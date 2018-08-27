@@ -1,0 +1,11 @@
+<template>
+    <div>
+        <header></header>
+    </div>
+</template>
+<script>
+    
+</script>
+<style lang="less" scoped>
+
+</style>
