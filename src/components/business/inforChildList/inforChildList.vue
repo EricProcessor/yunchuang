@@ -1,33 +1,40 @@
 <template>
     <div>
+        <!-- <mt-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore"> -->
         <ul class="listBox">
-            <li class="list_li clearfix">
+            <li class="list_li clearfix" @click="linkInforDetail" v-for="(n,v) in 5" :key="v">
                 <div class="fl left_div">
                     <p class="text">京东科统园区企业惊艳亮相 ,多 领域“开花”尽显风采</p>
                     <div class="clearfix">
                         <div class="fl time">2018-08-08</div>
                         <div class="fr">
                             <p class="clearfix readCount">
-                                <span class="fl el-icon-view"></span>
+                                <span class="fl icon_num"></span>
                                 <span class="fl count">123</span>
                             </p>
                         </div>
                     </div>
                 </div>
                 <div class="fl right_div">
-                    <img src="../../../../static/images/business_2.jpg" alt="">
+                    <img src="/static/images/business_2.jpg" alt="">
                 </div>
             </li>
         </ul>
+        <!-- </mt-loadmore> -->
+
     </div>
+
 </template>
 <script>
 export default {
-    data (){
-        return {
-            
-        }
+  data() {
+    return {};
+  },
+  methods: {
+    linkInforDetail() {
+        this.$router.push('/inforDetail');
     }
+  }
 };
 </script>
 <style lang="less" scoped>
@@ -62,6 +69,13 @@ export default {
       }
       .readCount {
         margin-right: 0.9375rem;
+        .icon_num {
+          display: block;
+          width: 1.25rem;
+          height: 1rem;
+          background: url("./readNum.png") no-repeat center center;
+          background-size: 100% 100%;
+        }
         .count {
           font-size: 0.625rem;
           color: #999;

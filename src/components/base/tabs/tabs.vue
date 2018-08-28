@@ -11,10 +11,10 @@
         <InforList></InforList>
       </mt-tab-container-item>
       <mt-tab-container-item id="2">
-        <mt-cell v-for="(n,v) in 4" :key='v' :title="'测试 ' + n" />
+         <mt-cell v-for="(n,v) in 4" :key="v" :title="'内容 ' + n" />
       </mt-tab-container-item>
       <mt-tab-container-item id="3">
-        <mt-cell v-for="(n,v) in 6" :key='v' :title="'选项 ' + n" />
+         <mt-cell v-for="(n,v) in 5" :key="v" :title="'内容 ' + n" />
       </mt-tab-container-item>
     </mt-tab-container>
   </div>
@@ -34,13 +34,24 @@ export default {
 </script>
 <style lang="less">
 #tabBox {
+  .mint-tab-container {
+    background: #eee;
+  }
   .mint-navbar {
     .mint-tab-item {
       margin-bottom: 0;
       padding: 12px 0;
+      .mint-tab-item-label {
+        font-size: 1rem;
+        color: #333;
+      }
     }
-    .mint-tab-item-label {
-      font-size: 1rem;
+    .mint-tab-item.is-selected {
+      color: #6ea1ff;
+      border-color: #6ea1ff;
+      .mint-tab-item-label {
+        color: #6ea1ff;
+      }
     }
   }
 }

@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <img class="inforImg" src="../../../../static/images/business_1.jpg" alt="">
+    <div class="inforImgBox">
+        <img class="inforImg" src="/static/images/business_1.jpg" alt="">
         <List></List>
     </div>
 </template>
@@ -13,12 +13,15 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-.inforImg {
-  width: 100%;
-  height: 8.125rem;
-  img {
+.inforImgBox {
+  margin-top: 0.375rem;
+  .inforImg {
     width: 100%;
-    height: 100%;
+    height: 8.125rem;
+    img {
+      width: 100%;
+      height: 100%;
+    }
   }
 }
 </style>
