@@ -157,19 +157,8 @@ export default {
 // 搜索数据列表样式
 .searchList {
 }
-</style>
-<style>
-.header-search .el-input__inner,
-.header-search .el-input-group__append {
-  background: #253350;
-  border: none;
-  border-bottom: 1px solid #dcdfe6;
-}
-.header-search .el-input__inner {
-  color: #fff;
-}
 body {
-  background: rgb(245, 245, 245);
-  height: 100%;
-}
+        background: rgb(245, 245, 245);
+        height: 100%;
+      }
 </style>
