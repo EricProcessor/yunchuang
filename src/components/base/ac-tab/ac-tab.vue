@@ -7,16 +7,17 @@
     <!-- tab-container -->
     <mt-tab-container v-model="selected">
       <mt-tab-container-item id="1">
-        <ActiveList></ActiveList>
+        <ActiveListone></ActiveListone>
       </mt-tab-container-item>
       <mt-tab-container-item id="2">
-         <activeList-two></activeList-two>
+         <ActiveListtwo></ActiveListtwo>
       </mt-tab-container-item>
     </mt-tab-container>
   </div>
 </template>
 <script>
-import ActiveList from "business/activity/activityListC1";
+import ActiveListone from "business/activity/activityListC1";
+import ActiveListtwo from "business/activity/activityListC2";
 export default {
   data() {
     return {
@@ -24,7 +25,8 @@ export default {
     };
   },
   components: {
-    ActiveList
+    ActiveListone,
+    ActiveListtwo
   }
 };
 </script>
@@ -36,9 +38,9 @@ export default {
   .mint-navbar {
     .mint-tab-item {
       margin-bottom: 0;
-      padding: 12px 0;
+      padding: .375rem 0;
       .mint-tab-item-label {
-        font-size: 1rem;
+        font-size: .4375rem;
         color: #333;
       }
     }
