@@ -39,7 +39,7 @@ export default {
     },
     //获取后台数据
     inforData() {
-      let _url = "http://118.184.218.156/frontcarrierinfoTop-home";
+      let _url = "/api/frontcarrierinfotop-home";
       axios.get(_url).then(res => {
         console.log(res);
       });
