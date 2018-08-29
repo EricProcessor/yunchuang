@@ -1,14 +1,14 @@
 <template>
     <div class="searchAfterList">
         <ul class="listBox">
-            <li class="list_li clearfix">
+            <li class="list_li clearfix" @click="linkInforDetail" v-for="(n,v) in 4" :key="v">
                 <div class="fl left_div">
                     <p class="text">UI设计全国巡演</p>
                     <div class="clearfix">
                         <div class="fl time">博文天地</div>
                         <div class="fr">
                             <p class="clearfix readCount">
-                                <span class="fl el-icon-view"></span>
+                                <span data-v-397fe9a0="" class="fl icon_num"></span>
                                 <span class="fl count">123</span>
                             </p>
                         </div>
@@ -26,52 +26,71 @@ export default {
   name: "searchAfterList",
   data() {
     return {};
+  },
+  methods: {
+    // 点击列表跳转到详情
+    linkInforDetail() {
+      this.$router.push("/inforDetail");
+    },
+    //获取后台数据
+    inforData() {
+      let _url = "/api/frontcarrierinfotop-home";
+      axios.get(_url).then(res => {
+        console.log(res);
+      });
+    }
   }
 };
 </script>
 <style lang="less" scoped>
 .listBox {
-  padding: 0 0.3125rem;
-  padding-bottom: 0.3rem;
+  padding: 0 10px;
+  padding-bottom: 10px;
   li {
     width: 100%;
-    height: 5.3125rem;
-    margin-top: 0.3125rem;
+    height: 170px;
+    margin-top: 10px;
     .left_div {
       width: 60%;
       height: 100%;
       background: #fff;
-      border-radius: 3px 0px 0px 3px;
+      border-radius: 6px 0px 0px 6px;
+
       .text {
         width: 90%;
         color: #333;
-        font-size: 0.875rem;
+        font-size: 14px;
         height: auto;
         text-align: left;
-        margin: 0.625rem 0 1.5rem 0.625rem;
-        font-size: 0.875rem;
+        margin: 20px 0 40px 20px;
+        font-size: 24px;
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 2;
-        min-height: 30px;
+        min-height: 60px;
       }
       .time {
-        font-size: 0.625rem;
+        font-size: 20px;
         color: #999;
-        margin-left: 0.625rem;
+        margin-left: 20px;
         border: 1px solid #dfdfdf;
         padding: 4px;
-        position: relative;
-        top: -6px;
       }
       .readCount {
-        margin-right: 0.9375rem;
+        margin-right: 14px;
+        .icon_num {
+          display: block;
+          width: 48px;
+          height: 36px;
+          background: url("./readNum.png") no-repeat center center;
+          background-size: 100% 100%;
+        }
         .count {
-          font-size: 0.625rem;
+          font-size: 20px;
           color: #999;
-          line-height: 1rem;
+          line-height: 40px;
           padding-left: 2px;
         }
       }
