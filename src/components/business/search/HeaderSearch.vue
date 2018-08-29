@@ -1,80 +1,90 @@
 <template>
 <div>
   <div class="header-search">
-    <div class="el-icon-arrow-left"></div>
-    <el-input v-model="input" placeholder="请输入内容">
-      <el-button slot="append" icon="el-icon-search"></el-button>
-    </el-input>
-    
-  <!-- </el-input> -->
+    <a href="#/" class="page-back router-link-active">
+      <i class="mintui mintui-back"></i>
+    </a>
+    <div class="mint-searchbar-inner">
+      <input type="text" placeholder="搜索" v-model="searchVal" class="mint-searchbar-core">
+      <i class="mintui mintui-search"></i> 
+    </div>
   </div>
-  <div class="searchBefor">
+  <div class="searchBefor ">
     <ul class="secrchCon">
-      <li>
-        <div class="el-icon-search"></div>
-        <span>UI设计巡回演讲</span>
-      </li>
-      <li>
-        <div class="el-icon-search"></div>
-        <span>UI设计巡回演讲</span>
-      </li>
-      <li>
-        <div class="el-icon-search"></div>
-        <span>UI设计巡回演讲</span>
-      </li>
-        <li>
-        <div class="el-icon-search"></div>
-        <span>UI设计巡回演讲</span>
-      </li>
-      <li>
-        <div class="el-icon-search"></div>
-        <span>UI设计巡回演讲</span>
-      </li>
-      <li>
-        <div class="el-icon-search"></div>
-        <span>UI设计巡回演讲</span>
-      </li>
-      <li>
-        <div class="el-icon-search"></div>
-        <span>UI设计巡回演讲</span>
+      <li v-for="(item,index) in NewItems" :key="index"  >
+        <div class="mintui mintui-search"></div>
+        <span :value="item.value" v-text="item.name"></span>
       </li>
     </ul>
-    <ol class="searchHot">
-      <h3>热门搜索</h3>
-      <li><span>1</span>新零售</li>
-      <li><span>2</span>新零售</li>
-      <li><span>3</span>新零售</li>
-      <li><span>4</span>新零售</li>
-      <li><span>5</span>新零售</li>
-      <li><span>6</span>新零售</li>
-      <li><span>7</span>新零售</li>
-      <li><span>8</span>新零售</li>
-      <li><span>9</span>新零售</li>
-      <li><span>10</span>新零售</li>
-    </ol>
+    <searchHot></searchHot>
+   
   </div>
-  <div class="searchAfter">
-    <ul class="searchList">
-      <li>
-        <div class="search_list_left">
-
-        </div>
-        <div class="search_list_right">
-
-        </div>
-      </li>
-    </ul>
-  </div>
+  <search-after-list></search-after-list>
   
 </div>
- 
+
 </template>
 
 <script>
+import searchAfterList from "../searchAfterList/searchAfterList";
+import searchHot from "../searchHot/searchHot";
 export default {
   name: "HeaderSearch",
+  components: {
+    searchHot,
+    searchAfterList
+  },
   data() {
-    return { input5: "" };
+    return {
+      // result: [
+      //   { title: "aaa", value: "aaa" },
+      //   { title: "bbb", value: "bbb" },
+      //   { title: "bbb", value: "bbb" }
+      // ],
+      // value: "",
+      // title: ""
+
+      searchVal: "",
+      items: [
+        {
+          name: "上海",
+          value: "sh"
+        },
+        {
+          name: "北京",
+          value: "bj"
+        },
+        {
+          name: "重庆",
+          value: "cq"
+        },
+        {
+          name: "嗨嗨嗨",
+          value: "hhh"
+        },
+        {
+          name: "海上",
+          value: "hs"
+        },
+        {
+          name: "京都",
+          value: "jd"
+        }
+      ]
+    };
+  },
+  methods: {},
+  computed: {
+    NewItems() {
+      var _this = this;
+      var NewItems = [];
+      this.items.map(function(item) {
+        if (item.name.search(_this.searchVal) != -1) {
+          NewItems.push(item);
+        }
+      });
+      return NewItems;
+    }
   }
 };
 </script>
@@ -91,23 +101,30 @@ export default {
 .header-search > div {
   float: left;
 }
-.el-icon-arrow-left,
-.el-icon-search {
-  font-size: 26px;
-}
-.el-icon-search:before {
+.mintui-back:before {
   color: #fff;
-  padding: 10px 10px 0px 10px;
-}
-.el-icon-arrow-left:before {
-  color: #fff;
-  padding: 10px 10px 0px 10px;
-}
-.el-icon-search:before {
+  padding-left: 12px;
   font-size: 24px;
 }
-.el-button--default {
-  font-size: 24px !important;
+.mintui-search:before {
+  font-size: 24px;
+  color: #fff;
+}
+.header-search > div[data-v-5eeac47d] {
+  background: #253350;
+}
+.mint-searchbar-core {
+  background: #253350;
+  color: #fff;
+}
+.mint-searchbar-inner .mintui-search {
+  padding-right: 8px;
+}
+.mint-searchbar-core[data-v-5eeac47d] {
+  font-size: 14px;
+}
+.hide {
+  display: none;
 }
 /* 搜索内容的样式 */
 .secrchCon .el-icon-search[data-v-5eeac47d]:before {
@@ -130,35 +147,20 @@ export default {
     }
   }
 }
-// 热门搜索样式
-.searchHot {
-  background: #fff;
-  padding-left: 15px;
-  padding-bottom: 8px;
-  overflow: hidden;
-  h3 {
-    font-size: 15px;
-    color: #333;
-    padding: 15px 0;
-    font-weight: bold;
+.el-icon-search {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+}
+ul {
+  .mintui-search:before {
+    font-size: 16px;
+    color: #253350;
   }
-  li {
-    width: 50%;
-    float: left;
-    height: 0.3rem;
-    line-height: 0.3rem;
-    span {
-      color: rgb(55, 190, 240);
-      display: inline-block;
-      width: 0.2rem;
-    }
+  .mintui {
+    display: inline-block;
+    padding-right: 4px;
   }
 }
-// 搜索数据列表样式
-.searchList {
-}
-body {
-        background: rgb(245, 245, 245);
-        height: 100%;
-      }
 </style>
+
