@@ -41,6 +41,7 @@ export default {
     inforData() {
       let _url = "http://118.184.218.156/frontcarrierinfoTop-home";
       axios.get(_url).then(res => {
+        // console.log(res);
         console.log(res);
       });
     }
