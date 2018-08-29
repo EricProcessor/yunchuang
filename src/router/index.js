@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Index from 'business/index/index'
 import Information from 'business/information/Information';
 import inforDetail from 'business/inforDetail/inforDetail';
+import HeaderSearch from 'business/search/HeaderSearch';
 Vue.use(Router)
 
 export default new Router({
@@ -18,5 +19,9 @@ export default new Router({
     path: '/infordetail',
     name: 'inforDetail',
     component: inforDetail
+  }, {
+    path: '/HeaderSearch',
+    name: 'HeaderSearch',
+    component: HeaderSearch
   }]
 })
