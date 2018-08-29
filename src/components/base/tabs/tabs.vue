@@ -1,9 +1,9 @@
 <template>
   <div id="tabBox">
     <mt-navbar v-model="selected">
-      <mt-tab-item id="1">创业头条</mt-tab-item>
-      <mt-tab-item id="2">创业资讯</mt-tab-item>
-      <mt-tab-item id="3">博文天地</mt-tab-item>
+      <mt-tab-item id="1" @click="getSomething">创业头条</mt-tab-item>
+      <mt-tab-item id="2" @click="getSomething">创业政策</mt-tab-item>
+      <mt-tab-item id="3" @click="getSomething">博文天地</mt-tab-item>
     </mt-navbar>
     <!-- tab-container -->
     <mt-tab-container v-model="selected">
@@ -11,10 +11,10 @@
         <InforList></InforList>
       </mt-tab-container-item>
       <mt-tab-container-item id="2">
-         <mt-cell v-for="(n,v) in 4" :key="v" :title="'内容 ' + n" />
+        <mt-cell v-for="(n,v) in 4" :key="v" :title="'内容 ' + n" />
       </mt-tab-container-item>
       <mt-tab-container-item id="3">
-         <mt-cell v-for="(n,v) in 5" :key="v" :title="'内容 ' + n" />
+        <mt-cell v-for="(n,v) in 5" :key="v" :title="'内容 ' + n" />
       </mt-tab-container-item>
     </mt-tab-container>
   </div>
@@ -26,6 +26,11 @@ export default {
     return {
       selected: "1"
     };
+  },
+  methods: {
+    getSomething() {
+      alert("123")
+    }
   },
   components: {
     InforList
@@ -40,15 +45,16 @@ export default {
   .mint-navbar {
     .mint-tab-item {
       margin-bottom: 0;
-      padding: 12px 0;
+      padding: 30px 0;
       .mint-tab-item-label {
-        font-size: 1rem;
+        font-size: 30px;
         color: #333;
       }
     }
     .mint-tab-item.is-selected {
       color: #6ea1ff;
       border-color: #6ea1ff;
+      border-width: 4px;
       .mint-tab-item-label {
         color: #6ea1ff;
       }

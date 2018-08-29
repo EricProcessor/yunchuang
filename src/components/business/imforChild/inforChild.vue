@@ -14,10 +14,10 @@ export default {
 </script>
 <style lang="less" scoped>
 .inforImgBox {
-  margin-top: 0.375rem;
+  margin-top: 12px;
   .inforImg {
     width: 100%;
-    height: 8.125rem;
+    height: 260px;
     img {
       width: 100%;
       height: 100%;

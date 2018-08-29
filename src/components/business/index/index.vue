@@ -73,6 +73,8 @@ export default {
     }
     .block {
         background: #fff;
+        margin-top: 20px;
+        padding-bottom: 10px;
         .block-title {
             margin-left: 20px;
             margin-right: 20px;
@@ -105,6 +107,10 @@ export default {
         .activity-list {
             overflow-x: auto;
             overflow-y: hidden;
+            margin-left: 20px;
+            margin-right: 20px;
+            height: 240px;
+            margin-top: 10px;
             ul {
                 li {
                     height: 240px;
@@ -120,12 +126,63 @@ export default {
                     h3 {
                         font-size: 22px;
                         line-height: 32px;
+                        height: 64px;
                         color: #333333;
-                        margin-top: 20px;
+                        margin-top: 10px;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        -webkit-line-clamp: 2;
+                        display: -webkit-box;
+                        -webkit-box-orient: vertical;
                     }
                 }
             }
         }
+        .class-list {
+            overflow-x: auto;
+            overflow-y: hidden;
+            margin-left: 20px;
+            margin-right: 20px;
+            height: 480px;
+            margin-top: 10px;
+            ul {
+                li {
+                    height: 480px;
+                    width: 660px;
+                    display: inline-block;
+                    img {
+                        width: 660px;
+                        height: 370px;
+                        border-radius: 5px;
+                        display: inline-block;
+                        background: red;
+                    }
+                    h3 {
+                        font-size: 28px;
+                        line-height: 40px;
+                        height: 40px;
+                        color: #333333;
+                        margin-top: 10px;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                        margin-bottom: 10px;
+                    }
+                    .hot-sowing {
+                        width: 120px;
+                        height: 40px;
+                        border-radius: 5px;
+                        color: #fff;
+                        background: #f35828;
+                        line-height: 36px;
+                        text-align: center;
+                        font-size: 20px;
+                        display: inline-block;
+                    }
+                }
+            }
+        }
+
     }
 }
 </style>
