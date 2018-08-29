@@ -6,23 +6,26 @@
     </header>
     <!-- tab标签 -->
     <tabs class="tabs"></tabs>
+    <mFooter></mFooter>
   </div>
 </template>
 <script>
 import Tabs from "base/tabs/tabs";
+import mFooter from 'business/mFooter/mFooter'
 export default {
   components: {
-    Tabs
+    Tabs,
+    mFooter
   }
 };
 </script>
 <style lang="less" scoped>
 .top {
   width: 100%;
-  height: 2.75rem;
+  height: 88px;
   text-align: center;
-  line-height: 2.75rem;
-  font-size: 1.125rem;
+  line-height: 88px;
+  font-size: 36px;
   color: #fff;
   background: #253350;
   position: fixed;
@@ -31,17 +34,17 @@ export default {
   z-index: 3;
   .icon_search {
     display: block;
-    width: 1.125rem;
-    height: 1.125rem;
+    width: 36px;
+    height: 36px;
     background: url("./search.png") no-repeat center center;
     background-size: 100% 100%;
     position: absolute;
-    top: 0.75rem;
-    right: 0.75rem;
+    top: 26px;
+    right: 24px;
     z-index: 3;
   }
 }
 .tabs {
-  margin-top: 2.75rem;
+  margin-top: 88px;
 }
 </style>
