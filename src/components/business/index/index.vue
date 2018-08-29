@@ -73,6 +73,8 @@ export default {
     }
     .block {
         background: #fff;
+        margin-top: 20px;
+        padding-bottom: 10px;
         .block-title {
             margin-left: 20px;
             margin-right: 20px;
@@ -105,6 +107,10 @@ export default {
         .activity-list {
             overflow-x: auto;
             overflow-y: hidden;
+            margin-left: 20px;
+            margin-right: 20px;
+            height: 240px;
+            margin-top: 10px;
             ul {
                 li {
                     height: 240px;
@@ -120,12 +126,53 @@ export default {
                     h3 {
                         font-size: 22px;
                         line-height: 32px;
+                        height: 64px;
                         color: #333333;
-                        margin-top: 20px;
+                        margin-top: 10px;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        -webkit-line-clamp: 2;
+                        display: -webkit-box;
+                        -webkit-box-orient: vertical;
                     }
                 }
             }
         }
+        .class-list {
+            overflow-x: auto;
+            overflow-y: hidden;
+            margin-left: 20px;
+            margin-right: 20px;
+            height: 480px;
+            margin-top: 10px;
+            ul {
+                li {
+                    height: 660px;
+                    width: 370px;
+                    display: inline-block;
+                    img {
+                        width: 165px;
+                        height: 165px;
+                        border-radius: 5px;
+                        display: inline-block;
+                        background: red;
+                    }
+                    h3 {
+                        font-size: 22px;
+                        line-height: 32px;
+                        height: 64px;
+                        color: #333333;
+                        margin-top: 10px;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        -webkit-line-clamp: 2;
+                        display: -webkit-box;
+                        -webkit-box-orient: vertical;
+                    }
+                }
+            }
+        }
+
     }
 }
 </style>
