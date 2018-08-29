@@ -28,14 +28,15 @@
 import axios from "axios";
 export default {
   data() {
-    return {};
+    return {
+    };
   },
   mounted() {
     this.inforData();
   },
   methods: {
     linkInforDetail() {
-      this.$router.push("/inforDetail");
+      this.$router.push("/infordetail");
     },
     //获取后台数据
     inforData() {
