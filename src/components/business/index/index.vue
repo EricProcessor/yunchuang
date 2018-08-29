@@ -147,27 +147,37 @@ export default {
             margin-top: 10px;
             ul {
                 li {
-                    height: 660px;
-                    width: 370px;
+                    height: 480px;
+                    width: 660px;
                     display: inline-block;
                     img {
-                        width: 165px;
-                        height: 165px;
+                        width: 660px;
+                        height: 370px;
                         border-radius: 5px;
                         display: inline-block;
                         background: red;
                     }
                     h3 {
-                        font-size: 22px;
-                        line-height: 32px;
-                        height: 64px;
+                        font-size: 28px;
+                        line-height: 40px;
+                        height: 40px;
                         color: #333333;
                         margin-top: 10px;
                         overflow: hidden;
                         text-overflow: ellipsis;
-                        -webkit-line-clamp: 2;
-                        display: -webkit-box;
-                        -webkit-box-orient: vertical;
+                        white-space: nowrap;
+                        margin-bottom: 10px;
+                    }
+                    .hot-sowing {
+                        width: 120px;
+                        height: 40px;
+                        border-radius: 5px;
+                        color: #fff;
+                        background: #f35828;
+                        line-height: 36px;
+                        text-align: center;
+                        font-size: 20px;
+                        display: inline-block;
                     }
                 }
             }
