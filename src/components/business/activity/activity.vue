@@ -2,7 +2,7 @@
   <div>
     <!-- header部分 -->
     <header class="activity-title">活动
-      <span class="acticity-screen" @click="activeScreen">筛选</span>
+      <span class="acticity-screen" @click="screenResult">筛选</span>
     </header>
     <!-- tab部分 -->
     <acTab class="ac-tab"></acTab>
@@ -18,26 +18,25 @@
             mFooter
         },
         methods:{
-          activeScreen(){
-            alert(0)
-            this.$router.push("../activity/activeScreen");
+          screenResult(){
+            this.$router.push('/screenResult');
           }
         }
     };
 </script>
 <style lang="less" scoped>
 .activity-title {
-  position: relative;
-  width: 100%;
-  height: 1.25rem;
-  text-align: center;
-  line-height: 1.25rem;
-  font-size: 0.4375rem;
-  color: #fff;
-  background: #253350;
-  position: fixed;
-  top: 0;
-  left: 0;
+    position: relative;
+    width: 100%;
+    height: 1.25rem;
+    text-align: center;
+    line-height: 1.25rem;
+    font-size: 0.4375rem;
+    color: #fff;
+    background: #253350;
+    position: fixed;
+    top: 0;
+    left: 0;
   .acticity-screen{
     height: 1.25rem;
     line-height: 1.25rem;
