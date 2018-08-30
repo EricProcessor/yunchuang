@@ -5,21 +5,21 @@
       <i class="mintui mintui-back"></i>
     </a>
     <div class="mint-searchbar-inner">
-      <input type="text" placeholder="搜索" v-model="searchVal" class="mint-searchbar-core">
+      <input type="text" placeholder="搜索" @click="linkSearchListBack" v-model="searchVal" class="mint-searchbar-core">
       <i class="mintui mintui-search"></i> 
     </div>
   </div>
   <div class="searchBefor ">
     <ul class="secrchCon">
-      <li v-for="(item,index) in NewItems" :key="index"  >
+      <li  @click="linkSearchList" v-show="!afertList.type" v-for="(item,index) in NewItems" :key="index"  >
         <div class="mintui mintui-search"></div>
         <span :value="item.value" v-text="item.name"></span>
       </li>
     </ul>
-    <searchHot></searchHot>
+    <searchHot v-show="!afertList.type"></searchHot>
    
   </div>
-  <search-after-list></search-after-list>
+  <search-after-list v-show="afertList.type"></search-after-list>
   
 </div>
 
@@ -43,7 +43,9 @@ export default {
       // ],
       // value: "",
       // title: ""
-
+      afertList: {
+        type: false
+      },
       searchVal: "",
       items: [
         {
@@ -73,8 +75,20 @@ export default {
       ]
     };
   },
-  methods: {},
+  methods: {
+    // 点击搜索内容切换至列表信息
+    linkSearchList() {
+      this.afertList.type = !this.afertList.type;
+    },
+    // 在列表信息中点击头部搜索切换至搜索
+    linkSearchListBack() {
+      if (this.afertList.type == 1) {
+        this.afertList.type = !this.afertList.type;
+      }
+    }
+  },
   computed: {
+    //模糊搜素
     NewItems() {
       var _this = this;
       var NewItems = [];
@@ -92,7 +106,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
 .header-search {
-  height: 44px;
+  height: 88px;
   background: #253350;
   display: flex;
   justify-content: space-between;
@@ -103,11 +117,11 @@ export default {
 }
 .mintui-back:before {
   color: #fff;
-  padding-left: 12px;
-  font-size: 24px;
+  padding-left: 24px;
+  font-size: 48px;
 }
 .mintui-search:before {
-  font-size: 24px;
+  font-size: 48px;
   color: #fff;
 }
 .header-search > div[data-v-5eeac47d] {
@@ -118,10 +132,10 @@ export default {
   color: #fff;
 }
 .mint-searchbar-inner .mintui-search {
-  padding-right: 8px;
+  padding-right: 16px;
 }
 .mint-searchbar-core[data-v-5eeac47d] {
-  font-size: 14px;
+  font-size: 28px;
 }
 .hide {
   display: none;
@@ -129,37 +143,37 @@ export default {
 /* 搜索内容的样式 */
 .secrchCon .el-icon-search[data-v-5eeac47d]:before {
   color: #999;
-  font-size: 16px;
-  padding: 10px 5px 0px 0px;
+  font-size: 32px;
+  padding: 20px 10px 0px 0px;
 }
 .secrchCon {
   background: #fff;
-  margin-top: 15px;
-  margin-bottom: 15px;
+  margin-top: 16px;
+  margin-bottom: 30px;
   li {
-    height: 0.32rem;
-    line-height: 0.32rem;
-    border-bottom: 1px solid #dfdfdf;
-    margin-left: 0.15rem;
-    font-size: 0.12rem;
+    height: 64px;
+    line-height: 64px;
+    border-bottom: 2px solid #dfdfdf;
+    margin-left: 30px;
+    font-size: 24px;
     span {
       color: #333;
     }
   }
 }
 .el-icon-search {
-  width: 20px;
-  height: 20px;
+  width: 40px;
+  height: 40px;
   display: inline-block;
 }
 ul {
   .mintui-search:before {
-    font-size: 16px;
+    font-size: 32px;
     color: #253350;
   }
   .mintui {
     display: inline-block;
-    padding-right: 4px;
+    padding-right: 8px;
   }
 }
 </style>
