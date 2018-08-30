@@ -1,7 +1,7 @@
 <template>
     <div>       
         <ul class="listBox">
-            <li class="list_li clearfix" @click="linkActDetail" v-for="(n,v) in 3" :key="v">
+            <li class="list_li clearfix" @click="linkInforDetail" v-for="(val,index) in 3" :key="index">
                 <div class="ac-img"><img src="/static/images/ac-pic2.jpg" alt=""/></div>
                 <div class="ac-mes">
                    <p>2018 中国创新峰会</p>
@@ -18,7 +18,9 @@ export default {
   },
   methods: {
     linkInforDetail() {
-        this.$router.push('/inforDetail');
+        this.$router.push({
+            path: '/inforDetail'
+        });
     }
   }
 };
