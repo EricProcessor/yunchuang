@@ -1,16 +1,15 @@
 <template>
     <div>       
         <ul class="listBox">
-            <li class="list_li clearfix" @click="activeDetail" v-for="(n,v) in 3" :key="v">
-                <div class="ac-img"><img src="/static/images/ac-pic1.jpg" alt=""/></div>
+            <li class="list_li clearfix" @click="linkActDetail" v-for="(n,v) in 3" :key="v">
+                <div class="ac-img"><img src="/static/images/ac-pic2.jpg" alt=""/></div>
                 <div class="ac-mes">
-                   <p>2018Demo Asia 创新中国亚洲峰会</p>
-                   <span>已报名：<em>86</em>人</span>
+                   <p>2018 中国创新峰会</p>
+                   <span>已报名：<em>80</em>人</span>
                 </div>
             </li>
         </ul>
     </div>
-
 </template>
 <script>
 export default {
@@ -18,8 +17,8 @@ export default {
     return {};
   },
   methods: {
-    activeDetail() {
-        this.$router.push('/activeDetail');
+    linkInforDetail() {
+        this.$router.push('/inforDetail');
     }
   }
 };
