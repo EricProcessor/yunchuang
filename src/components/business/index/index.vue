@@ -18,6 +18,22 @@
                         <img src="" alt="" />
                         <h3>人工智能研讨峰会</h3>
                     </li>
+                    <li>
+                        <img src="" alt="" />
+                        <h3>人工智能研讨峰会</h3>
+                    </li>
+                    <li>
+                        <img src="" alt="" />
+                        <h3>人工智能研讨峰会</h3>
+                    </li>
+                    <li>
+                        <img src="" alt="" />
+                        <h3>人工智能研讨峰会</h3>
+                    </li>
+                    <li>
+                        <img src="" alt="" />
+                        <h3>人工智能研讨峰会</h3>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -34,6 +50,12 @@
                         <span class="hot-sowing">正在热播</span>
                         <span>183次观看</span>
                     </li>
+                    <li>
+                        <img src="" alt="" />
+                        <h3>赢创学院《霍夫曼独角兽训练营》第2期</h3>
+                        <span class="hot-sowing">正在热播</span>
+                        <span>183次观看</span>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -44,6 +66,7 @@ import IndexHeader from 'business/indexHeader/indexHeader'
 import Swiper from 'base/swiper/swiper'
 import Mfooter from 'business/mFooter/mFooter'
 import Tabs from 'base/tabs/tabs'
+import config from '@/config/config'
 export default {
     data() {
         return {
@@ -112,10 +135,12 @@ export default {
             height: 240px;
             margin-top: 10px;
             ul {
+                white-space: nowrap;
                 li {
                     height: 240px;
                     width: 165px;
                     display: inline-block;
+                    margin-right: 20px;
                     img {
                         width: 165px;
                         height: 165px;
@@ -130,6 +155,7 @@ export default {
                         color: #333333;
                         margin-top: 10px;
                         overflow: hidden;
+                        white-space: normal;
                         text-overflow: ellipsis;
                         -webkit-line-clamp: 2;
                         display: -webkit-box;
@@ -146,6 +172,7 @@ export default {
             height: 480px;
             margin-top: 10px;
             ul {
+                white-space: nowrap;
                 li {
                     height: 480px;
                     width: 660px;

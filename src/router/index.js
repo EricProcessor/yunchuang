@@ -9,16 +9,16 @@ Vue.use(Router)
 
 export default new Router({
   routes: [{
-    path: '/',
+    path: '/',          //首页
     name: 'index',
     component: Index
   }, {
-    path: '/information',
+    path: '/information',   //资讯页面
     name: 'Information',
     component: Information
   }, {
     path: '/infordetail',
-    name: 'inforDetail',
+    name: 'inforDetail',    
     component: inforDetail
   } ,{
     path: '/activity',
