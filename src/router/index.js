@@ -9,6 +9,8 @@ import activeDetail from 'business/activeDetail/activeDetail';
 import screenResult from 'business/screenResult/screenResult';
 import activeScreen from 'business/activeScreen/activeScreen';
 import HeaderSearch from 'business/search/HeaderSearch';
+import login from 'business/login/login';
+import register from 'business/register/register';
 Vue.use(Router)
 
 export default new Router({
@@ -32,11 +34,11 @@ export default new Router({
     path: '/screenResult',
     name: 'screenResult',
     component: screenResult
-  },{
+  }, {
     path: '/activeScreen',
     name: 'activeScreen',
     component: activeScreen
-  },{
+  }, {
     path: '/mine',
     name: 'mine',
     component: mine
@@ -48,5 +50,13 @@ export default new Router({
     path: '/HeaderSearch',
     name: 'HeaderSearch',
     component: HeaderSearch
+  }, {
+    path: '/login', //登录页
+    name: 'login',
+    component: login
+  }, {
+    path: '/register', //注册页
+    name: 'register',
+    component: register
   }]
 })
