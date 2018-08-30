@@ -65,7 +65,7 @@ export default {
                 case 'information': path = '/information'; break;
                 case 'activity': path = '/activity'; break;
                 case  'classroom': path = '/'; break;
-                case 'my': path = '/'; break;
+                case 'my': path = '/mine'; break;
             }
             this.$router.push({
                 path
