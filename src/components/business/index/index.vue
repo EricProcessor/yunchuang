@@ -2,18 +2,33 @@
     <div class="index-content">
         <index-header></index-header>
         <swiper></swiper>
-        <mfooter></mfooter>
         <div class="tab-list">
             <tabs></tabs>
-            <p>查看更多</p>
+            <p @click="_jump('information')">查看更多</p>
         </div>
         <div class="block">
             <div class="block-title">
                 <h2>创业活动</h2>
-                <span>更多</span>
+                <span @click="_jump('activity')">更多</span>
             </div>
             <div class="block-list activity-list">
                 <ul>
+                    <li>
+                        <img src="" alt="" />
+                        <h3>人工智能研讨峰会</h3>
+                    </li>
+                    <li>
+                        <img src="" alt="" />
+                        <h3>人工智能研讨峰会</h3>
+                    </li>
+                    <li>
+                        <img src="" alt="" />
+                        <h3>人工智能研讨峰会</h3>
+                    </li>
+                    <li>
+                        <img src="" alt="" />
+                        <h3>人工智能研讨峰会</h3>
+                    </li>
                     <li>
                         <img src="" alt="" />
                         <h3>人工智能研讨峰会</h3>
@@ -24,12 +39,24 @@
         <div class="block">
             <div class="block-title">
                 <h2>创业课堂</h2>
-                <span>更多</span>
+                <span @click="_jump('')">更多</span>
             </div>
             <div class="block-list class-list">
                 <ul>
                     <li>
-                        <img src="" alt="" />
+                        <div class="class-img">
+                            <img src="" alt="" />
+                            <i><img src="./video-play-big.png" /></i>
+                        </div>
+                        <h3>赢创学院《霍夫曼独角兽训练营》第2期</h3>
+                        <span class="hot-sowing">正在热播</span>
+                        <span>183次观看</span>
+                    </li>
+                    <li>
+                        <div class="class-img">
+                            <img src="" alt="" />
+                            <i><img src="./video-play-big.png" /></i>
+                        </div>
                         <h3>赢创学院《霍夫曼独角兽训练营》第2期</h3>
                         <span class="hot-sowing">正在热播</span>
                         <span>183次观看</span>
@@ -42,25 +69,34 @@
 <script>
 import IndexHeader from 'business/indexHeader/indexHeader'
 import Swiper from 'base/swiper/swiper'
-import Mfooter from 'business/mFooter/mFooter'
 import Tabs from 'base/tabs/tabs'
+import config from '@/config/config'
 export default {
     data() {
         return {
 
         }
     },
+    methods: {
+        //点击"更多"，路由跳转
+        _jump(path) {
+            this.$router.push({
+                path
+            })
+            //改变导航栏对应的选中状态
+            this.$emit("changeSelect", path)
+        }
+    },
     components: {
         IndexHeader,
         Swiper,
-        Mfooter,
         Tabs
     }
 }
 </script>
 <style lang="less" scoped>
 .index-content {
-    padding-bottom: 55px;
+    padding-bottom: 100px;
     .tab-list{ 
         p {
             height: 70px;
@@ -112,10 +148,12 @@ export default {
             height: 240px;
             margin-top: 10px;
             ul {
+                white-space: nowrap;
                 li {
                     height: 240px;
                     width: 165px;
                     display: inline-block;
+                    margin-right: 20px;
                     img {
                         width: 165px;
                         height: 165px;
@@ -130,6 +168,7 @@ export default {
                         color: #333333;
                         margin-top: 10px;
                         overflow: hidden;
+                        white-space: normal;
                         text-overflow: ellipsis;
                         -webkit-line-clamp: 2;
                         display: -webkit-box;
@@ -146,16 +185,36 @@ export default {
             height: 480px;
             margin-top: 10px;
             ul {
+                white-space: nowrap;
                 li {
                     height: 480px;
                     width: 660px;
                     display: inline-block;
-                    img {
+                    .class-img {
                         width: 660px;
                         height: 370px;
                         border-radius: 5px;
                         display: inline-block;
                         background: red;
+                        position: relative;
+                        &>img {
+                            width: 660px;
+                            height: 370px;
+                        }
+                        i {
+                            display: inline-block;
+                            width: 120px;
+                            height: 120px;
+                            position: absolute;
+                            top: 50%;
+                            left: 50%;
+                            margin-left: -60px;
+                            margin-top: -60px;
+                            img {
+                                width: 120px;
+                                height: 120px;
+                            }
+                        }
                     }
                     h3 {
                         font-size: 28px;

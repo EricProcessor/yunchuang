@@ -4,6 +4,7 @@ import Index from 'business/index/index'
 import Information from 'business/information/Information';
 import inforDetail from 'business/inforDetail/inforDetail';
 import activity from 'business/activity/activity';
+import mine from 'business/mine/mine';
 import activeDetail from 'business/activeDetail/activeDetail';
 import screenResult from 'business/screenResult/screenResult';
 import activeScreen from 'business/activeScreen/activeScreen';
@@ -12,18 +13,18 @@ Vue.use(Router)
 
 export default new Router({
   routes: [{
-    path: '/',
+    path: '/', //首页
     name: 'index',
     component: Index
   }, {
-    path: '/information',
+    path: '/information', //资讯页面
     name: 'Information',
     component: Information
   }, {
     path: '/infordetail',
     name: 'inforDetail',
     component: inforDetail
-  } ,{
+  }, {
     path: '/activity',
     name: 'activity',
     component: activity
@@ -36,10 +37,14 @@ export default new Router({
     name: 'activeScreen',
     component: activeScreen
   },{
+    path: '/mine',
+    name: 'mine',
+    component: mine
+  }, {
     path: '/activeDetail',
     name: 'activeDetail',
     component: activeDetail
-  },{
+  }, {
     path: '/HeaderSearch',
     name: 'HeaderSearch',
     component: HeaderSearch
