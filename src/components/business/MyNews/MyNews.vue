@@ -9,6 +9,11 @@
     </header>
     <ul class="myIntCon">
       <li>
+          <div class="myIntNew">
+            <span>会员审核通过通知</span>
+            <span>2018-09-12 00:00:00</span>
+          </div>
+          <p>删除</p>
       </li>
     </ul>
   </div>
@@ -57,12 +62,16 @@ export default {};
 //我的项目内容区域
 .myIntCon {
   margin-top: 88px;
-  overflow: hidden;
+  // overflow: hidden;
+  overflow-x: scroll;
   li {
     background-color: #fff;
     margin-top: 20px;
-    width: 750px;
+    width: 950px;
     height: 88px;
+    .myIntNew {
+      width: 750px;
+    }
   }
 }
 </style>

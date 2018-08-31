@@ -6,7 +6,7 @@
         <img src="./gd.png" alt="">
       </li>
       <li>
-        <div><img src="./myProject.png" alt="">我的项目</div>
+        <div @click="linkMyProject"><img src="./myProject.png" alt="">我的项目</div>
         <img src="./gd.png" alt="">
       </li>
       <li>
@@ -14,11 +14,11 @@
         <img src="./gd.png" alt="">
       </li>
       <li>
-        <div><img src="./myInterview.png" alt="">我的关注</div>
+        <div @click="linkMyCare"><img src="./myCare.png" alt="">我的关注</div>
         <img src="./gd.png" alt="">
       </li>
       <li>
-        <div><img src="./myCare.png" alt="">我的活动</div>
+        <div @click="linkMyInterview"><img src="./myInterview.png" alt="">我的活动</div>
         <img src="./gd.png" alt="">
       </li>
       <li>
@@ -30,14 +30,33 @@
         <img src="./gd.png" alt="">
       </li>
       <li>
-        <div><img src="./myNews.png" alt="">我的消息</div>
+        <div @click="linkMyNews"><img src="./myNews.png" alt="">我的消息</div>
         <img src="./gd.png" alt="">
       </li>
     </ul>
   </div>
 </template>
 <script>
-export default {};
+export default {
+  methods: {
+    // 我的活动跳转
+    linkMyInterview() {
+      this.$router.push("/mine/MyInterview");
+    },
+    linkMyCare() {
+      // 我的关注跳转
+      this.$router.push("/mine/MyCare");
+    },
+    linkMyProject() {
+      // 我的项目跳转
+      this.$router.push("/mine/MyProject");
+    },
+    linkMyNews() {
+      // 我的消息跳转
+      this.$router.push("/mine/MyNews");
+    }
+  }
+};
 </script>
 <style lang="less" scoped>
 //我的tab切换
