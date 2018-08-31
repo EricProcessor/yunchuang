@@ -39,7 +39,7 @@
         <div class="block">
             <div class="block-title">
                 <h2>创业课堂</h2>
-                <span @click="_jump('')">更多</span>
+                <span @click="_jump('classroom')">更多</span>
             </div>
             <div class="block-list class-list">
                 <ul>
