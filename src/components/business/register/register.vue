@@ -20,49 +20,49 @@
                                 </p>
                                 <p class="fr regTip">使用组织机构代码为登录账号</p>
                             </div>
-                            <input type="text"></li>
+                            <input type="text" v-model="companyData.MechanismCode"></li>
                         <li>
                             <div class="clearfix">
                                 <p class="fl">单位名称
                                     <span>（必填）</span>
                                 </p>
                             </div>
-                            <input type="text"></li>
+                            <input type="text" v-model="companyData.companyName"></li>
                         <li>
                             <div class="clearfix">
                                 <p class="fl">联系人
                                     <span>（必填）</span>
                                 </p>
                             </div>
-                            <input type="text"></li>
+                            <input type="text" v-model="companyData.registerName"></li>
                         <li>
                             <div class="clearfix">
                                 <p class="fl">手机号码
                                     <span>（必填）</span>
                                 </p>
                             </div>
-                            <input type="text"></li>
+                            <input type="text" v-model="companyData.registerPhone"></li>
                         <li>
                             <div class="clearfix">
                                 <p class="fl">电子邮箱
                                     <span>（必填）</span>
                                 </p>
                             </div>
-                            <input type="text"></li>
+                            <input type="text" v-model="companyData.registerEmail"></li>
                         <li>
                             <div class="clearfix">
                                 <p class="fl">登录密码
                                     <span>（必填）</span>
                                 </p>
                             </div>
-                            <input type="password"></li>
+                            <input type="password" v-model="companyData.registerPwd"></li>
                         <li>
                             <div class="clearfix">
                                 <p class="fl">确认密码
                                     <span>（必填）</span>
                                 </p>
                             </div>
-                            <input type="password"></li>
+                            <input type="password" v-model="companyData.confirmPwd"></li>
                     </ol>
                 </div>
                 <div class="div_li own_reg" :class="{active:regInfo.isOwd}" v-if="regInfo.isOwd">
@@ -73,7 +73,7 @@
                                     <span>（必填）</span>
                                 </p>
                             </div>
-                            <input type="text" maxlength="11">
+                            <input type="text" maxlength="11" v-model="ownData.ownPhone">
                             <span class="getCode" @click="getCode">获取验证码</span>
                         </li>
                         <li>
@@ -82,28 +82,28 @@
                                     <span>（必填）</span>
                                 </p>
                             </div>
-                            <input type="text" maxlength="6"></li>
+                            <input type="text" maxlength="6" v-model="ownData.ownCode"></li>
                         <li>
                             <div class="clearfix">
                                 <p class="fl">电子邮箱
                                     <span>（必填）</span>
                                 </p>
                             </div>
-                            <input type="text"></li>
+                            <input type="text" v-model="ownData.ownEamil"></li>
                         <li>
                             <div class="clearfix">
                                 <p class="fl">登录密码
                                     <span>（必填）</span>
                                 </p>
                             </div>
-                            <input type="password"></li>
+                            <input type="password" v-model="ownData.ownPwd"></li>
                         <li>
                             <div class="clearfix">
                                 <p class="fl">确认密码
                                     <span>（必填）</span>
                                 </p>
                             </div>
-                            <input type="password"></li>
+                            <input type="password" v-model="ownData.ownSurePwd"></li>
                     </ol>
                 </div>
             </div>
@@ -182,23 +182,44 @@ export default {
           console.log("您输入的信息不完整！");
         } else if (this.companyData.MechanismCode == "") {
           console.log("组织代码机构不能为空！");
-        }else if (this.companyData.companyName == "") {
+        } else if (this.companyData.companyName == "") {
           console.log("公司名称不能为空！");
-        }else if (this.companyData.registerName == "") {
+        } else if (this.companyData.registerName == "") {
           console.log("联系人不能为空！");
-        }else if (this.companyData.regiterPhone == "") {
+        } else if (this.companyData.regiterPhone == "") {
           console.log("手机号码不能为空！");
-        }else if (this.companyData.registerEmail == "") {
+        } else if (this.companyData.registerEmail == "") {
           console.log("联系邮箱不能为空！");
-        }else if (this.companyData.registerPwd == "") {
+        } else if (this.companyData.registerPwd == "") {
           console.log("密码不能为空！");
-        }else if (this.companyData.confirmPwd == "") {
+        } else if (this.companyData.confirmPwd == "") {
           console.log("确认密码不能为空！");
-        }else{
-            console.log("输入正确")
+        } else {
+          console.log(this.companyData);
         }
       } else {
-        console.log(345);
+          debugger;
+        if (
+          this.ownData.ownPhone == "" &&
+          this.ownData.ownCode == "" &&
+          this.ownData.ownEamil == "" &&
+          this.ownData.ownPwd == "" &&
+          this.ownData.ownSurePwd == ""
+        ) {
+          alert("信息不完整！");
+        } else if (this.ownData.ownPhone == "") {
+          alert("手机号不能为空！");
+        } else if (this.ownData.ownCode == "") {
+          alert("验证码不能为空！");
+        } else if (this.ownData.ownEamil == "") {
+          alert("邮箱不能为空！");
+        } else if (this.ownData.ownPwd == "") {
+          alert("密码不能为空！");
+        } else if (this.ownData.ownSurePwd == "") {
+          alert("确认密码不能为空！");
+        }else{
+            console.log(this.ownData);
+        }
       }
     }
   }
