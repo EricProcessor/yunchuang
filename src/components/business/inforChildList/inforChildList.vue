@@ -2,21 +2,22 @@
   <div>
     <!-- <mt-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore"> -->
     <ul class="listBox">
-      <li class="list_li clearfix" @click="linkInforDetail" v-for="(n,v) in 5" :key="v">
+      <li class="list_li clearfix" @click="linkInforDetail" v-for="(val,index) in item" :key="index">
         <div class="fl left_div">
-          <p class="text">京东科统园区企业惊艳亮相 ,多 领域“开花”尽显风采</p>
+          <p class="text">{{val.fciTitle}}</p>
+          <input type="hidden" class="fcaId" :value="val.fciId" />
           <div class="clearfix">
-            <div class="fl time">2018-08-08</div>
+            <div class="fl time">{{val.fciDatetime}}</div>
             <div class="fr">
               <p class="clearfix readCount">
                 <span class="fl icon_num"></span>
-                <span class="fl count">123</span>
+                <span class="fl count">{{val.fciExamine}}</span>
               </p>
             </div>
           </div>
         </div>
         <div class="fl right_div">
-          <img src="/static/images/business_2.jpg" alt="">
+          <img v-lazy="val.fciPath" alt="">
         </div>
       </li>
     </ul>
@@ -26,9 +27,11 @@
 </template>
 <script>
 import axios from "axios";
+import config from "@/config/config";
 export default {
   data() {
     return {
+      item: []
     };
   },
   mounted() {
@@ -36,13 +39,22 @@ export default {
   },
   methods: {
     linkInforDetail() {
-      this.$router.push("/infordetail");
+      this.$router.push({
+        path: "/information/inforDetail"
+      });
     },
     //获取后台数据
     inforData() {
-      let _url = "/api/frontcarrierinfotop-home";
+      let _url = config.host + "/h5frontcarrierinfotop-home";
       axios.get(_url).then(res => {
-        console.log(res);
+        this.item = res.data.citList;
+        for (let i in this.item) {
+          //转化时间戳
+          let newTime = new Date(this.item[i].fciDatetime)
+            .toLocaleString()
+            .split(" ");
+          this.item[i].fciDatetime = newTime[0];
+        }
       });
     }
   }
@@ -63,7 +75,7 @@ export default {
       border-radius: 3px 0px 0px 3px;
       .text {
         width: 90%;
-        height: auto;
+        height: 75px;
         line-height: 40px;
         text-align: left;
         margin: 20px 0 30px 20px;
@@ -83,8 +95,9 @@ export default {
         margin-right: 30px;
         .icon_num {
           display: block;
-          width: 48px;
-          height: 36px;
+          width: 28px;
+          height: 24px;
+          margin-top: 8px;
           background: url("./readNum.png") no-repeat center center;
           background-size: 100% 100%;
         }

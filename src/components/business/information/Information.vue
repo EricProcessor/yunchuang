@@ -1,21 +1,30 @@
 <template>
   <div>
     <!-- header -->
-    <header class="top pos1">资讯
-      <span class="icon_search"></span>
-    </header>
+    <index-header :text="headerText"></index-header>
     <!-- tab标签 -->
     <tabs class="tabs"></tabs>
-    <mFooter></mFooter>
+    <m-footer :selected="selected"></m-footer>
   </div>
 </template>
 <script>
 import Tabs from "base/tabs/tabs";
-import mFooter from 'business/mFooter/mFooter'
+import MFooter from 'business/mFooter/mFooter'
+import IndexHeader from 'business/indexHeader/indexHeader'
 export default {
+  data() {
+    return {
+
+    }
+  },
+  created() {
+      this.selected = "information"   //设置导航栏默认选中项
+      this.headerText = "资讯"      //头部显示内容
+  },
   components: {
     Tabs,
-    mFooter
+    MFooter,
+    IndexHeader
   }
 };
 </script>

@@ -16,7 +16,6 @@ export default {
 <style lang="less" scoped>
 .swiper {
     height: 320px;
-    border: 1px solid red;
 }
 </style>
 

@@ -1,33 +1,34 @@
 <template>
-    <div class="loginBox">
-        <p class="logo">
-            <img src="./logo.png" alt="">
-        </p>
-        <div class="formList">
-            <div class="person pos1">
-                <label for="person"></label>
-                <input name="person" v-model="userInfo.userName" type="text" placeholder="user name">
-            </div>
-            <div class="serctKey pos1">
-                <label for="key"></label>
-                <input type="text" v-model="userInfo.password" name="key" placeholder="user password">
-            </div>
-            <div class="clearfix forgetSth">
-                <div class="fl left_remb clearfix pos1">
-                    <input type="checkBox" @click="checkedBtn" v-model="userInfo.checked">
-                    <p class="fl remb_btn"></p>
-                    <div class="remb_btn_pwd">
-                        <img src="./checkedTrue.png" alt="">
-                    </div>
-                    <p class="fl">记住密码</p>
-                </div>
-                <div class="fr right_forget">忘记密码？</div>
-            </div>
-            <div class="submit" @click="loginBtn">
-                <p>登录</p>
-            </div>
+  <div class="loginBox">
+    <p class="logo">
+      <img src="./logo.png" alt="">
+    </p>
+    <div class="formList">
+      <div class="person pos1">
+        <label for="person"></label>
+        <input name="person" v-model="userInfo.userName" type="text" placeholder="user name">
+      </div>
+      <div class="serctKey pos1">
+        <label for="key"></label>
+        <input type="password" v-model="userInfo.password" name="key" placeholder="user password">
+      </div>
+      <div class="clearfix forgetSth">
+        <div class="fl left_remb clearfix pos1">
+          <input type="checkBox" @click="checkedBtn" v-model="userInfo.checked">
+          <p class="fl remb_btn"></p>
+          <div class="remb_btn_pwd" v-show="userInfo.showImg">
+            <img src="./checkedTrue.png" alt="">
+          </div>
+          <p class="fl">记住密码</p>
         </div>
+        <div class="fr right_forget" @click="forgotPwdBtn">忘记密码？</div>
+      </div>
+      <div class="submit" @click="loginBtn">
+        <p>登录</p>
+      </div>
+      <p class="register" @click="goToRegister">还没有账号？去注册！</p>
     </div>
+  </div>
 </template>
 <script>
 export default {
@@ -37,21 +38,43 @@ export default {
         //登录信息
         userName: "",
         password: "",
-        checked: false
+        checked: false,
+        showImg: false
       }
     };
   },
   methods: {
     checkedBtn() {
-      if (this.checked != true) {
-        this.checked = true;
-        console.log(this.checked);
+      //记住密码
+      this.userInfo.checked = !this.userInfo.checked;
+      this.userInfo.showImg = !this.userInfo.showImg;
+      if (this.userInfo.showImg == true) {
+        console.log(123);
       } else {
-        this.checked = false;
-        console.log(this.checked);
+        console.log(456);
       }
     },
-    loginBtn() {}
+    forgotPwdBtn() {
+      //忘记密码
+      alert("忘记密码");
+    },
+    loginBtn() {
+      //登录信息
+      if (this.userInfo.userName == "" && this.userInfo.password == "") {
+        alert("请输入用户名和密码！");
+      } else if (this.userInfo.userName == "") {
+        alert("用户名不能为空！");
+      } else if (this.userInfo.password == "") {
+        alert("密码不能为空！");
+      } else if (this.userInfo.userName == "" && this.userInfo.password == "") {
+        alert("请输入用户名和密码！");
+      } else {
+        this.$router.push("/");
+      }
+    },
+    goToRegister() {
+      this.$router.push("/register");
+    }
   }
 };
 </script>
@@ -87,7 +110,7 @@ export default {
         letter-spacing: 5px;
         border: none;
         font-size: 30px;
-        background: #253350;
+        background-color: #253350;
         color: #fff;
         margin-bottom: 84px;
         border-bottom: 1px solid #777b84;
@@ -125,7 +148,7 @@ export default {
           position: absolute;
           top: -3px;
           left: -6px;
-          z-index: 3;
+          z-index: 4;
           opacity: 0;
         }
         .remb_btn {
@@ -140,12 +163,12 @@ export default {
           height: 36px;
           border-radius: 50%;
           position: absolute;
-          top: -3px;
-          left: 0;
+          top: -4px;
+          left: -4px;
           z-index: 3;
-          img{
-              width: 100%;
-              height: 100%;
+          img {
+            width: 100%;
+            height: 100%;
           }
         }
         p {
@@ -159,7 +182,8 @@ export default {
       }
     }
     .submit {
-      padding: 82px 115px;
+      padding: 0 115px;
+      margin: 82px 0;
       p {
         width: 100%;
         height: 80px;
@@ -173,6 +197,12 @@ export default {
         box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.1);
         border-radius: 6px;
       }
+    }
+    .register {
+      text-align: center;
+      margin-top: 160px;
+      font-size: 24px;
+      color: #37bef0;
     }
   }
 }

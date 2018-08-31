@@ -1,6 +1,6 @@
 <template>
     <div class="index-content">
-        <index-header></index-header>
+        <index-header :text="headerText"></index-header>
         <swiper></swiper>
         <div class="tab-list">
             <tabs></tabs>
@@ -39,7 +39,7 @@
         <div class="block">
             <div class="block-title">
                 <h2>创业课堂</h2>
-                <span @click="_jump('')">更多</span>
+                <span @click="_jump('classroom')">更多</span>
             </div>
             <div class="block-list class-list">
                 <ul>
@@ -64,6 +64,7 @@
                 </ul>
             </div>
         </div>
+        <m-footer :selected="selected"></m-footer>
     </div>
 </template>
 <script>
@@ -71,11 +72,16 @@ import IndexHeader from 'business/indexHeader/indexHeader'
 import Swiper from 'base/swiper/swiper'
 import Tabs from 'base/tabs/tabs'
 import config from '@/config/config'
+import MFooter from 'business/mFooter/mFooter'
 export default {
     data() {
-        return {
+        return {     
 
         }
+    },
+    created() {
+        this.selected = "index"     //导航栏默认是主页导航
+        this.headerText = "首页"        //头部显示内容
     },
     methods: {
         //点击"更多"，路由跳转
@@ -90,13 +96,13 @@ export default {
     components: {
         IndexHeader,
         Swiper,
-        Tabs
+        Tabs,
+        MFooter
     }
 }
 </script>
 <style lang="less" scoped>
 .index-content {
-    padding-bottom: 100px;
     .tab-list{ 
         p {
             height: 70px;

@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div class="detailView">
     <!-- header -->
     <header class="topDetail pos1">资讯详情
-      <span class="icon_back" @click="backBtnPre"></span>
+      <span class="icon_back mintui mintui-back" @click="backBtnPre"></span>
       <span class="icon_search" @click="linkSearch"></span>
     </header>
     <!-- 资讯信息 -->
@@ -54,6 +54,15 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+.detailView {
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #eee;
+  z-index: 5;
+  overflow-y: auto;
+}
 .topDetail {
   width: 100%;
   height: 88px;
@@ -61,19 +70,20 @@ export default {
   text-align: center;
   font-size: 36px;
   color: #fff;
+  letter-spacing: 4px;
   background: #253350;
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 3;
+  z-index: 6;
   .icon_back {
     display: block;
     width: 40px;
-    height:46px;
-    background: url("./backBtn.png") no-repeat center center;
-    background-size: 100% 100%;
+    height: 46px;
+    color: #fff;
+    font-size: 40px;
     position: absolute;
-    top: 20px;
+    top: 5px;
     left: 30px;
     z-index: 3;
   }
@@ -133,7 +143,7 @@ export default {
     margin-top: 60px;
     .detailText {
       font-size: 24px;
-      line-height:44px;
+      line-height: 44px;
     }
     .showImg {
       width: 100%;

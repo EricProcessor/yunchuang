@@ -1,80 +1,82 @@
 <template>
-    <div class="m-footer">
-        <mt-tabbar fixed v-model="isSelected">
-            <mt-tab-item id="index">
-                <i></i>
-                <br>
-                <span>首页</span>
-            </mt-tab-item>
-            <mt-tab-item id="information">
-                <i></i>
-                <br>
-                <span>资讯</span>
-            </mt-tab-item>
-            <mt-tab-item id="activity">
-                <i></i>
-                <br>
-                <span>活动</span>
-            </mt-tab-item>
-            <mt-tab-item id="classroom">
-                <i></i>
-                <br>
-                <span>课堂</span>
-            </mt-tab-item>
-            <mt-tab-item id="my">
-                <i></i>
-                <br>
-                <span>我的</span>
-            </mt-tab-item>
-        </mt-tabbar>
+    <div class="public-footer">
+        <div class="sitg"><!--占位用，撑起公共底部的高度--></div>
+        <div ref="mFooter" class="m-footer">
+            <mt-tabbar fixed v-model="isSelected">
+                <mt-tab-item id="index">
+                    <i></i>
+                    <br>
+                    <span>首页</span>
+                </mt-tab-item>
+                <mt-tab-item id="information">
+                    <i></i>
+                    <br>
+                    <span>资讯</span>
+                </mt-tab-item>
+                <mt-tab-item id="activity">
+                    <i></i>
+                    <br>
+                    <span>活动</span>
+                </mt-tab-item>
+                <mt-tab-item id="classroom">
+                    <i></i>
+                    <br>
+                    <span>课堂</span>
+                </mt-tab-item>
+                <mt-tab-item id="mine">
+                    <i></i>
+                    <br>
+                    <span>我的</span>
+                </mt-tab-item>
+            </mt-tabbar>
+        </div>
     </div>
 </template>
 <script>
 export default {
     data() {
         return {
-            isSelected: "index"
+            isSelected: "",
         }
     },
     props: {
         selected: {
             type: String,
-            default: "index"
         }
+    },
+    mounted() {
+        this.isSelected = this.selected
+        this.isFirst = true         //是否首次状态传值
     },
     watch: {
         isSelected(type) {
-            //路由跳转
-            this._jumpRouter(type)
-        },
-        selected(path) {
-            console.log("传递的路由路径值改变了")
-
-            //如果selected改变的值是""，那么就是切换导航时手动清空的，不是父组件传过来的。不做处理
-            path ? this.isSelected = path : ""
-            
+            //首次改变是传select值改版的，不进行路由跳转
+            this.isFirst ? this.isFirst = !this.isFirst : this._jumpRouter(type)
         }
     },
     methods: {
         _jumpRouter(type) {
-            this.$emit("changeSelect", "")      //修改父组件传入的导航选中状态，避免在页面两次跳转相同的二级导航栏目，状态selected值不变，无法监听。导致导航栏选中状态无法同步
+            // this.$emit("changeSelect", "")      //修改父组件传入的导航选中状态，避免在页面两次跳转相同的二级导航栏目，状态selected值不变，无法监听。导致导航栏选中状态无法同步
 
             var path = ""
             switch(type) {
                 case 'index': path = '/'; break;
                 case 'information': path = '/information'; break;
                 case 'activity': path = '/activity'; break;
-                case  'classroom': path = '/'; break;
-                case 'my': path = '/mine'; break;
+                case  'classroom': path = '/classroom'; break;
+                case 'mine': path = '/mine'; break;
             }
             this.$router.push({
                 path
             })
-        }   
+        }
     }
 }
 </script>
 <style lang="less" scoped>
+.sitg {
+    height: 100px;
+}
 .m-footer {
     .mint-tabbar {
         .mint-tab-item {
