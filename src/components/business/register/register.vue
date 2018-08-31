@@ -131,11 +131,11 @@ export default {
       },
       ownData: {
         //个人注册信息
-        ownPhone:'',//注册手机号
-        ownCode:'',//验证码
-        ownEamil:'',//个人邮箱
-        ownPwd:'',//个人登录密码
-        ownSurePwd:""//确认个人密码
+        ownPhone: "", //注册手机号
+        ownCode: "", //验证码
+        ownEamil: "", //个人邮箱
+        ownPwd: "", //个人登录密码
+        ownSurePwd: "" //确认个人密码
       }
     };
   },
@@ -164,12 +164,42 @@ export default {
     },
     getCode() {
       //获取验证码
-      let code='123456';
+      let code = "123456";
       alert(code);
     },
     subListBtn() {
       //注册
-      console.log("tijiao");
+      if (this.regInfo.isCompany) {
+        if (
+          this.companyData.MechanismCode == "" &&
+          this.companyData.companyName == "" &&
+          this.companyData.registerName == "" &&
+          this.companyData.regiterPhone == "" &&
+          this.companyData.registerEmail == "" &&
+          this.companyData.registerPwd == "" &&
+          this.companyData.confirmPwd == ""
+        ) {
+          console.log("您输入的信息不完整！");
+        } else if (this.companyData.MechanismCode == "") {
+          console.log("组织代码机构不能为空！");
+        }else if (this.companyData.companyName == "") {
+          console.log("公司名称不能为空！");
+        }else if (this.companyData.registerName == "") {
+          console.log("联系人不能为空！");
+        }else if (this.companyData.regiterPhone == "") {
+          console.log("手机号码不能为空！");
+        }else if (this.companyData.registerEmail == "") {
+          console.log("联系邮箱不能为空！");
+        }else if (this.companyData.registerPwd == "") {
+          console.log("密码不能为空！");
+        }else if (this.companyData.confirmPwd == "") {
+          console.log("确认密码不能为空！");
+        }else{
+            console.log("输入正确")
+        }
+      } else {
+        console.log(345);
+      }
     }
   }
 };
