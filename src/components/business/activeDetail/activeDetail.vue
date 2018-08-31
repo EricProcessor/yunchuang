@@ -52,8 +52,9 @@
           <p>刘一鸣：1852095477
           </p>
         </li>
-      </ul>
+      </ul>  
     </div>
+     <span class="ac-bao">报名</span>
   </div>
 </template>
 <script>
@@ -64,8 +65,7 @@ export default {
   methods: {
     backBtnPre() {
       this.$router.go(-1);
-    },
-    linkSearch() {}
+    }
   }
 };
 </script>
@@ -127,8 +127,19 @@ export default {
          color: #333;
          margin-left: .1975rem;
        }
-     }
+     }    
    }
   
 }
+ .ac-bao{
+       display: block;
+       width: 100%;
+       height:40px;
+       text-align: center;
+       line-height: 40px;
+       background: #6ea1ff;
+       color: #fff;
+       font-size: 15px;
+       margin-top: 30px;
+     }
 </style>

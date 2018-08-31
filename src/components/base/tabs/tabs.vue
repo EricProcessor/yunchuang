@@ -1,9 +1,9 @@
 <template>
   <div id="tabBox">
     <mt-navbar v-model="selected">
-      <mt-tab-item id="1" @click="getSomething">创业头条</mt-tab-item>
-      <mt-tab-item id="2" @click="getSomething">创业政策</mt-tab-item>
-      <mt-tab-item id="3" @click="getSomething">博文天地</mt-tab-item>
+      <mt-tab-item id="1">创业头条</mt-tab-item>
+      <mt-tab-item id="2">创业政策</mt-tab-item>
+      <mt-tab-item id="3">博文天地</mt-tab-item>
     </mt-navbar>
     <!-- tab-container -->
     <mt-tab-container v-model="selected">
@@ -27,11 +27,7 @@ export default {
       selected: "1"
     };
   },
-  methods: {
-    getSomething() {
-      alert("123")
-    }
-  },
+  methods: {},
   components: {
     InforList
   }
