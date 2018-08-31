@@ -59,25 +59,20 @@ export default {
       alert("忘记密码");
     },
     loginBtn() {
-      //登录
-      let tempName = "15110253002"; //测试name
-      let tempPwd = "zhucong123"; //测试pwd
+      //登录信息
       if (this.userInfo.userName == "" && this.userInfo.password == "") {
-        alert("用户名或密码不能为空！");
-      } else if (this.userInfo.userName == "" && this.userInfo.password != "") {
+        alert("请输入用户名和密码！");
+      } else if (this.userInfo.userName == "") {
         alert("用户名不能为空！");
-      } else if (this.userInfo.password == "" && this.userInfo.userName != "") {
+      } else if (this.userInfo.password == "") {
         alert("密码不能为空！");
       } else if (this.userInfo.userName == "" && this.userInfo.password == "") {
         alert("请输入用户名和密码！");
-      } else if (
-        this.userInfo.userName == tempName &&
-        this.userInfo.password == tempPwd
-      ) {
+      } else {
         this.$router.push("/");
       }
     },
-    goToRegister(){
+    goToRegister() {
       this.$router.push("/register");
     }
   }

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="detailView">
     <!-- header -->
     <header class="topDetail pos1">资讯详情
       <span class="icon_back mintui mintui-back" @click="backBtnPre"></span>
@@ -54,6 +54,15 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+.detailView {
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #eee;
+  z-index: 5;
+  overflow-y: auto;
+}
 .topDetail {
   width: 100%;
   height: 88px;
@@ -66,7 +75,7 @@ export default {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 3;
+  z-index: 6;
   .icon_back {
     display: block;
     width: 40px;
