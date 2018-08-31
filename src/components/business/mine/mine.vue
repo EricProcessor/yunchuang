@@ -17,18 +17,23 @@
     <mine-information></mine-information>
     <mine-tab></mine-tab>
     <!-- tab标签 -->
-    <mFooter></mFooter>
+    <m-footer :selected="selected"></m-footer>
   </div>
 </template>
 <script>
-import mFooter from "business/mFooter/mFooter";
-import mineInformation from "business/mineInformation/mineInformation";
-import mineTab from "business/mineTab/mineTab";
+import MFooter from "business/mFooter/mFooter";
+import MineInformation from "business/mineInformation/mineInformation";
+import MineTab from "business/mineTab/mineTab";
 export default {
+  data() {
+    return {
+      selected: "mine"  //设置导航栏选中栏目
+    }
+  },
   components: {
-    mFooter,
-    mineInformation,
-    mineTab
+    MFooter,
+    MineInformation,
+    MineTab
   }
 };
 </script>

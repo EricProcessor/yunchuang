@@ -6,21 +6,27 @@
     </header>
     <!-- tab部分 -->
     <acTab class="ac-tab"></acTab>
-     <mFooter></mFooter>
+     <m-footer :selected="selected"></m-footer>
   </div>
 </template>
 <script>
-    import acTab from "base/ac-tab/ac-tab";
-    import mFooter from 'business/mFooter/mFooter'
+    import AcTab from "base/ac-tab/ac-tab";
+    import MFooter from 'business/mFooter/mFooter'
     export default {
+      data() {
+        return {
+          selected: "activity"    //设置导航栏选中栏目
+        }
+      },
         components: {
-            acTab,
-            mFooter
+            AcTab,
+            MFooter
         },
         methods:{
           activeScreen(){
-            alert(0)
-            this.$router.push("../activity/activeScreen");
+            this.$router.push({
+              path: "/activity/activeScreen"
+            });
           }
         }
     };

@@ -64,6 +64,7 @@
                 </ul>
             </div>
         </div>
+        <m-footer :selected="selected"></m-footer>
     </div>
 </template>
 <script>
@@ -71,10 +72,11 @@ import IndexHeader from 'business/indexHeader/indexHeader'
 import Swiper from 'base/swiper/swiper'
 import Tabs from 'base/tabs/tabs'
 import config from '@/config/config'
+import MFooter from 'business/mFooter/mFooter'
 export default {
     data() {
         return {
-
+            selected: "index"       //默认是主页导航
         }
     },
     methods: {
@@ -90,7 +92,8 @@ export default {
     components: {
         IndexHeader,
         Swiper,
-        Tabs
+        Tabs,
+        MFooter
     }
 }
 </script>

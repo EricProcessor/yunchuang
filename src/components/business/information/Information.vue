@@ -6,16 +6,24 @@
     </header>
     <!-- tab标签 -->
     <tabs class="tabs"></tabs>
-    <mFooter></mFooter>
+    <m-footer :selected="selected"></m-footer>
   </div>
 </template>
 <script>
 import Tabs from "base/tabs/tabs";
-import mFooter from 'business/mFooter/mFooter'
+import MFooter from 'business/mFooter/mFooter'
 export default {
+  data() {
+    return {
+      selected: "information"
+    }
+  },
+  methods: {
+
+  },
   components: {
     Tabs,
-    mFooter
+    MFooter
   }
 };
 </script>

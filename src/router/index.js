@@ -2,10 +2,10 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Index from 'business/index/index'
 import Information from 'business/information/Information';
-import inforDetail from 'business/inforDetail/inforDetail';
-import activity from 'business/activity/activity';
-import mine from 'business/mine/mine';
-import activeDetail from 'business/activeDetail/activeDetail';
+import InforDetail from 'business/inforDetail/inforDetail';
+import Activity from 'business/activity/activity';
+import Mine from 'business/mine/mine';
+import ActiveDetail from 'business/activeDetail/activeDetail';
 import HeaderSearch from 'business/search/HeaderSearch';
 Vue.use(Router)
 
@@ -21,19 +21,19 @@ export default new Router({
   }, {
     path: '/infordetail',
     name: 'inforDetail',
-    component: inforDetail
+    component: InforDetail
   }, {
     path: '/activity',
     name: 'activity',
-    component: activity
+    component: Activity
   }, {
     path: '/mine',
     name: 'mine',
-    component: mine
+    component: Mine
   }, {
     path: '/activeDetail',
     name: 'activeDetail',
-    component: activeDetail
+    component: ActiveDetail
   }, {
     path: '/HeaderSearch',
     name: 'HeaderSearch',
