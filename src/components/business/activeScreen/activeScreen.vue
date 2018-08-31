@@ -3,14 +3,9 @@
         <header class="topDetail">活动筛选
             <span class="icon_back" @click="backBtnPre"></span> 
         </header>
-        <div class="actice-place">
-            <span>活动区域</span>
-            <div class="actice-input">
-                <input type="text" placeholder="选择省-市-区"/>
-                <i>▼</i>
-            </div>
-        </div>
-        <div class="actice-time">
+       <ActiveScreenone></ActiveScreenone>
+        <ActiveScreentwo></ActiveScreentwo>
+        <!-- <div class="actice-time">
             <span>活动时间</span>
             <div class="actice-input">
                 <div class="time-left">
@@ -22,16 +17,27 @@
                     <i>☷</i>
                 </div>
             </div>
-        </div>
+        </div>        -->
     </div>
 </template>
 <script>
+import ActiveScreenone from "business/activeScreen/activeScreenC1";
+import ActiveScreentwo from "business/activeScreen/activeScreenC2";
+import {Popup} from 'mint-ui';
+import {Picker} from 'mint-ui';
 export default {
     methods: {
         backBtnPre() {
           this.$router.go(-1);
         }
+    },
+    components:{
+        'mt-popup':Popup,
+        'mt-picker':Picker,
+        ActiveScreenone,
+        ActiveScreentwo
     }    
+    
 }
 </script>
 <style lang="less" scoped>
@@ -48,7 +54,7 @@ export default {
   height: 86px;
   line-height: 86px;
   text-align: center;
-  font-size: 36px;
+  font-size: 32px;
   color: #fff;
   background: #253350;
   position: fixed;
