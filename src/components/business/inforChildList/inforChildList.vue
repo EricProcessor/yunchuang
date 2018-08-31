@@ -39,16 +39,21 @@ export default {
   },
   methods: {
     linkInforDetail() {
-      this.$router.push("/infordetail");
+      this.$router.push({
+        path: "/information/inforDetail"
+      });
     },
     //获取后台数据
     inforData() {
       let _url = config.host + "/h5frontcarrierinfotop-home";
       axios.get(_url).then(res => {
         this.item = res.data.citList;
-        for (let i in this.item) {//转化时间戳
-          let newTime = (new Date(this.item[i].fciDatetime).toLocaleString()).split(" ");
-          this.item[i].fciDatetime=newTime[0];
+        for (let i in this.item) {
+          //转化时间戳
+          let newTime = new Date(this.item[i].fciDatetime)
+            .toLocaleString()
+            .split(" ");
+          this.item[i].fciDatetime = newTime[0];
         }
       });
     }
