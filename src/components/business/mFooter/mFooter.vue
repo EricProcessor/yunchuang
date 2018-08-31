@@ -1,32 +1,35 @@
 <template>
-    <div ref="mFooter" class="m-footer">
-        <mt-tabbar fixed v-model="isSelected">
-            <mt-tab-item id="index">
-                <i></i>
-                <br>
-                <span>首页</span>
-            </mt-tab-item>
-            <mt-tab-item id="information">
-                <i></i>
-                <br>
-                <span>资讯</span>
-            </mt-tab-item>
-            <mt-tab-item id="activity">
-                <i></i>
-                <br>
-                <span>活动</span>
-            </mt-tab-item>
-            <mt-tab-item id="classroom">
-                <i></i>
-                <br>
-                <span>课堂</span>
-            </mt-tab-item>
-            <mt-tab-item id="mine">
-                <i></i>
-                <br>
-                <span>我的</span>
-            </mt-tab-item>
-        </mt-tabbar>
+    <div class="public-footer">
+        <div class="sitg"><!--占位用，撑起公共底部的高度--></div>
+        <div ref="mFooter" class="m-footer">
+            <mt-tabbar fixed v-model="isSelected">
+                <mt-tab-item id="index">
+                    <i></i>
+                    <br>
+                    <span>首页</span>
+                </mt-tab-item>
+                <mt-tab-item id="information">
+                    <i></i>
+                    <br>
+                    <span>资讯</span>
+                </mt-tab-item>
+                <mt-tab-item id="activity">
+                    <i></i>
+                    <br>
+                    <span>活动</span>
+                </mt-tab-item>
+                <mt-tab-item id="classroom">
+                    <i></i>
+                    <br>
+                    <span>课堂</span>
+                </mt-tab-item>
+                <mt-tab-item id="mine">
+                    <i></i>
+                    <br>
+                    <span>我的</span>
+                </mt-tab-item>
+            </mt-tabbar>
+        </div>
     </div>
 </template>
 <script>
@@ -53,7 +56,6 @@ export default {
     },
     methods: {
         _jumpRouter(type) {
-            console.log("调用了一次")
             // this.$emit("changeSelect", "")      //修改父组件传入的导航选中状态，避免在页面两次跳转相同的二级导航栏目，状态selected值不变，无法监听。导致导航栏选中状态无法同步
 
             var path = ""
@@ -61,7 +63,7 @@ export default {
                 case 'index': path = '/'; break;
                 case 'information': path = '/information'; break;
                 case 'activity': path = '/activity'; break;
-                case  'classroom': path = '/'; break;
+                case  'classroom': path = '/classroom'; break;
                 case 'mine': path = '/mine'; break;
             }
             this.$router.push({
@@ -72,6 +74,9 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+.sitg {
+    height: 100px;
+}
 .m-footer {
     .mint-tabbar {
         .mint-tab-item {

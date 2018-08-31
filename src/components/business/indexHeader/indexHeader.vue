@@ -1,20 +1,39 @@
 <template>
+  <div class="public-header">
+    <div class="sitg"><!--占位用，撑起公共头部的高度--></div>
     <div class="index-header" @click="linkSearchHeader">
-        首页
-        <i data-v-5eeac47d="" class="mintui mintui-search"></i>
+        {{text}}
+        <i v-if="hasSearch" data-v-5eeac47d="" class="mintui mintui-search"></i>
     </div>
+  </div>
 </template>
+
 <script>
 export default {
+  props: {
+    text: {       //头部显示内容
+      type: String,
+    },
+    hasSearch: {      //是否显示搜索图标
+      type: Boolean,
+      default: true
+    }
+  },
   components: {},
   methods: {
     linkSearchHeader() {
-      this.$router.push("/HeaderSearch");
+      this.$router.push({
+        path: '/HeaderSearch'
+      });
     }
   }
 };
 </script>
+
 <style lang="less" scoped>
+.sitg {
+  height: 88px;
+}
 .index-header {
   height: 88px;
   background: #253350;
@@ -22,6 +41,11 @@ export default {
   text-align: center;
   font-size: 36px;
   color: #fff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
 }
 .mintui-search:before {
   font-size: 0.64rem;

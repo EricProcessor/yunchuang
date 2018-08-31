@@ -2,22 +2,22 @@
   <div>
     <!-- <mt-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore"> -->
     <ul class="listBox">
-      <li class="list_li clearfix" @click="linkInforDetail" v-for="(n,v) in item" :key="v">
+      <li class="list_li clearfix" @click="linkInforDetail" v-for="(val,index) in item" :key="index">
         <div class="fl left_div">
-          <p class="text">{{n.fciTitle}}</p>
-          <input type="hidden" class="fcaId" :value="n.fciId" />
+          <p class="text">{{val.fciTitle}}</p>
+          <input type="hidden" class="fcaId" :value="val.fciId" />
           <div class="clearfix">
-            <div class="fl time">{{n.fciDatetime}}</div>
+            <div class="fl time">{{val.fciDatetime}}</div>
             <div class="fr">
               <p class="clearfix readCount">
                 <span class="fl icon_num"></span>
-                <span class="fl count">{{n.fciExamine}}</span>
+                <span class="fl count">{{val.fciExamine}}</span>
               </p>
             </div>
           </div>
         </div>
         <div class="fl right_div">
-          <img v-lazy="n.fciPath" alt="">
+          <img v-lazy="val.fciPath" alt="">
         </div>
       </li>
     </ul>

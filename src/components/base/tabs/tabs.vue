@@ -8,7 +8,7 @@
     <!-- tab-container -->
     <mt-tab-container v-model="selected">
       <mt-tab-container-item id="1">
-        <InforList></InforList>
+        <InforChild></InforChild>
       </mt-tab-container-item>
       <mt-tab-container-item id="2">
         <mt-cell v-for="(n,v) in 4" :key="v" :title="'内容 ' + n" />
@@ -20,7 +20,7 @@
   </div>
 </template>
 <script>
-import InforList from "business/imforChild/inforChild";
+import inforChild from "business/inforChild/inforChild";
 export default {
   data() {
     return {
@@ -29,7 +29,7 @@ export default {
   },
   methods: {},
   components: {
-    InforList
+    inforChild
   }
 };
 </script>

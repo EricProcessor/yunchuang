@@ -4,6 +4,7 @@ import Index from 'business/index/index'
 import Information from 'business/information/Information';
 import InforDetail from 'business/inforDetail/inforDetail';
 import Activity from 'business/activity/activity';
+import Classroom from 'business/classroom/classroom'
 import Mine from 'business/mine/mine';
 import ActiveDetail from 'business/activeDetail/activeDetail';
 import ScreenResult from 'business/screenResult/screenResult';
@@ -27,7 +28,7 @@ export default new Router({
     name: 'inforDetail',
     component: InforDetail
   }, {
-    path: '/activity',
+    path: '/activity',    //活动页面
     name: 'activity',
     component: Activity
   }, {
@@ -38,8 +39,13 @@ export default new Router({
     path: '/activeScreen',
     name: 'activeScreen',
     component: ActiveScreen
+  },
+  {
+    path: '/classroom',   //课堂页面
+    name: 'classroom',
+    component: Classroom
   }, {
-    path: '/mine',
+    path: '/mine',          //个人中心页面
     name: 'mine',
     component: Mine
   }, {

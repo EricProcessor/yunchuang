@@ -1,14 +1,14 @@
 <template>
     <div class="inforImgBox">
         <img class="inforImg" src="/static/images/business_1.jpg" alt="">
-        <List></List>
+        <infor-child-list></infor-child-list>
     </div>
 </template>
 <script>
-import List from "../inforChildList/inforChildList";
+import InforChildList from "../inforChildList/inforChildList";
 export default {
   components: {
-    List
+    InforChildList
   }
 };
 </script>

@@ -1,6 +1,6 @@
 <template>
     <div class="index-content">
-        <index-header></index-header>
+        <index-header :text="headerText"></index-header>
         <swiper></swiper>
         <div class="tab-list">
             <tabs></tabs>
@@ -75,9 +75,13 @@ import config from '@/config/config'
 import MFooter from 'business/mFooter/mFooter'
 export default {
     data() {
-        return {
-            selected: "index"       //默认是主页导航
+        return {     
+
         }
+    },
+    created() {
+        this.selected = "index"     //导航栏默认是主页导航
+        this.headerText = "首页"        //头部显示内容
     },
     methods: {
         //点击"更多"，路由跳转
@@ -99,7 +103,6 @@ export default {
 </script>
 <style lang="less" scoped>
 .index-content {
-    padding-bottom: 100px;
     .tab-list{ 
         p {
             height: 70px;
