@@ -20,7 +20,7 @@
   </div>
 </template>
 <script>
-import inforChild from "business/inforChild/inforChild";
+import InforChild from "business/inforChild/inforChild";
 export default {
   data() {
     return {
@@ -29,7 +29,7 @@ export default {
   },
   methods: {},
   components: {
-    inforChild
+    InforChild
   }
 };
 </script>

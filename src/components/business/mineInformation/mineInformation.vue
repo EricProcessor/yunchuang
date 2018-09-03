@@ -17,7 +17,6 @@ export default {};
 <style lang="less" scoped>
 // 我的基本信息
 .mine_information {
-  margin-top: 126px;
   width: 750px;
   height: 140px;
   margin-bottom: 120px;

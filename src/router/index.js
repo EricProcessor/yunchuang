@@ -12,6 +12,8 @@ import ActiveScreen from 'business/activeScreen/activeScreen';
 import HeaderSearch from 'business/search/HeaderSearch';
 import Login from 'business/login/login';
 import Register from 'business/register/register';
+import PersonalSet from 'business/personalSet/personalSet'
+
 Vue.use(Router)
 
 export default new Router({
@@ -47,7 +49,12 @@ export default new Router({
   }, {
     path: '/mine',          //个人中心页面
     name: 'mine',
-    component: Mine
+    component: Mine,
+    children: [{
+      path: 'personalSet',        //个人设置页面
+      name: 'personalSet',
+      component:PersonalSet,
+    }]
   }, {
     path: '/activeDetail',
     name: 'activeDetail',

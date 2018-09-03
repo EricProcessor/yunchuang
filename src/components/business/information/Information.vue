@@ -53,7 +53,4 @@ export default {
     z-index: 3;
   }
 }
-.tabs {
-  margin-top: 88px;
-}
 </style>

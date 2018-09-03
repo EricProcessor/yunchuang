@@ -2,9 +2,13 @@
   <div class="public-header">
     <div class="sitg"><!--占位用，撑起公共头部的高度--></div>
     <div class="index-header" @click="linkSearchHeader">
+        <router-link v-if="hasBack" to="/">
+          <i class="mintui mintui-back"></i>
+        </router-link>
         {{text}}
         <i v-if="hasSearch" data-v-5eeac47d="" class="mintui mintui-search"></i>
     </div>
+
   </div>
 </template>
 
@@ -15,6 +19,10 @@ export default {
       type: String,
     },
     hasSearch: {      //是否显示搜索图标
+      type: Boolean,
+      default: true
+    },
+    hasBack: {
       type: Boolean,
       default: true
     }
@@ -33,6 +41,12 @@ export default {
 <style lang="less" scoped>
 .sitg {
   height: 88px;
+}
+.mintui-back {
+  font-size: 38px;
+  color: #fff;
+  position: absolute;
+  left: 20px;
 }
 .index-header {
   height: 88px;

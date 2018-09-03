@@ -25,7 +25,7 @@
         <div><img src="./mySafety.png" alt="">账号安全</div>
         <img src="./gd.png" alt="">
       </li>
-      <li>
+      <li @click="_pageJump('/personalSet')">
         <div><img src="./mySetting.png" alt="">个人设置</div>
         <img src="./gd.png" alt="">
       </li>
@@ -37,7 +37,16 @@
   </div>
 </template>
 <script>
-export default {};
+export default {
+  methods: {
+    _pageJump(path) {
+      //页面路由跳转方法
+      this.$router.push({
+        path: '/mine' + path
+      })
+    }
+  }
+};
 </script>
 <style lang="less" scoped>
 //我的tab切换
