@@ -2,23 +2,23 @@
   <div class="mine_tab">
     <ul>
       <li>
-        <div><img src="./myIndex.png" alt=""><span>我的首页</span></div>
+        <div @click="linkMyIndex"><img src="./myIndex.png" alt=""><span>我的首页</span></div>
         <img src="./gd.png" alt="">
       </li>
       <li>
-        <div><img src="./myProject.png" alt="">我的项目</div>
+        <div @click="linkMyProject"><img src="./myProject.png" alt="">我的项目</div>
         <img src="./gd.png" alt="">
       </li>
       <li>
-        <div><img src="./myInterview.png" alt="">我的约谈</div>
+        <div @click="linkMyInterview"><img src="./myInterview.png" alt="">我的约谈</div>
         <img src="./gd.png" alt="">
       </li>
       <li>
-        <div><img src="./myInterview.png" alt="">我的关注</div>
+        <div @click="linkMyCare"><img src="./myCare.png" alt="">我的关注</div>
         <img src="./gd.png" alt="">
       </li>
       <li>
-        <div><img src="./myCare.png" alt="">我的活动</div>
+        <div @click="linkMyActivity"><img src="./myInterview.png" alt="">我的活动</div>
         <img src="./gd.png" alt="">
       </li>
       <li>
@@ -30,7 +30,7 @@
         <img src="./gd.png" alt="">
       </li>
       <li>
-        <div><img src="./myNews.png" alt="">我的消息</div>
+        <div @click="linkMyNews"><img src="./myNews.png" alt="">我的消息</div>
         <img src="./gd.png" alt="">
       </li>
     </ul>
@@ -44,6 +44,34 @@ export default {
       this.$router.push({
         path: '/mine' + path
       })
+    },
+    linkMyIndex() {
+      // 我的首页
+      this.$router.push("/mine/MyIndex");
+    },
+    // 我的活动跳转
+    linkMyActivity() {
+      this.$router.push("/mine/MyActivity");
+    },
+    linkMyCare() {
+      // 我的关注跳转
+      this.$router.push("/mine/MyCare");
+    },
+    linkMyProject() {
+      // 我的项目跳转
+      this.$router.push("/mine/MyProject");
+    },
+    linkMyNews() {
+      // 我的消息跳转
+      this.$router.push("/mine/MyNews");
+    },
+    linkMyInterview() {
+      // 我的约谈跳转
+      this.$router.push("/mine/MyInterview");
+    },
+    linkMyIndex() {
+      // 我的首页
+      this.$router.push("/mine/MyIndex");
     }
   }
 };

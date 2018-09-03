@@ -9,12 +9,22 @@
     </header>
     <ul class="myIntCon">
       <li>
+          <div class="myIntNew">
+            <span>会员审核通过通知</span>
+            <span>2018-09-12 00:00:00</span>
+          </div>
+          <p class="myDelate">删除</p>
+          <!-- <button class="mint-button mint-button--default mint-button--large">
+            <label class="mint-button-text">打开 confirm 提示框</label>
+          </button> -->
       </li>
     </ul>
   </div>
 </template>
 <script>
-export default {};
+export default {
+  methods: {}
+};
 </script>
 <style lang="less" scoped>
 // 二级路由定位
@@ -57,12 +67,31 @@ export default {};
 //我的项目内容区域
 .myIntCon {
   margin-top: 88px;
-  overflow: hidden;
+  // overflow: hidden;
+  overflow-x: scroll;
   li {
     background-color: #fff;
     margin-top: 20px;
-    width: 750px;
+    width: 870px;
     height: 88px;
+    .myIntNew {
+      width: 690px;
+      padding: 0 30px;
+      display: flex;
+      justify-content: space-between;
+      height: 88px;
+      line-height: 88px;
+      float: left;
+    }
+    .myDelate {
+      float: left;
+      width: 119px;
+      height: 88px;
+      line-height: 88px;
+      color: #fff;
+      text-align: center;
+      background-color: #f35828;
+    }
   }
 }
 </style>
