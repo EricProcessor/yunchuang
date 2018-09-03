@@ -22,9 +22,9 @@ Vue.use(Router)
 
 export default new Router({
   routes: [{
-    path: '/', //首页
-    name: 'index',
-    component: Index
+      path: '/', //首页
+      name: 'index',
+      component: Index
     }, {
       path: '/information', //资讯页面
       name: 'Information',
@@ -95,6 +95,11 @@ export default new Router({
       path: '/register', //注册页
       name: 'register',
       component: Register
+    },
+    {
+      path: '/err404', //404
+      name: 'err404',
+      component: Err404
     }
   ]
 })
