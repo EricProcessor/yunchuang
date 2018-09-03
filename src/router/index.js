@@ -102,10 +102,10 @@ export default new Router({
       name: 'register',
       component: Register
     },
-    {
-      path: '/err404', //404
-      name: 'err404',
-      component: Err404
-    }
+    // {
+    //   path: '/err404', //404
+    //   name: 'err404',
+    //   component: Err404
+    // }
   ]
 })
