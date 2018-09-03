@@ -6,6 +6,8 @@ import InforDetail from 'business/inforDetail/inforDetail';
 import Activity from 'business/activity/activity';
 import Classroom from 'business/classroom/classroom'
 import Mine from 'business/mine/mine';
+import MyIndex from 'business/MyIndex/MyIndex';
+import MyActivity from 'business/MyActivity/MyActivity';
 import MyInterview from 'business/MyInterview/MyInterview';
 import MyCare from 'business/MyCare/MyCare';
 import MyProject from 'business/MyProject/MyProject';
@@ -23,67 +25,76 @@ export default new Router({
     path: '/', //首页
     name: 'index',
     component: Index
-  }, {
-    path: '/information', //资讯页面
-    name: 'Information',
-    component: Information
-  }, {
-    path: '/infordetail',
-    name: 'inforDetail',
-    component: InforDetail
-  }, {
-    path: '/activity',    //活动页面
-    name: 'activity',
-    component: Activity
-  }, {
-    path: '/screenResult',
-    name: 'screenResult',
-    component: ScreenResult
-  }, {
-    path: '/activeScreen',
-    name: 'activeScreen',
-    component: ActiveScreen
-  },
-  {
-    path: '/classroom',   //课堂页面
-    name: 'classroom',
-    component: Classroom
-  }, {
-    path: '/mine',          //个人中心页面
-    name: 'mine',
-    component: Mine,
-	children: [{
-      path: 'MyInterview',
-      name: 'MyInterview',
-      component: MyInterview
     }, {
-      path: 'MyCare',
-      name: 'MyCare',
-      component: MyCare
+      path: '/information', //资讯页面
+      name: 'Information',
+      component: Information
     }, {
-      path: 'MyProject',
-      name: 'MyProject',
-      component: MyProject
+      path: '/infordetail',
+      name: 'inforDetail',
+      component: InforDetail
     }, {
-      path: 'MyNews',
-      name: 'MyNews',
-      component: MyNews
-    }]
-  }, {
-    path: '/activeDetail',
-    name: 'activeDetail',
-    component: ActiveDetail
-  }, {
-    path: '/HeaderSearch',
-    name: 'HeaderSearch',
-    component: HeaderSearch
-  }, {
-    path: '/login', //登录页
-    name: 'login',
-    component: Login
-  }, {
-    path: '/register', //注册页
-    name: 'register',
-    component: Register
-  }]
+      path: '/activity', //活动页面
+      name: 'activity',
+      component: Activity
+    }, {
+      path: '/screenResult',
+      name: 'screenResult',
+      component: ScreenResult
+    }, {
+      path: '/activeScreen',
+      name: 'activeScreen',
+      component: ActiveScreen
+    },
+    {
+      path: '/classroom', //课堂页面
+      name: 'classroom',
+      component: Classroom
+    }, {
+      path: '/mine', //个人中心页面
+      name: 'mine',
+      component: Mine,
+      children: [{
+        path: 'MyIndex', // 我的首页页面
+        name: 'MyIndex',
+        component: MyIndex
+      }, {
+        path: 'MyActivity', // 我的活动页面
+        name: 'MyActivity',
+        component: MyActivity
+      }, {
+        path: 'MyInterview', // 我的约谈页面
+        name: 'MyInterview',
+        component: MyInterview
+      }, {
+        path: 'MyCare', // 我的关注页面
+        name: 'MyCare',
+        component: MyCare
+      }, {
+        path: 'MyProject', // 我的项目页面
+        name: 'MyProject',
+        component: MyProject
+      }, {
+        path: 'MyNews', // 我的消息页面
+        name: 'MyNews',
+        component: MyNews
+      }]
+    }, {
+      path: '/activeDetail',
+      name: 'activeDetail',
+      component: ActiveDetail
+    }, {
+      path: '/HeaderSearch',
+      name: 'HeaderSearch',
+      component: HeaderSearch
+    }, {
+      path: '/login', //登录页
+      name: 'login',
+      component: Login
+    }, {
+      path: '/register', //注册页
+      name: 'register',
+      component: Register
+    }
+  ]
 })

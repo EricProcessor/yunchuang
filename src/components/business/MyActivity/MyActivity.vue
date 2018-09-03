@@ -1,22 +1,22 @@
 <template>
-  <div class="towLevelRouter">
+  <div class="myInterview towLevelRouter">
     <!-- header -->
     <header class="top pos1">
       <a href="#/" class="page-back router-link-active">
         <i class="mintui mintui-back"></i>
       </a>
-      <span>我的关注</span>
+      <span>我的活动</span>
     </header>
-    <div class="myCareMar">
-      <my-care-list></my-care-list>
+    <div class="myActMar">
+      <my-activity-list></my-activity-list>
     </div>
   </div>
 </template>
 <script>
-import MyCareList from "../MyCareList/MyCareList";
+import MyActivityList from "../MyActivityList/MyActivityList";
 export default {
   components: {
-    MyCareList
+    MyActivityList
   }
 };
 </script>
@@ -57,8 +57,7 @@ export default {
     top: 6px;
   }
 }
-//我的关注内容区域
-.myCareMar {
+.myActMar {
   margin-top: 88px;
 }
 </style>

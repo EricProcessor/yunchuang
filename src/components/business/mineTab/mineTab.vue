@@ -2,7 +2,7 @@
   <div class="mine_tab">
     <ul>
       <li>
-        <div><img src="./myIndex.png" alt=""><span>我的首页</span></div>
+        <div @click="linkMyIndex"><img src="./myIndex.png" alt=""><span>我的首页</span></div>
         <img src="./gd.png" alt="">
       </li>
       <li>
@@ -10,7 +10,7 @@
         <img src="./gd.png" alt="">
       </li>
       <li>
-        <div><img src="./myInterview.png" alt="">我的约谈</div>
+        <div @click="linkMyInterview"><img src="./myInterview.png" alt="">我的约谈</div>
         <img src="./gd.png" alt="">
       </li>
       <li>
@@ -18,7 +18,7 @@
         <img src="./gd.png" alt="">
       </li>
       <li>
-        <div @click="linkMyInterview"><img src="./myInterview.png" alt="">我的活动</div>
+        <div @click="linkMyActivity"><img src="./myInterview.png" alt="">我的活动</div>
         <img src="./gd.png" alt="">
       </li>
       <li>
@@ -39,9 +39,13 @@
 <script>
 export default {
   methods: {
+    linkMyIndex() {
+      // 我的首页
+      this.$router.push("/mine/MyIndex");
+    },
     // 我的活动跳转
-    linkMyInterview() {
-      this.$router.push("/mine/MyInterview");
+    linkMyActivity() {
+      this.$router.push("/mine/MyActivity");
     },
     linkMyCare() {
       // 我的关注跳转
@@ -54,6 +58,14 @@ export default {
     linkMyNews() {
       // 我的消息跳转
       this.$router.push("/mine/MyNews");
+    },
+    linkMyInterview() {
+      // 我的约谈跳转
+      this.$router.push("/mine/MyInterview");
+    },
+    linkMyIndex() {
+      // 我的首页
+      this.$router.push("/mine/MyIndex");
     }
   }
 };
