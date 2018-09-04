@@ -4,7 +4,7 @@
       <header class="pos1">
         注册
         <span class="icon_back mintui mintui-back" @click="backBtnPre"></span>
-        <span class="toLogin" @click="toLogin">去登陆</span>
+        <router-link class="toLogin" to="/login" tag="span">去登陆</router-link>
       </header>
       <div class="top_div"></div>
       <div class="registerList">
@@ -21,7 +21,7 @@
                     <span>（必填）</span>
                   </p>
                 </div>
-                <input type="text" placeholder="请输入手机号码" v-model="companyData.registerPhone.val" maxlength="11">
+                <input type="text" @blur="registerPhone" placeholder="请输入手机号码" v-model="companyData.registerPhone.val" maxlength="11">
                 <div class="tipInfo fr" v-show="companyData.registerPhone.isRight">
                   <i></i>
                   <span>请输入正确的手机号码</span>
@@ -42,14 +42,14 @@
                   </p>
                   <p class="fr regTip">使用组织机构代码为登录账号</p>
                 </div>
-                <input type="text" placeholder="请输入组织机构代码" v-model="companyData.MechanismCode.val">
+                <input type="text" @blur="companyCode" placeholder="请输入组织机构代码" v-model="companyData.MechanismCode.val">
                 <div class="tipInfo fr" v-show="companyData.MechanismCode.isRight">
                   <i></i>
                   <span>请输入正确的机构代码格式</span>
                 </div>
                 <div class="tipInfo fr" v-show="companyData.MechanismCode.isEmpty">
                   <i></i>
-                  <span>请输入正确的机构代码格式</span>
+                  <span>机构代码不能为空</span>
                 </div>
               </li>
               <li>
@@ -58,7 +58,7 @@
                     <span>（必填）</span>
                   </p>
                 </div>
-                <input type="text" placeholder="请输入单位名称" v-model="companyData.companyName.val">
+                <input type="text" @blur="companyName" placeholder="请输入单位名称" v-model="companyData.companyName.val">
                 <div class="tipInfo fr" v-show="companyData.companyName.isEmpty">
                   <i></i>
                   <span>单位名称不能为空</span>
@@ -70,7 +70,7 @@
                     <span>（必填）</span>
                   </p>
                 </div>
-                <input type="text" placeholder="请输入联系人" v-model="companyData.registerName.val">
+                <input type="text" @blur="registerName" placeholder="请输入联系人" v-model="companyData.registerName.val">
                 <div class="tipInfo fr" v-show="companyData.registerName.isEmpty">
                   <i></i>
                   <span>联系人不能为空</span>
@@ -82,7 +82,7 @@
                     <span>（必填）</span>
                   </p>
                 </div>
-                <input type="text" placeholder="请输入电子邮箱" v-model="companyData.registerEmail.val">
+                <input type="text" @blur="registerEmail" placeholder="请输入电子邮箱" v-model="companyData.registerEmail.val">
                 <div class="tipInfo fr" v-show="companyData.registerEmail.isRight">
                   <i></i>
                   <span>请输入正确的邮箱格式</span>
@@ -102,7 +102,7 @@
                     <span>（必填）</span>
                   </p>
                 </div>
-                <input type="password" placeholder="密码长度6-21位，由字母数字组成，区分大小写" v-model="companyData.registerPwd.val">
+                <input type="password" @blur="registerPwd" placeholder="密码长度6-21位，由字母数字组成，区分大小写" v-model="companyData.registerPwd.val">
                 <div class="tipInfo fr" v-show="companyData.registerPwd.isRight">
                   <i></i>
                   <span>请输入正确的密码格式</span>
@@ -118,7 +118,7 @@
                     <span>（必填）</span>
                   </p>
                 </div>
-                <input type="password" placeholder="再次输入登录密码" v-model="companyData.confirmPwd.val">
+                <input type="password" @blur="confirmPwdBlur" placeholder="再次输入登录密码" v-model="companyData.confirmPwd.val">
                 <div class="tipInfo fr" v-show="companyData.confirmPwd.isRight">
                   <i></i>
                   <span>两次输入的密码不一致</span>
@@ -138,7 +138,7 @@
                     <span>（必填）</span>
                   </p>
                 </div>
-                <input type="text" class="input_tel" placeholder="请输入手机号码" maxlength="11" v-model="ownData.ownPhone.val">
+                <input type="text" class="input_tel" @blur="ownPhoneBlur" placeholder="请输入手机号码" maxlength="11" v-model="ownData.ownPhone.val">
                 <span class="getCode" v-show="regInfo.timeMsg" @click="getCode">获取验证码</span>
                 <span class="getCode codeTime" v-show="!regInfo.timeMsg">{{regInfo.count}}秒后重新获取</span>
                 <div class="tipInfo fr" v-show="ownData.ownPhone.isRight">
@@ -152,7 +152,7 @@
                 <div class="tipInfo fr" v-show="ownData.ownPhone.isExist">
                   <i></i>
                   <span>该手机号码已注册
-                    </span>
+                  </span>
                 </div>
               </li>
               <li>
@@ -161,7 +161,7 @@
                     <span>（必填）</span>
                   </p>
                 </div>
-                <input type="text" placeholder="请输入用户名" v-model="ownData.ownName.val">
+                <input type="text" @blur="ownNameBlur" placeholder="请输入用户名" v-model="ownData.ownName.val">
                 <div class="tipInfo fr" v-show="ownData.ownName.isEmpty">
                   <i></i>
                   <span>用户名不能为空</span>
@@ -177,7 +177,7 @@
                     <span>（必填）</span>
                   </p>
                 </div>
-                <input type="password" placeholder="密码长度6-21位，由字母数字组成，区分大小写" v-model="ownData.ownPwd.val">
+                <input type="password" @blur="ownPwdBlur" placeholder="密码长度6-21位，由字母数字组成，区分大小写" v-model="ownData.ownPwd.val">
                 <div class="tipInfo fr" v-show="ownData.ownPwd.isRight">
                   <i></i>
                   <span>请输入正确的密码格式</span>
@@ -193,10 +193,14 @@
                     <span>（必填）</span>
                   </p>
                 </div>
-                <input type="password" placeholder="再次输入登录密码" v-model="ownData.ownSurePwd.val">
+                <input type="password" @blur="ownSurePwdBlur" placeholder="再次输入登录密码" v-model="ownData.ownSurePwd.val">
                 <div class="tipInfo fr" v-show="ownData.ownSurePwd.isRight">
                   <i></i>
                   <span>两次输入的密码不一致</span>
+                </div>
+                <div class="tipInfo fr" v-show="ownData.ownSurePwd.isEmpty">
+                  <i></i>
+                  <span>确认密码不能为空</span>
                 </div>
               </li>
               <li>
@@ -205,7 +209,7 @@
                     <span>（必填）</span>
                   </p>
                 </div>
-                <input type="text" placeholder="请输入6位手机验证码" v-model="ownData.ownCode.val">
+                <input type="text" @blur="ownCodeBlur" placeholder="请输入6位手机验证码" v-model="ownData.ownCode.val">
                 <div class="tipInfo fr" v-show="ownData.ownCode.isRight">
                   <i></i>
                   <span>请输入正确的验证码</span>
@@ -222,7 +226,7 @@
                     <span>（必填）</span>
                   </p>
                 </div>
-                <input type="text" placeholder="请输入电子邮箱" v-model="ownData.ownEmail.val">
+                <input type="text" @blur="ownEmailBlur" placeholder="请输入电子邮箱" v-model="ownData.ownEmail.val">
                 <div class="tipInfo fr" v-show="ownData.ownEmail.isRight">
                   <i></i>
                   <span>请输入正确的邮箱格式</span>
@@ -334,10 +338,6 @@ export default {
       //返回上级
       this.$router.go(-1);
     },
-    toLogin() {
-      //去登陆页
-      this.$router.push("/login");
-    },
     companyShow() {
       //企业注册
       if (!this.regInfo.isCompany) {
@@ -353,7 +353,8 @@ export default {
       }
     },
     getCode() {
-      //获取验证码
+      //1、请求后台验证码接口
+      //2、获取验证码倒计时
       if (!this.regInfo.timer) {
         this.regInfo.timeMsg = false;
         this.regInfo.timer = setInterval(() => {
@@ -370,7 +371,7 @@ export default {
     isMechanismCode(mecCode) {
       //机构代码验证
       let isMechanismCode = /^[a-zA-Z0-9]{8}-[a-zA-Z0-9]$/;
-      return isMechanismCode(mecCode);
+      return isMechanismCode.test(mecCode);
     },
     isPhone(phone) {
       //手机号验证
@@ -380,103 +381,256 @@ export default {
     isEmail(email) {
       //邮箱验证
       let isEmail = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/; //邮箱正则
-      return isEmail(email);
+      return isEmail.test(email);
     },
     isPwd(pwd) {
       //密码验证
       let isPWd = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,21}$/;
-      return isPwd(pwd);
+      return isPwd.test(pwd);
     },
-    subListBtn() {
-      //注册
-      if (this.regInfo.isCompany) {
-        if (
-          this.companyData.MechanismCode.val == "" &&
-          this.companyData.companyName.val == "" &&
-          this.companyData.registerName.val == "" &&
-          this.companyData.registerPhone.val == "" &&
-          this.companyData.registerEmail.val == "" &&
-          this.companyData.registerPwd.val == "" &&
-          this.companyData.confirmPwd.val == ""
-        ) {
-          console.log("您输入的信息不完整！");
-        } else if (this.companyData.MechanismCode.val == "") {
-          console.log("组织代码机构不能为空！");
-        } else if (this.companyData.companyName.val == "") {
-          console.log("公司名称不能为空！");
-        } else if (this.companyData.registerName.val == "") {
-          console.log("联系人不能为空！");
-        } else if (this.companyData.registerPhone.val == "") {
-          console.log("手机号码不能为空！");
-        } else if (this.companyData.registerEmail.val == "") {
-          console.log("联系邮箱不能为空！");
-        } else if (this.companyData.registerPwd.val == "") {
-          console.log("密码不能为空！");
-        } else if (this.companyData.confirmPwd.val == "") {
-          console.log("确认密码不能为空！");
-        } else {
-          if (
-            isPhone(this.companyData.registerPhone.val) &&
-            isEmail(this.companyData.registerEmail.val) &&
-            this.companyData.registerPwd.val ==
-              this.companyData.confirmPwd.val &&
-            isPwd(this.companyData.registerPwd.val)
-          ) {
-            console.log(this.companyData);
-            this.regInfo.isRegSucc = !this.regInfo.isRegSucc; //显示注册成功
-          } else if (!isPhone(this.companyData.registerPhone.val)) {
-            console.log("手机号格式不正确！");
-          } else if (!isEmail(this.companyData.registerEmail.val)) {
-            console.log("邮箱格式不正确！");
-          } else if (!isPWd(this.companyData.registerPwd.val)) {
-            console.log("密码格式不正确！");
-          } else if (
-            this.companyData.registerPwd.val != this.companyData.confirmPwd.val
-          ) {
-            console.log("两次输入的密码不一致！");
-          }
-        }
+    registerPhone() {
+      //企业注册--联系电话验证
+      if (this.companyData.registerPhone.val == "") {
+        this.companyData.registerPhone.isEmpty = true;
       } else {
-        if (
-          this.ownData.ownPhone.val == "" &&
-          this.ownData.ownCode.val == "" &&
-          this.ownData.ownEmail.val == "" &&
-          this.ownData.ownPwd.val == "" &&
-          this.ownData.ownSurePwd.val == ""
-        ) {
-          alert("信息不完整！");
-        } else if (this.ownData.ownPhone.val == "") {
-          alert("手机号不能为空！");
-        } else if (this.ownData.ownCode.val == "") {
-          alert("验证码不能为空！");
-        } else if (this.ownData.ownEmail.val == "") {
-          alert("邮箱不能为空！");
-        } else if (this.ownData.ownPwd.val == "") {
-          alert("密码不能为空！");
-        } else if (this.ownData.ownSurePwd.val == "") {
-          alert("确认密码不能为空！");
+        this.companyData.registerPhone.isEmpty = false;
+        if (this.isPhone(this.companyData.registerPhone.val)) {
+          //验证手机号是否已注册
+          // axios.post(res => {
+          //   console.log(res);
+          //   if (res.data == "存在") {
+          //     this.companyData.registerPhone.isExist = true;
+          //   }
+          // });
         } else {
-          if (
-            isPhone(this.ownData.ownPhone) &&
-            isEmail(this.ownData.ownEmail) &&
-            isPWd(this.ownData.ownPwd) &&
-            this.ownData.ownPwd == this.ownData.ownSurePwd
-          ) {
-            console.log(this.ownData);
-            this.regInfo.isRegSucc = !this.regInfo.isRegSucc;
-          } else if (!isPhone(this.ownData.ownPhone.val)) {
-            console.log("手机号格式不正确！");
-          } else if (!isEmail(this.ownData.ownEmail.val)) {
-            console.log("邮箱格式不正确！");
-          } else if (!isPhone(this.ownData.ownPwd.val)) {
-            console.log("密码格式不正确！");
-          } else if (this.ownData.ownPwd.val != this.ownData.ownSurePwd.val) {
-            console.log("两次输如的密码不一致！");
+          this.companyData.registerPhone.isRight = true;
+        }
+      }
+    },
+    companyCode() {
+      //企业注册--机构代码验证
+      if (this.companyData.MechanismCode.val == "") {
+        this.companyData.MechanismCode.isEmpty = true;
+      } else {
+        this.companyData.MechanismCode.isEmpty = false;
+        if (this.isMechanismCode(this.companyData.MechanismCode.val)) {
+          this.companyData.MechanismCode.isRight = false;
+        } else {
+          this.companyData.MechanismCode.isRight = true;
+        }
+      }
+    },
+    companyName() {
+      //企业注册--单位名称验证
+      if (this.companyData.companyName.val == "") {
+        this.companyData.companyName.isEmpty = true;
+      } else {
+        this.companyData.companyName.isEmpty = false;
+      }
+    },
+    registerName() {
+      //企业注册--联系人验证
+      if (this.companyData.registerName.val == "") {
+        this.companyData.registerName.isEmpty = true;
+      } else {
+        this.companyData.registerName.isEmpty = false;
+      }
+    },
+    registerEmail() {
+      //企业注册--联系邮箱验证
+      if (this.companyData.registerEmail.val == "") {
+        this.companyData.registerEmail.isEmpty = true;
+      } else {
+        this.companyData.registerEmail.isEmpty = false;
+        if (this.isEmail(this.companyData.registerEmail.val)) {
+          this.companyData.registerEmail.isRight = false;
+          // axios.post(res => {
+          //   console.log(res);
+          //   if (res.data == "存在") {
+          //     this.companyData.registerEmail.isExist = true;
+          //   }
+          // });
+        } else {
+          if (this.companyData.registerEmail.val != "") {
+            this.companyData.registerEmail.isRight = true;
           }
         }
       }
     },
+    registerPwd() {
+      //企业注册--密码验证
+      if (this.companyData.registerPwd.val == "") {
+        this.companyData.registerPwd.isEmpty = true;
+      } else {
+        this.companyData.registerPwd.isEmpty = false;
+        if (this.isPwd(this.companyData.registerPwd.val)) {
+          this.companyData.registerPwd.isRight = false;
+        } else {
+          this.companyData.registerPwd.isRight = true;
+        }
+      }
+    },
+    confirmPwdBlur() {
+      //企业注册--确认密码验证
+      if (this.companyData.confirmPwd.val == "") {
+        this.companyData.confirmPwd.isEmpty = true;
+      } else {
+        this.companyData.confirmPwd.isEmpty = false;
+        if (
+          this.companyData.confirmPwd.val != this.companyData.registerPwd.val
+        ) {
+          this.companyData.confirmPwd.isRight = true;
+        } else {
+          this.companyData.confirmPwd.isRight = false;
+        }
+      }
+    },
+    ownPhoneBlur() {
+      //失去焦点验证手机号
+      if (this.ownData.ownPhone.val == "") {
+        //手机号是否为空
+        this.ownData.ownPhone.isEmpty = true;
+      } else {
+        this.ownData.ownPhone.isEmpty = false;
+        if (this.isPhone(this.ownData.ownPhone.val)) {
+          this.ownData.ownPhone.isRight = false;
+          //判断手机号是否已注册
+          // axios.post(res => {
+          //   console.log(res);
+          //   if (res.data == "存在") {
+          //     this.ownData.ownPhone.isExist = true;
+          //   } else {
+          //     this.ownData.ownPhone.isExist = false;
+          //   }
+          // });
+        } else {
+          this.ownData.ownPhone.isRight = true;
+        }
+      }
+    },
+    ownNameBlur() {
+      //验证用户名
+      if (this.ownData.ownName.val == "") {
+        //用户名是否为空
+        this.ownData.ownName.isEmpty = true;
+      } else {
+        this.ownData.ownName.isEmpty = false;
+        //判断用户名是否已存在
+        // axios.post(res => {
+        //   console.log(res);
+        //   if (res.data == "存在") {
+        //     this.ownData.ownName.isEXist = true;
+        //   } else {
+        //     this.ownData.ownName.isEXist = false;
+        //   }
+        // });
+      }
+    },
+    ownPwdBlur() {
+      //密码验证
+      if (this.ownData.ownPwd.val == "") {
+        //密码是否为空
+        this.ownData.ownPwd.isEmpty = true;
+      } else {
+        this.ownData.ownPwd.isEmpty = false;
+        if (this.isPwd(this.ownData.ownPwd.val)) {
+          //密码格式是否正确
+          this.ownData.ownPwd.isRight = false;
+        } else {
+          this.ownData.ownPwd.isRight = true;
+        }
+      }
+    },
+    ownSurePwdBlur() {
+      //确认密码验证
+      if (this.ownData.ownSurePwd.val == "") {
+        //密码是否为空
+        this.ownData.ownSurePwd.isEmpty = true;
+      } else {
+        this.ownData.ownSurePwd.isEmpty = false;
+        if (this.ownData.ownSurePwd.val != this.ownData.ownPwd.val) {
+          //两次输入的密码是否一致
+          this.ownData.ownSurePwd.isRight = true;
+        } else {
+          this.ownData.ownSurePwd.isRight = false;
+        }
+      }
+    },
+    ownCodeBlur() {
+      //验证码验证
+      if (this.ownData.ownCode.val == "") {
+        //密码是否为空
+        this.ownData.ownCode.isEmpty = true;
+      } else {
+        this.ownData.ownCode.isEmpty = false;
+      }
+      //后台获取验证码 判断输入的验证码是否一样
+      // axios.post(res => {
+      //   console.log(res);
+      //   if (res.data) {
+      //     this.ownData.ownCode.isRight = false;
+      //   } else {
+      //     ownData.ownCode.isRight = true;
+      //   }
+      // });
+    },
+    ownEmailBlur() {
+      //邮箱验证
+      if (this.ownData.ownEmail.val == "") {
+        this.ownData.ownEmail.isEmpty = true;
+      } else {
+        this.ownData.ownEmail.isEmpty = false;
+        if (this.isEmail(this.ownData.ownEmail.val)) {
+          this.ownData.ownEmail.isRight = false;
+          //验证邮箱是否已注册
+          // axios.post(res => {
+          //   console.log(res);
+          //   if (res.data == "存在") {
+          //     this.ownData.ownEmail.isExist = true;
+          //   } else {
+          //     this.ownData.ownEmail.isExist = false;
+          //   }
+          // });
+        } else {
+          this.ownData.ownEmail.isRight = true;
+        }
+      }
+    },
+    subListBtn() {
+      //注册
+      if (this.regInfo.isCompany) {
+        //企业注册信息验证
+        if (
+          this.isMechanismCode(this.companyData.MechanismCode.val) &&
+          this.isPhone(this.companyData.registerPhone.val) &&
+          this.isEmail(this.companyData.registerEmail.val) &&
+          this.isPwd(this.companyData.registerPwd.val) &&
+          this.companyData.companyName.val != "" &&
+          this.companyData.registerName.val != "" &&
+          this.companyData.confirmPwd.val == this.companyData.registerPwd.val
+        ) {
+          console.log(this.companyData);
+        } else {
+          alert("信息不完整！");
+        }
+      } else {
+        //个人注册信息验证
+        if (
+          this.isPhone(this.ownData.ownPhone.val) &&
+          this.ownData.ownCode.val != "" &&
+          this.ownData.ownName.val != "" &&
+          this.isEmail(this.ownData.ownEmail.val) &&
+          this.isPwd(this.ownData.ownPwd.val) &&
+          this.ownData.ownSurePwd.val == this.ownData.ownPwd.val
+        ) {
+          console.log(this.ownData);
+        } else {
+          alert("信息不完整！");
+        }
+      }
+    },
     cutDownTime() {
+      //注册成功5秒后跳转
       if (this.regInfo.isRegSucc == true) {
         this.regInfo.isTime--;
         if (this.regInfo.isTime == 0) {

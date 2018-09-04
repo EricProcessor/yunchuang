@@ -31,6 +31,8 @@
   </div>
 </template>
 <script>
+import axios from "axios";
+import config from "@/config/config";
 export default {
   data() {
     return {
@@ -69,7 +71,9 @@ export default {
       } else if (this.userInfo.userName == "" && this.userInfo.password == "") {
         alert("请输入用户名和密码！");
       } else {
-        this.$router.push("/");
+        // this.$router.push("/");
+        let url = config.host + "/frontloginoperate-login";
+       
       }
     },
     goToRegister() {
