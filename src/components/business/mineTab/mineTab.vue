@@ -18,7 +18,7 @@
         <img src="./gd.png" alt="">
       </li>
       <li>
-        <div @click="linkMyActivity"><img src="./myInterview.png" alt="">我的活动</div>
+        <div @click="linkMyActivity"><img src="./myActivity.png" alt="">我的活动</div>
         <img src="./gd.png" alt="">
       </li>
       <li>
@@ -42,8 +42,8 @@ export default {
     _pageJump(path) {
       //页面路由跳转方法
       this.$router.push({
-        path: '/mine' + path
-      })
+        path: "/mine" + path
+      });
     },
     linkMyIndex() {
       // 我的首页

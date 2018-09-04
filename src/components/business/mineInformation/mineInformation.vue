@@ -20,6 +20,7 @@ export default {};
   width: 750px;
   height: 140px;
   margin-bottom: 120px;
+  margin-top: 128px;
   background: linear-gradient(
     bottom,
     rgb(245, 245, 245) 20%,
