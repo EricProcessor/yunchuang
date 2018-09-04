@@ -17,7 +17,6 @@
     <mine-tab></mine-tab>
     <router-view></router-view> 
     <!-- tab标签 -->
-    <router-view></router-view>
     <m-footer :selected="selected"></m-footer>
   </div>
 </template>
