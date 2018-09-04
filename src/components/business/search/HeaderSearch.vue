@@ -1,16 +1,22 @@
 <template>
 <div>
-  <div class="header-search">
+  <div class="header-search" @click="TogSelect=false"> 
     <a href="#/" class="page-back router-link-active">
       <i class="mintui mintui-back"></i>
     </a>
+    <div class="selModel" >
+      <div  @click.stop="TogSelect=!TogSelect"><span>{{checkedClass}}</span><img src="./updown.png" alt=""></div>
+      <ol v-show="TogSelect">
+        <li  @click="checkSeachType(item)" v-for="(item,index) in checkClass" :key="index"  >{{item.title}}</li>
+      </ol>
+    </div>
     <div class="mint-searchbar-inner">
       <input type="text" placeholder="搜索" @click="linkSearchListBack" v-model="searchVal" class="mint-searchbar-core">
       <i class="mintui mintui-search"></i> 
     </div>
   </div>
-  <div class="searchBefor ">
-    <ul class="secrchCon">
+  <div class="searchBefor"> 
+    <ul class="secrchCon" v-show="searchVal!=''" >
       <li  @click="linkSearchList" v-show="!afertList.type" v-for="(item,index) in NewItems" :key="index"  >
         <div class="mintui mintui-search"></div>
         <span :value="item.value" v-text="item.name"></span>
@@ -43,6 +49,12 @@ export default {
       // ],
       // value: "",
       // title: ""
+      checkClass: [
+        { title: "创业活动", Ctype: "1" },
+        { title: "创业课堂", Ctype: "2" }
+      ],
+      checkedClass: "创业活动",
+      TogSelect: false,
       afertList: {
         type: false
       },
@@ -85,6 +97,10 @@ export default {
       if (this.afertList.type == 1) {
         this.afertList.type = !this.afertList.type;
       }
+    },
+    //选择搜索的类型
+    checkSeachType(item) {
+      this.checkedClass = item.title;
     }
   },
   computed: {
@@ -124,6 +140,36 @@ export default {
   font-size: 48px;
   color: #fff;
 }
+//选择版块样式
+.header-search {
+  .selModel {
+    font-size: 24px;
+    color: #d1d0d0;
+    padding: 0px 20px;
+    border-right: 1px solid #697897;
+    img {
+      width: 18px;
+      padding-left: 12px;
+    }
+    ol {
+      position: absolute;
+      width: 142px;
+      background-color: #253350;
+      opacity: 0.8;
+      left: 80px;
+      top: 92px;
+      opacity: 0.8;
+      width: 156px;
+      li {
+        height: 70px;
+        line-height: 70px;
+        padding-left: 12px;
+        font-size: 24px;
+        color: #ffffff;
+      }
+    }
+  }
+}
 .header-search > div[data-v-5eeac47d] {
   background: #253350;
 }
@@ -136,6 +182,7 @@ export default {
 }
 .mint-searchbar-core[data-v-5eeac47d] {
   font-size: 28px;
+  text-indent: 14px;
 }
 .hide {
   display: none;
@@ -148,17 +195,21 @@ export default {
 }
 .secrchCon {
   background: #fff;
-  margin-top: 16px;
-  margin-bottom: 30px;
   li {
     height: 64px;
-    line-height: 64px;
+    // line-height: 64px;
     border-bottom: 2px solid #dfdfdf;
     margin-left: 30px;
     font-size: 24px;
     span {
       color: #333;
     }
+  }
+  :nth-child(1) {
+    margin-top: 16px;
+  }
+  li:last-child {
+    margin-bottom: 30px;
   }
 }
 .el-icon-search {
