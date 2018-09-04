@@ -6,7 +6,7 @@
             <div class="actice-input">
                 <div class="time-left">
                     <!-- <input type="text" @click="openPicker" placeholder="开始时间" value="" /> -->
-                    <div @click="openPicker" style="height:30px;width:120px; background:#ddd;"> {{pickerValue}}</div>
+                    <div @click="openPicker" style="height:30px;width:120px; background:#ddd;"></div>
                     <i>☷</i>
                 </div>
                 <div class="time-right">
@@ -44,8 +44,7 @@ export default {
     openPicker () {
       this.$refs.picker.open()
     },
-  },
-  formatDate(date) {
+    formatDate(date) {
     const y = date.getFullYear()
     let m = date.getMonth() + 1
     m = m < 10 ? '0' + m : m
@@ -55,11 +54,11 @@ export default {
     },
   handleConfirm(){
     let a = this.pickerValue
-    // console.log(a.split(" ")) ;
     this.zheng=this.formatDate(this.$refs.picker.value)
-    console.log(this.formatDate(this.$refs.picker.value))
-    // console.log(this.value) ;
+
     },
+  },
+  
 }
 </script>
 <style lang="less" scoped>
