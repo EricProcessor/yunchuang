@@ -69,7 +69,6 @@ import IndexHeader from 'business/indexHeader/indexHeader'
 export default {
 
     created() {
-        console.log("找到我这个组件了")
         this.headerText = "个人设置"        //头部显示内容
     },
     components: {
@@ -136,11 +135,17 @@ export default {
                 justify-content: space-between;
                 ul {
                     width: 100%;
+                    display: flex;
+                    display: -webkit-flex;
+                    justify-content: space-between;
                     .column-left {
-                        width: 115px;
+                        width: 110px;
+                        text-align: right;
+                        
                     }
                     .column-right {
                         width: 560px;
+                        text-align: right;
                         input[type=text] {
                             width: 550px;
                             height: 60px;

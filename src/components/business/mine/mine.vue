@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- header -->
-    <index-header :text="headerText" :hasSearch="false"></index-header>
+    <index-header :text="headerText" :hasSearch="false" :hasBack="false"></index-header>
     <!-- <div class="mine_information"> 
       <ol>
         <li class="infor_left">
@@ -29,7 +29,7 @@ import MineTab from "business/mineTab/mineTab";
 export default {
   data() {
     return {
-      
+
     };
   },
   created() {
