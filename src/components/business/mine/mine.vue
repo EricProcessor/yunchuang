@@ -1,8 +1,7 @@
 <template>
   <div>
     <!-- header -->
-    <header class="top pos1">个人中心
-    </header>
+    <index-header :text="headerText" :hasSearch="false"></index-header>
     <!-- <div class="mine_information"> 
       <ol>
         <li class="infor_left">
@@ -23,19 +22,25 @@
   </div>
 </template>
 <script>
+import IndexHeader from 'business/indexHeader/indexHeader'
 import MFooter from "business/mFooter/mFooter";
 import MineInformation from "business/mineInformation/mineInformation";
 import MineTab from "business/mineTab/mineTab";
 export default {
   data() {
     return {
-      selected: "mine" //设置导航栏选中栏目
+      
     };
+  },
+  created() {
+    this.headerText = "个人中心"    //设置头部显示导航内容
+    this.selected = "mine"        //设置底部导航栏默认选中
   },
   components: {
     MFooter,
     MineInformation,
-    MineTab
+    MineTab,
+    IndexHeader
   }
 };
 </script>
