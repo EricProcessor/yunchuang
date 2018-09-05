@@ -5,34 +5,6 @@
         <div><img :src="item.tabImg" alt=""><span>{{item.title}}</span></div>
         <img src="./gd.png" alt="">
       </li>
-      <!-- <li @click="_pageJump('/MyIndex')">
-        <div><img src="./myIndex.png" alt=""><span>我的首页</span></div>
-        <img src="./gd.png" alt="">
-      </li>
-      <li @click="_pageJump('/MyProject')">
-        <div><img src="./myProject.png" alt="">我的项目</div>
-        <img src="./gd.png" alt="">
-      </li>
-      <li @click="_pageJump('/MyInterview')">
-        <div><img src="./myInterview.png" alt="">我的约谈</div>
-        <img src="./gd.png" alt="">
-      </li>
-      <li @click="_pageJump('/MyActivity')">
-        <div><img src="./myActivity.png" alt="">我的活动</div>
-        <img src="./gd.png" alt="">
-      </li>
-      <li>
-        <div><img src="./mySafety.png" alt="">账号安全</div>
-        <img src="./gd.png" alt="">
-      </li>
-      <li @click="_pageJump('/personalSet')">
-        <div><img src="./mySetting.png" alt="">个人设置</div>
-        <img src="./gd.png" alt="">
-      </li>
-      <li @click="_pageJump('/MyNews')">
-        <div><img src="./myNews.png" alt="">我的消息</div>
-        <img src="./gd.png" alt="">
-      </li> -->
     </ul>
   </div>
 </template>
