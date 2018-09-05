@@ -52,8 +52,13 @@ export default {
       // value: "",
       // title: ""
       checkClass: [
-        { title: "创业活动", Ctype: "1" },
-        { title: "创业课堂", Ctype: "2" }
+        { title: "创业服务", Ctype: "F" },
+        { title: "创业资讯", Ctype: "C" },
+        { title: "创业项目", Ctype: "X" },
+        { title: "创业载体", Ctype: "Z" },
+        { title: "创业活动", Ctype: "H" },
+        { title: "投资人", Ctype: "R" },
+        { title: "创业课堂", Ctype: "D" }
       ],
       SearchClass: 1,
       checkedClass: "创业活动",

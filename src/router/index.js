@@ -9,7 +9,6 @@ import Mine from 'business/mine/mine';
 import MyIndex from 'business/MyIndex/MyIndex';
 import MyActivity from 'business/MyActivity/MyActivity';
 import MyInterview from 'business/MyInterview/MyInterview';
-import MyCare from 'business/MyCare/MyCare';
 import MyProject from 'business/MyProject/MyProject';
 import MyNews from 'business/MyNews/MyNews';
 import ActiveDetail from 'business/activeDetail/activeDetail';
@@ -69,10 +68,6 @@ export default new Router({
         path: 'MyInterview', // 我的约谈页面
         name: 'MyInterview',
         component: MyInterview
-      }, {
-        path: 'MyCare', // 我的关注页面
-        name: 'MyCare',
-        component: MyCare
       }, {
         path: 'MyProject', // 我的项目页面
         name: 'MyProject',
