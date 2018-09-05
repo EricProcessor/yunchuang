@@ -116,13 +116,21 @@ export default {
     },
     //获取后台数据
     inforData() {
-      let _url = config.host + "/h5frontcarrierinfotop-home";
-
-      axios.get(_url).then(res => {
-        this.item = res.data.citList;
-        console.log(this.item);
-        console.log(this.SearchClass);
-      });
+      let _url = config.host + "/h5frontsearch-home";
+      axios
+        .get(_url, {
+          params: {
+            selType: "F",
+            KeyWord: "京东"
+          }
+        })
+        .then(res => {
+          this.item = res.data;
+          console.log(res);
+          // this.item = res.data.citList;
+          // console.log(this.item);
+          // console.log(this.SearchClass);
+        });
     }
   },
   computed: {
