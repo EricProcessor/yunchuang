@@ -263,6 +263,8 @@
   </div>
 </template>
 <script>
+import axios from "axios";
+import config from "@/config/config";
 export default {
   data() {
     return {
@@ -273,7 +275,8 @@ export default {
         timer: null, //定时器
         timeMsg: true, //是否发送验证码
         isRegSucc: false, //是否注册成功
-        isTime: 5 //跳转倒计时
+        isTime: 5, //跳转倒计时
+        isCode: "" //后台验证码
       },
       companyData: {
         //企业注册信息
@@ -354,18 +357,32 @@ export default {
     },
     getCode() {
       //1、请求后台验证码接口
-      //2、获取验证码倒计时
-      if (!this.regInfo.timer) {
-        this.regInfo.timeMsg = false;
-        this.regInfo.timer = setInterval(() => {
-          if (this.regInfo.count > 0 && this.regInfo.count <= 60) {
-            this.regInfo.count--;
+      let codeUrl = config.host + "/frontnote-send";
+      let params = new URLSearchParams();
+      params.append("phoneCode", this.ownData.ownPhone.val);
+      if (this.ownData.ownPhone.val != "") {
+        axios.post(codeUrl, params).then(res => {
+          if (res.data.flag == true) {
+            this.regInfo.isCode = res.data.verifyCode;
           } else {
-            this.regInfo.timeMsg = true;
-            clearInterval(this.regInfo.timer);
-            this.regInfo.timer = null;
+            alert(res.data.msg);
           }
-        }, 1000);
+        });
+        //2、获取验证码倒计时
+        if (!this.regInfo.timer) {
+          this.regInfo.timeMsg = false;
+          this.regInfo.timer = setInterval(() => {
+            if (this.regInfo.count > 0 && this.regInfo.count <= 60) {
+              this.regInfo.count--;
+            } else {
+              this.regInfo.timeMsg = true;
+              clearInterval(this.regInfo.timer);
+              this.regInfo.timer = null;
+            }
+          }, 1000);
+        }
+      } else {
+        alert("请输入手机号码！");
       }
     },
     isMechanismCode(mecCode) {
@@ -385,7 +402,7 @@ export default {
     },
     isPwd(pwd) {
       //密码验证
-      let isPWd = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,21}$/;
+      let isPwd = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,21}$/;
       return isPwd.test(pwd);
     },
     registerPhone() {
@@ -396,12 +413,16 @@ export default {
         this.companyData.registerPhone.isEmpty = false;
         if (this.isPhone(this.companyData.registerPhone.val)) {
           //验证手机号是否已注册
-          // axios.post(res => {
-          //   console.log(res);
-          //   if (res.data == "存在") {
-          //     this.companyData.registerPhone.isExist = true;
-          //   }
-          // });
+          let conpanyTelUrl = config.host + "/frontcompanyinfomile2-checkAcc";
+          let params = new URLSearchParams();
+          params.append("fmiTel", this.companyData.registerPhone.val);
+          axios.post(conpanyTelUrl, params).then(res => {
+            if (res.data.flag) {
+              this.companyData.registerPhone.isExist = true;
+            } else {
+              this.companyData.registerPhone.isExist = false;
+            }
+          });
         } else {
           this.companyData.registerPhone.isRight = true;
         }
@@ -495,14 +516,17 @@ export default {
         if (this.isPhone(this.ownData.ownPhone.val)) {
           this.ownData.ownPhone.isRight = false;
           //判断手机号是否已注册
-          // axios.post(res => {
-          //   console.log(res);
-          //   if (res.data == "存在") {
-          //     this.ownData.ownPhone.isExist = true;
-          //   } else {
-          //     this.ownData.ownPhone.isExist = false;
-          //   }
-          // });
+          let phoneUrl = config.host + "/frontcompanyinfomile-checkAcc";
+          let params = new URLSearchParams();
+          params.append("fmiAcc", this.ownData.ownPhone.val);
+          axios.post(phoneUrl, params).then(res => {
+            console.log(res)
+            if (res.data.flag) {
+              this.ownData.ownPhone.isExist = true;
+            } else {
+              this.ownData.ownPhone.isExist = false;
+            }
+          });
         } else {
           this.ownData.ownPhone.isRight = true;
         }
@@ -515,7 +539,7 @@ export default {
         this.ownData.ownName.isEmpty = true;
       } else {
         this.ownData.ownName.isEmpty = false;
-        //判断用户名是否已存在
+        //判断用户名是否已存在   fmiUsername
         // axios.post(res => {
         //   console.log(res);
         //   if (res.data == "存在") {
@@ -563,16 +587,14 @@ export default {
         this.ownData.ownCode.isEmpty = true;
       } else {
         this.ownData.ownCode.isEmpty = false;
+        //后台获取验证码 判断输入的验证码是否一样
+        if (this.ownData.ownCode.val != this.regInfo.isCode) {
+          this.ownData.ownCode.isRight = true;
+        } else {
+          this.ownData.ownCode.isRight = false;
+          return;
+        }
       }
-      //后台获取验证码 判断输入的验证码是否一样
-      // axios.post(res => {
-      //   console.log(res);
-      //   if (res.data) {
-      //     this.ownData.ownCode.isRight = false;
-      //   } else {
-      //     ownData.ownCode.isRight = true;
-      //   }
-      // });
     },
     ownEmailBlur() {
       //邮箱验证
@@ -583,14 +605,27 @@ export default {
         if (this.isEmail(this.ownData.ownEmail.val)) {
           this.ownData.ownEmail.isRight = false;
           //验证邮箱是否已注册
-          // axios.post(res => {
-          //   console.log(res);
-          //   if (res.data == "存在") {
-          //     this.ownData.ownEmail.isExist = true;
-          //   } else {
-          //     this.ownData.ownEmail.isExist = false;
-          //   }
-          // });
+          let emailUrl = config.host + "/frontcompanyinfoperson-checkAcc";
+          let params = new URLSearchParams();
+          params.append("fmiTel", this.ownData.ownPhone.val);
+          params.append("fmiMile", this.ownData.ownEmail.val);
+          if (this.ownData.ownPhone.val != "") {
+            axios
+              .post(emailUrl, params)
+              .then(res => {
+                console.log(res.data);
+                if (res.data.flag) {
+                  this.ownData.ownEmail.isExist = true;
+                } else {
+                  this.ownData.ownEmail.isExist = false;
+                }
+              })
+              .catch(res => {
+                console.log(res);
+              });
+          } else {
+            alert("请输入手机号码！");
+          }
         } else {
           this.ownData.ownEmail.isRight = true;
         }
@@ -623,7 +658,18 @@ export default {
           this.isPwd(this.ownData.ownPwd.val) &&
           this.ownData.ownSurePwd.val == this.ownData.ownPwd.val
         ) {
-          console.log(this.ownData);
+          let ownUrl = config.host + "/h5frontregisteroperate-one";
+          let params = new URLSearchParams();
+          params.append("fmiTel", this.ownData.ownPhone.val);
+          params.append("verify", this.ownData.ownCode.val);
+          params.append("fmiMile", this.ownData.ownEmail.val);
+          params.append("fmiPwd", this.ownData.ownPwd.val);
+          params.append("fmiPwd2", this.ownData.ownSurePwd.val);
+          params.append("fmiUsername", this.ownData.ownName.val);
+
+          axios.post(ownUrl, params).then(res => {
+            console.log(res);
+          });
         } else {
           alert("信息不完整！");
         }
@@ -772,7 +818,7 @@ export default {
             text-align: center;
             border-radius: 0px 6px 6px 0px;
             position: absolute;
-            top: 31px;
+            top: 36px;
             right: -1px;
             z-index: 2;
           }
@@ -783,7 +829,7 @@ export default {
           .codeTime {
             width: 220px;
             background: #ccc;
-            color: #666;
+            color: #333;
           }
         }
       }
