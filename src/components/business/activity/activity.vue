@@ -2,7 +2,7 @@
   <div>
     <!-- header部分 -->
     <header class="activity-title">活动
-      <span class="acticity-screen" @click="screenResult">筛选</span>
+      <span class="acticity-screen" @click="activeScreen">筛选</span>
     </header>
     <!-- tab部分 -->
     <acTab class="ac-tab"></acTab>
@@ -23,9 +23,9 @@
             MFooter
         },
         methods:{
-          screenResult(){
+          activeScreen(){
             this.$router.push({
-              path: "/screenResult"
+              path: "/activeScreen"
             });
           }
         }
