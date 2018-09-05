@@ -1,36 +1,8 @@
 <template>
   <div class="mine_tab">
     <ul>
-      <li>
-        <div @click="linkMyIndex"><img src="./myIndex.png" alt=""><span>我的首页</span></div>
-        <img src="./gd.png" alt="">
-      </li>
-      <li>
-        <div @click="linkMyProject"><img src="./myProject.png" alt="">我的项目</div>
-        <img src="./gd.png" alt="">
-      </li>
-      <li>
-        <div @click="linkMyInterview"><img src="./myInterview.png" alt="">我的约谈</div>
-        <img src="./gd.png" alt="">
-      </li>
-      <li>
-        <div @click="linkMyCare"><img src="./myCare.png" alt="">我的关注</div>
-        <img src="./gd.png" alt="">
-      </li>
-      <li>
-        <div @click="linkMyActivity"><img src="./myActivity.png" alt="">我的活动</div>
-        <img src="./gd.png" alt="">
-      </li>
-      <li>
-        <div><img src="./mySafety.png" alt="">账号安全</div>
-        <img src="./gd.png" alt="">
-      </li>
-      <li @click="_pageJump('/personalSet')">
-        <div><img src="./mySetting.png" alt="">个人设置</div>
-        <img src="./gd.png" alt="">
-      </li>
-      <li>
-        <div @click="linkMyNews"><img src="./myNews.png" alt="">我的消息</div>
+      <li @click="_pageJump(item.path)" v-for="(item,index) in tabList" :key="index">
+        <div><img :src="item.tabImg" alt=""><span>{{item.title}}</span></div>
         <img src="./gd.png" alt="">
       </li>
     </ul>
@@ -38,40 +10,53 @@
 </template>
 <script>
 export default {
+  data() {
+    return {
+      tabList: [
+        {
+          path: "/MyIndex",
+          title: "我的首页",
+          tabImg: require("./myIndex.png")
+        },
+        {
+          path: "/MyProject",
+          title: "我的项目",
+          tabImg: require("./myProject.png")
+        },
+        {
+          path: "/MyInterview",
+          title: "我的约谈",
+          tabImg: require("./myInterview.png")
+        },
+        {
+          path: "/MyActivity",
+          title: "我的活动",
+          tabImg: require("./myActivity.png")
+        },
+        {
+          path: "",
+          title: "账号安全",
+          tabImg: require("./mySafety.png")
+        },
+        {
+          path: "/personalSet",
+          title: "个人设置",
+          tabImg: require("./mySetting.png")
+        },
+        {
+          path: "/MyNews",
+          title: "我的消息",
+          tabImg: require("./myNews.png")
+        }
+      ]
+    };
+  },
   methods: {
     _pageJump(path) {
       //页面路由跳转方法
       this.$router.push({
         path: "/mine" + path
       });
-    },
-    linkMyIndex() {
-      // 我的首页
-      this.$router.push("/mine/MyIndex");
-    },
-    // 我的活动跳转
-    linkMyActivity() {
-      this.$router.push("/mine/MyActivity");
-    },
-    linkMyCare() {
-      // 我的关注跳转
-      this.$router.push("/mine/MyCare");
-    },
-    linkMyProject() {
-      // 我的项目跳转
-      this.$router.push("/mine/MyProject");
-    },
-    linkMyNews() {
-      // 我的消息跳转
-      this.$router.push("/mine/MyNews");
-    },
-    linkMyInterview() {
-      // 我的约谈跳转
-      this.$router.push("/mine/MyInterview");
-    },
-    linkMyIndex() {
-      // 我的首页
-      this.$router.push("/mine/MyIndex");
     }
   }
 };

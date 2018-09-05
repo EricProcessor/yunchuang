@@ -20,12 +20,14 @@ export default {};
   width: 750px;
   height: 140px;
   margin-bottom: 120px;
-  margin-top: 128px;
+  padding-top: 30px;
   background: linear-gradient(
     bottom,
     rgb(245, 245, 245) 20%,
     #253350
   ); /* 标准的语法 */
+  position: relative;
+  top: -2px;
   ol {
     width: 690px;
     height: 220px;

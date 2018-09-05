@@ -1,13 +1,6 @@
 <template>
   <div class="towLevelRouter">
-    <!-- header -->
-    <header class="top pos1">
-      <a href="#/" class="page-back router-link-active">
-        <i class="mintui mintui-back"></i>
-      </a>
-      <span>我的项目</span>
-      <input class="sendProject" type="button" value="发布项目">
-    </header>
+    <index-header :text="headerText" :hasSearch="false"></index-header>
     <ul class="myIntCon">
       <li>
         <ol>
@@ -47,7 +40,15 @@
   </div>
 </template>
 <script>
-export default {};
+import IndexHeader from "business/indexHeader/indexHeader";
+export default {
+  created() {
+    this.headerText = "我的项目"; //设置头部显示导航内容
+  },
+  components: {
+    IndexHeader
+  }
+};
 </script>
 <style lang="less" scoped>
 // 二级路由定位
@@ -57,52 +58,11 @@ export default {};
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 10;
+  z-index: 200;
   background: rgb(245, 245, 245);
-}
-// 头部样式
-.top {
-  width: 100%;
-  height: 88px;
-  text-align: center;
-  line-height: 88px;
-  font-size: 36px;
-  color: #fff;
-  background: #253350;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 3;
-
-  .mintui-back {
-    position: absolute;
-    left: 0px;
-    top: -2px;
-  }
-  .mintui-back:before {
-    color: #fff;
-    padding-left: 0.32rem;
-    font-size: 0.64rem;
-    position: relative;
-    top: 6px;
-  }
-  .sendProject {
-    position: absolute;
-    right: 0px;
-    padding-top: 28px;
-    padding-right: 28px;
-    background: #253350;
-    color: #fff;
-    border: none;
-    font-size: 24px;
-    font-weight: normal;
-    font-stretch: normal;
-    letter-spacing: 2px;
-  }
 }
 //我的项目内容区域
 .myIntCon {
-  margin-top: 88px;
   overflow: hidden;
   li {
     background-color: #fff;
