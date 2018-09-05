@@ -3,8 +3,11 @@
         <header class="topDetail">活动筛选
             <span class="icon_back" @click="backBtnPre"></span> 
         </header>
-       <ActiveScreenone></ActiveScreenone>
-        <ActiveScreentwo></ActiveScreentwo>
+        <div>
+            <activeScreenOne></activeScreenOne>
+            <activeScreenTwo></activeScreenTwo>
+        </div>
+       
         <!-- <div class="actice-time">
             <span>活动时间</span>
             <div class="actice-input">
@@ -21,8 +24,8 @@
     </div>
 </template>
 <script>
-import ActiveScreenone from "business/activeScreen/activeScreenC1";
-import ActiveScreentwo from "business/activeScreen/activeScreenC2";
+import activeScreenOne from "business/activeScreen/activeScreenC1";
+import activeScreenTwo from "business/activeScreen/activeScreenC2";
 import {Popup} from 'mint-ui';
 import {Picker} from 'mint-ui';
 export default {
@@ -34,8 +37,8 @@ export default {
     components:{
         'mt-popup':Popup,
         'mt-picker':Picker,
-        ActiveScreenone,
-        ActiveScreentwo
+        activeScreenOne,
+        activeScreenTwo
     }    
     
 }

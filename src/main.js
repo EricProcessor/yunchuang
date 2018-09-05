@@ -11,6 +11,16 @@ Vue.config.productionTip = false
 
 Vue.use(MintUI);
 
+Vue.filter('formatDate', function(date) {
+  //时间格式化过滤器。传入 date时间对象。全局可用
+  if (Object.prototype.toString.call(date).indexOf('Date') === -1) return
+
+  let year = date.getFullYear(),
+      month = date.getMonth() - 0 + 1,
+      day = date.getDate()
+  return `${year}-${month}-${day}`
+})
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

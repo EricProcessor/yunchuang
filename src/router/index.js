@@ -18,7 +18,8 @@ import ActiveScreen from 'business/activeScreen/activeScreen';
 import HeaderSearch from 'business/search/HeaderSearch';
 import Login from 'business/login/login';
 import Register from 'business/register/register';
-import PersonalSet from 'business/personalSet/personalSet'
+import PersonalSet from 'business/personalSet/personalSet';
+import Err404 from 'business/err404/err404';
 
 Vue.use(Router)
 
@@ -80,10 +81,10 @@ export default new Router({
         path: 'MyNews', // 我的消息页面
         name: 'MyNews',
         component: MyNews
-      },{
-        path: 'personalSet',        //个人设置页面
+      }, {
+        path: 'personalSet', //个人设置页面
         name: 'personalSet',
-        component:PersonalSet,
+        component: PersonalSet,
       }]
     }, {
       path: '/activeDetail',
@@ -102,10 +103,10 @@ export default new Router({
       name: 'register',
       component: Register
     },
-    // {
-    //   path: '/err404', //404
-    //   name: 'err404',
-    //   component: Err404
-    // }
+    {
+      path: '/err404', //404
+      name: 'err404',
+      component: Err404
+    }
   ]
 })

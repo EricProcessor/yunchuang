@@ -23,7 +23,7 @@
               <li>宁波</li>
               <li>郑州</li>
             </ul>
-            <mt-picker :slots="myAddressSlots" showToolbar="flase" valueKey="name"  :visibleItemCount	="2" @change="addressChange" :itemHeight="30"></mt-picker>
+            <mt-picker :slots="myAddressSlots"  valueKey="name"  :visibleItemCount	="2" @change="addressChange" :itemHeight="30"></mt-picker>
           </mt-popup>
       </div>   
 </template>
@@ -93,8 +93,8 @@
       },
       //picker组件的change事件，进行取值赋值
       addressChange(picker, values){
-        console.log(picker);
-        console.table(values);
+        // console.log(picker);
+        // console.table(values);
         if (this.regionInit){
           //取值并赋值
           this.region = values[0]["name"] + values[1]["name"] + values[2]["name"];
@@ -105,9 +105,9 @@
           this.cityCode = values[1]["code"];
           this.countyCode = values[2]["code"];
  
-          console.log(picker.getSlotValue(0));
-          console.table(picker.getSlotValues(0));
-          console.table(picker.getValues());
+          // console.log(picker.getSlotValue(0));
+          // console.table(picker.getSlotValues(0));
+          // console.table(picker.getValues());
           //给市、县赋值
           picker.setSlotValues(1, this.getCityArr(values[0]["name"]));
           picker.setSlotValues(2, this.getCountyArr(values[0]["name"], values[1]["name"]));
