@@ -14,10 +14,6 @@
         <img src="./gd.png" alt="">
       </li>
       <li>
-        <div @click="linkMyCare"><img src="./myCare.png" alt="">我的关注</div>
-        <img src="./gd.png" alt="">
-      </li>
-      <li>
         <div @click="linkMyActivity"><img src="./myActivity.png" alt="">我的活动</div>
         <img src="./gd.png" alt="">
       </li>
@@ -52,10 +48,6 @@ export default {
     // 我的活动跳转
     linkMyActivity() {
       this.$router.push("/mine/MyActivity");
-    },
-    linkMyCare() {
-      // 我的关注跳转
-      this.$router.push("/mine/MyCare");
     },
     linkMyProject() {
       // 我的项目跳转

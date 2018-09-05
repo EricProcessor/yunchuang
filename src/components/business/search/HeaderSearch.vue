@@ -34,6 +34,8 @@
 <script>
 import searchAfterList from "../searchAfterList/searchAfterList";
 import searchHot from "../searchHot/searchHot";
+import axios from "axios";
+import config from "@/config/config";
 export default {
   name: "HeaderSearch",
   components: {
@@ -53,6 +55,7 @@ export default {
         { title: "创业活动", Ctype: "1" },
         { title: "创业课堂", Ctype: "2" }
       ],
+      SearchClass: 1,
       checkedClass: "创业活动",
       TogSelect: false,
       afertList: {
@@ -87,6 +90,9 @@ export default {
       ]
     };
   },
+  mounted() {
+    this.inforData();
+  },
   methods: {
     // 点击搜索内容切换至列表信息
     linkSearchList() {
@@ -101,6 +107,17 @@ export default {
     //选择搜索的类型
     checkSeachType(item) {
       this.checkedClass = item.title;
+      this.SearchClass = item.Ctype;
+    },
+    //获取后台数据
+    inforData() {
+      let _url = config.host + "/h5frontcarrierinfotop-home";
+
+      axios.get(_url).then(res => {
+        this.item = res.data.citList;
+        console.log(this.item);
+        console.log(this.SearchClass);
+      });
     }
   },
   computed: {

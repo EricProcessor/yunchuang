@@ -11,8 +11,7 @@
       <mt-navbar v-model="selected">
         <mt-tab-item id="1">我的约谈</mt-tab-item>
         <mt-tab-item id="2">被约谈</mt-tab-item>
-        <mt-tab-item id="3">关注的项目</mt-tab-item>
-        <mt-tab-item id="4">我的活动</mt-tab-item>
+        <mt-tab-item id="3">我的活动</mt-tab-item>
       </mt-navbar>
       <mt-tab-container v-model="selected">
         <mt-tab-container-item id="1">
@@ -22,12 +21,7 @@
           <my-interview-list :toggleInt="2"></my-interview-list>
         </mt-tab-container-item>
         <mt-tab-container-item id="3">
-          <my-care-list></my-care-list>
-          <!-- <my-interview-list :toggleInt="3"></my-interview-list> -->
-        </mt-tab-container-item>
-        <mt-tab-container-item id="4">
           <my-activity-list></my-activity-list>
-          <!-- <my-interview-list :toggleInt="4"></my-interview-list> -->
         </mt-tab-container-item>
       </mt-tab-container>
     </section>
@@ -35,7 +29,6 @@
 </template>
 <script>
 import MyInterviewList from "../MyInterviewList/MyInterviewList";
-import MyCareList from "../MyCareList/MyCareList";
 import MyActivityList from "../MyActivityList/MyActivityList";
 export default {
   data() {
@@ -45,7 +38,6 @@ export default {
   },
   components: {
     MyInterviewList,
-    MyCareList,
     MyActivityList
   },
   methods: {}
