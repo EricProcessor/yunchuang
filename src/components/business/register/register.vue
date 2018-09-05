@@ -413,10 +413,10 @@ export default {
         this.companyData.registerPhone.isEmpty = false;
         if (this.isPhone(this.companyData.registerPhone.val)) {
           //验证手机号是否已注册
-          let conpanyTelUrl = config.host + "/frontcompanyinfomile2-checkAcc";
+          let companyTelUrl = config.host + "/frontcompanyinfomile2-checkAcc";
           let params = new URLSearchParams();
           params.append("fmiTel", this.companyData.registerPhone.val);
-          axios.post(conpanyTelUrl, params).then(res => {
+          axios.post(companyTelUrl, params).then(res => {
             if (res.data.flag) {
               this.companyData.registerPhone.isExist = true;
             } else {

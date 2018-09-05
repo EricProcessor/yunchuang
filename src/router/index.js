@@ -19,6 +19,7 @@ import Login from 'business/login/login';
 import Register from 'business/register/register';
 import PersonalSet from 'business/personalSet/personalSet';
 import Err404 from 'business/err404/err404';
+import CompanyAccount from 'business/companyAccount/companyAccount';
 
 Vue.use(Router)
 
@@ -102,6 +103,11 @@ export default new Router({
       path: '/err404', //404
       name: 'err404',
       component: Err404
+    },
+    {
+      path: '/companyAccount', //企业认证
+      name: 'companyAccount',
+      component: CompanyAccount
     }
   ]
 })
