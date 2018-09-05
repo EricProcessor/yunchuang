@@ -31,6 +31,9 @@
   </div>
 </template>
 <script>
+import axios from "axios";
+import config from "@/config/config";
+
 export default {
   data() {
     return {
@@ -54,6 +57,11 @@ export default {
         console.log(456);
       }
     },
+    isPhone(phone) {
+      //手机号验证
+      let isPhone = /^(((13[0-9]{1})|(15[0-9]{1})|(17[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+      return isPhone.test(phone);
+    },
     forgotPwdBtn() {
       //忘记密码
       alert("忘记密码");
@@ -66,10 +74,25 @@ export default {
         alert("用户名不能为空！");
       } else if (this.userInfo.password == "") {
         alert("密码不能为空！");
-      } else if (this.userInfo.userName == "" && this.userInfo.password == "") {
-        alert("请输入用户名和密码！");
+      } else if (!this.isPhone(this.userInfo.userName)) {
+        alert("请输入正确的手机号码！");
       } else {
-        this.$router.push("/");
+        let url = config.host + "/frontloginoperate-login";
+        let params = new URLSearchParams();
+        params.append("fmiTel", this.userInfo.userName);
+        params.append("fmiPwd", this.userInfo.password);
+        axios({
+          method: "post",
+          url: url,
+          data: params
+        }).then(res => {
+          // console.log(res.data)
+          if(res.data.msg){
+            alert(res.data.msg);
+          }else{
+            this.$router.push("/");
+          }
+        });
       }
     },
     goToRegister() {

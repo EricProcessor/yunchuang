@@ -9,7 +9,6 @@ import Mine from 'business/mine/mine';
 import MyIndex from 'business/MyIndex/MyIndex';
 import MyActivity from 'business/MyActivity/MyActivity';
 import MyInterview from 'business/MyInterview/MyInterview';
-import MyCare from 'business/MyCare/MyCare';
 import MyProject from 'business/MyProject/MyProject';
 import MyNews from 'business/MyNews/MyNews';
 import ActiveDetail from 'business/activeDetail/activeDetail';
@@ -18,7 +17,9 @@ import ActiveScreen from 'business/activeScreen/activeScreen';
 import HeaderSearch from 'business/search/HeaderSearch';
 import Login from 'business/login/login';
 import Register from 'business/register/register';
-import PersonalSet from 'business/personalSet/personalSet'
+import PersonalSet from 'business/personalSet/personalSet';
+import Err404 from 'business/err404/err404';
+import CompanyAccount from 'business/companyAccount/companyAccount';
 
 Vue.use(Router)
 
@@ -69,10 +70,6 @@ export default new Router({
         name: 'MyInterview',
         component: MyInterview
       }, {
-        path: 'MyCare', // 我的关注页面
-        name: 'MyCare',
-        component: MyCare
-      }, {
         path: 'MyProject', // 我的项目页面
         name: 'MyProject',
         component: MyProject
@@ -80,10 +77,10 @@ export default new Router({
         path: 'MyNews', // 我的消息页面
         name: 'MyNews',
         component: MyNews
-      },{
-        path: 'personalSet',        //个人设置页面
+      }, {
+        path: 'personalSet', //个人设置页面
         name: 'personalSet',
-        component:PersonalSet,
+        component: PersonalSet,
       }]
     }, {
       path: '/activeDetail',
@@ -102,10 +99,15 @@ export default new Router({
       name: 'register',
       component: Register
     },
-    // {
-    //   path: '/err404', //404
-    //   name: 'err404',
-    //   component: Err404
-    // }
+    {
+      path: '/err404', //404
+      name: 'err404',
+      component: Err404
+    },
+    {
+      path: '/companyAccount', //企业认证
+      name: 'companyAccount',
+      component: CompanyAccount
+    }
   ]
 })
