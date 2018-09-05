@@ -2,7 +2,7 @@
   <div class="mine_tab">
     <ul>
       <li @click="_pageJump(item.path)" v-for="(item,index) in tabList" :key="index">
-        <div><img :src="item.tabImg" alt=""><span>我的首页</span></div>
+        <div><img :src="item.tabImg" alt=""><span>{{item.title}}</span></div>
         <img src="./gd.png" alt="">
       </li>
       <!-- <li @click="_pageJump('/MyIndex')">
