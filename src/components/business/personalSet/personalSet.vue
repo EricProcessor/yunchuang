@@ -5,7 +5,8 @@
             <p class="remind" v-show="remind">带*号为必填项，请务必如实填写  <i class="close" @click="_closeRemind">&times;</i></p>
             <div class="head-box">
                 <div class="head-pic">
-                    <img src="" alt="">
+                    <img v-if="picList[0]" :src="picList[0].file.src" alt="">
+                    <upload-img @getImg="getUploadImg"></upload-img>
                 </div>
                 <span>更换头像</span>
             </div>
@@ -20,8 +21,8 @@
                     <ul>
                         <li class="column-left"><i>*</i>性别</li>
                         <li class="column-right align-left">
-                            <span>男</span>
-                            <span>女</span>
+                            <span :class="{ active: sex == '男'}" @click="_setSex('男')">男</span>
+                            <span :class="{ active: sex == '女'}" @click="_setSex('女')">女</span>
                         </li>
                     </ul>
                 </div>
@@ -46,7 +47,7 @@
                 <div class="column">
                     <ul>
                         <li class="column-left">地址</li>
-                        <li class="column-right"><input type="text" v-model="simpAddress" /></li>
+                        <li class="column-right" @click="_showAddressPopup"><input type="text" placeholder="点击选择" disabled v-model="simpAddress" /></li>
                     </ul>
                 </div>
                 <div class="column">
@@ -66,13 +67,14 @@
             ></mt-datetime-picker>
             <!--日期选择组件-->
             <!--地址选择组件-->
-            <div class="address-pick" v-show="addressShow">
-                <mt-picker :slots="slots" @change="_changeAddress"></mt-picker>
-            </div>
+            <mt-popup position="bottom" v-model="addressShow" :showToolbar="true">
+                <mt-picker :slots="slots" :showToolbar="true" valueKey="name"  @change="_changeAddress"></mt-picker>
+            </mt-popup>
+
             <!--地址选择组件-->
             <div class="butt">
-                <div class="reset">重置</div>
-                <div class="save">保存</div>
+                <div @click="_resetEvent" class="reset">重置</div>
+                <div @click="_saveEvent" class="save">保存</div>
             </div>
         </div>
     </div>
@@ -80,18 +82,23 @@
 <script>
 import IndexHeader from 'business/indexHeader/indexHeader'
 import address from '@/config/address.json'         //地址三级联动json数据
+import axios from '@/config/axiosConf'
+import config from '@/config/config'
+import {MessageBox} from 'mint-ui'
+import UploadImg from 'base/uploadImg/uploadImg'
 export default {
     data() {
         return {
             remind: true,       //弹窗提示
             addressShow: false,     //选择地址栏显示/隐藏
             name: "",       //姓名
-            sex: "",            //性别
+            sex: "男",            //性别
             birthday: "",           //生日
             telephone: "",          //手机号
             email: "",              //邮箱
             simpAddress: "",              //简单地址
             address: "",             //详细地址
+            picList: [],            //保存上传图片文件的数组，元素是file对象
             slots: [{
                 flex: 1,    
                 values: Object.keys(address),
@@ -103,7 +110,7 @@ export default {
                 className: 'slot2'
             }, {
                 flex: 1,
-                values: [],
+                values: Object.keys(address["北京市"]),
                 className: 'slot3',
                 textAlign: 'center'
             }, {
@@ -112,16 +119,34 @@ export default {
                 className: 'slot4'
             }, {
                 flex: 1,
-                values: [],
+                values: address["北京市"]["市辖区"],
                 className: 'slot5',
                 textAlign: 'center'
             }],
-            addressProvince: '北京',
-            addressCity: '北京'
+            addressProvince: '',
+            addressCity: '',
+            addressCounty: ''
         }
     },
     created() {
         this.headerText = "个人设置"        //头部显示内容
+        // axios({
+        //     url: config.host + "/frontcompanyinfoperson-checkAcc",
+        //     method: 'post',
+        //     data: {
+        //         fmiTel: "15130038144",
+        //         fmiMile: "15130038144@163.com"
+        //     }
+        // }).then(res => {
+        //     console.log(res)
+        // })
+
+        // axios.post(config.host + "/frontcompanyinfoperson-checkAcc", {
+        //     fmiTel: "15130038144",
+        //     fmiMile: "15130038144@163.com"
+        // }).then(res => {
+        //     console.log(res)
+        // })
     },
     methods: {
         _closeRemind() {    //关闭提示窗
@@ -139,23 +164,62 @@ export default {
             this.birthday = `${year}-${month}-${day}`
         },
         _changeAddress(picker, values) {              //地址选择组件改变后调用的  回调函数
-            console.log(values)             //values为当前选中的地址数组
-            picker.setSlotValues(1, address[values[0]]);    //设置二级联动的内容。第二个参数为内容数组
-            this.addressProvince = values[0];
-            this.addressCity = values[1];
-            this.addressShow
+            // console.log(values)             //values为当前选中的地址数组
+            if(address[values[0]]) {
+
+                picker.setSlotValues(1, Object.keys(address[values[0]]));    //设置二级联动的内容，这里是城市。第二个参数为内容数组
+                picker.setSlotValues(2, address[values[0]][values[1]])    //设置三级联动的内容，这里是县/区。第三个参数为
+                this.addressProvince = values[0];
+                this.addressCity = values[1];
+                this.addressCounty = values[2]
+                this.simpAddress = `${values[0]} - ${values[1]} - ${values[2]}`
+            }
         },
         _setAddress() {     //请求用户数据后，设置地点
             picker.setValues(["北京", "北京"])
         },
+        _showAddressPopup() {       //地址选择栏弹出显示
+            
+            this.addressShow = true
+        },
+        _setSex(val) {      //设置性别
+            this.sex = val
+        },
+        _resetEvent() {          //重置事件
+            MessageBox({
+                title: '提示',
+                message: "确定要执行此操作吗？",
+                showCancelButton: true,
+                showConfirmButton: true,
+            }).then( action => {
+                (action === "confirm") && this._reset()
+            })
+        },
+        _reset() {            //重置操作
+            this.name = ""       //姓名
+            this.sex = ""            //性别
+            this.birthday = ""          //生日
+            this.telephone = ""         //手机号
+            this.email = ""           //邮箱
+            this.simpAddress = "",              //简单地址
+            this.address = ""             //详细地址
+        },
+        _saveEvent() {               //保存信息
+            //进行ajax请求
 
+        },
+        getUploadImg(imgList) {     //获得上传的图片数组
+            this.picList = imgList
+        }
     },
     components: {
-        IndexHeader
+        IndexHeader,
+        UploadImg
     }
 }
 </script>
 <style lang="less" scoped>
+
 .personal-set {
     position: fixed;
     top: 0;
@@ -198,6 +262,11 @@ export default {
                 background: #f5f5f5;
                 margin: 0 auto;
                 margin-bottom: 20px;
+                position: relative;
+                img {
+                    width: 100%;
+                    height: 100%;
+                }
             }
             span {
                 font-size: 20px;
@@ -257,13 +326,17 @@ export default {
                             width: 120px;
                             height: 60px;
                             display: inline-block;
-                            border: 2px solid #6ea1ff;
+                            border: 2px solid #e0e0e0;
                             border-radius: 6px;
                             text-align: center;
                             line-height: 60px;
                             font-size: 24px;
                             color: #999999;
                             margin-left: 10px;
+                            &.active {
+                                border: solid 2px #6ea1ff;
+                                color: #6ea1ff;
+                            }
                         }
                     }
                     .align-left {
@@ -279,6 +352,9 @@ export default {
             left: 0;
             background: #fff;
             z-index: 300;
+        }
+        .mint-popup-bottom {
+            width: 100%;
         }
         .butt {
             height: 88px;
@@ -304,6 +380,10 @@ export default {
                 text-align: center;
             }
         }
+    }
+    .mint-msgbox-btns {
+        height: 100px !important;
+        line-height: 100px !important;
     }
 }
 </style>

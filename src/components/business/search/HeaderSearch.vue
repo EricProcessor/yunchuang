@@ -1,16 +1,22 @@
 <template>
 <div>
-  <div class="header-search">
+  <div class="header-search" @click="TogSelect=false"> 
     <a href="#/" class="page-back router-link-active">
       <i class="mintui mintui-back"></i>
     </a>
+    <div class="selModel" >
+      <div  @click.stop="TogSelect=!TogSelect"><span>{{checkedClass}}</span><img src="./updown.png" alt=""></div>
+      <ol v-show="TogSelect">
+        <li  @click="checkSeachType(item)" v-for="(item,index) in checkClass" :key="index"  >{{item.title}}</li>
+      </ol>
+    </div>
     <div class="mint-searchbar-inner">
       <input type="text" placeholder="搜索" @click="linkSearchListBack" v-model="searchVal" class="mint-searchbar-core">
       <i class="mintui mintui-search"></i> 
     </div>
   </div>
-  <div class="searchBefor ">
-    <ul class="secrchCon">
+  <div class="searchBefor"> 
+    <ul class="secrchCon" v-show="searchVal!=''" >
       <li  @click="linkSearchList" v-show="!afertList.type" v-for="(item,index) in NewItems" :key="index"  >
         <div class="mintui mintui-search"></div>
         <span :value="item.value" v-text="item.name"></span>
@@ -28,6 +34,8 @@
 <script>
 import searchAfterList from "../searchAfterList/searchAfterList";
 import searchHot from "../searchHot/searchHot";
+import axios from "axios";
+import config from "@/config/config";
 export default {
   name: "HeaderSearch",
   components: {
@@ -43,6 +51,18 @@ export default {
       // ],
       // value: "",
       // title: ""
+      checkClass: [
+        { title: "创业服务", Ctype: "F" },
+        { title: "创业资讯", Ctype: "C" },
+        { title: "创业项目", Ctype: "X" },
+        { title: "创业载体", Ctype: "Z" },
+        { title: "创业活动", Ctype: "H" },
+        { title: "投资人", Ctype: "R" },
+        { title: "创业课堂", Ctype: "D" }
+      ],
+      SearchClass: 1,
+      checkedClass: "创业活动",
+      TogSelect: false,
       afertList: {
         type: false
       },
@@ -75,6 +95,9 @@ export default {
       ]
     };
   },
+  mounted() {
+    this.inforData();
+  },
   methods: {
     // 点击搜索内容切换至列表信息
     linkSearchList() {
@@ -85,6 +108,29 @@ export default {
       if (this.afertList.type == 1) {
         this.afertList.type = !this.afertList.type;
       }
+    },
+    //选择搜索的类型
+    checkSeachType(item) {
+      this.checkedClass = item.title;
+      this.SearchClass = item.Ctype;
+    },
+    //获取后台数据
+    inforData() {
+      let _url = config.host + "/h5frontsearch-home";
+      axios
+        .get(_url, {
+          params: {
+            selType: "F",
+            KeyWord: "京东"
+          }
+        })
+        .then(res => {
+          this.item = res.data;
+          console.log(res);
+          // this.item = res.data.citList;
+          // console.log(this.item);
+          // console.log(this.SearchClass);
+        });
     }
   },
   computed: {
@@ -124,6 +170,36 @@ export default {
   font-size: 48px;
   color: #fff;
 }
+//选择版块样式
+.header-search {
+  .selModel {
+    font-size: 24px;
+    color: #d1d0d0;
+    padding: 0px 20px;
+    border-right: 1px solid #697897;
+    img {
+      width: 18px;
+      padding-left: 12px;
+    }
+    ol {
+      position: absolute;
+      width: 142px;
+      background-color: #253350;
+      opacity: 0.8;
+      left: 80px;
+      top: 92px;
+      opacity: 0.8;
+      width: 156px;
+      li {
+        height: 70px;
+        line-height: 70px;
+        padding-left: 12px;
+        font-size: 24px;
+        color: #ffffff;
+      }
+    }
+  }
+}
 .header-search > div[data-v-5eeac47d] {
   background: #253350;
 }
@@ -136,6 +212,7 @@ export default {
 }
 .mint-searchbar-core[data-v-5eeac47d] {
   font-size: 28px;
+  text-indent: 14px;
 }
 .hide {
   display: none;
@@ -148,17 +225,21 @@ export default {
 }
 .secrchCon {
   background: #fff;
-  margin-top: 16px;
-  margin-bottom: 30px;
   li {
     height: 64px;
-    line-height: 64px;
+    // line-height: 64px;
     border-bottom: 2px solid #dfdfdf;
     margin-left: 30px;
     font-size: 24px;
     span {
       color: #333;
     }
+  }
+  :nth-child(1) {
+    margin-top: 16px;
+  }
+  li:last-child {
+    margin-bottom: 30px;
   }
 }
 .el-icon-search {

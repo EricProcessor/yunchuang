@@ -9,7 +9,6 @@ import Mine from 'business/mine/mine';
 import MyIndex from 'business/MyIndex/MyIndex';
 import MyActivity from 'business/MyActivity/MyActivity';
 import MyInterview from 'business/MyInterview/MyInterview';
-import MyCare from 'business/MyCare/MyCare';
 import MyProject from 'business/MyProject/MyProject';
 import MyNews from 'business/MyNews/MyNews';
 import ActiveDetail from 'business/activeDetail/activeDetail';
@@ -21,6 +20,7 @@ import Register from 'business/register/register';
 import PersonalSet from 'business/personalSet/personalSet';
 import Err404 from 'business/err404/err404';
 import Accountsecuritys from 'business/Accountsecurity/Accountsecuritys.vue' //账号安全
+import CompanyAccount from 'business/companyAccount/companyAccount';
 import Changepassword from 'business/Accountsecurity/Changepassword.vue'  //手机绑定
 import Tel from 'business/Accountsecurity/Tel.vue'  //修改密码
 import Emaild from 'business/Accountsecurity/Emaild.vue'  //邮箱认证
@@ -73,10 +73,6 @@ export default new Router({
         name: 'MyInterview',
         component: MyInterview
       }, {
-        path: 'MyCare', // 我的关注页面
-        name: 'MyCare',
-        component: MyCare
-      }, {
         path: 'MyProject', // 我的项目页面
         name: 'MyProject',
         component: MyProject
@@ -110,6 +106,7 @@ export default new Router({
       path: '/err404', //404
       name: 'err404',
       component: Err404
+<<<<<<< .mine
     },
     {
       path: '/accountsecuritys', //账号安全 
@@ -132,5 +129,29 @@ export default new Router({
       component: Emaild
     },
 
+=======
+    },
+    {
+      path: '/companyAccount', //企业认证
+      name: 'companyAccount',
+      component: CompanyAccount
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+>>>>>>> .theirs
   ]
 })
