@@ -106,7 +106,6 @@ export default new Router({
       path: '/err404', //404
       name: 'err404',
       component: Err404
-<<<<<<< .mine
     },
     {
       path: '/accountsecuritys', //账号安全 
@@ -129,29 +128,11 @@ export default new Router({
       component: Emaild
     },
 
-=======
-    },
+
     {
       path: '/companyAccount', //企业认证
       name: 'companyAccount',
       component: CompanyAccount
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
->>>>>>> .theirs
   ]
 })
