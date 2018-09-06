@@ -1,35 +1,34 @@
 <template>
     <div class="classroom">
         <!--课堂页面组件-->
-        <index-header :text="headerText"></index-header>
+        <index-header text="课堂"></index-header>
         <div class="video-box">
-            <i class="is-live">正在直播</i>
+            <!-- <i class="is-live">正在直播</i>
             <i class="play-butt"><img src="./video-play-big.png" /></i>
-            <p class="state">马云电商云商互联网领导智慧沟通营销销售讲座</p>
+            <p class="state">马云电商云商互联网领导智慧沟通营销销售讲座</p> -->
+            <swiper></swiper>
         </div>
         <div class="class-list">
             <infor-child-list></infor-child-list>
         </div>
-        <m-footer :selected="selected"></m-footer>
+        <m-footer selected="classroom"></m-footer>
     </div>
 </template>
 <script>
 import IndexHeader from 'business/indexHeader/indexHeader'
 import InforChildList from 'business/inforChildList/inforChildList'
 import MFooter from 'business/mFooter/mFooter'
+import Swiper from 'base/swiper/swiper'
 export default {
     data() {
         return {
         }
     },
-    created() {
-        this.selected = "classroom"     //导航栏默认选中项设置
-        this.headerText = "课堂"        //头部显示内容
-    },
     components: {
         IndexHeader,
         MFooter,
-        InforChildList
+        InforChildList,
+        Swiper
     }
 }
 </script>
