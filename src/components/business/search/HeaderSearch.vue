@@ -11,11 +11,11 @@
       </ol>
     </div>
     <div class="mint-searchbar-inner">
-      <input type="text" placeholder="搜索" @click="linkSearchListBack" v-model="searchVal" class="mint-searchbar-core">
-      <i class="mintui mintui-search"></i> 
+      <input type="text" placeholder="搜索" v-model="searchVal" class="mint-searchbar-core">
+      <i class="mintui mintui-search" @click="inforData"></i> 
     </div>
   </div>
-  <div class="searchBefor"> 
+  <!-- <div class="searchBefor"> 
     <ul class="secrchCon" v-show="searchVal!=''" >
       <li  @click="linkSearchList" v-show="!afertList.type" v-for="(item,index) in NewItems" :key="index"  >
         <div class="mintui mintui-search"></div>
@@ -23,8 +23,7 @@
       </li>
     </ul>
     <searchHot v-show="!afertList.type"></searchHot>
-   
-  </div>
+  </div> -->
   <search-after-list v-show="afertList.type"></search-after-list>
   
 </div>
@@ -33,13 +32,13 @@
 
 <script>
 import searchAfterList from "../searchAfterList/searchAfterList";
-import searchHot from "../searchHot/searchHot";
+// import searchHot from "../searchHot/searchHot";
 import axios from "axios";
 import config from "@/config/config";
 export default {
-  name: "HeaderSearch",
+  name: "",
   components: {
-    searchHot,
+    // searchHot,
     searchAfterList
   },
   data() {
@@ -50,7 +49,8 @@ export default {
       //   { title: "bbb", value: "bbb" }
       // ],
       // value: "",
-      // title: ""
+      // title: "",
+      searchVal: "",
       checkClass: [
         { title: "创业服务", Ctype: "F" },
         { title: "创业资讯", Ctype: "C" },
@@ -60,39 +60,24 @@ export default {
         { title: "投资人", Ctype: "R" },
         { title: "创业课堂", Ctype: "D" }
       ],
-      SearchClass: 1,
+      SearchClass: "F",
       checkedClass: "创业活动",
       TogSelect: false,
       afertList: {
         type: false
       },
       searchVal: "",
-      items: [
-        {
-          name: "上海",
-          value: "sh"
-        },
-        {
-          name: "北京",
-          value: "bj"
-        },
-        {
-          name: "重庆",
-          value: "cq"
-        },
-        {
-          name: "嗨嗨嗨",
-          value: "hhh"
-        },
-        {
-          name: "海上",
-          value: "hs"
-        },
-        {
-          name: "京都",
-          value: "jd"
-        }
-      ]
+      // items: [
+      //   {
+      //     name: "上海",
+      //     value: "sh"
+      //   },
+      //   {
+      //     name: "北京",
+      //     value: "bj"
+      //   }
+      // ]
+      item: []
     };
   },
   mounted() {
@@ -100,15 +85,15 @@ export default {
   },
   methods: {
     // 点击搜索内容切换至列表信息
-    linkSearchList() {
-      this.afertList.type = !this.afertList.type;
-    },
+    // linkSearchList() {
+    //   this.afertList.type = !this.afertList.type;
+    // },
     // 在列表信息中点击头部搜索切换至搜索
-    linkSearchListBack() {
-      if (this.afertList.type == 1) {
-        this.afertList.type = !this.afertList.type;
-      }
-    },
+    // linkSearchListBack() {
+    //   if (this.afertList.type == 1) {
+    //     this.afertList.type = !this.afertList.type;
+    //   }
+    // },
     //选择搜索的类型
     checkSeachType(item) {
       this.checkedClass = item.title;
@@ -120,31 +105,28 @@ export default {
       axios
         .get(_url, {
           params: {
-            selType: "F",
-            KeyWord: "京东"
+            selType: this.SearchClass,
+            KeyWord: this.searchVal
           }
         })
         .then(res => {
           this.item = res.data;
           console.log(res);
-          // this.item = res.data.citList;
-          // console.log(this.item);
-          // console.log(this.SearchClass);
         });
     }
   },
   computed: {
     //模糊搜素
-    NewItems() {
-      var _this = this;
-      var NewItems = [];
-      this.items.map(function(item) {
-        if (item.name.search(_this.searchVal) != -1) {
-          NewItems.push(item);
-        }
-      });
-      return NewItems;
-    }
+    // NewItems() {
+    //   var _this = this;
+    //   var NewItems = [];
+    //   this.items.map(function(item) {
+    //     if (item.name.search(_this.searchVal) != -1) {
+    //       NewItems.push(item);
+    //     }
+    //   });
+    //   return NewItems;
+    // }
   }
 };
 </script>
