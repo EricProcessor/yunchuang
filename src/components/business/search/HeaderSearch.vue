@@ -5,17 +5,17 @@
       <i class="mintui mintui-back"></i>
     </a>
     <div class="selModel" >
-      <div  @click.stop="TogSelect=!TogSelect"><span>{{checkedClass}}</span><img src="./updown.png" alt=""></div>
+      <div  @click.stop="TogSelect=!TogSelect"><span>{{serachSend.checkedClass}}</span><img src="./updown.png" alt=""></div>
       <ol v-show="TogSelect">
         <li  @click="checkSeachType(item)" v-for="(item,index) in checkClass" :key="index"  >{{item.title}}</li>
       </ol>
     </div>
     <div class="mint-searchbar-inner">
-      <input type="text" placeholder="搜索" @click="linkSearchListBack" v-model="searchVal" class="mint-searchbar-core">
-      <i class="mintui mintui-search"></i> 
+      <input type="text" placeholder="搜索" v-model="serachSend.searchVal" class="mint-searchbar-core">
+      <i class="mintui mintui-search" @click="inforData"></i> 
     </div>
   </div>
-  <div class="searchBefor"> 
+  <!-- <div class="searchBefor"> 
     <ul class="secrchCon" v-show="searchVal!=''" >
       <li  @click="linkSearchList" v-show="!afertList.type" v-for="(item,index) in NewItems" :key="index"  >
         <div class="mintui mintui-search"></div>
@@ -23,9 +23,8 @@
       </li>
     </ul>
     <searchHot v-show="!afertList.type"></searchHot>
-   
-  </div>
-  <search-after-list v-show="afertList.type"></search-after-list>
+  </div> -->
+  <search-after-list :items="items"></search-after-list>
   
 </div>
 
@@ -33,13 +32,13 @@
 
 <script>
 import searchAfterList from "../searchAfterList/searchAfterList";
-import searchHot from "../searchHot/searchHot";
+// import searchHot from "../searchHot/searchHot";
 import axios from "axios";
 import config from "@/config/config";
 export default {
-  name: "HeaderSearch",
+  name: "",
   components: {
-    searchHot,
+    // searchHot,
     searchAfterList
   },
   data() {
@@ -50,7 +49,7 @@ export default {
       //   { title: "bbb", value: "bbb" }
       // ],
       // value: "",
-      // title: ""
+      // title: "",
       checkClass: [
         { title: "创业服务", Ctype: "F" },
         { title: "创业资讯", Ctype: "C" },
@@ -60,91 +59,71 @@ export default {
         { title: "投资人", Ctype: "R" },
         { title: "创业课堂", Ctype: "D" }
       ],
-      SearchClass: 1,
-      checkedClass: "创业活动",
-      TogSelect: false,
-      afertList: {
-        type: false
+      serachSend: {
+        SearchClass: "F",
+        checkedClass: "创业服务",
+        searchVal: ""
       },
-      searchVal: "",
-      items: [
-        {
-          name: "上海",
-          value: "sh"
-        },
-        {
-          name: "北京",
-          value: "bj"
-        },
-        {
-          name: "重庆",
-          value: "cq"
-        },
-        {
-          name: "嗨嗨嗨",
-          value: "hhh"
-        },
-        {
-          name: "海上",
-          value: "hs"
-        },
-        {
-          name: "京都",
-          value: "jd"
-        }
-      ]
+      TogSelect: false,
+      // afertList: {
+      //   type: false
+      // },
+
+      // items: [
+      //   {
+      //     name: "上海",
+      //     value: "sh"
+      //   },
+      //   {
+      //     name: "北京",
+      //     value: "bj"
+      //   }
+      // ]
+      items: []
     };
   },
   mounted() {
-    this.inforData();
+    // this.inforData();
   },
   methods: {
     // 点击搜索内容切换至列表信息
-    linkSearchList() {
-      this.afertList.type = !this.afertList.type;
-    },
+    // linkSearchList() {
+    //   this.afertList.type = !this.afertList.type;
+    // },
     // 在列表信息中点击头部搜索切换至搜索
-    linkSearchListBack() {
-      if (this.afertList.type == 1) {
-        this.afertList.type = !this.afertList.type;
-      }
-    },
+    // linkSearchListBack() {
+    //   if (this.afertList.type == 1) {
+    //     this.afertList.type = !this.afertList.type;
+    //   }
+    // },
     //选择搜索的类型
     checkSeachType(item) {
       this.checkedClass = item.title;
-      this.SearchClass = item.Ctype;
+      this.serachSend.SearchClass = item.Ctype;
     },
     //获取后台数据
     inforData() {
       let _url = config.host + "/h5frontsearch-home";
-      axios
-        .get(_url, {
-          params: {
-            selType: "F",
-            KeyWord: "京东"
-          }
-        })
-        .then(res => {
-          this.item = res.data;
-          console.log(res);
-          // this.item = res.data.citList;
-          // console.log(this.item);
-          // console.log(this.SearchClass);
-        });
+      let params = new URLSearchParams();
+      params.append("selType", this.serachSend.SearchClass);
+      params.append("KeyWord", encodeURI(encodeURI(this.serachSend.searchVal)));
+      axios.post(_url, params).then(res => {
+        this.items = res.data.List;
+      });
     }
   },
   computed: {
     //模糊搜素
-    NewItems() {
-      var _this = this;
-      var NewItems = [];
-      this.items.map(function(item) {
-        if (item.name.search(_this.searchVal) != -1) {
-          NewItems.push(item);
-        }
-      });
-      return NewItems;
-    }
+    // NewItems() {
+    //   var _this = this;
+    //   var NewItems = [];
+    //   this.items.map(function(item) {
+    //     if (item.name.search(_this.searchVal) != -1) {
+    //       NewItems.push(item);
+    //     }
+    //   });
+    //   return NewItems;
+    // }
   }
 };
 </script>

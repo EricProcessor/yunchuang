@@ -1,9 +1,19 @@
 <template>
     <div class="searchAfterList">
         <ul class="listBox">
-            <li class="list_li clearfix" @click="linkInforDetail" v-for="(n,v) in 4" :key="v">
+            <li class="list_li clearfix" id="item.faiId" @click="linkInforDetail(item.faiId)" v-for="(item,index) in items" :key="index">
                 <div class="fl left_div">
-                    <p class="text">UI设计全国巡演</p>
+                   <p class="text">{{item.faiAddress}}</p>
+                    <div class="clearfix">
+                        <div class="fl time">{{item.faiPublishorg}}</div>
+                        <div class="fr">
+                            <p class="clearfix readCount">
+                                <span data-v-397fe9a0="" class="fl icon_num"></span>
+                                <span class="fl count">{{item.faiSource}}</span>
+                            </p>
+                        </div>
+                    </div>
+                    <!-- <p class="text">UI设计全国巡演</p>
                     <div class="clearfix">
                         <div class="fl time">博文天地</div>
                         <div class="fr">
@@ -12,10 +22,11 @@
                                 <span class="fl count">123</span>
                             </p>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="fl right_div">
-                    <img src="../../../../static/images/business_2.jpg" alt="">
+                    <img :src="item.faiPath" alt="">
+                    <!-- <img src="../../../../static/images/business_2.jpg" alt=""> -->
                 </div>
             </li>
         </ul>
@@ -27,16 +38,14 @@ export default {
   data() {
     return {};
   },
+  props: ["items"],
   methods: {
     // 点击列表跳转到详情
-    linkInforDetail() {
-      this.$router.push("/inforDetail");
-    },
-    //获取后台数据
-    inforData() {
-      let _url = "/api/frontcarrierinfotop-home";
-      axios.get(_url).then(res => {
-        console.log(res);
+    linkInforDetail(itemId) {
+      // this.$router.push("/inforDetail");
+      this.$router.push({
+        name: "inforDetail",
+        params: { paicheNo: itemId }
       });
     }
   }

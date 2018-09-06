@@ -31,22 +31,40 @@
             <span class="cared">待审核</span>
           </dd>
         </dl> 
-        <div class="operation">
-          <p><img src="./edit.png" alt=""><span>编辑</span></p>
-          <p><img src="./deleate.png" alt=""><span>删除</span></p>
-        </div>
+          <!-- <div class="operation">
+            <p><img src="./edit.png" alt=""><span>编辑</span></p>
+            <p><img src="./deleate.png" alt=""><span>删除</span></p>
+          </div> -->
       </li>
     </ul>
   </div>
 </template>
 <script>
 import IndexHeader from "business/indexHeader/indexHeader";
+import axios from "axios";
+import config from "@/config/config";
 export default {
   created() {
     this.headerText = "我的项目"; //设置头部显示导航内容
   },
   components: {
     IndexHeader
+  },
+  mounted() {
+    this.inforData();
+  },
+  methods: {
+    //获取后台数据
+    inforData() {
+      let _url = config.host + "h5frontmyactivity-home";
+      let params = new URLSearchParams();
+      // params.append("selType", this.serachSend.SearchClass);
+      // params.append("KeyWord", encodeURI(encodeURI(this.serachSend.searchVal)));
+      axios.post(_url).then(res => {
+        // this.items = res.data;
+        console.log(res.data);
+      });
+    }
   }
 };
 </script>
