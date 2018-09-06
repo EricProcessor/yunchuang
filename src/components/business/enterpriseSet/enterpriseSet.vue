@@ -1,6 +1,6 @@
 <template>
-    <div class="personal-set">
-        <index-header text="个人设置" :hasSearch="false"></index-header>
+    <div class="enterprise-set">
+        <index-header text="企业设置" :hasSearch="false"></index-header>
         <div class="setBox">
             <p class="remind" v-show="remind">带*号为必填项，请务必如实填写  <i class="close" @click="_closeRemind">&times;</i></p>
             <div class="head-box">
@@ -13,23 +13,8 @@
             <div class="form-list">
                 <div class="column">
                     <ul>
-                        <li class="column-left"><i>*</i>姓名</li>
+                        <li class="column-left"><i>*</i>联系人</li>
                         <li class="column-right"><input type="text" v-model="name" /></li>
-                    </ul>
-                </div>
-                <div class="column">
-                    <ul>
-                        <li class="column-left"><i>*</i>性别</li>
-                        <li class="column-right align-left">
-                            <span :class="{ active: sex == '男'}" @click="_setSex('男')"><img src="./man.png" />男</span>
-                            <span :class="{ active: sex == '女'}" @click="_setSex('女')"><img src="./woman.png" />女</span>
-                        </li>
-                    </ul>
-                </div>
-                <div class="column">
-                    <ul>
-                        <li class="column-left"><i>*</i>出生日期</li>
-                        <li class="column-right" @click.prevent="_openPicker"><input type="text" disabled v-model="birthday" placeholder="点击选择" /></li>
                     </ul>
                 </div>
                 <div class="column">
@@ -42,6 +27,12 @@
                     <ul>
                         <li class="column-left">邮箱</li>
                         <li class="column-right"><input type="text" v-model="email" /></li>
+                    </ul>
+                </div>
+                <div class="column">
+                    <ul>
+                        <li class="column-left"><i>*</i>网址</li>
+                        <li class="column-right"><input type="text" disabled v-model="website" /></li>
                     </ul>
                 </div>
                 <div class="column">
@@ -59,14 +50,6 @@
                     </ul>
                 </div>
             </div>
-            <!--日期选择组件-->
-                <mt-datetime-picker 
-                    ref="datePicker"
-                    type="date"
-                    @confirm="_handleTime"
-                    :startDate="new Date('1900-01-01')"
-                ></mt-datetime-picker>
-            <!--日期选择组件-->
             <!--地址选择组件-->
                 <address-pick ref="addressPopup" @selectAddress="_getAddress"></address-pick>
             <!--地址选择组件-->
@@ -88,10 +71,9 @@ export default {
     data() {
         return {
             remind: true,       //弹窗提示
-            name: "",       //姓名
-            sex: "男",            //性别
-            birthday: "",           //生日
-            telephone: "",          //手机号
+            name: "",       //企业名称
+            telephone: "",          //联系方式
+            website: "",            //网址
             email: "",              //邮箱
             simpAddress: "",              //简单地址
             address: "",             //详细地址
@@ -110,7 +92,7 @@ export default {
         //     console.log(res)
         // })
 
-        // this.axios.post(config.host + "/frontcompanyinfoperson-checkAcc", {
+        // axios.post(config.host + "/frontcompanyinfoperson-checkAcc", {
         //     fmiTel: "15130038144",
         //     fmiMile: "15130038144@163.com"
         // }).then(res => {
@@ -121,22 +103,8 @@ export default {
         _closeRemind() {    //关闭提示窗
             this.remind = false
         },
-        _openPicker() {     //打开时间选择器
-            this.$refs.datePicker.open()
-        },
-        _handleTime(date) {     //转换得到的时间格式
-            console.log(date)
-            
-            let year = date.getFullYear(),
-                month = date.getMonth() - 0 + 1,
-                day = date.getDate()
-            this.birthday = `${year}-${month}-${day}`
-        },
         _showAddressPopup() {       //地址选择栏弹出显示
             this.$refs.addressPopup.showAddressComponent()
-        },
-        _setSex(val) {      //设置性别
-            this.sex = val
         },
         _resetEvent() {          //重置事件
             MessageBox({
@@ -176,8 +144,7 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-
-.personal-set {
+.enterprise-set {
     position: fixed;
     top: 0;
     left: 0;

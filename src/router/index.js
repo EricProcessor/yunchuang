@@ -20,6 +20,7 @@ import Register from 'business/register/register';
 import PersonalSet from 'business/personalSet/personalSet';
 import Err404 from 'business/err404/err404';
 import CompanyAccount from 'business/companyAccount/companyAccount';
+import EnterpriseSet from 'business/enterpriseSet/enterpriseSet'
 
 Vue.use(Router)
 
@@ -81,6 +82,10 @@ export default new Router({
         path: 'personalSet', //个人设置页面
         name: 'personalSet',
         component: PersonalSet,
+      }, {
+        path: 'enterpriseSet',    //企业设置页面
+        name: 'enterpriseSet',
+        component: EnterpriseSet
       }]
     }, {
       path: '/activeDetail',
