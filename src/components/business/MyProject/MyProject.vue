@@ -31,10 +31,10 @@
             <span class="cared">待审核</span>
           </dd>
         </dl> 
-        <div class="operation">
-          <p><img src="./edit.png" alt=""><span>编辑</span></p>
-          <p><img src="./deleate.png" alt=""><span>删除</span></p>
-        </div>
+          <!-- <div class="operation">
+            <p><img src="./edit.png" alt=""><span>编辑</span></p>
+            <p><img src="./deleate.png" alt=""><span>删除</span></p>
+          </div> -->
       </li>
     </ul>
   </div>
