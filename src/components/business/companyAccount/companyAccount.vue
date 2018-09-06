@@ -1,27 +1,75 @@
 <template>
-    <div class="accountBox">
-        <index-header :text="headerText"></index-header>
-        <ul>
-            <li class="clearfix">
-                <i class="fl"></i>
-                <p class="fl ">认证服务机构</p>
-                <p class="fr validate">未验证</p>
-            </li>
-            <li class="clearfix">
-                <i class="fl"></i>
-                <p class="fl">认证投资机构</p>
-                <p class="fr validate">未验证</p>
-            </li>
-        </ul>
-    </div>
+  <div class="accountBox">
+    <index-header :text="headerText" :hasSearch="hasSearch"></index-header>
+    <ul v-if="!account.isCompany">
+      <li class="clearfix" @click="linkServiceHref">
+        <i class="fl"></i>
+        <p class="fl">认证服务机构</p>
+        <p class="fr validate" v-if="!account.isPass">未验证</p>
+        <p class="fr isAudit" v-if="account.isAudit">审核中</p>
+        <p class="fr isPass" v-if="account.isPass">
+          <span></span>已认证</p>
+      </li>
+      <li class="clearfix" @click="linkInvestHref">
+        <i class="fl"></i>
+        <p class="fl">认证投资机构</p>
+        <p class="fr validate" v-if="!account.isPass">未验证</p>
+        <p class="fr isAudit" v-if="account.isAudit">审核中</p>
+        <p class="fr isPass" v-if="account.isPass">
+          <span></span>已认证</p>
+      </li>
+    </ul>
+    <ul v-if="account.isCompany">
+      <li class="clearfix" @click="linkTeacherHref">
+        <i class="fl teacher"></i>
+        <p class="fl">认证导师</p>
+        <p class="fr validate" v-if="!account.isPass">未验证</p>
+        <p class="fr isAudit" v-if="account.isAudit">审核中</p>
+        <p class="fr isPass" v-if="account.isPass">
+          <span></span>已认证</p>
+      </li>
+      <li class="clearfix" @click="linkInvestPersonHref">
+        <i class="fl investor"></i>
+        <p class="fl">认证投资人</p>
+        <p class="fr validate" v-if="!account.isPass">未验证</p>
+        <p class="fr isAudit" v-if="account.isAudit">审核中</p>
+        <p class="fr isPass" v-if="account.isPass">
+          <span></span>已认证</p>
+      </li>
+    </ul>
+  </div>
 </template>
 <script>
 import IndexHeader from "business/indexHeader/indexHeader";
 export default {
+  data() {
+    return {
+      account: {
+        isCompany: false, //是否是公司账号认证
+        isPass: false, //是否通过
+        isAudit: false //审核中
+      }
+    };
+  },
   created() {
     this.headerText = "账号认证"; //设置头部显示导航内容
+    this.hasSearch = false;
   },
-  methods: {},
+  methods: {
+    //根据验证状态
+    linkServiceHref() {
+      //认证服务机构
+    },
+    linkInvestHref() {
+      //认证投资机构
+    },
+    linkTeacherHref() {
+      //认证导师
+    },
+    linkInvestPersonHref() {
+      //认证投资人
+    }
+  },
   components: {
     IndexHeader
   }
@@ -36,21 +84,42 @@ export default {
     line-height: 120px;
     background: #fff;
     margin-top: 20px;
-    i{
+    i {
+      display: inline-block;
+      width: 54px;
+      height: 48px;
+      margin: 35px 32px;
+      background: #f00;
+    }
+    .teacher {
+      height: 50px;
+    }
+    .investor {
+      /*投资人*/
+      height: 54px;
+    }
+    p {
+      font-size: 24px;
+      color: #333;
+      letter-spacing: 2px;
+    }
+    .validate {
+      color: #f35828;
+      margin: 0 22px;
+    }
+    .isAudit,
+    .isPass {
+      margin: 0 22px;
+    }
+    .isPass {
+      color: #6ea1ff;
+      span {
         display: inline-block;
-        width: 54px;
-        height: 48px;
-        margin:35px 32px;
+        width: 34px;
+        height: 24px;
         background: #f00;
-    }
-    p{
-        font-size: 24px;
-        color: #333;
-        letter-spacing: 2px;
-    }
-    .validate{
-        color: #f35828;
-        margin: 0 22px;
+        margin: 0 10px;
+      }
     }
   }
 }
