@@ -27,6 +27,7 @@ export default {
             this._handleFiles(e.target.files)  //批量处理图片
 
             e.target.value = ""        //清空file值，便于继续上传另一张图片
+            
             this.$emit("getImg", this.imgList)
         },
 

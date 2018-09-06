@@ -6,7 +6,7 @@
             <div class="head-box">
                 <div class="head-pic">
                     <img v-if="picList[0]" :src="picList[0].src" alt="">
-                    <upload-img @getImg="getUploadImg"></upload-img>
+                    <upload-img @getImg="getHeadUploadImg"></upload-img>
                 </div>
                 <span>更换头像</span>
             </div>
@@ -19,7 +19,7 @@
                 </div>
                 <div class="column">
                     <ul>
-                        <li class="column-left">手机</li>
+                        <li class="column-left">联系电话</li>
                         <li class="column-right"><input type="text" v-model="telephone" /></li>
                     </ul>
                 </div>
@@ -31,7 +31,7 @@
                 </div>
                 <div class="column">
                     <ul>
-                        <li class="column-left"><i>*</i>网址</li>
+                        <li class="column-left">网址</li>
                         <li class="column-right"><input type="text" disabled v-model="website" /></li>
                     </ul>
                 </div>
@@ -47,6 +47,20 @@
                         <li class="column-right">
                             <textarea name="" placeholder="请输入详细地址" v-model="address" id="" cols="30" rows="10"></textarea>
                         </li>
+                    </ul>
+                </div>
+                <div class="column">
+                    <ul>
+                        <li class="column-left">照片</li>
+                        <div class="column-right align-left">
+                            <div class="img-box">
+                                <img v-if="picList2[0]" :src="picList2[0].src" />
+                                <upload-img @getImg="getUploadImg"></upload-img>
+                            </div>
+                            <div class="upload-state">
+                                包含但不限于xxxx证件，jpg、png、gif格式，<=5MB
+                            </div>
+                        </div>
                     </ul>
                 </div>
             </div>
@@ -77,7 +91,8 @@ export default {
             email: "",              //邮箱
             simpAddress: "",              //简单地址
             address: "",             //详细地址
-            picList: []            //保存上传图片文件的数组，元素是file对象
+            picList: [],            //保存头像上传图片文件的数组，元素是file对象
+            picList2: []            //保存照片上传图片文件的数组，元素是file对象
         }
     },
     created() {
@@ -118,9 +133,8 @@ export default {
         },
         _reset() {            //重置信息操作
             this.name = ""       //姓名
-            this.sex = ""            //性别
-            this.birthday = ""          //生日
-            this.telephone = ""         //手机号
+            this.website = ""            //网址
+            this.telephone = ""         //联系方式
             this.email = ""           //邮箱
             this.simpAddress = "",              //简单地址
             this.address = ""             //详细地址
@@ -129,8 +143,11 @@ export default {
             //进行ajax请求
 
         },
-        getUploadImg(imgList) {     //获得上传的图片数组
+        getHeadUploadImg(imgList) {     //获得上传的头像图片数组
             this.picList = imgList
+        },
+        getUploadImg(imgList) {         //获得上传的照片图片数组
+            this.picList2 = imgList
         },
         _getAddress(val) {      //获取选择的地址
             this.simpAddress = val
@@ -268,6 +285,52 @@ export default {
                                 top: 3px;
                                 margin-right: 5px;
                             }
+                        }
+                        .img-box {
+                            width: 280px;
+                            height: 180px;
+                            position: relative;
+                            background: #f5f5f5;
+                            border-radius: 6px;
+                            margin-left: 10px;
+                            float: left;
+                            img {
+                                width: 100%;
+                                height: 100%;
+                                z-index: 50;
+                                position: relative;
+                            }
+                            &:before {
+                                content: "";
+                                width: 80px;
+                                border-top: 2px solid #D9D9D9;
+                                position: absolute;
+                                top: 50%;
+                                left: 50%;
+                                margin-left: -40px;
+                                z-index: 10;
+                            }
+                            &:after {
+                                content: "";
+                                height: 80px;
+                                border-left: 2px solid #D9D9D9;
+                                position: absolute;
+                                top: 50%;
+                                left: 50%;
+                                margin-top: -40px;
+                                z-index: 10;
+                            }
+                        }
+                        .upload-state {
+                            width: 255px;
+                            padding-top: 35px;
+                            padding-left: 20px;
+                            box-sizing: border-box;
+                            float: left;
+                            display: inlin-block;
+                            font-size: 20px;
+                            line-height: 36px;
+                            color: #999999;
                         }
                     }
                     .align-left {
