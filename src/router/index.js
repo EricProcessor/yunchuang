@@ -21,7 +21,10 @@ import PersonalSet from 'business/personalSet/personalSet';
 import Err404 from 'business/err404/err404';
 import CompanyAccount from 'business/companyAccount/companyAccount';
 import EnterpriseSet from 'business/enterpriseSet/enterpriseSet'
-
+import SetServiceIns from 'business/SetServiceIns/SetServiceIns';
+import SetInvestment from 'business/setInvestment/setInvestment';
+import SetTeacher from 'business/setTeacher/setTeacher';
+import SetInvestor from 'business/setInvestor/setInvestor';
 Vue.use(Router)
 
 export default new Router({
@@ -83,7 +86,7 @@ export default new Router({
         name: 'personalSet',
         component: PersonalSet,
       }, {
-        path: 'enterpriseSet',    //企业设置页面
+        path: 'enterpriseSet', //企业设置页面
         name: 'enterpriseSet',
         component: EnterpriseSet
       }]
@@ -113,6 +116,26 @@ export default new Router({
       path: '/companyAccount', //企业认证
       name: 'companyAccount',
       component: CompanyAccount
+    },
+    {
+      path: '/setServiceIns', //认证服务机构
+      name: 'setServiceIns',
+      component: SetServiceIns
+    },
+    {
+      path: '/setInvestment', //认证投资机构
+      name: 'setInvestment',
+      component: SetInvestment
+    },
+    {
+      path: '/setTeacher', //认证导师
+      name: 'setTeacher',
+      component: SetTeacher
+    },
+    {
+      path: '/setInvestor', //认证投资人
+      name: 'setInvestor',
+      component: SetInvestor
     }
   ]
 })

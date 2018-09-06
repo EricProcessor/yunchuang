@@ -187,7 +187,7 @@ export default {
           border-radius: 50%;
           position: absolute;
           top: -4px;
-          left: -4px;
+          left: -4.5px;
           z-index: 3;
           img {
             width: 100%;
