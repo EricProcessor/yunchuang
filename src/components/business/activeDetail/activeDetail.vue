@@ -54,18 +54,32 @@
         </li>
       </ul>  
     </div>
-     <span class="ac-bao">报名</span>
+    <span class="ac-bao" @click="showAddressPicker">报名</span>
+    <mt-popup
+    v-model="popupVisible"
+    >
+    sadasd
+    </mt-popup>
   </div>
 </template>
 <script>
+import Vue from 'vue'
+import { Popup } from 'mint-ui';
+Vue.component(Popup.name, Popup);
 export default {
   data() {
-    return {};
+    return {
+      popupVisible:false
+    };
   },
   methods: {
     backBtnPre() {
       this.$router.go(-1);
-    }
+    },
+    //打开popup
+    showAddressPicker(){
+      this.popupVisible = true;
+    },
   }
 };
 </script>
@@ -95,7 +109,7 @@ export default {
   }
 }
 .detail {
-  margin-top: 1.2625rem;
+  margin-top: 90px;
   padding: 0 1rem;
     .detail-title {
       width: 100%;
@@ -111,7 +125,7 @@ export default {
        width: 100%;
        display: flex;
        flex-direction: column;
-       margin-top: .7125rem;
+       margin-top: 75px;
        label{
          width: 100%;
          height:.425rem;
@@ -131,15 +145,16 @@ export default {
    }
   
 }
- .ac-bao{
-       display: block;
-       width: 100%;
-       height:40px;
-       text-align: center;
-       line-height: 40px;
-       background: #6ea1ff;
-       color: #fff;
-       font-size: 15px;
-       margin-top: 30px;
-     }
+.ac-bao{
+  display: block;
+  width: 100%;
+  height:85px;
+  text-align: center;
+  line-height: 85px;
+  background: #6ea1ff;
+  color: #fff;
+  font-size: 25px;
+  position: fixed;
+  bottom:0;
+}
 </style>
