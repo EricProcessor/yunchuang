@@ -5,7 +5,7 @@
             <p class="remind" v-show="remind">带*号为必填项，请务必如实填写  <i class="close" @click="_closeRemind">&times;</i></p>
             <div class="head-box">
                 <div class="head-pic">
-                    <img v-if="picList[0]" :src="picList[0].file.src" alt="">
+                    <img v-if="picList[0]" :src="picList[0].src" alt="">
                     <upload-img @getImg="getUploadImg"></upload-img>
                 </div>
                 <span>更换头像</span>
@@ -21,8 +21,8 @@
                     <ul>
                         <li class="column-left"><i>*</i>性别</li>
                         <li class="column-right align-left">
-                            <span :class="{ active: sex == '男'}" @click="_setSex('男')">男</span>
-                            <span :class="{ active: sex == '女'}" @click="_setSex('女')">女</span>
+                            <span :class="{ active: sex == '男'}" @click="_setSex('男')"><img src="./man.png" />男</span>
+                            <span :class="{ active: sex == '女'}" @click="_setSex('女')"><img src="./woman.png" />女</span>
                         </li>
                     </ul>
                 </div>
@@ -60,17 +60,14 @@
                 </div>
             </div>
             <!--日期选择组件-->
-            <mt-datetime-picker 
-                ref="datePicker"
-                type="date"
-                @confirm="_handleTime"
-            ></mt-datetime-picker>
+                <mt-datetime-picker 
+                    ref="datePicker"
+                    type="date"
+                    @confirm="_handleTime"
+                ></mt-datetime-picker>
             <!--日期选择组件-->
             <!--地址选择组件-->
-            <mt-popup position="bottom" v-model="addressShow" :showToolbar="true">
-                <mt-picker :slots="slots" :showToolbar="true" valueKey="name"  @change="_changeAddress"></mt-picker>
-            </mt-popup>
-
+                <address-pick ref="addressPopup" @selectAddress="_getAddress"></address-pick>
             <!--地址选择组件-->
             <div class="butt">
                 <div @click="_resetEvent" class="reset">重置</div>
@@ -81,11 +78,11 @@
 </template>
 <script>
 import IndexHeader from 'business/indexHeader/indexHeader'
-import address from '@/config/address.json'         //地址三级联动json数据
 import axios from '@/config/axiosConf'
 import config from '@/config/config'
 import {MessageBox} from 'mint-ui'
 import UploadImg from 'base/uploadImg/uploadImg'
+import AddressPick from 'base/addressPick/addressPick'
 export default {
     data() {
         return {
@@ -98,34 +95,7 @@ export default {
             email: "",              //邮箱
             simpAddress: "",              //简单地址
             address: "",             //详细地址
-            picList: [],            //保存上传图片文件的数组，元素是file对象
-            slots: [{
-                flex: 1,    
-                values: Object.keys(address),
-                className: 'slot1',
-                textAlign: 'center'
-            }, {
-                divider: true,
-                content: '-',
-                className: 'slot2'
-            }, {
-                flex: 1,
-                values: Object.keys(address["北京市"]),
-                className: 'slot3',
-                textAlign: 'center'
-            }, {
-                divider: true,
-                content: '-',
-                className: 'slot4'
-            }, {
-                flex: 1,
-                values: address["北京市"]["市辖区"],
-                className: 'slot5',
-                textAlign: 'center'
-            }],
-            addressProvince: '',
-            addressCity: '',
-            addressCounty: ''
+            picList: []            //保存上传图片文件的数组，元素是file对象
         }
     },
     created() {
@@ -163,24 +133,8 @@ export default {
                 day = date.getDate()
             this.birthday = `${year}-${month}-${day}`
         },
-        _changeAddress(picker, values) {              //地址选择组件改变后调用的  回调函数
-            // console.log(values)             //values为当前选中的地址数组
-            if(address[values[0]]) {
-
-                picker.setSlotValues(1, Object.keys(address[values[0]]));    //设置二级联动的内容，这里是城市。第二个参数为内容数组
-                picker.setSlotValues(2, address[values[0]][values[1]])    //设置三级联动的内容，这里是县/区。第三个参数为
-                this.addressProvince = values[0];
-                this.addressCity = values[1];
-                this.addressCounty = values[2]
-                this.simpAddress = `${values[0]} - ${values[1]} - ${values[2]}`
-            }
-        },
-        _setAddress() {     //请求用户数据后，设置地点
-            picker.setValues(["北京", "北京"])
-        },
         _showAddressPopup() {       //地址选择栏弹出显示
-            
-            this.addressShow = true
+            this.$refs.addressPopup.showAddressComponent()
         },
         _setSex(val) {      //设置性别
             this.sex = val
@@ -192,10 +146,10 @@ export default {
                 showCancelButton: true,
                 showConfirmButton: true,
             }).then( action => {
-                (action === "confirm") && this._reset()
+                (action === "confirm") && this._reset()     //如果点击确定，那么进行重置操作
             })
         },
-        _reset() {            //重置操作
+        _reset() {            //重置信息操作
             this.name = ""       //姓名
             this.sex = ""            //性别
             this.birthday = ""          //生日
@@ -210,11 +164,15 @@ export default {
         },
         getUploadImg(imgList) {     //获得上传的图片数组
             this.picList = imgList
+        },
+        _getAddress(val) {      //获取选择的地址
+            this.simpAddress = val
         }
     },
     components: {
         IndexHeader,
-        UploadImg
+        UploadImg,
+        AddressPick
     }
 }
 </script>
@@ -336,6 +294,13 @@ export default {
                             &.active {
                                 border: solid 2px #6ea1ff;
                                 color: #6ea1ff;
+                            }
+                            img {
+                                width: 18px;
+                                height: 24px;
+                                position: relative;
+                                top: 3px;
+                                margin-right: 5px;
                             }
                         }
                     }
