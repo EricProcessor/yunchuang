@@ -31,9 +31,29 @@
   </ul>
 </template>
 <script>
+import axios from "axios";
+import config from "@/config/config";
 export default {
   props: ["toggleInt"],
-  methods: {}
+  mounted() {
+    this.inforData();
+  },
+  methods: {
+    //获取后台数据
+    inforData() {
+      let _url = config.host + "h5frontmembercentre-home";
+      // if (toggleInt == 1) {
+      //   let _url = config.host + "h5frontmembercentre-home";
+      // }
+      let params = new URLSearchParams();
+      // params.append("selType", this.serachSend.SearchClass);
+      // params.append("KeyWord", encodeURI(encodeURI(this.serachSend.searchVal)));
+      axios.post(_url).then(res => {
+        // this.items = res.data;
+        console.log(res.data);
+      });
+    }
+  }
 };
 </script>
 <style lang="less" scoped>
