@@ -64,6 +64,7 @@
                     ref="datePicker"
                     type="date"
                     @confirm="_handleTime"
+                    :startDate="new Date('1900-01-01')"
                 ></mt-datetime-picker>
             <!--日期选择组件-->
             <!--地址选择组件-->
@@ -318,9 +319,9 @@ export default {
             background: #fff;
             z-index: 300;
         }
-        .mint-popup-bottom {
-            width: 100%;
-        }
+        // .mint-popup-bottom {
+        //     width: 100%;
+        // }
         .butt {
             height: 88px;
             width: 100%;

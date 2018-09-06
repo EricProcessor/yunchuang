@@ -10,7 +10,7 @@
 import address from '@/config/address.json'         //地址三级联动json数据
 export default {
     props: {
-        position: {             //弹出方向设置
+        position: {             //弹出方向设置，默认下方弹出
             type: String,
             default: 'bottom'
         }
@@ -74,6 +74,8 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-
+.mint-popup {
+    width: 100% !important;
+}
 </style>
 
