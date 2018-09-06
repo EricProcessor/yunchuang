@@ -5,13 +5,13 @@
       <i class="mintui mintui-back"></i>
     </a>
     <div class="selModel" >
-      <div  @click.stop="TogSelect=!TogSelect"><span>{{checkedClass}}</span><img src="./updown.png" alt=""></div>
+      <div  @click.stop="TogSelect=!TogSelect"><span>{{serachSend.checkedClass}}</span><img src="./updown.png" alt=""></div>
       <ol v-show="TogSelect">
         <li  @click="checkSeachType(item)" v-for="(item,index) in checkClass" :key="index"  >{{item.title}}</li>
       </ol>
     </div>
     <div class="mint-searchbar-inner">
-      <input type="text" placeholder="搜索" v-model="searchVal" class="mint-searchbar-core">
+      <input type="text" placeholder="搜索" v-model="serachSend.searchVal" class="mint-searchbar-core">
       <i class="mintui mintui-search" @click="inforData"></i> 
     </div>
   </div>
@@ -24,7 +24,7 @@
     </ul>
     <searchHot v-show="!afertList.type"></searchHot>
   </div> -->
-  <search-after-list v-show="afertList.type"></search-after-list>
+  <search-after-list :items="items"></search-after-list>
   
 </div>
 
@@ -50,7 +50,6 @@ export default {
       // ],
       // value: "",
       // title: "",
-      searchVal: "",
       checkClass: [
         { title: "创业服务", Ctype: "F" },
         { title: "创业资讯", Ctype: "C" },
@@ -60,13 +59,16 @@ export default {
         { title: "投资人", Ctype: "R" },
         { title: "创业课堂", Ctype: "D" }
       ],
-      SearchClass: "F",
-      checkedClass: "创业活动",
-      TogSelect: false,
-      afertList: {
-        type: false
+      serachSend: {
+        SearchClass: "F",
+        checkedClass: "创业服务",
+        searchVal: ""
       },
-      searchVal: "",
+      TogSelect: false,
+      // afertList: {
+      //   type: false
+      // },
+
       // items: [
       //   {
       //     name: "上海",
@@ -77,11 +79,11 @@ export default {
       //     value: "bj"
       //   }
       // ]
-      item: []
+      items: []
     };
   },
   mounted() {
-    this.inforData();
+    // this.inforData();
   },
   methods: {
     // 点击搜索内容切换至列表信息
@@ -97,22 +99,17 @@ export default {
     //选择搜索的类型
     checkSeachType(item) {
       this.checkedClass = item.title;
-      this.SearchClass = item.Ctype;
+      this.serachSend.SearchClass = item.Ctype;
     },
     //获取后台数据
     inforData() {
       let _url = config.host + "/h5frontsearch-home";
-      axios
-        .get(_url, {
-          params: {
-            selType: this.SearchClass,
-            KeyWord: this.searchVal
-          }
-        })
-        .then(res => {
-          this.item = res.data;
-          console.log(res);
-        });
+      let params = new URLSearchParams();
+      params.append("selType", this.serachSend.SearchClass);
+      params.append("KeyWord", encodeURI(encodeURI(this.serachSend.searchVal)));
+      axios.post(_url, params).then(res => {
+        this.items = res.data.List;
+      });
     }
   },
   computed: {
