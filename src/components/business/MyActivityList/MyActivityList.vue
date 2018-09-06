@@ -23,7 +23,26 @@
   </ul>
 </template>
 <script>
-export default {};
+import axios from "axios";
+import config from "@/config/config";
+export default {
+  mounted() {
+    this.inforData();
+  },
+  methods: {
+    //获取后台数据
+    inforData() {
+      let _url = config.host + "h5frontmyattentionproject-home";
+      let params = new URLSearchParams();
+      // params.append("selType", this.serachSend.SearchClass);
+      // params.append("KeyWord", encodeURI(encodeURI(this.serachSend.searchVal)));
+      axios.post(_url).then(res => {
+        // this.items = res.data;
+        console.log(res.data);
+      });
+    }
+  }
+};
 </script>
 <style lang="less" scoped>
 //我的活动内容

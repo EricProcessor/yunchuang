@@ -24,6 +24,11 @@ import CompanyAccount from 'business/companyAccount/companyAccount';
 import Changepassword from 'business/Accountsecurity/Changepassword.vue'  //手机绑定
 import Tel from 'business/Accountsecurity/Tel.vue'  //修改密码
 import Emaild from 'business/Accountsecurity/Emaild.vue'  //邮箱认证
+import EnterpriseSet from 'business/enterpriseSet/enterpriseSet'
+import SetServiceIns from 'business/SetServiceIns/SetServiceIns';
+import SetInvestment from 'business/setInvestment/setInvestment';
+import SetTeacher from 'business/setTeacher/setTeacher';
+import SetInvestor from 'business/setInvestor/setInvestor';
 Vue.use(Router)
 
 export default new Router({
@@ -84,6 +89,10 @@ export default new Router({
         path: 'personalSet', //个人设置页面
         name: 'personalSet',
         component: PersonalSet,
+      }, {
+        path: 'enterpriseSet', //企业设置页面
+        name: 'enterpriseSet',
+        component: EnterpriseSet
       }]
     }, {
       path: '/activeDetail',
@@ -133,6 +142,26 @@ export default new Router({
       path: '/companyAccount', //企业认证
       name: 'companyAccount',
       component: CompanyAccount
+    },
+    {
+      path: '/setServiceIns', //认证服务机构
+      name: 'setServiceIns',
+      component: SetServiceIns
+    },
+    {
+      path: '/setInvestment', //认证投资机构
+      name: 'setInvestment',
+      component: SetInvestment
+    },
+    {
+      path: '/setTeacher', //认证导师
+      name: 'setTeacher',
+      component: SetTeacher
+    },
+    {
+      path: '/setInvestor', //认证投资人
+      name: 'setInvestor',
+      component: SetInvestor
     }
   ]
 })

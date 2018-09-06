@@ -31,13 +31,10 @@
 <script>
   import Vue from 'vue'
   import { Popup } from 'mint-ui';
-
   Vue.component(Popup.name, Popup);
   import { Picker } from 'mint-ui';
   Vue.component(Picker.name, Picker);
- 
-  //引入省市区数据json文件
-  import threeLevelAddress from './threeLevelAddress.json'
+  import threeLevelAddress from './threeLevelAddress.json'//引入省市区数据json文件
  
   export default {
     data(){
@@ -46,9 +43,6 @@
         province:'',//省
         city:'',//市
         county:'',//县
-        // provinceCode:'',//省级代码
-        // cityCode:'', //市级代码
-        // countyCode:'',//县级代码
         regionVisible:false,//弹出框是否可见
         regionInit:false,//禁止地区选择器自动初始化，picker组件会默认进行初始化，导致一进入页面就会默认选中一个初始3级地址
         //picker组件插槽
@@ -99,20 +93,12 @@
       //picker组件的change事件，进行取值赋值
       addressChange(picker, values){
         // console.log(picker);
-        // console.table(values);
         if (this.regionInit){
           //取值并赋值
           this.region = values[0]["name"] + "-" + values[1]["name"] + "-" + values[2]["name"];
           this.province = values[0]["name"];
           this.city = values[1]["name"];
           this.county = values[2]["name"];
-          this.provinceCode = values[0]["code"];
-          this.cityCode = values[1]["code"];
-          this.countyCode = values[2]["code"];
- 
-          // console.log(picker.getSlotValue(0));
-          // console.table(picker.getSlotValues(0));
-          // console.table(picker.getValues());
           //给市、县赋值
           picker.setSlotValues(1, this.getCityArr(values[0]["name"]));
           picker.setSlotValues(2, this.getCountyArr(values[0]["name"], values[1]["name"]));
@@ -168,11 +154,6 @@
         return countyArr;
       },
     },
-//     mounted(){
-//       //初始化设备高度为设备高度height 100%
-//       let orderHeight = window.innerHeight;
-//       document.getElementById("three_level_address").style.height = orderHeight + 'px';
-//     }
   }
  
 </script>
@@ -195,6 +176,7 @@
             border:1px solid #f2f2f2;
             padding-left:10px;
             border-radius: 4px;
+            color:#666;
         }
         i{
             position: absolute;
