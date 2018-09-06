@@ -58,7 +58,27 @@
     <mt-popup
     v-model="popupVisible"
     >
-    sadasd
+      <div class="popupBox">
+        <i @click="closeAddressPicker">✖</i>
+        <ul>
+          <li>
+            <label>活动名称：</label><span>2018中国创业舞林大会</span>
+          </li>
+          <li class="mh">
+            <label>活动时间：</label><span>2018年6月19日<br>上午12：00到0:00</span>
+          </li>
+          <li class="mh">
+            <label>活动地点：</label><span>创新园京东云电商创新中心5F路演大厅</span>
+          </li>
+          <li>
+            <label class="mw">联系人：</label><input type="text"/>
+          </li>
+          <li>
+            <label>联系电话：</label><input type="text"/>
+          </li>
+        </ul>
+        <button>提交</button>
+      </div>
     </mt-popup>
   </div>
 </template>
@@ -79,6 +99,10 @@ export default {
     //打开popup
     showAddressPicker(){
       this.popupVisible = true;
+    },
+    //关闭popup
+    closeAddressPicker(){
+      this.popupVisible = false;
     },
   }
 };
@@ -156,5 +180,59 @@ export default {
   font-size: 25px;
   position: fixed;
   bottom:0;
+}
+.popupBox{
+  width:580px;
+  height:680px;
+  position: relative;
+  i{
+    position: absolute;
+    right:8px;
+    top:8px;
+  }
+  ul{
+    padding-top: 50px;
+    li{
+      height:38px;
+      padding:25px 26px;
+      display: flex;
+      letter-spacing: 1px;
+      color: #333;
+      label{
+        width: 130px;
+        line-height: 36px;
+        text-align: end;
+      }
+      .mw{
+        letter-spacing: 7px;
+      }
+      span{
+        width: 350px;
+        line-height: 36px;
+      }
+      input{
+        width: 340px;
+        height:40px;
+        background: #f2f2f2;
+        border:1px solid rgb(226, 226, 226);
+      }
+    }
+    .mh{
+      height:48px;
+    }
+  }
+  button{
+    width: 258px;
+    height:54px;
+    text-align: center;
+    line-height:27px;
+    margin-left:154px;
+    margin-top:60px;
+    background: #6ea1ff;
+    color: #fff;
+    font-size: 26px;
+    border:0;
+    border-radius: 5px;
+  }
 }
 </style>

@@ -8,6 +8,7 @@
    <mt-datetime-picker
       type="date"
       ref="picker"
+      v-model="dateTime"
       year-format="{value} 年"
       month-format="{value} 月"
       date-format="{value} 日"
@@ -24,22 +25,13 @@ export default {
   data () {
     return {
       birthdays: "",
-      dateTime: '',
-      startDate: new Date()
+      dateTime: new Date()
     }
   },
   methods: {
     openPicker () {
       this.$refs.picker.open()
     },
-    // formatDate(date) {
-    // const y = date.getFullYear()
-    // let m = date.getMonth() + 1
-    // m = m < 10 ? '0' + m : m
-    // let d = date.getDate()
-    // d = d < 10 ? ('0' + d) : d
-    // return y + ' ' + m + ' ' + d
-    // },
     handleConfirms(date){
         console.log(date)
         let year = date.getFullYear(),
@@ -63,6 +55,7 @@ export default {
         border:1px solid #f2f2f2;
         padding-left:10px;
         border-radius: 4px;
+        color: #666;
     }
     i{
         position: absolute;
