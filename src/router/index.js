@@ -21,9 +21,9 @@ import PersonalSet from 'business/personalSet/personalSet';
 import Err404 from 'business/err404/err404';
 import Accountsecuritys from 'business/Accountsecurity/Accountsecuritys.vue' //账号安全
 import CompanyAccount from 'business/companyAccount/companyAccount';
-import Changepassword from 'business/Accountsecurity/Changepassword.vue'  //手机绑定
-import Tel from 'business/Accountsecurity/Tel.vue'  //修改密码
-import Emaild from 'business/Accountsecurity/Emaild.vue'  //邮箱认证
+import Changepassword from 'business/Accountsecurity/Changepassword.vue' //手机绑定
+import Tel from 'business/Accountsecurity/Tel.vue' //修改密码
+import Emaild from 'business/Accountsecurity/Emaild.vue' //邮箱认证
 import EnterpriseSet from 'business/enterpriseSet/enterpriseSet'
 import SetServiceIns from 'business/SetServiceIns/SetServiceIns';
 import SetInvestment from 'business/setInvestment/setInvestment';
@@ -93,6 +93,14 @@ export default new Router({
         path: 'enterpriseSet', //企业设置页面
         name: 'enterpriseSet',
         component: EnterpriseSet
+      }, {
+        path: 'companyAccount', //企业认证
+        name: 'companyAccount',
+        component: CompanyAccount
+      }, {
+        path: 'accountsecuritys', //账号安全 
+        name: 'Accountsecuritys',
+        component: Accountsecuritys
       }]
     }, {
       path: '/activeDetail',
@@ -117,11 +125,6 @@ export default new Router({
       component: Err404
     },
     {
-      path: '/accountsecuritys', //账号安全 
-      name: 'Accountsecuritys',
-      component: Accountsecuritys
-    },
-    {
       path: '/changepassword', //手机绑定  Tel
       name: 'Changepassword',
       component: Changepassword
@@ -135,13 +138,6 @@ export default new Router({
       path: '/emaild', //邮箱认证   Emaild
       name: 'Emaild',
       component: Emaild
-    },
-
-
-    {
-      path: '/companyAccount', //企业认证
-      name: 'companyAccount',
-      component: CompanyAccount
     },
     {
       path: '/setServiceIns', //认证服务机构

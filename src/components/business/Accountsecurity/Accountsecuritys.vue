@@ -1,11 +1,12 @@
 <template>
-    <div class="wrap">
+    <div class="wrap towLevelRouter">
+        <index-header :text="headerText" :hasSearch="false"></index-header>
         <!-- 头部 -->
-            <div class="head">
+            <!-- <div class="head">
                 <span>&lt;</span>
                 <span>账号安全</span>
                 <span></span>
-            </div>
+            </div> -->
     <!-- 手机绑定 修改密码 邮箱验证 -->
         <section class="center">
             <div class="main">
@@ -64,210 +65,211 @@
 </template>
 
 <script>
+import IndexHeader from "business/indexHeader/indexHeader";
 export default {
-
-}
+  created() {
+    this.headerText = "账号安全"; //设置头部显示导航内容
+  },
+  components: {
+    IndexHeader
+  }
+};
 </script>
 
 <style lang="less" scoped>
-    .wrap{
-        // 头部------账号安全
-        .head{
-            display:flex;
-            justify-content: space-between;
-            background: #253350;
-            height:50px;
-            padding: 10px 0;
-            span{
-                color:#ffffff;
-               
+// 二级路由定位
+.towLevelRouter {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 200;
+  background: rgb(245, 245, 245);
+}
+.wrap {
+  // 头部------账号安全
+  .head {
+    display: flex;
+    justify-content: space-between;
+    background: #253350;
+    height: 50px;
+    padding: 10px 0;
+    span {
+      color: #ffffff;
+    }
+    span:first-child {
+      font-size: 50px;
+      margin-left: 25px;
+      width: 20px;
+      height: 36px;
+    }
+    span:nth-child(2) {
+      //    width: 164px;
+      height: 37px;
+      font-family: MicrosoftYaHei;
+      font-size: 38px;
+      font-weight: normal;
+      font-stretch: normal;
+      line-height: 46px;
+      letter-spacing: 4px;
+      color: #ffffff;
+      width: 60%;
+      text-align: center;
+    }
+  }
+  .center {
+    height: 140px;
+
+    .main {
+      //    手机绑定
+      .main_dl {
+        background: #fff;
+        margin-top: 4%;
+        height: 140px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .one {
+          dl {
+            display: flex;
+            dt {
+              margin-left: 15%;
+
+              img {
+                width: 90%;
+                padding-right: 5%;
+              }
             }
-            span:first-child{
-                font-size: 50px;
-                margin-left: 25px;
-                width: 20px;
-	            height: 36px;
-            }
-            span:nth-child(2){
-            //    width: 164px;
-                height: 37px;
+            dd {
+              margin-left: 10px;
+              //  margin-left:5px;
+              p:first-child {
+                height: 33px;
                 font-family: MicrosoftYaHei;
-                font-size: 38px;
+                font-size: 20px;
                 font-weight: normal;
                 font-stretch: normal;
-                line-height: 46px;
-                letter-spacing: 4px;
-                color: #ffffff;
-                width:60% ;
-                text-align: center;
+                letter-spacing: 2px;
+                color: #333333;
+              }
+              p:last-child {
+                color: #6ea1ff;
+              }
             }
+          }
         }
-       .center{
-           height:140px;
-          
-          
-          
-           .main{
-            //    手机绑定
-               .main_dl{
-                   background: #fff;
-                   margin-top: 4%;
-                   height:140px;
-                   display: flex;
-                   justify-content: space-between;
-                    align-items: center;
-                    .one{
-                        
-                      dl{
-                            display: flex;
-                            dt{
-                                margin-left:15%;
-                                
-                                img{
-                                    width: 90%;
-                                    padding-right: 5%;
+        .two {
+          width: 13%;
+          p:first-child {
+            color: red;
+            font-size: 24px;
+          }
+          p:last-child {
+            color: #6ea1ff;
+            font-size: 24px;
+            display: none;
+          }
+        }
+      }
+      // 修改密码
+      .lock_dl {
+        background: #fff;
+        margin-top: 4%;
+        height: 140px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .one {
+          dl {
+            display: flex;
+            dt {
+              margin-left: 7%;
 
-                                }
-                            }
-                            dd{
-                                    margin-left: 10px;
-                              //  margin-left:5px;
-                                p:first-child{
-                               
-                                    height: 33px;
-                                    font-family: MicrosoftYaHei;
-                                    font-size: 20px;
-                                    font-weight: normal;
-                                    font-stretch: normal;
-                                    letter-spacing: 2px;
-                                    color: #333333;
-                                }
-                                p:last-child{
-                                    color: #6ea1ff;
-                                }
-                            }
-                      }
-                    }
-                    .two{
-                       width: 13%;
-                        p:first-child{
-                            color: red;
-                            font-size: 24px;
-                        }
-                        p:last-child{
-                            color: #6ea1ff;
-                            font-size: 24px;
-                            display: none;
-                        }
-                    }
-               }
-            // 修改密码
-               .lock_dl{
-                    background: #fff;
-                   margin-top: 4%;
-                   height:140px;
-                   display: flex;
-                   justify-content: space-between;
-                    align-items: center;
-                    .one{
-                        
-                      dl{
-                            display: flex;
-                            dt{
-                                margin-left:7%;
-                                
-                                img{
-                                    width: 80%;
-                                   
+              img {
+                width: 80%;
+              }
+            }
+            dd {
+              margin-left: 8px;
+              width: 119%;
+              p:first-child {
+                height: 33px;
+                font-family: MicrosoftYaHei;
+                font-size: 20px;
+                font-weight: normal;
+                font-stretch: normal;
+                letter-spacing: 2px;
+                color: #333333;
+              }
+              p:last-child {
+                color: #999999;
+              }
+            }
+          }
+        }
+        .two {
+          width: 13%;
+          p:first-child {
+            color: #6ea1ff;
+            font-size: 24px;
+            text-align: center;
+          }
+          // p:last-child{
+          //     color: #6ea1ff;
+          //     font-size: 24px;
+          // }
+        }
+      }
+      //    邮箱验证
+      .email_dl {
+        background: #fff;
+        margin-top: 4%;
+        height: 140px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .one {
+          dl {
+            display: flex;
+            dt {
+              margin-left: 7%;
 
-                                }
-                            }
-                            dd{
-                                 margin-left: 8px;
-                                width: 119%;
-                                p:first-child{
-                               
-                                    height: 33px;
-                                    font-family: MicrosoftYaHei;
-                                    font-size: 20px;
-                                    font-weight: normal;
-                                    font-stretch: normal;
-                                    letter-spacing: 2px;
-                                    color: #333333;
-                                }
-                                p:last-child{
-                                    color: #999999;
-                                    
-                                }
-                            }
-                      }
-                    }
-                     .two{
-                       width: 13%;
-                        p:first-child{
-                            color: #6ea1ff;
-                            font-size: 24px;
-                            text-align: center;
-                        }
-                        // p:last-child{
-                        //     color: #6ea1ff;
-                        //     font-size: 24px;
-                        // }
-                    }
-               }
-            //    邮箱验证
-               .email_dl{
-                    background: #fff;
-                   margin-top: 4%;
-                   height:140px;
-                   display: flex;
-                   justify-content: space-between;
-                    align-items: center;
-                    .one{
-                        
-                      dl{
-                            display: flex;
-                            dt{
-                                margin-left:7%;
-                                
-                                img{
-                                    width: 80%;
-                                   
-
-                                }
-                            }
-                            dd{
-                                 margin-left: 8px;
-                                width: 119%;
-                                p:first-child{
-                               
-                                    height: 33px;
-                                    font-family: MicrosoftYaHei;
-                                    font-size: 20px;
-                                    font-weight: normal;
-                                    font-stretch: normal;
-                                    letter-spacing: 2px;
-                                    color: #333333;
-                                }
-                                p:last-child{
-                                      color: #999999;
-                                }
-                            }
-                      }
-                    }
-                     .two{
-                       width: 13%;
-                        p:first-child{
-                            color: red;
-                            font-size: 24px;
-                        }
-                        p:last-child{
-                            color: #6ea1ff;
-                            font-size: 24px;
-                        }
-                    }
-               }
-           }
-       }
+              img {
+                width: 80%;
+              }
+            }
+            dd {
+              margin-left: 8px;
+              width: 119%;
+              p:first-child {
+                height: 33px;
+                font-family: MicrosoftYaHei;
+                font-size: 20px;
+                font-weight: normal;
+                font-stretch: normal;
+                letter-spacing: 2px;
+                color: #333333;
+              }
+              p:last-child {
+                color: #999999;
+              }
+            }
+          }
+        }
+        .two {
+          width: 13%;
+          p:first-child {
+            color: red;
+            font-size: 24px;
+          }
+          p:last-child {
+            color: #6ea1ff;
+            font-size: 24px;
+          }
+        }
+      }
     }
+  }
+}
 </style>

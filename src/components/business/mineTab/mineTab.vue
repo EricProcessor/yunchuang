@@ -34,9 +34,14 @@ export default {
           tabImg: require("./myActivity.png")
         },
         {
-          path: "",
+          path: "/accountsecuritys",
           title: "账号安全",
           tabImg: require("./mySafety.png")
+        },
+        {
+          path: "/companyAccount",
+          title: "账号认证",
+          tabImg: require("./authen.png")
         },
         {
           path: "/personalSet",
