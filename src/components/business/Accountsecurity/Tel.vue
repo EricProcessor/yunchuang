@@ -16,7 +16,7 @@
                </div>
                
             <div class="iptone">
-                <input type="password"  class="txtone"  @blur="ownPwdBlur" v-model="old.oldtxt" placeholder="请输入原密码"  >
+                <input type="password"  class="txtone"  @blur="ownPwdBlur(old.oldtxt)" v-model="old.oldtxt" placeholder="请输入原密码"  >
                 
             </div>
             
@@ -33,12 +33,13 @@
                </div>
                
             <div class="ipttwo">
-                <input type="password" class="txtone" v-model="newpss.newtxt" placeholder="密码长度6-21位，由字母数字组成，区分大小写"  >
+                <input type="password" class="txtone" @blur="newspsd" v-model="newpss.newtxt" placeholder="密码长度6-21位，由字母数字组成，区分大小写"  >
             </div>
             
             <div class="new_pas">
-                <p class="new_one"  >{{newpss.new_ones}}</p>
+                <p class="new_one"  v-show="newpss.newpsd">{{newpss.new_ones}}</p>
                 <p class="new_two">{{newpss.new_twos}}</p>
+                <div v-show="newpss.formats" >{{newpss.format}}</div>  
             </div>
           </div>
         <div class="new_yuanone" >
@@ -47,14 +48,14 @@
                </div>
                
             <div class="new_iptthree">
-                <input type="password" class="txtone" placeholder="再次输入登录密码" v-model="newpss.confirmtxt" >
+                <input type="password" class="txtone" @blur="Reaffirm" v-model="newpss.confirmtxt" placeholder="再次输入登录密码"  >
                 
             </div>
             
             <div class="cuo" >
-                <p class="cuo_p" v-show="judge"  >{{newpss.newendold}}</p>
-                 <p class="cuo_null" >{{newpss.nulls}}</p>
-                 <p>{{newpss.two}}</p>
+                <p class="cuo_p" v-show="newpss.identical"  >{{newpss.newendold}}</p>
+                 <p class="cuo_null" v-show="newpss.judge" >{{newpss.nulls}}</p>
+                 
             </div>
           </div>
         </div>
@@ -62,7 +63,7 @@
     <!-- footer -->
     <div class="foot">
             <div class="btn">
-                <p class="foot_btn" @click="add" >保存</p>
+                <p class="foot_btn" @click="add(newpss.confirmtxt)" >保存</p>
             </div>
         </div>
     </div>
@@ -73,30 +74,34 @@ export default {
     data () {
         return {
             
-            judge:true,
+            
             old:{
                   oldtxt:"",      //原密码
                   oldshow:false,    //判断密码框不能为空时
                   old_nls:"原密码不能为空",
-                  matching:false,
+                  matching:false,       
                   old_matchings:"和原密码不匹配", 
                   
             },
 
           newpss:{
                 newtxt:"",      //新密码
-                new_ones:"密码不能为空",
-                //new_twos:"密码不能为空",
+                newpsd:false,  //判断新密码框不能为空时
+                format:"以数字字母的六-二十一位数组成",
+                formats:false,      //判断格式不正确时弹出
+                new_ones:"密码不能为空", 
                 confirmtxt:"",  //确认密码
+                judge:false,       //确认密码下的默认值         
                 nulls:"结果不能为空",   //确认密码下的验证
-                newendold:"输入的和新密码不一致"  //确认密码下的验证
-            
+                identical:false,       //点击保存时,判断新密码和确认密码的值
+                newendold:"输入的和新密码不一致",  //确认密码下的验证
           }
           
 
         }
     },
     methods:{
+        //返回上一层
         go(){
             this.$router.go(-1);
         },
@@ -105,22 +110,55 @@ export default {
             let isPwd = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,21}$/;
             return isPwd.test(pwd);
          },
-         
-         ownPwdBlur(){
-             //判断原密码,新密码,确认密码是否为空
-            if(this.old.oldtxt == "" ||this.newpss.newtxt == "" || this.newpss.confirmtxt ==""){
-                this.old.oldshow = true;  
-               
+         //判断原密码是否为空
+         ownPwdBlur(oldVal){
+             //判断字符串为空
+             console.log(oldVal)
+            if(this.old.oldtxt == ""  ){
+                this.old.oldshow = true; 
+                return;          
             }else{
                 this.old.oldshow = false;
-                
+                return;
             }
-            
-         },
-         //保存按钮点击事件
-        add(){
-            if(this.isPwd(this.newpss.newtxt)){
+            //判断正则验证
+            if(this.isPwd(this.old.oldtxt)){
+                
+            }else{
+               this.old.matching = true;
+               
+            }
 
+         },
+         //判断新密码是否为空
+        newspsd(){
+            
+            if(this.newpss.newtxt == ""){
+                this.newpss.newpsd = true;           
+            }else{
+                this.newpss.newpsd = false;
+            }
+        },
+        //判断确认密码是否为空
+        Reaffirm(){
+            if(this.newpss.confirmtxt == ""){
+                this.newpss.judge = true;
+            }else{
+                this.newpss.judge = false;
+            }
+        },
+         //保存按钮点击事件
+        add(confirmtxtVal){
+            console.log(confirmtxtVal)
+            let old = this.old.oldtxt,
+                news = this.newpss.newtxt;
+            if(old == "" || news == "" || confirmtxtVal == ""){
+                alert('信息不完整')
+            }
+            if(news == confirmtxtVal){
+                alert(1)
+            }else{
+                this.newpss.identical = true;
             }
 
 
@@ -169,7 +207,6 @@ body{
             padding: 10px 0;
             span{
                 color:#ffffff;
-               
             }
            
             span:nth-child(2){
@@ -240,10 +277,10 @@ body{
                      height:20px;
                      letter-spacing: 2px;
                     .new_one{
-                        display: none;
+                       // display: none;
                     }
                     .new_two{
-                      display: none;
+                     // display: none;
                     }
                 }
             }
@@ -252,14 +289,14 @@ body{
              .new_yuanone{
                  .cuo{
                     .cuo_p{
-                        display: none;
+                    display: none;
                     }
                     text-align: right;
                     margin-right: 40px;
                     color: red;
                    letter-spacing: 2px;
                    .cuo_null{
-                       display: none;
+                      // display: none;
                    }
                 }
                 margin-left: 40px;
@@ -289,6 +326,7 @@ body{
                 color: red;
                 margin-right:40px;
                 letter-spacing: 2px;
+                height:5px;
                 .old_nl{
                    // display: none;
                 }

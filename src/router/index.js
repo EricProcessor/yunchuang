@@ -122,7 +122,7 @@ export default new Router({
       component: Accountsecuritys
     },
     {
-      path: '/changepassword', //手机绑定  Tel
+      path: '/changepassword', //手机绑定  
       name: 'Changepassword',
       component: Changepassword
     },
@@ -136,8 +136,6 @@ export default new Router({
       name: 'Emaild',
       component: Emaild
     },
-
-
     {
       path: '/companyAccount', //企业认证
       name: 'companyAccount',

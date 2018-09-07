@@ -77,7 +77,7 @@ export default {
         yanzheng(){
            var tel = 11 && /^((13|14|15|17|18|)[0-9]{1}\d{8})$/
             if(this.Obtain.tels == ""){
-                alert('输入的值不能为空')
+                alert('请输入手机号码')
                 return;
             }
             if(!tel.test(this.Obtain.tels)){
@@ -127,8 +127,8 @@ export default {
             .lefts{
                 color:#fff;
                 margin-left:10px;
-                font-size: 45px;
-                margin-top: 2px;
+                font-size: 40px;
+                margin-top: 5px;
             }
             display:flex;
             justify-content: space-between;
@@ -144,7 +144,7 @@ export default {
             margin-left: -40px;
                 height: 37px;
                 font-family: MicrosoftYaHei;
-                font-size: 45px;
+                font-size: 40px;
                 font-weight: normal;
                 font-stretch: normal;
                 line-height: 46px;

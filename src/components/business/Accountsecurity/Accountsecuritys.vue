@@ -2,7 +2,7 @@
     <div class="wrap">
         <!-- 头部 -->
             <div class="head">
-                <span>&lt;</span>
+                <i class="iconfont lefts" @click="go" >&#xe645;</i>
                 <span>账号安全</span>
                 <span></span>
             </div>
@@ -65,7 +65,14 @@
 
 <script>
 export default {
-
+    data (){
+        return {}
+    },
+    methods:{
+        go(){
+            this.$router.go(-1);
+        },
+    }
 }
 </script>
 
@@ -73,6 +80,12 @@ export default {
     .wrap{
         // 头部------账号安全
         .head{
+            .lefts{
+                color:#fff;
+                margin-left:10px;
+                font-size: 40px;
+                margin-top: 5px;
+            }
             display:flex;
             justify-content: space-between;
             background: #253350;
@@ -82,12 +95,7 @@ export default {
                 color:#ffffff;
                
             }
-            span:first-child{
-                font-size: 50px;
-                margin-left: 25px;
-                width: 20px;
-	            height: 36px;
-            }
+          
             span:nth-child(2){
             //    width: 164px;
                 height: 37px;
@@ -100,6 +108,7 @@ export default {
                 color: #ffffff;
                 width:60% ;
                 text-align: center;
+                margin-left: -18px;
             }
         }
        .center{
