@@ -19,10 +19,23 @@ import IndexHeader from 'business/indexHeader/indexHeader'
 import InforChildList from 'business/inforChildList/inforChildList'
 import MFooter from 'business/mFooter/mFooter'
 import Swiper from 'base/swiper/swiper'
+// import axios from 'axios'
 export default {
     data() {
         return {
         }
+    },
+    mounted() {
+        this.axios({
+            url: '/h5frontcarrierinfotop-home',
+            method: 'post',
+            data: {
+                name: "xiaolei",
+                sex: "男"
+            }
+        }).then(res => {
+            // console.log(res)
+        })
     },
     components: {
         IndexHeader,

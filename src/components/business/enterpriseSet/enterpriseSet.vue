@@ -76,8 +76,6 @@
 </template>
 <script>
 import IndexHeader from 'business/indexHeader/indexHeader'
-import axios from '@/config/axiosConf'
-import config from '@/config/config'
 import {MessageBox} from 'mint-ui'
 import UploadImg from 'base/uploadImg/uploadImg'
 import AddressPick from 'base/addressPick/addressPick'
