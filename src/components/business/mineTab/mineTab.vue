@@ -34,9 +34,14 @@ export default {
           tabImg: require("./myActivity.png")
         },
         {
-          path: "",
+          path: "/accountsecuritys",
           title: "账号安全",
           tabImg: require("./mySafety.png")
+        },
+        {
+          path: "/companyAccount",
+          title: "账号认证",
+          tabImg: require("./authen.png")
         },
         {
           path: "/personalSet",
@@ -62,33 +67,40 @@ export default {
       });
     },
     saveUserMessage() {
-      var user = {
-        fmi_id: "183",
-        fmi_acc: "haoqing",
-        fmi_username: "张超",
-        fmi_pwd: "yongchao3",
-        fmi_pwd_jm: "e1ec2061a7167ebfc2f6c29d3c6b8f09",
-        fmi_tel: "15010142698",
-        fmi_status: "Y",
-        fmi_path: "",
-        fmi_group: "G",
-        fmi_type: "R",
-        fmi_mile: "369800761@qq.com",
-        fmi_datetimes: "2017/12/4  16:32:01",
-        fmi_pho_verify: "N",
-        fmi_mail_verify: "N"
-      };
-      // 存储值：将对象转换为Json字符串
-      sessionStorage.setItem("memberInfo", JSON.stringify(user));
-      localStorage.setItem("memberInfo", JSON.stringify(user));
+      var d = new Date();
+      d.setTime(d.getTime() + 1 * 24 * 60 * 60 * 1000);
+      var expires = "expires=" + d.toUTCString();
+      // console.info(cname + "=" + +"; " + expires);
+      document.cookie =
+        "SESSION=fa04dfcc-bcfb-4592-9368-e172ae5e60ed" + "; " + expires;
+      console.info(document.cookie);
+      //   var user = {
+      //     fmi_id: "183",
+      //     fmi_acc: "haoqing",
+      //     fmi_username: "张超",
+      //     fmi_pwd: "yongchao3",
+      //     fmi_pwd_jm: "e1ec2061a7167ebfc2f6c29d3c6b8f09",
+      //     fmi_tel: "15010142698",
+      //     fmi_status: "Y",
+      //     fmi_path: "",
+      //     fmi_group: "G",
+      //     fmi_type: "R",
+      //     fmi_mile: "369800761@qq.com",
+      //     fmi_datetimes: "2017/12/4  16:32:01",
+      //     fmi_pho_verify: "N",
+      //     fmi_mail_verify: "N"
+      //   };
+      //   // 存储值：将对象转换为Json字符串
+      //   sessionStorage.setItem("memberInfo", JSON.stringify(user));
+      //   localStorage.setItem("memberInfo", JSON.stringify(user));
 
-      // 取值时：把获取到的Json字符串转换回对象
+      //   // 取值时：把获取到的Json字符串转换回对象
 
-      var userJsonStr = sessionStorage.getItem("memberInfo");
+      //   var userJsonStr = sessionStorage.getItem("memberInfo");
 
-      var userEntity = JSON.parse(userJsonStr);
-      console.log(userEntity);
-      // console.log(userEntity.name); // => james
+      //   var userEntity = JSON.parse(userJsonStr);
+      //   console.log(userEntity);
+      //   // console.log(userEntity.name); // => james
     }
   }
 };

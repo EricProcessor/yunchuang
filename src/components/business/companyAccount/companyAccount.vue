@@ -1,5 +1,5 @@
 <template>
-  <div class="accountBox">
+  <div class="accountBox towLevelRouter">
     <index-header :text="headerText" :hasSearch="hasSearch"></index-header>
     <ul v-if="!account.isCompany">
       <li class="clearfix" @click="linkServiceHref">
@@ -76,6 +76,16 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+// 二级路由定位
+.towLevelRouter {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 200;
+  background: rgb(245, 245, 245);
+}
 .accountBox {
   width: 100%;
   background: #eee;
