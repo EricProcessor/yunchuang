@@ -199,7 +199,7 @@ export default {
             box-sizing: border-box;
             background: #feffc7;
             display: -webkit-flex;
-            dispaly: flex;
+            display: flex;
             justify-content: space-between;
             .close {
                 font-size: 40px;

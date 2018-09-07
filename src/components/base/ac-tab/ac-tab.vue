@@ -7,7 +7,7 @@
     <!-- tab-container -->
     <mt-tab-container v-model="selected">
       <mt-tab-container-item id="1">
-        <ActiveListone></ActiveListone>
+        <ActiveListone :active-list="activeList"></ActiveListone>
       </mt-tab-container-item>
       <mt-tab-container-item id="2">
          <ActiveListtwo></ActiveListtwo>
@@ -18,15 +18,24 @@
 <script>
 import ActiveListone from "business/activity/activityListC1";
 import ActiveListtwo from "business/activity/activityListC2";
+import axios from "axios";
+import config from "@/config/config";
 export default {
   data() {
     return {
-      selected: "1"
+      selected: "1",
+      activeList:[]
     };
   },
   components: {
     ActiveListone,
     ActiveListtwo
+  },
+  mounted(){
+          this.axios.post("/h5frontactivityinfo-foreshow?type=Y").then(res => {
+            this.activeList=res.data.list
+            console.log(this.activeList)
+         })      
   }
 };
 </script>
