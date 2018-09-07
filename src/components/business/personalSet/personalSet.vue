@@ -79,8 +79,6 @@
 </template>
 <script>
 import IndexHeader from 'business/indexHeader/indexHeader'
-import axios from '@/config/axiosConf'
-import config from '@/config/config'
 import {MessageBox} from 'mint-ui'
 import UploadImg from 'base/uploadImg/uploadImg'
 import AddressPick from 'base/addressPick/addressPick'
@@ -201,7 +199,7 @@ export default {
             box-sizing: border-box;
             background: #feffc7;
             display: -webkit-flex;
-            dispaly: flex;
+            display: flex;
             justify-content: space-between;
             .close {
                 font-size: 40px;

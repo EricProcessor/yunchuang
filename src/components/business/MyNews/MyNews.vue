@@ -7,7 +7,7 @@
             <span>会员审核通过通知</span>
             <span>2018-09-12 00:00:00</span>
           </div>
-          <p class="myDelate">删除</p>
+          <p class="myDelate" @click="deleateBox">删除</p>
           <!-- <button class="mint-button mint-button--default mint-button--large">
             <label class="mint-button-text">打开 confirm 提示框</label>
           </button> -->
@@ -19,7 +19,11 @@
 import IndexHeader from "business/indexHeader/indexHeader";
 import axios from "axios";
 import config from "@/config/config";
+import { MessageBox } from "mint-ui";
 export default {
+  data: {
+    message: ""
+  },
   created() {
     this.headerText = "我的消息"; //设置头部显示导航内容
   },
@@ -33,7 +37,7 @@ export default {
   methods: {
     //获取后台数据
     inforData() {
-      let _url = config.host + "/h5frontmyattentionproject-home";
+      let _url = config.host + "/h5frontmessage-home";
       let params = new URLSearchParams();
       // params.append("selType", this.serachSend.SearchClass);
       // params.append("KeyWord", encodeURI(encodeURI(this.serachSend.searchVal)));
@@ -41,6 +45,14 @@ export default {
         // this.items = res.data;
         console.log(res.data);
       });
+    },
+    deleateBox() {
+      MessageBox({
+        title: "提示",
+        message: "确定执行此操作?",
+        showCancelButton: true
+      });
+      MessageBox.confirm("确定执行此操作", "提示");
     }
   }
 };

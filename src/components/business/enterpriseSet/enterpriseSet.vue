@@ -58,7 +58,7 @@
                                 <upload-img @getImg="getUploadImg"></upload-img>
                             </div>
                             <div class="upload-state">
-                                包含但不限于xxxx证件，jpg、png、gif格式，<=5MB
+                               
                             </div>
                         </div>
                     </ul>
@@ -76,8 +76,6 @@
 </template>
 <script>
 import IndexHeader from 'business/indexHeader/indexHeader'
-import axios from '@/config/axiosConf'
-import config from '@/config/config'
 import {MessageBox} from 'mint-ui'
 import UploadImg from 'base/uploadImg/uploadImg'
 import AddressPick from 'base/addressPick/addressPick'
@@ -185,7 +183,7 @@ export default {
             box-sizing: border-box;
             background: #feffc7;
             display: -webkit-flex;
-            dispaly: flex;
+            display: flex;
             justify-content: space-between;
             .close {
                 font-size: 40px;

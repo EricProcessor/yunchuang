@@ -1,11 +1,11 @@
 <template>
     <div>       
         <ul class="listBox">
-            <li class="list_li clearfix" @click="activeDetail" v-for="(n,v) in 3" :key="v">
-                <div class="ac-img"><img src="/static/images/ac-pic1.jpg" alt=""/></div>
+            <li class="list_li clearfix" @click="activeDetail" v-for="(val,index) in activeList" :key="index">
+                <div class="ac-img"><img :src="val.faiPath" alt=""/></div>
                 <div class="ac-mes">
-                   <p>2018Demo Asia 创新中国亚洲峰会</p>
-                   <span>已报名：<em>86</em>人</span>
+                   <p>{{val.faiName}}</p>
+                   <span>已报名：<em>{{val.faiPerNum}}</em>人</span>
                 </div>
             </li>
         </ul>
@@ -16,6 +16,14 @@
 export default {
   data() {
     return {};
+  },
+  props:{
+      activeList:{
+          type:Array,
+          default(){
+              return []
+          }
+      }
   },
   methods: {
     activeDetail() {
@@ -31,14 +39,14 @@ export default {
     li{
         width:97%;
         margin-left:1.5%;
-        margin-top:.15625rem;
-        margin-bottom: .15625rem;
+        margin-top:29px;
+        margin-bottom: 29px;
         display: flex;
         flex-direction: column;
         .ac-img{
             width:100%;
-            height:5rem;
-            border-radius: .125rem;
+            height:320px;
+            border-radius: 5px;
             img{
                 width: 100%;  
                 height:100%;            
@@ -46,19 +54,20 @@ export default {
         }
         .ac-mes{
             width:100%;
-            height:1.1275rem;
+            height:80px;
             display: flex;
             background: #fff;
             justify-content: space-around;
             p{
-                height:1.1275rem;
-                font-size: .39875rem;
-                line-height: 1.1275rem;
+                height:80px;
+                font-size: 27px;
+                line-height: 80px;
+                color:#333;
             }
             span{
-                height:1.1275rem;
-                line-height: 1.1275rem;
-                font-size: 0.275rem;
+                height:80px;
+                line-height: 80px;
+                font-size: 12px;
                 color: #999;
             }
         }

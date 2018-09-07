@@ -4,7 +4,8 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import MintUI from 'mint-ui'
-import axios from 'axios'
+// import axios from 'axios'
+import {axios} from '@/config/axiosDefault'    //公共配置后的axios
 import 'lib-flexible'
 import '../static/css/reset.css'
 import 'mint-ui/lib/style.min.css'
@@ -24,7 +25,8 @@ Vue.filter('formatDate', function(date) {
   return `${year}-${month}-${day}`
 })
 
-//全局引用axios
+
+//全局引用 公共配置过的 axios
 Vue.prototype.axios = axios
 
 /* eslint-disable no-new */
