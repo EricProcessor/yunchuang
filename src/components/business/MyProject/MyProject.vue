@@ -56,7 +56,7 @@ export default {
   methods: {
     //获取后台数据
     inforData() {
-      let _url = config.host + "h5frontmyactivity-home";
+      let _url = config.host + "/h5frontmyactivity-home";
       let params = new URLSearchParams();
       // params.append("selType", this.serachSend.SearchClass);
       // params.append("KeyWord", encodeURI(encodeURI(this.serachSend.searchVal)));
