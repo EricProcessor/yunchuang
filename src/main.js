@@ -9,6 +9,7 @@ import {axios} from '@/config/axiosDefault'    //公共配置后的axios
 import 'lib-flexible'
 import '../static/css/reset.css'
 import 'mint-ui/lib/style.min.css'
+import '../src/components/business/Accountsecurity/font_bvnd5sczwrm/iconfont.css'
 Vue.config.productionTip = false
 
 Vue.use(MintUI);
