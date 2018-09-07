@@ -34,6 +34,9 @@
 import axios from "axios";
 import config from "@/config/config";
 export default {
+  data:{
+    toggleInt : 'toggleInt'
+  },
   props: ["toggleInt"],
   mounted() {
     this.inforData();
@@ -41,10 +44,16 @@ export default {
   methods: {
     //获取后台数据
     inforData() {
-      let _url = config.host + "h5frontmembercentre-home";     
+      // let _url = config.host + "h5frontmembercentre-home";     
       // if (toggleInt == 1) {
       //   let _url = config.host + "h5frontmembercentre-home";
       // }
+      let _url = "";
+      if (toggleInt == 1) {
+        _url = config.host + "/h5frontmessage-home";
+      } else {
+        _url = config.host + "/h5frontmybyagreementtalk-home";
+      }
       let params = new URLSearchParams();
       // params.append("selType", this.serachSend.SearchClass);
       // params.append("KeyWord", encodeURI(encodeURI(this.serachSend.searchVal)));
