@@ -41,7 +41,7 @@ export default {
   methods: {
     //获取后台数据
     inforData() {
-      let _url = config.host + "h5frontmembercentre-home";
+      let _url = config.host + "h5frontmembercentre-home";     
       // if (toggleInt == 1) {
       //   let _url = config.host + "h5frontmembercentre-home";
       // }

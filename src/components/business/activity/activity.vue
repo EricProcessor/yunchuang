@@ -12,10 +12,13 @@
 <script>
     import AcTab from "base/ac-tab/ac-tab";
     import MFooter from 'business/mFooter/mFooter'
+    import axios from "axios";
+    import config from "@/config/config";
     export default {
       data() {
         return {
-          selected: "activity"    //设置导航栏选中栏目
+          selected: "activity",//设置导航栏选中栏目
+          activeList:[]
         }
       },
         components: {
@@ -28,7 +31,14 @@
               path: "/activeScreen"
             });
           }
+        },
+        mounted(){
+          let _url = config.host + "/h5frontactivityinfo-foreshow?type=Y";
+            axios.get(_url).then(res => {
+              console.log(res)
+            });
         }
+
     };
 </script>
 <style lang="less" scoped>
