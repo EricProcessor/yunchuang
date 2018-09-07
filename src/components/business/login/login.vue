@@ -31,7 +31,6 @@
   </div>
 </template>
 <script>
-import axios from "axios";
 import config from "@/config/config";
 
 export default {
@@ -81,15 +80,12 @@ export default {
         let params = new URLSearchParams();
         params.append("fmiTel", this.userInfo.userName);
         params.append("fmiPwd", this.userInfo.password);
-        axios({
-          method: "post",
-          url: url,
-          data: params
-        }).then(res => {
-          // console.log(res.data)
-          if(res.data.msg){
+        this.axios.post(url, params).then(res => {
+          if (res.data.msg) {
             alert(res.data.msg);
-          }else{
+          } else {
+            localStorage.setItem("userName",this.userInfo.userName);
+            localStorage.setItem("pwd",this.userInfo.password);
             this.$router.push("/");
           }
         });
