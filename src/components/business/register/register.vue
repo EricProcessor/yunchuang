@@ -138,9 +138,11 @@
                     <span>（必填）</span>
                   </p>
                 </div>
-                <input type="text" class="input_tel" @blur="ownPhoneBlur" placeholder="请输入手机号码" maxlength="11" v-model="ownData.ownPhone.val">
-                <span class="getCode" v-show="regInfo.timeMsg" @click="getCode">获取验证码</span>
-                <span class="getCode codeTime" v-show="!regInfo.timeMsg">重新获取（{{regInfo.count}}）</span>
+                <div class="clearfix pos1">
+                  <input type="text" class="fl input_tel" @blur="ownPhoneBlur" placeholder="请输入手机号码" maxlength="11" v-model="ownData.ownPhone.val">
+                  <span class="getCode fr" v-show="regInfo.timeMsg" @click="getCode">获取验证码</span>
+                  <span class="getCode fr codeTime" v-show="!regInfo.timeMsg">重新获取（{{regInfo.count}}）</span>
+                </div>
                 <div class="tipInfo fr" v-show="ownData.ownPhone.isRight">
                   <i></i>
                   <span>请输入正确的手机号码</span>
@@ -264,7 +266,7 @@
 </template>
 <script>
 import config from "@/config/config";
-import {Install} from "@/config/checkRule";
+import { Install } from "@/config/checkRule";
 export default {
   data() {
     return {
@@ -385,7 +387,7 @@ export default {
         alert("请输入手机号码！");
       }
     },
- 
+
     registerPhone() {
       //企业注册--联系电话验证
       if (this.companyData.registerPhone.val == "") {
@@ -446,7 +448,6 @@ export default {
         this.companyData.registerEmail.isEmpty = false;
         if (Install.isEmail(this.companyData.registerEmail.val)) {
           this.companyData.registerEmail.isRight = false;
-
         } else {
           if (this.companyData.registerEmail.val != "") {
             this.companyData.registerEmail.isRight = true;
@@ -496,7 +497,7 @@ export default {
           let params = new URLSearchParams();
           params.append("fmiAcc", this.ownData.ownPhone.val);
           this.axios.post(phoneUrl, params).then(res => {
-            console.log(res)
+            console.log(res);
             if (res.data.flag) {
               this.ownData.ownPhone.isExist = true;
             } else {
@@ -516,7 +517,6 @@ export default {
       } else {
         this.ownData.ownName.isEmpty = false;
         //判断用户名是否已存在   fmiUsername
-
       }
     },
     ownPwdBlur() {
@@ -579,7 +579,9 @@ export default {
           params.append("fmiTel", this.ownData.ownPhone.val);
           params.append("fmiMile", this.ownData.ownEmail.val);
           if (this.ownData.ownPhone.val != "") {
-            this.axios.post(emailUrl, params).then(res => {
+            this.axios
+              .post(emailUrl, params)
+              .then(res => {
                 console.log(res.data);
                 if (res.data.flag) {
                   this.ownData.ownEmail.isExist = true;
@@ -779,18 +781,18 @@ export default {
           .getCode {
             width: 200px;
             display: inline-block;
-            line-height: 66px;
+            line-height: 62px;
             background: #6ea1ff;
             color: #fff;
             text-align: center;
             border-radius: 0px 6px 6px 0px;
             position: absolute;
-            top: 36px;
+            top: 10px;
             right: -1px;
             z-index: 2;
           }
           .input_tel {
-            width: 520px;
+            width: 500px;
           }
 
           .codeTime {

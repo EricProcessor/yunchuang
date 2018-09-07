@@ -32,7 +32,7 @@
 </template>
 <script>
 import config from "@/config/config";
-
+import Install from "@/config/checkRule";
 export default {
   data() {
     return {
@@ -56,11 +56,6 @@ export default {
         console.log(456);
       }
     },
-    isPhone(phone) {
-      //手机号验证
-      let isPhone = /^(((13[0-9]{1})|(15[0-9]{1})|(17[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
-      return isPhone.test(phone);
-    },
     forgotPwdBtn() {
       //忘记密码
       alert("忘记密码");
@@ -73,7 +68,7 @@ export default {
         alert("用户名不能为空！");
       } else if (this.userInfo.password == "") {
         alert("密码不能为空！");
-      } else if (!this.isPhone(this.userInfo.userName)) {
+      } else if (!Install.isPhone(this.userInfo.userName)) {
         alert("请输入正确的手机号码！");
       } else {
         let url = config.host + "/frontloginoperate-login";
