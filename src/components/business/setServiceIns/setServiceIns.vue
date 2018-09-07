@@ -199,9 +199,9 @@ export default {
           background: #d5d5d5;
           margin: 50px auto;
         }
-        img{
-            width: 100%;
-            height: 100%;
+        img {
+          width: 100%;
+          height: 100%;
         }
       }
       .addPicTip {

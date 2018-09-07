@@ -24,7 +24,7 @@
 </template>
 <script>
 import axios from "axios";
-import config from "@/config/config";
+// import config from "@/config/config";
 export default {
   mounted() {
     this.inforData();
@@ -32,7 +32,7 @@ export default {
   methods: {
     //获取后台数据
     inforData() {
-      let _url = config.host + "h5frontmyattentionproject-home";
+      let _url = "h5frontmyactivity-home";
       let params = new URLSearchParams();
       // params.append("selType", this.serachSend.SearchClass);
       // params.append("KeyWord", encodeURI(encodeURI(this.serachSend.searchVal)));
