@@ -28,7 +28,8 @@ import MyActivityList from "../MyActivityList/MyActivityList";
 export default {
   data() {
     return {
-      selected: "1"
+      selected: "1",
+      toggleInt: "1"
     };
   },
   created() {

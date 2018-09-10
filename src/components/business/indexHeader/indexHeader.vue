@@ -1,10 +1,10 @@
 <template>
   <div class="public-header">
     <div class="sitg"><!--占位用，撑起公共头部的高度--></div>
-    <div class="index-header" @click="linkSearchHeader">
-        <router-link v-if="hasBack" to="/">
-          <i class="mintui mintui-back"></i>
-        </router-link>
+    <div class="index-header">
+        <!-- <router-link  to="/"> -->
+          <i class="mintui mintui-back" v-if="hasBack" @click="linkSearchHeader"></i>
+        <!-- </router-link> -->
         {{text}}
         <i v-if="hasSearch" data-v-5eeac47d="" class="mintui mintui-search"></i>
     </div>
@@ -15,10 +15,12 @@
 <script>
 export default {
   props: {
-    text: {       //头部显示内容
-      type: String,
+    text: {
+      //头部显示内容
+      type: String
     },
-    hasSearch: {      //是否显示搜索图标
+    hasSearch: {
+      //是否显示搜索图标
       type: Boolean,
       default: true
     },
@@ -30,9 +32,11 @@ export default {
   components: {},
   methods: {
     linkSearchHeader() {
-      this.$router.push({
-        path: '/HeaderSearch'
-      });
+      // this.$router.push({
+      //   path: "/HeaderSearch"
+      // });
+      this.$router.go(-1);
+      // history.go(-1);
     }
   }
 };
