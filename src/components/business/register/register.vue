@@ -266,7 +266,7 @@
 </template>
 <script>
 import config from "@/config/config";
-import { Install } from "@/config/checkRule";
+import Install from "@/config/checkRule";
 export default {
   data() {
     return {

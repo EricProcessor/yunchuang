@@ -18,6 +18,4 @@ let Install = {
   },
 };
 
-export {
-  Install
-}
+export default Install

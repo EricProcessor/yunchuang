@@ -34,14 +34,21 @@
       </li>
       <li class="group clearfix">
         <label class="fl pos1">
-          <i v-if="formList.isShow">*</i>接受邀约
-        </label>
-        <div class="fl clearfix similarRadio">
-          <i class="fl"></i>
+          <i v-if="formList.isShow">*</i>接受邀约</label>
+        <div class="fl clearfix similarRadio pos1">
+          <i class="fl" v-if="investment.agree" :class="{noborder:investment.agree}">
+            <img src="./agree.png" alt="" />
+          </i>
+          <i class="fl" v-if="!investment.agree"></i>
+          <input type="radio" value="接受" class="agreeBtn" @click="agreeInviter" :checked="investment.agree">
           <span class="fl">接受</span>
         </div>
-        <div class="fl clearfix similarRadio">
-          <i class="fl"></i>
+        <div class="fl clearfix similarRadio pos1">
+          <i class="fl" v-if="investment.disagree" :class="{noborder:!investment.agree}">
+            <img src="./agree.png" alt="" />
+          </i>
+          <i class="fl" v-if="!investment.disagree"></i>
+          <input type="radio" value="不接受" class="agreeBtn" @click="disagreeInviter" :checked="investment.disagree">
           <span class="fl">不接受</span>
         </div>
       </li>
@@ -74,7 +81,7 @@
         <label class="fl pos1">
           <i v-if="!formList.isShow">*</i>投资理念</label>
         <textarea class="investIdea fr" maxlength="200"></textarea>
-        <span class="textCount" >0/200</span>
+        <span class="textCount">0/200</span>
       </li>
       <li class="group clearfix pos1">
         <label class="fl pos1">
@@ -112,7 +119,21 @@ export default {
         isShow: true //是否显示*
       },
       address: "", //地址
-      inputImg: [] //上传的图片
+      inputImg: [], //上传的图片
+      investment: {
+        person: "", //联系人
+        personTel: "", //联系人电话
+        addeDetail: "", //详细地址
+        email: "", //邮箱
+        website: "", //网址
+        agree: true, //同意
+        disagree: false, //不同意
+        field: "", //投资领域
+        stage: "", //投资阶段
+        scale: "", //基金规模
+        idea: "", //投资理念
+        succCase: "" //成功案例
+      }
     };
   },
   created() {
@@ -128,6 +149,20 @@ export default {
     },
     inputGetImg(arr) {
       this.inputImg = arr;
+    },
+    agreeInviter() {
+      if (!this.investment.agree) {
+        this.investment.agree = !this.investment.agree;
+        this.investment.disagree = !this.investment.disagree;
+      } else {
+        return;
+      }
+    },
+    disagreeInviter() {
+      if (!this.investment.disagree) {
+        this.investment.disagree = !this.investment.disagree;
+        this.investment.agree = !this.investment.agree;
+      }
     }
   },
   components: {
@@ -162,7 +197,7 @@ export default {
     padding: 30px;
     padding-bottom: 100px;
     .group {
-      margin-bottom: 19px;
+      margin-bottom: 20px;
       label {
         display: inline-block;
         width: 116px;
@@ -188,8 +223,28 @@ export default {
           width: 44px;
           height: 44px;
           border-radius: 50%;
-          margin: 5px 10px 0 20px;
+          margin: 10px 10px 0 20px;
           border: 2px solid #999;
+          box-sizing: border-box;
+          img {
+            width: 100%;
+            height: 100%;
+          }
+        }
+        .noborder {
+          border: none;
+        }
+        .agreeBtn {
+          display: block;
+          width: 44px;
+          height: 44px;
+          border-radius: 50%;
+          margin: 0;
+          position: absolute;
+          top: 10px;
+          left: 22px;
+          z-index: 3;
+          opacity: 0;
         }
         span {
           font-size: 24px;
@@ -197,7 +252,7 @@ export default {
           margin-top: 18px;
         }
       }
-      .similarRadio:last-child{
+      .similarRadio:last-child {
         margin-left: 40px;
       }
       input,

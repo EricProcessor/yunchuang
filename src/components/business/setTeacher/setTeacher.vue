@@ -239,13 +239,13 @@ export default {
       }
     },
     agreeInviter() {
-      if (!this.invitation.afree) {
+      if (!this.invitation.agree) {
         this.invitation.agree = !this.invitation.agree;
         this.invitation.disagree = !this.invitation.disagree;
       }
     },
     disagreeInviter() {
-      if (!this.invitation.disafree) {
+      if (!this.invitation.disagree) {
         this.invitation.disagree = !this.invitation.disagree;
         this.invitation.agree = !this.invitation.agree;
       }

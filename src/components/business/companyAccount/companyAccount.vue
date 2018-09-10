@@ -59,15 +59,19 @@ export default {
     //根据验证状态
     linkServiceHref() {
       //认证服务机构
+      this.$router.push("/setServiceIns");
     },
     linkInvestHref() {
       //认证投资机构
+      this.$router.push("/setInvestment");
     },
     linkTeacherHref() {
       //认证导师
+      this.$router.push("/setTeacher");
     },
     linkInvestPersonHref() {
       //认证投资人
+      this.$router.push("/setInvestor");
     }
   },
   components: {
