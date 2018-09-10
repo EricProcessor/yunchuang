@@ -29,6 +29,7 @@ import SetServiceIns from 'business/SetServiceIns/SetServiceIns';
 import SetInvestment from 'business/setInvestment/setInvestment';
 import SetTeacher from 'business/setTeacher/setTeacher';
 import SetInvestor from 'business/setInvestor/setInvestor';
+import ClassVideo from 'business/classVideo/classVideo'
 Vue.use(Router)
 
 export default new Router({
@@ -49,18 +50,23 @@ export default new Router({
       name: 'activity',
       component: Activity
     }, {
-      path: '/screenResult',
+      path: '/screenResult',//筛选结果页面
       name: 'screenResult',
       component: ScreenResult
     }, {
-      path: '/activeScreen',
+      path: '/activeScreen',//活动筛选页面
       name: 'activeScreen',
       component: ActiveScreen
     },
     {
       path: '/classroom', //课堂页面
       name: 'classroom',
-      component: Classroom
+      component: Classroom,
+      children: [{
+        path: ':id',      //课堂视频页面
+        name: 'classVideo',
+        component: ClassVideo
+      }]
     }, {
       path: '/mine', //个人中心页面
       name: 'mine',
@@ -107,7 +113,7 @@ export default new Router({
         },
       ]
     }, {
-      path: '/activeDetail',
+      path: '/activeDetail/:id',//活动详情页面
       name: 'activeDetail',
       component: ActiveDetail
     }, {

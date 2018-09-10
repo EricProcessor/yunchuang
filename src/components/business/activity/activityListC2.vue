@@ -1,11 +1,11 @@
 <template>
     <div>       
         <ul class="listBox">
-            <li class="list_li clearfix" @click="linkInforDetail" v-for="(val,index) in 3" :key="index">
-                <div class="ac-img"><img src="/static/images/ac-pic2.jpg" alt=""/></div>
+            <li class="list_li clearfix" @click="linkInforDetail" v-for="(val,index) in activeList" :key="index">
+                <div class="ac-img"><img :src="val.faiPath" alt=""/></div>
                 <div class="ac-mes">
-                   <p>2018 中国创新峰会</p>
-                   <span>已报名：<em>80</em>人</span>
+                   <p>{{val.faiName}}</p>
+                   <span>已报名：<em>{{val.faiPerNum}}</em>人</span>
                 </div>
             </li>
         </ul>
@@ -14,7 +14,9 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+        activeList:[]
+    };
   },
   methods: {
     linkInforDetail() {
@@ -22,6 +24,12 @@ export default {
             path: '/inforDetail'
         });
     }
+  },
+  mounted(){
+          this.axios.post("/h5frontactivityinfo-foreshow?type=W").then(res => {
+            this.activeList=res.data.list
+            // console.log(this.activeList)
+         })      
   }
 };
 </script>

@@ -1,16 +1,16 @@
 <template>
-  <ul class="myIntCon">
-    <li>
-      <div class="myIntConImg">
-        <img src="" alt="">
+  <ul class="myIntCon" >
+    <li :id='item.fai_id' v-for="(item,index) in items" :key="index">
+      <div class="myIntConImg" :id="item.id">
+        <img :src="item.fai_path" alt="">
       </div>
       <div class="myIntConInf">
-        <h3>2018中国创业武林大会</h3>
-        <span>2018-07-17 至 08-21</span>
+        <h3>{{item.fai_name}}</h3>
+        <span>{{item.fai_datetime | formatDate}} 至 {{item.fai_end_datetime | formatDate}}</span>
       </div>
-      <div class="myIntState">已结束</div>
+      <div class="myIntState" :class="item.status=='进行中'?'start':''">{{item.status}}</div>
     </li>
-    <li>
+    <!-- <li>
       <div class="myIntConImg">
         <img src="" alt="">
       </div>
@@ -19,13 +19,18 @@
         <span>2018-07-17 至 08-21</span>
       </div>
       <div class="myIntState start">进行中</div>
-    </li>
+    </li> -->
   </ul>
 </template>
 <script>
 import axios from "axios";
 // import config from "@/config/config";
 export default {
+  data() {
+    return {
+      items: []
+    };
+  },
   mounted() {
     this.inforData();
   },
@@ -37,9 +42,27 @@ export default {
       // params.append("selType", this.serachSend.SearchClass);
       // params.append("KeyWord", encodeURI(encodeURI(this.serachSend.searchVal)));
       axios.post(_url).then(res => {
-        // this.items = res.data;
-        console.log(res.data);
+        this.items = res.data.activityList;
+        // console.log(res.data.activityList);
       });
+    }
+  },
+  //将时间戳转化成时间
+  filters: {
+    formatDate: function(value) {
+      let date = new Date(value);
+      let y = date.getFullYear();
+      let MM = date.getMonth() + 1;
+      MM = MM < 10 ? "0" + MM : MM;
+      let d = date.getDate();
+      d = d < 10 ? "0" + d : d;
+      let h = date.getHours();
+      h = h < 10 ? "0" + h : h;
+      let m = date.getMinutes();
+      m = m < 10 ? "0" + m : m;
+      let s = date.getSeconds();
+      s = s < 10 ? "0" + s : s;
+      return y + "-" + MM + "-" + d;
     }
   }
 };
@@ -60,6 +83,10 @@ export default {
       height: 120px;
       background-color: #cad3dc;
       margin: 0 30px;
+      img {
+        width: 100%;
+        height: 100%;
+      }
     }
     .myIntConInf {
       h3 {

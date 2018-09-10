@@ -2,28 +2,33 @@
   <div class="towLevelRouter">
     <index-header :text="headerText" :hasSearch="false"></index-header>
     <ul class="myIntCon">
-      <li>
+      <li  v-for="(item,index) in items" :key="index">
         <ol>
           <div class="myIntConImg">
-            <img src="" alt="">
+            <img :src="item.fcp_logo" alt="">
           </div>
           <div class="myIntConInf">
-            <h3>2018中国创业武林大会</h3>
-            <span>2018-07-17 至 08-21</span>
+            <h3>{{item.fcp_name}}</h3>
+            <span>{{item.fcp_datetime | formatDate}}</span>
           </div>
         </ol>
         <dl>
           <dd>
             <h4>行业领域</h4>
+<<<<<<< HEAD
             <span>消费生活</span>
+=======
+            <span>{{item.fcpi}}</span>
+            
+>>>>>>> c22198a4ae8117d9b0bd1c2f19f5d7f131a81a5c
           </dd>
           <dd>
             <h4>所属阶段</h4>
-            <span>概念阶段</span>
+            <span>{{item.fcpe}}</span>
           </dd>
           <dd>
             <h4>融资进度</h4>
-            <span>未融资</span>
+            <span>{{item.fcpf}}</span>
           </dd>
           <dd>
             <h4>审核状态</h4>
@@ -43,6 +48,11 @@ import IndexHeader from "business/indexHeader/indexHeader";
 import axios from "axios";
 import config from "@/config/config";
 export default {
+  data() {
+    return {
+      items: []
+    };
+  },
   created() {
     this.headerText = "我的项目"; //设置头部显示导航内容
   },
@@ -55,14 +65,32 @@ export default {
   methods: {
     //获取后台数据
     inforData() {
-      let _url = config.host + "/h5frontmyactivity-home";
+      let _url = "/h5frontmyproject-home";
       let params = new URLSearchParams();
       // params.append("selType", this.serachSend.SearchClass);
       // params.append("KeyWord", encodeURI(encodeURI(this.serachSend.searchVal)));
       axios.post(_url).then(res => {
-        // this.items = res.data;
-        console.log(res.data);
+        this.items = res.data.myProjectList;
+        console.log(res.data.myProjectList);
       });
+    }
+  },
+  //将时间戳转化成时间
+  filters: {
+    formatDate: function(value) {
+      let date = new Date(value);
+      let y = date.getFullYear();
+      let MM = date.getMonth() + 1;
+      MM = MM < 10 ? "0" + MM : MM;
+      let d = date.getDate();
+      d = d < 10 ? "0" + d : d;
+      let h = date.getHours();
+      h = h < 10 ? "0" + h : h;
+      let m = date.getMinutes();
+      m = m < 10 ? "0" + m : m;
+      let s = date.getSeconds();
+      s = s < 10 ? "0" + s : s;
+      return y + "-" + MM + "-" + d + " " + h + ":" + m + ":" + s;
     }
   }
 };
@@ -94,6 +122,10 @@ export default {
         height: 120px;
         background-color: #cad3dc;
         margin: 0 30px;
+        img {
+          width: 100%;
+          height: 100%;
+        }
       }
       .myIntConInf {
         h3 {

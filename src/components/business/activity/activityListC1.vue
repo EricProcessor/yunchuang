@@ -1,8 +1,10 @@
 <template>
     <div>       
         <ul class="listBox">
-            <li class="list_li clearfix" @click="activeDetail" v-for="(val,index) in activeList" :key="index">
-                <div class="ac-img"><img :src="val.faiPath" alt=""/></div>
+            <li class="list_li clearfix"  v-for="(val,index) in activeList" :key="index">
+                <div class="ac-img">
+                    <router-link :to="'/activeDetail/'+val.faiId"><img :src="val.faiPath" alt=""/></router-link>                  
+                </div>
                 <div class="ac-mes">
                    <p>{{val.faiName}}</p>
                    <span>已报名：<em>{{val.faiPerNum}}</em>人</span>
@@ -26,9 +28,9 @@ export default {
       }
   },
   methods: {
-    activeDetail() {
-        this.$router.push('/activeDetail');
-    }
+    // activeDetail(faiId) {
+    //     this.$router.push({path:"/activeDetail/:faiId");
+    // }
   }
 };
 </script>

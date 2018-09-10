@@ -12,9 +12,7 @@
       <ul>
         <li>
           <label><i>●</i><i>目标定位</i></label>
-          <p>电商平台店铺行业分析、电商平台店铺基准定位、电商平台
-            店铺目标分解规划、电商平台店铺活动促销视觉规划
-          </p>
+          <p></p>
         </li>
         <li>
           <label><i>●</i><i>举办时间</i></label>
@@ -23,34 +21,27 @@
         </li>
         <li>
           <label><i>●</i><i>举办地点</i></label>
-          <p>创新园京东云电商创新中心5F路演大厅
-          </p>
+          <p>{{this.activeDetail.faiAddress}}</p>
         </li>
         <li>
           <label><i>●</i><i>活动主题</i></label>
-          <p>2018年中国创业武林大会
-          </p>
+          <p>{{this.activeDetail.faiTitle}}</p>
         </li>
         <li>
           <label><i>●</i><i>参与人员</i></label>
-          <p>宋海讲师
-          </p>
+          <p>{{this.activeDetail.faiParticipant}}</p>
         </li>
         <li>
           <label><i>●</i><i>报名人数</i></label>
-          <p>82
-          </p>
+          <p>{{this.activeDetail.faiPerNum}}</p>
         </li>
         <li>
           <label><i>●</i><i>活动内容</i></label>
-          <p>电商平台店铺行业分析、电商平台店铺基准定位、电商平台
-            店铺目标分辨规划、电商平台店铺活动促销视觉规划
-          </p>
+          <p></p>
         </li>
         <li>
           <label><i>●</i><i>联系人</i></label>
-          <p>刘一鸣：1852095477
-          </p>
+          <p>{{this.activeDetail.faiLinkman}}</p>
         </li>
       </ul>  
     </div>
@@ -89,7 +80,8 @@ Vue.component(Popup.name, Popup);
 export default {
   data() {
     return {
-      popupVisible:false
+      popupVisible:false,
+      activeDetail:[]
     };
   },
   methods: {
@@ -104,6 +96,13 @@ export default {
     closeAddressPicker(){
       this.popupVisible = false;
     },
+  },
+  mounted(){
+    var id = this.$route.params.id
+    // console.log(id)
+    this.axios.get("/h5frontactivityinfo-item/"+id+"").then(res => {
+          this.activeDetail=res.data.ai       
+    }) 
   }
 };
 </script>
