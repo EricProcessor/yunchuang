@@ -15,7 +15,7 @@ axios.interceptors.request.use(config => {
     if (config.method === 'post') {
         config.data = qs.stringify(config.data)
     }
-    console.log(config)
+    // console.log(config)
     return config
 }, error => {
     return Promise.reject(error)

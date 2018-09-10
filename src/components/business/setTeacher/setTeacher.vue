@@ -74,19 +74,17 @@
         <label class="fl pos1">
           <i v-if="formList.isShow">*</i>服务载体</label>
         <select class="fl" v-model="setTeacher.serviceCarrier">
-          <option value="0">请选择</option>
-          <option value="1">金融服务</option>
-          <option value="2">投资服务</option>
-          <option value="3">融资服务</option>
+          <option value="0">金融服务</option>
+          <option value="1">投资服务</option>
+          <option value="2">融资服务</option>
         </select>
       </li>
       <li class="group clearfix">
         <label class="fl pos1">
           <i v-if="formList.isShow">*</i>单位属性</label>
         <select class="fl" v-model="setTeacher.unitAttrbute">
-          <option value="0">请选择</option>
-          <option value="1">国有</option>
-          <option value="2">民营</option>
+          <option value="0">国有</option>
+          <option value="1">民营</option>
         </select>
       </li>
       <li class="group clearfix">
@@ -124,18 +122,16 @@
         <label class="fl pos1">
           <i v-if="!formList.isShow">*</i>辅导特长</label>
         <select class="fl" v-model="setTeacher.speciality">
-          <option value="0">请选择</option>
-          <option value="1">国有</option>
-          <option value="2">民营</option>
+          <option value="0">国有</option>
+          <option value="1">民营</option>
         </select>
       </li>
       <li class="group clearfix">
         <label class="fl pos1">
           <i v-if="formList.isShow">*</i>技术领域</label>
         <select class="fl" v-model="setTeacher.technicalField">
-          <option value="0">请选择</option>
-          <option value="1">国有</option>
-          <option value="2">民营</option>
+          <option value="0">国有</option>
+          <option value="1">民营</option>
         </select>
       </li>
       <li class="group clearfix pos1">
@@ -285,21 +281,17 @@ export default {
       margin-bottom: 19px;
       label {
         display: inline-block;
-        width: 116px;
+        width: 128px;
         text-align: right;
         font-size: 24px;
         color: #333;
         margin-top: 20px;
         i {
-          display: block;
+          display: inline-block;
           font-size: 24px;
           color: #f35828;
-          position: absolute;
+          position: relative;
           top: 5px;
-          left: 5px;
-        }
-        .third {
-          left: 55px;
         }
       }
       .similarRadio {
@@ -388,7 +380,7 @@ export default {
       }
       input,
       select {
-        width: 550px;
+        width: 530px;
         height: 61px;
         background: #f5f5f5;
         border-radius: 6px;
@@ -396,7 +388,7 @@ export default {
         margin-left: 20px;
       }
       input {
-        width: 530px;
+        width: 510px;
         padding-left: 20px;
       }
       select {
@@ -407,21 +399,21 @@ export default {
       }
       .addeDetail {
         resize: none;
-        width: 510px;
+        width: 490px;
         height: 140px;
         background: #f5f5f5;
         border-radius: 6px;
-        margin: 10px 5px 0 0;
+        margin: 10px 10px 0 0;
         padding: 20px;
         border: none;
       }
       .investIdea {
         resize: none;
-        width: 510px;
+        width: 490px;
         height: 260px;
         background: #f5f5f5;
         border-radius: 6px;
-        margin: 10px 5px 0 0;
+        margin: 10px 10px 0 0;
         padding: 20px;
         border: none;
       }

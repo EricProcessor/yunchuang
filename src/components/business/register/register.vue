@@ -265,7 +265,6 @@
   </div>
 </template>
 <script>
-import config from "@/config/config";
 import Install from "@/config/checkRule";
 export default {
   data() {
@@ -359,9 +358,8 @@ export default {
     },
     getCode() {
       //1、请求后台验证码接口
-      let codeUrl = config.host + "/frontnote-send";
-      let params = new URLSearchParams();
-      params.append("phoneCode", this.ownData.ownPhone.val);
+      let codeUrl = "/frontnote-send";
+      let params = { phoneCode: this.ownData.ownPhone.val };
       if (this.ownData.ownPhone.val != "") {
         this.axios.post(codeUrl, params).then(res => {
           if (res.data.flag == true) {
@@ -396,9 +394,12 @@ export default {
         this.companyData.registerPhone.isEmpty = false;
         if (Install.isPhone(this.companyData.registerPhone.val)) {
           //验证手机号是否已注册
-          let companyTelUrl = config.host + "/frontcompanyinfomile2-checkAcc";
-          let params = new URLSearchParams();
-          params.append("fmiTel", this.companyData.registerPhone.val);
+          let companyTelUrl = "/frontcompanyinfo-checkAcc";
+          let params = {
+            fmiAcc: "",
+            fmiTel: this.companyData.registerPhone.val,
+            fmiMile: ""
+          };
           this.axios.post(companyTelUrl, params).then(res => {
             if (res.data.flag) {
               this.companyData.registerPhone.isExist = true;
@@ -417,7 +418,7 @@ export default {
         this.companyData.MechanismCode.isEmpty = true;
       } else {
         this.companyData.MechanismCode.isEmpty = false;
-        if (Install.isMechanismCode(this.companyData.MechanismCode.val)) {
+        if (Install.isCode(this.companyData.MechanismCode.val)) {
           this.companyData.MechanismCode.isRight = false;
         } else {
           this.companyData.MechanismCode.isRight = true;
@@ -448,6 +449,20 @@ export default {
         this.companyData.registerEmail.isEmpty = false;
         if (Install.isEmail(this.companyData.registerEmail.val)) {
           this.companyData.registerEmail.isRight = false;
+          let mailUrl = "/frontcompanyinfo-checkAcc";
+          let params = {
+            fmiAcc: "",
+            fmiTel: this.companyData.registerPhone.val,
+            fmiMile: this.companyData.registerEmail.val
+          };
+          this.axios.post(mailUrl, params).then(res => {
+            // console.log(res.data);
+            if (res.data.flag) {
+              this.companyData.registerEmail.isExist = true;
+            } else {
+              this.companyData.registerEmail.isExist = false;
+            }
+          });
         } else {
           if (this.companyData.registerEmail.val != "") {
             this.companyData.registerEmail.isRight = true;
@@ -493,11 +508,10 @@ export default {
         if (Install.isPhone(this.ownData.ownPhone.val)) {
           this.ownData.ownPhone.isRight = false;
           //判断手机号是否已注册
-          let phoneUrl = config.host + "/frontcompanyinfomile-checkAcc";
-          let params = new URLSearchParams();
-          params.append("fmiAcc", this.ownData.ownPhone.val);
+          let phoneUrl = "/frontcompanyinfomile-checkAcc";
+          let params = { fmiAcc: this.ownData.ownPhone.val };
           this.axios.post(phoneUrl, params).then(res => {
-            console.log(res);
+            // console.log(res);
             if (res.data.flag) {
               this.ownData.ownPhone.isExist = true;
             } else {
@@ -574,10 +588,11 @@ export default {
         if (Install.isEmail(this.ownData.ownEmail.val)) {
           this.ownData.ownEmail.isRight = false;
           //验证邮箱是否已注册
-          let emailUrl = config.host + "/frontcompanyinfoperson-checkAcc";
-          let params = new URLSearchParams();
-          params.append("fmiTel", this.ownData.ownPhone.val);
-          params.append("fmiMile", this.ownData.ownEmail.val);
+          let emailUrl = "/frontcompanyinfoperson-checkAcc";
+          let params = {
+            fmiTel: this.ownData.ownPhone.val,
+            fmiMile: this.ownData.ownEmail.val
+          };
           if (this.ownData.ownPhone.val != "") {
             this.axios
               .post(emailUrl, params)
@@ -605,7 +620,7 @@ export default {
       if (this.regInfo.isCompany) {
         //企业注册信息验证
         if (
-          Install.isMechanismCode(this.companyData.MechanismCode.val) &&
+          Install.isCode(this.companyData.MechanismCode.val) &&
           Install.isPhone(this.companyData.registerPhone.val) &&
           Install.isEmail(this.companyData.registerEmail.val) &&
           Install.isPwd(this.companyData.registerPwd.val) &&
@@ -613,7 +628,23 @@ export default {
           this.companyData.registerName.val != "" &&
           this.companyData.confirmPwd.val == this.companyData.registerPwd.val
         ) {
-          console.log(this.companyData);
+          let companyRegUrl = "/h5frontregisteroperate-company";
+          let params = {
+            fci_tel: this.companyData.registerPhone.val,
+            fmiAcc: this.companyData.MechanismCode.val,
+            fmiUsername: this.companyData.companyName.val,
+            fci_name: this.companyData.registerName.val,
+            fmiMile: this.companyData.registerEmail.val,
+            fmiPwd: this.companyData.registerPwd.val,
+            fmiPwd2: this.companyData.confirmPwd.val
+          };
+          this.axios.post(companyRegUrl, params).then(res => {
+            if (res.data.flag) {
+              this.regInfo.isRegSucc = true;
+            } else {
+              this.regInfo.isRegSucc = false;
+            }
+          });
         } else {
           alert("信息不完整！");
         }
@@ -627,17 +658,22 @@ export default {
           Install.isPwd(this.ownData.ownPwd.val) &&
           this.ownData.ownSurePwd.val == this.ownData.ownPwd.val
         ) {
-          let ownUrl = config.host + "/h5frontregisteroperate-one";
-          let params = new URLSearchParams();
-          params.append("fmiTel", this.ownData.ownPhone.val);
-          params.append("verify", this.ownData.ownCode.val);
-          params.append("fmiMile", this.ownData.ownEmail.val);
-          params.append("fmiPwd", this.ownData.ownPwd.val);
-          params.append("fmiPwd2", this.ownData.ownSurePwd.val);
-          params.append("fmiUsername", this.ownData.ownName.val);
+          let ownUrl = "/h5frontregisteroperate-one";
+          let params = {
+            fmiTel: this.ownData.ownPhone.val,
+            verify: this.ownData.ownCode.val,
+            fmiMile: this.ownData.ownEmail.val,
+            fmiPwd: this.ownData.ownPwd.val,
+            fmiPwd2: this.ownData.ownSurePwd.val,
+            fmiUsername: this.ownData.ownName.val
+          };
 
           this.axios.post(ownUrl, params).then(res => {
-            console.log(res);
+            if (res.data.flag) {
+              this.regInfo.isRegSucc = true;
+            } else {
+              this.regInfo.isRegSucc = false;
+            }
           });
         } else {
           alert("信息不完整！");
@@ -649,7 +685,7 @@ export default {
       if (this.regInfo.isRegSucc == true) {
         this.regInfo.isTime--;
         if (this.regInfo.isTime == 0) {
-          this.$router.push("/mine");
+          this.$router.push("/");
           this.regInfo.isTime = 5;
           this.regInfo.isRegSucc = false;
         }
