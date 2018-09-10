@@ -29,6 +29,7 @@ import SetServiceIns from 'business/SetServiceIns/SetServiceIns';
 import SetInvestment from 'business/setInvestment/setInvestment';
 import SetTeacher from 'business/setTeacher/setTeacher';
 import SetInvestor from 'business/setInvestor/setInvestor';
+import ClassVideo from 'business/classVideo/classVideo'
 Vue.use(Router)
 
 export default new Router({
@@ -60,40 +61,56 @@ export default new Router({
     {
       path: '/classroom', //课堂页面
       name: 'classroom',
-      component: Classroom
+      component: Classroom,
+      children: [{
+        path: ':id',      //课堂视频页面
+        name: 'classVideo',
+        component: ClassVideo
+      }]
     }, {
       path: '/mine', //个人中心页面
       name: 'mine',
       component: Mine,
       children: [{
-        path: 'MyIndex', // 我的首页页面
-        name: 'MyIndex',
-        component: MyIndex
-      }, {
-        path: 'MyActivity', // 我的活动页面
-        name: 'MyActivity',
-        component: MyActivity
-      }, {
-        path: 'MyInterview', // 我的约谈页面
-        name: 'MyInterview',
-        component: MyInterview
-      }, {
-        path: 'MyProject', // 我的项目页面
-        name: 'MyProject',
-        component: MyProject
-      }, {
-        path: 'MyNews', // 我的消息页面
-        name: 'MyNews',
-        component: MyNews
-      }, {
-        path: 'personalSet', //个人设置页面
-        name: 'personalSet',
-        component: PersonalSet,
-      }, {
-        path: 'enterpriseSet', //企业设置页面
-        name: 'enterpriseSet',
-        component: EnterpriseSet
-      }]
+          path: 'MyIndex', // 我的首页页面
+          name: 'MyIndex',
+          component: MyIndex
+        }, {
+          path: 'MyActivity', // 我的活动页面
+          name: 'MyActivity',
+          component: MyActivity
+        }, {
+          path: 'MyInterview', // 我的约谈页面
+          name: 'MyInterview',
+          component: MyInterview
+        }, {
+          path: 'MyProject', // 我的项目页面
+          name: 'MyProject',
+          component: MyProject
+        }, {
+          path: 'MyNews', // 我的消息页面
+          name: 'MyNews',
+          component: MyNews
+        },
+        {
+          path: 'accountsecuritys', //账号安全 
+          name: 'Accountsecuritys',
+          component: Accountsecuritys
+        },
+        {
+          path: 'companyAccount', //企业认证 _ （账号认证）
+          name: 'companyAccount',
+          component: CompanyAccount
+        }, {
+          path: 'personalSet', //个人设置页面
+          name: 'personalSet',
+          component: PersonalSet,
+        }, {
+          path: 'enterpriseSet', //企业设置页面
+          name: 'enterpriseSet',
+          component: EnterpriseSet
+        },
+      ]
     }, {
       path: '/activeDetail/:id',//活动详情页面
       name: 'activeDetail',
@@ -117,11 +134,6 @@ export default new Router({
       component: Err404
     },
     {
-      path: '/accountsecuritys', //账号安全 
-      name: 'Accountsecuritys',
-      component: Accountsecuritys
-    },
-    {
       path: '/changepassword', //手机绑定  
       name: 'Changepassword',
       component: Changepassword
@@ -135,11 +147,6 @@ export default new Router({
       path: '/emaild', //邮箱认证   Emaild
       name: 'Emaild',
       component: Emaild
-    },
-    {
-      path: '/companyAccount', //企业认证
-      name: 'companyAccount',
-      component: CompanyAccount
     },
     {
       path: '/setServiceIns', //认证服务机构
