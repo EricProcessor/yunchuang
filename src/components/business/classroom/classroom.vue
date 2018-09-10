@@ -11,6 +11,7 @@
         <div class="class-list">
             <infor-child-list></infor-child-list>
         </div>
+        <router-view></router-view>
         <m-footer selected="classroom"></m-footer>
     </div>
 </template>
