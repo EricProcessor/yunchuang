@@ -49,11 +49,11 @@ export default new Router({
       name: 'activity',
       component: Activity
     }, {
-      path: '/screenResult',
+      path: '/screenResult',//筛选结果页面
       name: 'screenResult',
       component: ScreenResult
     }, {
-      path: '/activeScreen',
+      path: '/activeScreen',//活动筛选页面
       name: 'activeScreen',
       component: ActiveScreen
     },
@@ -95,7 +95,7 @@ export default new Router({
         component: EnterpriseSet
       }]
     }, {
-      path: '/activeDetail',
+      path: '/activeDetail/:id',//活动详情页面
       name: 'activeDetail',
       component: ActiveDetail
     }, {

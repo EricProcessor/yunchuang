@@ -34,7 +34,7 @@ export default {
   mounted(){
           this.axios.post("/h5frontactivityinfo-foreshow?type=Y").then(res => {
             this.activeList=res.data.list
-            console.log(this.activeList)
+            // console.log(this.activeList)
          })      
   }
 };
