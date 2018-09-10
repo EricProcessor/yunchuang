@@ -72,7 +72,7 @@ export default {
       var expires = "expires=" + d.toUTCString();
       // console.info(cname + "=" + +"; " + expires);
       document.cookie =
-        "SESSION=fa04dfcc-bcfb-4592-9368-e172ae5e60ed" + "; " + expires;
+        "SESSION=a05dc935-6459-490d-bddd-9f9f651a83da" + "; " + expires;
       console.info(document.cookie);
       //   var user = {
       //     fmi_id: "183",

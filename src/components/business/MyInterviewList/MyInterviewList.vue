@@ -1,21 +1,21 @@
 <template>
   <ul>
-    <li>
+    <li :id="item.fcp_id" v-for="(item,index) in items" :key="index">
       <div class="left">
-
+        <img :src="item.FCP_LOGO" alt="">
       </div>
       <div class="right">
         <dd>
-          <h4>项目---{{toggleInt}}</h4>
-          <span class="intName">DMIAES</span>
+          <h4>项目</h4>
+          <span class="intName">{{item.fcp_name}}</span>
         </dd>
         <dd>
           <h4>约谈时间</h4>
-          <span>2018-07-17 15:31:06</span>
+          <span>{{item.fai_datatime|formatDate}}</span>
         </dd>
         <dd>
           <h4>约谈人</h4>
-          <span>成都盈创兴</span>
+          <span>{{item.fai_sponsor}}</span>
         </dd>
         <dd>
           <h4>角色</h4>
@@ -23,7 +23,7 @@
         </dd>
         <dd>
           <h4>约谈地点</h4>
-          <span>北京市朝阳区91创新中心5F大厅91创新中心5F</span>
+          <span>{{item.fai_address}}</span>
         </dd>
       </div>
     </li>
@@ -34,8 +34,10 @@
 import axios from "axios";
 import config from "@/config/config";
 export default {
-  data:{
-    toggleInt : 'toggleInt'
+  data() {
+    return {
+      items: []
+    };
   },
   props: ["toggleInt"],
   mounted() {
@@ -44,23 +46,46 @@ export default {
   methods: {
     //获取后台数据
     inforData() {
-      // let _url = config.host + "h5frontmembercentre-home";     
+      // let _url = config.host + "h5frontmembercentre-home";
       // if (toggleInt == 1) {
       //   let _url = config.host + "h5frontmembercentre-home";
       // }
       let _url = "";
-      if (toggleInt == 1) {
-        _url = config.host + "/h5frontmessage-home";
+      if (this.toggleInt == 1) {
+        _url = "/h5frontmyagreementtalk-home";
       } else {
-        _url = config.host + "/h5frontmybyagreementtalk-home";
+        _url = "/h5frontmybyagreementtalk-home";
       }
       let params = new URLSearchParams();
       // params.append("selType", this.serachSend.SearchClass);
       // params.append("KeyWord", encodeURI(encodeURI(this.serachSend.searchVal)));
       axios.post(_url).then(res => {
-        // this.items = res.data;
-        console.log(res.data);
+        if (this.toggleInt == 1) {
+          this.items = res.data.talkList;
+        } else {
+          this.items = res.data.bytalkList;
+        }
+
+        console.log(this.items);
       });
+    }
+  },
+  //将时间戳转化成时间
+  filters: {
+    formatDate: function(value) {
+      let date = new Date(value);
+      let y = date.getFullYear();
+      let MM = date.getMonth() + 1;
+      MM = MM < 10 ? "0" + MM : MM;
+      let d = date.getDate();
+      d = d < 10 ? "0" + d : d;
+      let h = date.getHours();
+      h = h < 10 ? "0" + h : h;
+      let m = date.getMinutes();
+      m = m < 10 ? "0" + m : m;
+      let s = date.getSeconds();
+      s = s < 10 ? "0" + s : s;
+      return y + "-" + MM + "-" + d + " " + h + ":" + m + ":" + s;
     }
   }
 };
@@ -80,6 +105,10 @@ ul {
       background-color: #cad3dc;
       margin-right: 30px;
       margin-top: 30px;
+      img {
+        width: 100%;
+        height: 100%;
+      }
     }
     .right {
       float: left;

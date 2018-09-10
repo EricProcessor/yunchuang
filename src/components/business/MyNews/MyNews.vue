@@ -2,27 +2,30 @@
   <div class="towLevelRouter">
     <index-header :text="headerText" :hasSearch="false"></index-header>
     <ul class="myIntCon">
-      <li>
+      <li :id="item.fmm_id" v-for="(item,index) in items" :key="index">
           <div class="myIntNew">
-            <span>会员审核通过通知</span>
-            <span>2018-09-12 00:00:00</span>
+            <span>{{item.fmm_title}}</span>
+            <span>{{item.fmi_datetime | formatDate}}</span>
           </div>
           <p class="myDelate" @click="deleateBox">删除</p>
           <!-- <button class="mint-button mint-button--default mint-button--large">
             <label class="mint-button-text">打开 confirm 提示框</label>
-          </button> -->
+          </button> --> 
       </li>
     </ul>
   </div>
 </template>
-<script>
+<script type="text/ecmascript-6">
 import IndexHeader from "business/indexHeader/indexHeader";
 import axios from "axios";
 import config from "@/config/config";
 import { MessageBox } from "mint-ui";
 export default {
-  data: {
-    message: ""
+  data() {
+    return {
+      message: "",
+      items: []
+    };
   },
   created() {
     this.headerText = "我的消息"; //设置头部显示导航内容
@@ -37,13 +40,13 @@ export default {
   methods: {
     //获取后台数据
     inforData() {
-      let _url = config.host + "/h5frontmessage-home";
+      let _url = "/h5frontmessage-home";
       let params = new URLSearchParams();
       // params.append("selType", this.serachSend.SearchClass);
-      // params.append("KeyWord", encodeURI(encodeURI(this.serachSend.searchVal)));
+      // params.append("KeyWord", encode  URI(encodeURI(this.serachSend.searchVal)));
       axios.post(_url).then(res => {
-        // this.items = res.data;
-        console.log(res.data);
+        this.items = res.data.messageList;
+        console.log(res.data.messageList);
       });
     },
     deleateBox() {
@@ -53,6 +56,24 @@ export default {
         showCancelButton: true
       });
       MessageBox.confirm("确定执行此操作", "提示");
+    }
+  },
+  //将时间戳转化成时间
+  filters: {
+    formatDate: function(value) {
+      let date = new Date(value);
+      let y = date.getFullYear();
+      let MM = date.getMonth() + 1;
+      MM = MM < 10 ? "0" + MM : MM;
+      let d = date.getDate();
+      d = d < 10 ? "0" + d : d;
+      let h = date.getHours();
+      h = h < 10 ? "0" + h : h;
+      let m = date.getMinutes();
+      m = m < 10 ? "0" + m : m;
+      let s = date.getSeconds();
+      s = s < 10 ? "0" + s : s;
+      return y + "-" + MM + "-" + d + " " + h + ":" + m + ":" + s;
     }
   }
 };
