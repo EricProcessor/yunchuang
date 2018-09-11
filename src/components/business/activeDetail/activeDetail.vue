@@ -7,17 +7,16 @@
     <!-- 详情 -->
     <div class="detail">
       <div class="detail-title">
-        <span>2018中国创业武林大会</span>
+        <span>{{this.activeDetail.faiName}}</span>
       </div>
       <ul>
         <li>
           <label><i>●</i><i>目标定位</i></label>
-          <p></p>
+          <p>{{this.activeDetail.faiGoal}}</p>
         </li>
         <li>
           <label><i>●</i><i>举办时间</i></label>
-          <p>2018年6月19日 上午12:00-2018年12月31日 上午12:00
-          </p>
+          <p>{{this.activeDetail.faiDatetime | formatDate}} ─ {{this.activeDetail.faiEndDatetime | formatDate}}</p>
         </li>
         <li>
           <label><i>●</i><i>举办地点</i></label>
@@ -37,36 +36,34 @@
         </li>
         <li>
           <label><i>●</i><i>活动内容</i></label>
-          <p></p>
+          <p>{{this.activeDetail.faiContent}}</p>
         </li>
         <li>
           <label><i>●</i><i>联系人</i></label>
-          <p>{{this.activeDetail.faiLinkman}}</p>
+          <p>{{this.activeDetail.faiLinkman}}:{{this.activeDetail.faiTel}}</p>
         </li>
       </ul>  
     </div>
     <span class="ac-bao" @click="showAddressPicker">报名</span>
-    <mt-popup
-    v-model="popupVisible"
-    >
+    <mt-popup v-model="popupVisible">
       <div class="popupBox">
         <i @click="closeAddressPicker">✖</i>
         <ul>
-          <li>
-            <label>活动名称：</label><span>2018中国创业舞林大会</span>
-          </li>
-          <li class="mh">
-            <label>活动时间：</label><span>2018年6月19日<br>上午12：00到0:00</span>
-          </li>
-          <li class="mh">
-            <label>活动地点：</label><span>创新园京东云电商创新中心5F路演大厅</span>
-          </li>
-          <li>
-            <label class="mw">联系人：</label><input type="text"/>
-          </li>
-          <li>
-            <label>联系电话：</label><input type="text"/>
-          </li>
+            <li>
+              <label>活动名称：</label><span>2018中国创业舞林大会</span>
+            </li>
+            <li class="mh">
+              <label>活动时间：</label><span>2018年6月19日<br>上午12：00到0:00</span>
+            </li>
+            <li class="mh">
+              <label>活动地点：</label><span>创新园京东云电商创新中心5F路演大厅</span>
+            </li>
+            <li>
+              <label class="mw">联系人：</label><input type="text"/>
+            </li>
+            <li>
+              <label>联系电话：</label><input type="text"/>
+            </li>
         </ul>
         <button>提交</button>
       </div>
@@ -97,10 +94,27 @@ export default {
       this.popupVisible = false;
     },
   },
+  filters: {
+      formatDate: function (value) {
+        let date = new Date(value);
+        let y = date.getFullYear();
+        let MM = date.getMonth() + 1;
+        MM = MM < 10 ? ('0' + MM) : MM;
+        let d = date.getDate();
+        d = d < 10 ? ('0' + d) : d;
+        let h = date.getHours();
+        h = h < 10 ? ('0' + h) : h;
+        let m = date.getMinutes();
+        m = m < 10 ? ('0' + m) : m;
+        let s = date.getSeconds();
+        s = s < 10 ? ('0' + s) : s;
+        return y + '-' + MM + '-' + d + ' ' + h + ':' + m + ':' + s;
+      }
+  },
   mounted(){
     var id = this.$route.params.id
     // console.log(id)
-    this.axios.get("/h5frontactivityinfo-item/"+id+"").then(res => {
+    this.axios.post("/h5frontactivityinfo-item/"+id+"").then(res => {
           this.activeDetail=res.data.ai       
     }) 
   }

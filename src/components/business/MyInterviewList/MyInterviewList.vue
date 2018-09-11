@@ -15,11 +15,17 @@
         </dd>
         <dd>
           <h4>约谈人</h4>
-          <span>{{item.fai_sponsor}}</span>
+          <span>{{item.fmi_username}}</span>
         </dd>
         <dd>
           <h4>角色</h4>
-          <span>投资人</span>
+          <span v-if="item.fmi_type=='p'">普通用户</span>
+          <span v-if="item.fmi_type=='T'">投资机构</span>
+          <span v-if="item.fmi_type=='C'">创业团队</span>
+          <span v-if="item.fmi_type=='M'">投资人</span>
+          <span v-if="item.fmi_type=='Z'">创业载体</span>
+          <span v-if="item.fmi_type=='D'">创业导师</span>
+          <span v-if="item.fmi_type=='F'">服务机构</span>
         </dd>
         <dd>
           <h4>约谈地点</h4>

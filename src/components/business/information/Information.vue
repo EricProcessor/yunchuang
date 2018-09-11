@@ -4,22 +4,21 @@
     <index-header :text="headerText"></index-header>
     <!-- tab标签 -->
     <tabs class="tabs"></tabs>
+    <router-view></router-view>
     <m-footer :selected="selected"></m-footer>
   </div>
 </template>
 <script>
 import Tabs from "base/tabs/tabs";
-import MFooter from 'business/mFooter/mFooter'
-import IndexHeader from 'business/indexHeader/indexHeader'
+import MFooter from "business/mFooter/mFooter";
+import IndexHeader from "business/indexHeader/indexHeader";
 export default {
   data() {
-    return {
-
-    }
+    return {};
   },
   created() {
-      this.selected = "information"   //设置导航栏默认选中项
-      this.headerText = "资讯"      //头部显示内容
+    this.selected = "information"; //设置导航栏默认选中项
+    this.headerText = "资讯"; //头部显示内容
   },
   components: {
     Tabs,

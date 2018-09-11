@@ -1,15 +1,11 @@
 <template>
-    <div class="inforImgBox">
-        <img class="inforImg" src="/static/images/business_1.jpg" alt="">
-        <infor-child-list></infor-child-list>
-    </div>
+  <div class="inforImgBox">
+    <img class="inforImg" src="/static/images/business_1.jpg" alt="">
+  </div>
 </template>
 <script>
-import InforChildList from "../inforChildList/inforChildList";
 export default {
-  components: {
-    InforChildList
-  }
+  props:["banner"]
 };
 </script>
 <style lang="less" scoped>
