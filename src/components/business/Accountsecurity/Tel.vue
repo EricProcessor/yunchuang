@@ -1,7 +1,7 @@
 <template>
     <div class="one">
       
-    <index-header :text="headerText" :hasSearch="false"></index-header>
+    <index-header text="修改密码" :hasSearch="false"></index-header>
 
        
     <!-- main -->
@@ -61,7 +61,7 @@
     <!-- footer -->
     <div class="foot">
             <div class="btn">
-                <p class="foot_btn" @click="add(newpss.confirmtxt)" >保存</p>
+                <p class="foot_btn" @click="add" >保存</p>
             </div>
         </div>
         <router-view />
@@ -72,6 +72,9 @@
 import IndexHeader from "business/indexHeader/indexHeader";
 
 export default {
+    created(){
+        // document.cookie = 
+    },
     data () {
         return {
             
@@ -81,7 +84,7 @@ export default {
                   oldshow:false,    //判断密码框不能为空时
                   old_nls:"原密码不能为空",
                   matching:false,       
-                  old_matchings:"和原密码不匹配", 
+                  old_matchings:"请输入正确的格式", 
             },
 
           newpss:{
@@ -97,12 +100,9 @@ export default {
                 newendold:"两次输入的密码不一致",  //确认密码下的验证
           }
           
-
         }
     },
-    components:{
-        IndexHeader
-    },
+    
     methods:{
         //返回上一层
         go(){
@@ -110,27 +110,26 @@ export default {
         },
          isPwd(pwd) {  
             //密码验证
-            let isPwd = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,21}$/;
+            let isPwd = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,21}$/; //密码正则
             return isPwd.test(pwd);
          },
          //判断原密码是否为空
          ownPwdBlur(oldVal){
              //判断字符串为空
-             console.log(oldVal)
-            if(this.old.oldtxt == ""  ){
+            if(this.old.oldtxt == "" ){
                 this.old.oldshow = true; 
-                return;          
+               this.old.matching = false;
             }else{
                 this.old.oldshow = false;
-                return;
-            }
-            //判断正则验证
-            if(this.isPwd(this.old.oldtxt)){
-                
-            }else{
-               this.old.matching = true;
+                //判断正则验证
+                if(this.isPwd(oldVal)){
+                   this.old.matching = false
+                }else{
+                    this.old.matching = true
+                }
                
             }
+            
          },
          //判断新密码是否为空
         newspsd(){
@@ -152,26 +151,39 @@ export default {
 
         },
          //保存按钮点击事件
-        add(confirmtxtVal){
-          
-            console.log(confirmtxtVal)
+        add(){
+            let userPwd=localStorage.getItem("password");
             let old = this.old.oldtxt,
-                news = this.newpss.newtxt;
-            if(old == "" || news == "" || confirmtxtVal == ""){
-                alert('信息不完整');
-                return
-            }
-            if(news == confirmtxtVal ){
-                alert(1)
+                news = this.newpss.newtxt,
+                confirmtxts = this.newpss.confirmtxt;
+            if(old==''&&news==''&&confirmtxts==''){
+                alert("信息不完整!")
+            }else if(old==''){
+                alert("原密码不能为空!");
+            }else if(news==''){
+alert("原密码不能为空!");
+            }else if(confirmtxts==''){
+                alert("原密码不能为空!");
             }else{
-                this.newpss.identical = true;
+                let _url="/frontcompanyaccpwdeditor-home";
+                let params={
+                    pwd:old,
+                    newpwd:news
+                }
+                this.axios.post(_url,params).then(res=>{
+                    console.log(res)
+                })
             }
+           
         }
-
     },
-    created() {
-        this.headerText = "修改密码"; //设置头部显示导航内容
+    watch:{
+        
     },
+    components:{
+        IndexHeader
+    },
+    
 }
 </script>
 
@@ -179,6 +191,13 @@ export default {
 body{
     background: #fff;
     .one{
+        position: fixed;
+        top:0;
+        left: 0;
+        width: 100%;
+        background: #fff;
+        z-index: 200;
+        height: 100%;
         // header
          .heade{
              .lefts{
@@ -231,6 +250,7 @@ body{
                         border: none;
                         width: 96%;
                         height: 59px;
+                        background: #f5f5f5;
                     }
                     
                 }
@@ -254,6 +274,7 @@ body{
                         border: none;
                         width: 96%;
                         height: 59px;
+                        background: #f5f5f5;
                     }
                     
                 }
@@ -303,6 +324,7 @@ body{
                         border: none;
                         width: 96%;
                         height: 59px;
+                        background: #f5f5f5;
                     }
                     
                 }

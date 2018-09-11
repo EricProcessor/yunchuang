@@ -26,7 +26,7 @@
                 </div>
                 <!-- 修改密码 -->
                 <!-- <router-link to="/mine/accountsecuritys/tel"> -->
-                <div class="lock_dl">
+                <div class="lock_dl" @click="modify" >
                    <div class="one">
                        <dl>
                            <dt><img src="./lock.png" alt=""></dt>
@@ -62,7 +62,7 @@
             
         </section>
     </div>
-    
+    <router-view />
 </div>
     
 </template>
@@ -81,6 +81,11 @@ export default {
         go(){
             this.$router.go(-1);
         },
+        modify(){
+            this.$router.push({
+                path: "/mine/accountsecuritys/tel"
+            })
+        },
     },
     components:{
         IndexHeader
@@ -97,13 +102,11 @@ export default {
     bottom: 0;
     z-index: 200;
     background: rgb(245, 245, 245);
-    .wrap{
+    
         // 头部------账号安全
         
        .center{
            height:140px;
-          
-          
           
            .main{
             //    手机绑定
@@ -267,7 +270,7 @@ export default {
                }
            }
        }
-    }
+    
 }
     
 </style>

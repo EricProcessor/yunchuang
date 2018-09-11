@@ -96,7 +96,18 @@ export default new Router({
           path: 'accountsecuritys', //账号安全 
           name: 'Accountsecuritys',
           component: Accountsecuritys,
-          
+          children:[
+            {
+              path: 'tel', //修改密码   
+              name: 'Tel', 
+              component: Tel
+            },
+            {
+              path: 'changepassword', //手机绑定  
+              name: 'Changepassword',
+              component: Changepassword
+            },
+          ]
         },
         {
           path: 'companyAccount', //企业认证 _ （账号认证）
@@ -135,16 +146,8 @@ export default new Router({
       component: Err404
     },
     
-     {
-        path: '/tel', //修改密码   
-        name: 'Tel',
-        component: Tel
-      },
-      {
-        path: '/changepassword', //手机绑定  
-        name: 'Changepassword',
-        component: Changepassword
-      },
+     
+      
       {
         path: '/emaild', //邮箱认证   
         name: 'Emaild',

@@ -22,11 +22,12 @@
                </div>
                
             <div class="email_iptone">
-                <input type="text" class="txtone" >
+                <input type="text"  v-model="em" @blur="emails(em)" class="txtone" >
                 
             </div>
             <div class="wrong_two" >
-                <p>邮箱格式错误错误</p>
+                <p v-show="emFormat">邮箱格式错误</p>
+                <p v-show="emNulls">您输入的为空</p>
             </div>
           </div>
            <div class="email_yuanone" >
@@ -42,7 +43,7 @@
                 <p>验证码错误</p>
             </div>
           </div>
-       
+        
         </div>
 
     <!-- footer -->
@@ -58,13 +59,35 @@
 export default {
     data() {
         return {
-            
+            em:'',       //邮箱账号信息
+            emNulls:false,   //判断邮箱为空的验证
+            emFormat:false  //判断邮箱格式不正确时验证
         }
     },
     methods:{
         go(){
                 this.$router.go(-1);
             },
+        
+        isEmail(pwd) {  
+            //邮箱验证
+            let isEmail = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+            return isEmail.test(pwd);
+         },
+        emails(emVal){
+            
+            if(emVal==""){
+                this.emNulls = true
+            }else{
+                this.emNulls = false;
+                if(this.isEmail(emVal)){
+                    this.emFormat = false
+                }else{
+                    this.emFormat = true            
+                }
+            }
+           
+        }
     }
 }
 </script>
@@ -146,9 +169,10 @@ export default {
                 .wrong_two{
                      text-align: right;
                     margin-right: 40px;
+                    height:10px;
                     color: red;
                    letter-spacing: 2px;
-                   display: none;
+             
                    margin-top: 20px;
                 }
             }
@@ -178,7 +202,7 @@ export default {
                     margin-right: 40px;
                     color: red;
                    letter-spacing: 2px;
-                   display: none;
+                  
                 }
             }
             
