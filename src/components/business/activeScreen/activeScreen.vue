@@ -14,15 +14,16 @@
             </div>             
         </div>
         <footer>
-            <button class="btn" @click="screenResult">确定</button>
+            <button class="btn"  @click="deleateBox">确定</button>
         </footer>
-        
+    
     </div>
 </template>
 <script>
 import activeScreenOne from "business/activeScreen/activeScreenC1";
 import activeScreenTwo from "business/activeScreen/activeScreenC2";
 import activeScreenC3 from "business/activeScreen/activeScreenC3";
+import { MessageBox } from "mint-ui";
 import {Popup} from 'mint-ui';
 import {Picker} from 'mint-ui';
 
@@ -31,10 +32,20 @@ export default {
         backBtnPre() {
           this.$router.go(-1);
         },
-        screenResult(){
-            this.$router.push({
-              path: "/screenResult"
+        // screenResult(){
+        //     this.$router.push({
+        //       path: "/screenResult"
+        //     });
+        // },
+        deleateBox() {
+            MessageBox({
+                title: "提示",
+                message: "确定执行此操作?",
+                showCancelButton: true
+            }).then(action=>{this.$router.push({
+                path: "/screenResult"
             });
+            })            
         }    
     },
     components:{

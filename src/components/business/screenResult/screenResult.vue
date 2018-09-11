@@ -6,18 +6,23 @@
       <span class="screen-result" @click="activeScreen">筛选</span>
     </header>
     <ul>
-      <li v-for="(n,v) in 4" :key="v"  @click="activeDetail">
+      <li v-for="(val,index) in screenResult" :key="index"  @click="activeDetail">
         <div class="screen-con">
-          <p class="pOne">2018中国创业武林大会</p>
-          <p class="pTwo">●紫竹院路29号北京香格里拉饭店</p>
+          <p class="pOne">{{val.faiName}}</p>
+          <p class="pTwo"><i></i> {{val.faiAddress}}</p>
         </div>
-        <div class="screen-img"><img src="/static/images/ac-pic1.jpg" alt=""></div>
+        <div class="screen-img"><img :src="val.faiPath" alt=""></div>
       </li>
     </ul>
   </div>
 </template>
 <script>
     export default {
+        data(){
+          return{
+             screenResult:''
+          }        
+        },
         methods: {
           backBtnPre() {
             this.$router.go(-1);
@@ -27,11 +32,16 @@
           },
           activeScreen(){
             this.$router.push('/activeScreen');
-          }
-          
-      }
+          }         
+        },
+        mounted(){
+          this.axios.post("/h5frontactivityinfo-foreshow").then(res=>{
+            this.screenResult = res.data.list
+            console.log(this.screenResult)
+          })
+        }
     };
-</script>
+</script>s
 <style lang="less" scoped>
 .screen{
   background: #f2f2f2;
@@ -82,12 +92,24 @@
         width: 60%;
         height:170px;
         p{
+          position: relative;
           height:75px;
           line-height: 75px;
           margin-left: 20px;
           overflow: hidden;
           white-space: nowrap;
           text-overflow: ellipsis;
+          
+          i{
+            position: absolute;
+            top:13px;
+            left:-10px;
+            display:block;
+            width: 44px;
+            height:48px;
+            background: url("./address.png") no-repeat;
+            transform: scale(0.5,0.5)
+          } 
         }
         .pOne{
           font-size: 29px;
@@ -95,6 +117,7 @@
         .pTwo{
           font-size: 12px;
           color: #999;
+          padding-left: 35px;
         }
       }
       .screen-img{
