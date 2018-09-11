@@ -8,13 +8,13 @@
     <!-- tab-container -->
     <mt-tab-container v-model="selected">
       <mt-tab-container-item id="1">
-        <InforChild></InforChild>
+        <InforChild :lsit="item"></InforChild>
       </mt-tab-container-item>
       <mt-tab-container-item id="2">
-        <mt-cell v-for="(n,v) in 4" :key="v" :title="'内容 ' + n" />
+        <!-- <InforChild :lsit="item"></InforChild> -->
       </mt-tab-container-item>
       <mt-tab-container-item id="3">
-        <mt-cell v-for="(n,v) in 5" :key="v" :title="'内容 ' + n" />
+        <!-- <InforChild :lsit="item"></InforChild> -->
       </mt-tab-container-item>
     </mt-tab-container>
   </div>
@@ -24,10 +24,56 @@ import InforChild from "business/inforChild/inforChild";
 export default {
   data() {
     return {
+      item: [],
       selected: "1"
     };
   },
-  methods: {},
+  mounted() {
+    this.headlineData();
+    this.policyData();
+    this.bowenWorld();
+  },
+  methods: {
+    linkInforDetail() {
+      this.$router.push({
+        path: "/information/inforDetail"
+      });
+    },
+    //创业头条
+    headlineData() {
+      let _url = "/h5frontcarrierinfotop-home";
+      this.axios.get(_url).then(res => {
+        this.item = res.data.citList;
+        for (let i in this.item) {
+          //转化时间戳
+          let newTime = new Date(this.item[i].fciDatetime)
+            .toLocaleString()
+            .split(" ");
+          this.item[i].fciDatetime = newTime[0];
+        }
+      });
+    },
+    //创业政策
+    policyData() {
+      let policyUrl = "/h5frontPolicyInfo-home";
+      this.axios.get(policyUrl).then(res => {
+        console.log(res.data.list);
+      });
+    },
+    //博文天地
+    bowenWorld() {
+      let bowenUrl = "/h5frontcarrierinfoblog-home";
+      this.axios.get(bowenUrl).then(res => {
+        console.log(res.data.cibList);
+      });
+    }
+  },
+  watch: {
+    selected: function(oldVal, newVal) {
+      this.selected = newVal;
+      console.log(oldVal, newVal)
+    }
+  },
   components: {
     InforChild
   }

@@ -31,7 +31,6 @@
   </div>
 </template>
 <script>
-import config from "@/config/config";
 import Install from "@/config/checkRule";
 export default {
   data() {
@@ -71,16 +70,17 @@ export default {
       } else if (!Install.isPhone(this.userInfo.userName)) {
         alert("请输入正确的手机号码！");
       } else {
-        let url = config.host + "/frontloginoperate-login";
-        let params = new URLSearchParams();
-        params.append("fmiTel", this.userInfo.userName);
-        params.append("fmiPwd", this.userInfo.password);
+        let url = "/frontloginoperate-login";
+        let params = {
+          fmiTel: this.userInfo.userName,
+          fmiPwd: this.userInfo.password
+        };
         this.axios.post(url, params).then(res => {
           if (res.data.msg) {
             alert(res.data.msg);
           } else {
-            localStorage.setItem("userName",this.userInfo.userName);
-            localStorage.setItem("pwd",this.userInfo.password);
+            localStorage.setItem("userName", this.userInfo.userName);
+            localStorage.setItem("pwd", this.userInfo.password);
             this.$router.push("/");
           }
         });

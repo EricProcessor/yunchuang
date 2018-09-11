@@ -50,11 +50,11 @@ export default new Router({
       name: 'activity',
       component: Activity
     }, {
-      path: '/screenResult',
+      path: '/screenResult',//筛选结果页面
       name: 'screenResult',
       component: ScreenResult
     }, {
-      path: '/activeScreen',
+      path: '/activeScreen',//活动筛选页面
       name: 'activeScreen',
       component: ActiveScreen
     },
@@ -95,7 +95,8 @@ export default new Router({
         {
           path: 'accountsecuritys', //账号安全 
           name: 'Accountsecuritys',
-          component: Accountsecuritys
+          component: Accountsecuritys,
+          
         },
         {
           path: 'companyAccount', //企业认证 _ （账号认证）
@@ -112,7 +113,7 @@ export default new Router({
         },
       ]
     }, {
-      path: '/activeDetail',
+      path: '/activeDetail/:id',//活动详情页面
       name: 'activeDetail',
       component: ActiveDetail
     }, {
@@ -133,21 +134,23 @@ export default new Router({
       name: 'err404',
       component: Err404
     },
-    {
-      path: '/changepassword', //手机绑定  
-      name: 'Changepassword',
-      component: Changepassword
-    },
-    {
-      path: '/tel', //修改密码   emaild
-      name: 'Tel',
-      component: Tel
-    },
-    {
-      path: '/emaild', //邮箱认证   Emaild
-      name: 'Emaild',
-      component: Emaild
-    },
+    
+     {
+        path: '/tel', //修改密码   
+        name: 'Tel',
+        component: Tel
+      },
+      {
+        path: '/changepassword', //手机绑定  
+        name: 'Changepassword',
+        component: Changepassword
+      },
+      {
+        path: '/emaild', //邮箱认证   
+        name: 'Emaild',
+        component: Emaild
+      },
+   
     {
       path: '/setServiceIns', //认证服务机构
       name: 'setServiceIns',

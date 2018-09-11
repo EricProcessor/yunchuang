@@ -3,17 +3,17 @@
     <index-header :text="headerText" :hasSearch="hasSearch"></index-header>
     <ul v-if="!account.isCompany">
       <li class="clearfix" @click="linkServiceHref">
-        <i class="fl"></i>
+        <i class="fl serviceBg"></i>
         <p class="fl">认证服务机构</p>
-        <p class="fr validate" v-if="!account.isPass">未验证</p>
+        <p class="fr validate" v-if="account.isUnverified">未验证</p>
         <p class="fr isAudit" v-if="account.isAudit">审核中</p>
         <p class="fr isPass" v-if="account.isPass">
           <span></span>已认证</p>
       </li>
       <li class="clearfix" @click="linkInvestHref">
-        <i class="fl"></i>
+        <i class="fl investBg"></i>
         <p class="fl">认证投资机构</p>
-        <p class="fr validate" v-if="!account.isPass">未验证</p>
+        <p class="fr validate" v-if="account.isUnverified">未验证</p>
         <p class="fr isAudit" v-if="account.isAudit">审核中</p>
         <p class="fr isPass" v-if="account.isPass">
           <span></span>已认证</p>
@@ -23,7 +23,7 @@
       <li class="clearfix" @click="linkTeacherHref">
         <i class="fl teacher"></i>
         <p class="fl">认证导师</p>
-        <p class="fr validate" v-if="!account.isPass">未验证</p>
+        <p class="fr validate" v-if="account.isUnverified">未验证</p>
         <p class="fr isAudit" v-if="account.isAudit">审核中</p>
         <p class="fr isPass" v-if="account.isPass">
           <span></span>已认证</p>
@@ -31,7 +31,7 @@
       <li class="clearfix" @click="linkInvestPersonHref">
         <i class="fl investor"></i>
         <p class="fl">认证投资人</p>
-        <p class="fr validate" v-if="!account.isPass">未验证</p>
+        <p class="fr validate" v-if="account.isUnverified">未验证</p>
         <p class="fr isAudit" v-if="account.isAudit">审核中</p>
         <p class="fr isPass" v-if="account.isPass">
           <span></span>已认证</p>
@@ -46,6 +46,7 @@ export default {
     return {
       account: {
         isCompany: false, //是否是公司账号认证
+        isUnverified:true,//未验证
         isPass: false, //是否通过
         isAudit: false //审核中
       }
@@ -73,6 +74,9 @@ export default {
       //认证投资人
       this.$router.push("/setInvestor");
     }
+  },
+  mounted(){
+
   },
   components: {
     IndexHeader
@@ -103,14 +107,25 @@ export default {
       width: 54px;
       height: 48px;
       margin: 35px 32px;
-      background: #f00;
+    }
+    .serviceBg {
+      background: url("./fuwu.png") no-repeat center center;
+      background-size: 100% 100%;
+    }
+    .investBg {
+      background: url("./jigou.png") no-repeat center center;
+      background-size: 100% 100%;
     }
     .teacher {
       height: 50px;
+      background: url("./daoshi.png") no-repeat center center;
+      background-size: 100% 100%;
     }
     .investor {
       /*投资人*/
       height: 54px;
+      background: url("./touzir.png") no-repeat center center;
+      background-size: 100% 100%;
     }
     p {
       font-size: 24px;
@@ -129,10 +144,11 @@ export default {
       color: #6ea1ff;
       span {
         display: inline-block;
-        width: 34px;
-        height: 24px;
-        background: #f00;
-        margin: 0 10px;
+        width: 40px;
+        height: 32px;
+        background: url("./yirenz.png") no-repeat center center;
+        background-size: 100% 100%;
+        margin: -5px 10px;
       }
     }
   }

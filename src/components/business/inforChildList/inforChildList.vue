@@ -1,8 +1,7 @@
 <template>
   <div>
-    <!-- <mt-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore"> -->
     <ul class="listBox">
-      <li class="list_li clearfix" @click="linkInforDetail" v-for="(val,index) in item" :key="index">
+      <!-- <li class="list_li clearfix" @click="linkInforDetail" v-for="(val,index) in item" :key="index">
         <div class="fl left_div">
           <p class="text">{{val.fciTitle}}</p>
           <input type="hidden" class="fcaId" :value="val.fciId" />
@@ -19,44 +18,16 @@
         <div class="fl right_div">
           <img v-lazy="val.fciPath" alt="">
         </div>
-      </li>
+      </li> -->
     </ul>
-    <!-- </mt-loadmore> -->
   </div>
 
 </template>
 <script>
-import axios from "axios";
-import config from "@/config/config";
 export default {
+  props: ["lsit"],
   data() {
-    return {
-      item: []
-    };
-  },
-  mounted() {
-    this.inforData();
-  },
-  methods: {
-    linkInforDetail() {
-      this.$router.push({
-        path: "/information/inforDetail"
-      });
-    },
-    //获取后台数据
-    inforData() {
-      let _url = config.host + "/h5frontcarrierinfotop-home";
-      axios.get(_url).then(res => {
-        this.item = res.data.citList;
-        for (let i in this.item) {
-          //转化时间戳
-          let newTime = new Date(this.item[i].fciDatetime)
-            .toLocaleString()
-            .split(" ");
-          this.item[i].fciDatetime = newTime[0];
-        }
-      });
-    }
+    return {};
   }
 };
 </script>

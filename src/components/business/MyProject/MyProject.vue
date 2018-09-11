@@ -15,8 +15,12 @@
         <dl>
           <dd>
             <h4>行业领域</h4>
+<<<<<<< HEAD
+            <span>消费生活</span>
+=======
             <span>{{item.fcpi}}</span>
             
+>>>>>>> c22198a4ae8117d9b0bd1c2f19f5d7f131a81a5c
           </dd>
           <dd>
             <h4>所属阶段</h4>
