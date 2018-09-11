@@ -9,7 +9,7 @@
             <swiper></swiper>
         </div>
         <div class="class-list">
-            <infor-child-list></infor-child-list>
+            <infor-child-list ref="infor"></infor-child-list>
         </div>
         <router-view></router-view>
         <m-footer selected="classroom"></m-footer>
@@ -24,9 +24,11 @@ import Swiper from 'base/swiper/swiper'
 export default {
     data() {
         return {
+
         }
     },
     mounted() {
+        console.log(this.$refs.infor.$el)
         this.axios({
             url: '/h5frontcarrierinfotop-home',
             method: 'post',

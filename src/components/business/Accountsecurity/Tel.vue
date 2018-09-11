@@ -1,12 +1,8 @@
 <template>
     <div class="one">
-        <!-- header -->
-        <div class="heade">
-               <i class="iconfont lefts" @click="go" >&#xe645;</i>
-                
-                <span>修改密码</span>
-                <span></span>
-        </div>
+      
+    <index-header :text="headerText" :hasSearch="false"></index-header>
+
        
     <!-- main -->
         <div class="xiugai">
@@ -53,7 +49,9 @@
             </div>
             
             <div class="cuo" >
-                <p class="cuo_p" v-show="newpss.identical"  >{{newpss.newendold}}</p>
+                <!-- 输入的和新密码不一致 -->
+                <p class="cuo_p" v-show="newpss.identical"  >{{newpss.newendold}}</p>  
+                <!-- 确认密码不能为空 -->
                  <p class="cuo_null" v-show="newpss.judge" >{{newpss.nulls}}</p>
                  
             </div>
@@ -66,10 +64,13 @@
                 <p class="foot_btn" @click="add(newpss.confirmtxt)" >保存</p>
             </div>
         </div>
+        <router-view />
     </div>
 </template>
 
 <script>
+import IndexHeader from "business/indexHeader/indexHeader";
+
 export default {
     data () {
         return {
@@ -81,7 +82,6 @@ export default {
                   old_nls:"原密码不能为空",
                   matching:false,       
                   old_matchings:"和原密码不匹配", 
-                  
             },
 
           newpss:{
@@ -92,20 +92,23 @@ export default {
                 new_ones:"密码不能为空", 
                 confirmtxt:"",  //确认密码
                 judge:false,       //确认密码下的默认值         
-                nulls:"结果不能为空",   //确认密码下的验证
+                nulls:"确认密码不能为空",   //确认密码下的验证
                 identical:false,       //点击保存时,判断新密码和确认密码的值
-                newendold:"输入的和新密码不一致",  //确认密码下的验证
+                newendold:"两次输入的密码不一致",  //确认密码下的验证
           }
           
 
         }
+    },
+    components:{
+        IndexHeader
     },
     methods:{
         //返回上一层
         go(){
             this.$router.go(-1);
         },
-         isPwd(pwd) {
+         isPwd(pwd) {  
             //密码验证
             let isPwd = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,21}$/;
             return isPwd.test(pwd);
@@ -128,7 +131,6 @@ export default {
                this.old.matching = true;
                
             }
-
          },
          //判断新密码是否为空
         newspsd(){
@@ -138,6 +140,7 @@ export default {
             }else{
                 this.newpss.newpsd = false;
             }
+            
         },
         //判断确认密码是否为空
         Reaffirm(){
@@ -146,45 +149,29 @@ export default {
             }else{
                 this.newpss.judge = false;
             }
+
         },
          //保存按钮点击事件
         add(confirmtxtVal){
+          
             console.log(confirmtxtVal)
             let old = this.old.oldtxt,
                 news = this.newpss.newtxt;
             if(old == "" || news == "" || confirmtxtVal == ""){
-                alert('信息不完整')
+                alert('信息不完整');
+                return
             }
-            if(news == confirmtxtVal){
+            if(news == confirmtxtVal ){
                 alert(1)
             }else{
                 this.newpss.identical = true;
             }
-
-
-            // if(this.isPwd(this.newpss.newtxt) && this.isPwd(this.newpss.confirmtxt)){
-            //     if(this.newpss.newtxt == this.newpss.confirmtxt){
-            //         alert(1)
-            //     }
-            // }else{
-            //     if(!this.isPwd(this.newpss.newtxt) || !this.isPwd(this.newpss.confirmtxt)){
-            //           alert("已数字字母的六-二十一位数");
-                      
-            //            if(this.newpss.newtxt !== this.newpss.confirmtxt){
-            //              alert(this.two)   
-            //            }
-            //     }
-            // }
-            
-            
-            // if(this.newpss.newtxt !== this.newpss.confirmtxt ){
-            //     alert(this.two ) 
-            //     return;
-            // }else{
-            //     alert("成功")
-            // }
         }
-    }
+
+    },
+    created() {
+        this.headerText = "修改密码"; //设置头部显示导航内容
+    },
 }
 </script>
 
@@ -289,7 +276,7 @@ body{
              .new_yuanone{
                  .cuo{
                     .cuo_p{
-                    display: none;
+                   // display: none;
                     }
                     text-align: right;
                     margin-right: 40px;

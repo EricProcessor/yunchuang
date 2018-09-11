@@ -1,6 +1,6 @@
 <template>
     <div class="index-content">
-        <index-header :text="headerText"></index-header>
+        <index-header text="首页"></index-header>
         <swiper></swiper>
         <div class="tab-list">
             <tabs></tabs>
@@ -13,25 +13,9 @@
             </div>
             <div class="block-list activity-list">
                 <ul>
-                    <li>
-                        <img src="" alt="" />
-                        <h3>人工智能研讨峰会</h3>
-                    </li>
-                    <li>
-                        <img src="" alt="" />
-                        <h3>人工智能研讨峰会</h3>
-                    </li>
-                    <li>
-                        <img src="" alt="" />
-                        <h3>人工智能研讨峰会</h3>
-                    </li>
-                    <li>
-                        <img src="" alt="" />
-                        <h3>人工智能研讨峰会</h3>
-                    </li>
-                    <li>
-                        <img src="" alt="" />
-                        <h3>人工智能研讨峰会</h3>
+                    <li @click="_jumpToActive(val.faiId)" v-for="(val,index) in activeData" :key="index">
+                        <img :src="val.faiPath" :alt="val.faiName" />
+                        <h3>{{val.faiName}}</h3>
                     </li>
                 </ul>
             </div>
@@ -43,28 +27,19 @@
             </div>
             <div class="block-list class-list">
                 <ul>
-                    <li>
+                    <li @click="_jumpToClassroom(val.fdpId)" v-for="(val, index) in classroomData" :key="index">
                         <div class="class-img">
-                            <img src="" alt="" />
+                            <img :src="val.fpdCoverPath" :alt="val.fdpTitle" />
                             <i><img src="./video-play-big.png" /></i>
                         </div>
-                        <h3>赢创学院《霍夫曼独角兽训练营》第2期</h3>
-                        <span class="hot-sowing">正在热播</span>
-                        <span>183次观看</span>
-                    </li>
-                    <li>
-                        <div class="class-img">
-                            <img src="" alt="" />
-                            <i><img src="./video-play-big.png" /></i>
-                        </div>
-                        <h3>赢创学院《霍夫曼独角兽训练营》第2期</h3>
-                        <span class="hot-sowing">正在热播</span>
-                        <span>183次观看</span>
+                        <h3>{{val.fdpTitle}}</h3>
+                        <!-- <span class="hot-sowing">正在热播</span> -->
+                        <span>{{val.fpdExamine}}次观看</span>
                     </li>
                 </ul>
             </div>
         </div>
-        <m-footer :selected="selected"></m-footer>
+        <m-footer selected="index"></m-footer>
     </div>
 </template>
 <script>
@@ -76,12 +51,13 @@ import MFooter from 'business/mFooter/mFooter'
 export default {
     data() {
         return {     
-
+            activeData: [],         //创业活动保存数据
+            classroomData: []       //创业课堂保存数据
         }
     },
     created() {
-        this.selected = "index"     //导航栏默认是主页导航
-        this.headerText = "首页"        //头部显示内容
+        this._getEntrepreneurshipData()     //获取创业活动列表信息
+        this._getClassroomData()            //获取创业课堂列表信息
     },
     methods: {
         //点击"更多"，路由跳转
@@ -91,6 +67,42 @@ export default {
             })
             //改变导航栏对应的选中状态
             this.$emit("changeSelect", path)
+        },
+        //获取创业活动列表信息
+        _getEntrepreneurshipData() {
+            this.axios({
+                url: "/h5frontactivityinfo-foreshow",
+                method: "post",
+            }).then(res => {
+                if (res.status === 200) {
+                    this.activeData = res.data.list
+                }
+            })
+        },
+        //点击“创业活动”列表跳转到详情页面
+        _jumpToActive(id) {
+            return 
+            this.$router.push({
+                path: "/activity/" + id
+            })
+        },
+        //获取创业课堂列表信息
+        _getClassroomData() {
+            this.axios({
+                url: "/h5frontclassroom-sift",
+                method: 'post'
+            }).then(res => {
+                if (res.status === 200) {
+                    this.classroomData = res.data.dpList
+                }
+            })
+        },
+        //点击“创业课堂”列表跳转到详情页面
+        _jumpToClassroom(id) {
+            return 
+            this.$router.push({
+                path: "/classroom/" + id
+            })
         }
     },
     components: {
@@ -165,7 +177,6 @@ export default {
                         height: 165px;
                         border-radius: 5px;
                         display: inline-block;
-                        background: red;
                     }
                     h3 {
                         font-size: 22px;
@@ -195,13 +206,14 @@ export default {
                 li {
                     height: 480px;
                     width: 660px;
+                    margin-left: 20px;
                     display: inline-block;
                     .class-img {
                         width: 660px;
                         height: 370px;
-                        border-radius: 5px;
+                        border-radius: 10px;
                         display: inline-block;
-                        background: red;
+                        overflow: hidden;
                         position: relative;
                         &>img {
                             width: 660px;

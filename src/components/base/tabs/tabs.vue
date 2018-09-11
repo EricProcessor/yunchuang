@@ -8,28 +8,102 @@
     <!-- tab-container -->
     <mt-tab-container v-model="selected">
       <mt-tab-container-item id="1">
-        <InforChild></InforChild>
+        <infor-child :banner="casePic"></infor-child>
+        <infor-child-list :list="item1"></infor-child-list>
       </mt-tab-container-item>
       <mt-tab-container-item id="2">
-        <mt-cell v-for="(n,v) in 4" :key="v" :title="'内容 ' + n" />
+        <infor-child :banner="casePic"></infor-child>
+        <infor-child-list :list="item2" :title="strTitle"></infor-child-list>
       </mt-tab-container-item>
       <mt-tab-container-item id="3">
-        <mt-cell v-for="(n,v) in 5" :key="v" :title="'内容 ' + n" />
+        <infor-child :banner="casePic"></infor-child>
+        <infor-child-list :list="item3"></infor-child-list>
       </mt-tab-container-item>
     </mt-tab-container>
+
   </div>
 </template>
 <script>
 import InforChild from "business/inforChild/inforChild";
+import InforChildList from "business/inforChildList/inforChildList";
 export default {
   data() {
     return {
-      selected: "1"
+      item1: [],
+      item2: [],
+      item3: [],
+      strTitle: "",
+      selected: "1",
+      casePic:[]
     };
   },
-  methods: {},
+  mounted() {
+    this.headlineData();
+    this.policyData();
+    this.bowenWorld();
+    this.getPapeList();
+  },
+  methods: {
+    //创业头条
+    headlineData() {
+      let _url = "/h5frontcarrierinfotop-home";
+      this.axios.get(_url).then(res => {
+        this.item1 = res.data.citList;
+        // console.log(this.item1);
+        for (let i in this.item1) {
+          //转化时间戳
+          let newTime = new Date(this.item1[i].fciDatetime)
+            .toLocaleString()
+            .split(" ");
+          this.item1[i].fciDatetime = newTime[0];
+        }
+      });
+    },
+    //创业政策
+    policyData() {
+      let policyUrl = "/h5frontPolicyInfo-home";
+      this.axios.get(policyUrl).then(res => {
+        this.strTitle = res.data.current_title;
+        this.item2 = res.data.list;
+        // console.log(this.item2);
+        for (let i in this.item2) {
+          //转化时间戳
+          let newTime = new Date(this.item2[i].fpiDatetime)
+            .toLocaleString()
+            .split(" ");
+          this.item2[i].fpiDatetime = newTime[0];
+          if (this.item2[i].fpiExamine == "") {
+            this.item2[i].fpiExamine = 0;
+          }
+        }
+      });
+    },
+    //博文天地
+    bowenWorld() {
+      let bowenUrl = "/h5frontcarrierinfoblog-home";
+      this.axios.get(bowenUrl).then(res => {
+        this.item3 = res.data.cibList;
+        for (let i in this.item3) {
+          //转化时间戳
+          let newTime = new Date(this.item3[i].fciDatetime)
+            .toLocaleString()
+            .split(" ");
+          this.item3[i].fciDatetime = newTime[0];
+        }
+      });
+    },
+    //banner图
+    getPapeList() {
+      let url = "/h5frontpageList-home";
+      this.axios.post(url).then(res => {
+        this.casePic=res.data.atiList;
+      });
+    }
+  },
+
   components: {
-    InforChild
+    InforChild,
+    InforChildList
   }
 };
 </script>

@@ -74,17 +74,19 @@
         <label class="fl pos1">
           <i v-if="formList.isShow">*</i>服务载体</label>
         <select class="fl" v-model="setTeacher.serviceCarrier">
-          <option value="0">金融服务</option>
-          <option value="1">投资服务</option>
-          <option value="2">融资服务</option>
+          <option value="0">请选择</option>
+          <option value="1">金融服务</option>
+          <option value="2">投资服务</option>
+          <option value="3">融资服务</option>
         </select>
       </li>
       <li class="group clearfix">
         <label class="fl pos1">
           <i v-if="formList.isShow">*</i>单位属性</label>
         <select class="fl" v-model="setTeacher.unitAttrbute">
-          <option value="0">国有</option>
-          <option value="1">民营</option>
+          <option value="0">请选择</option>
+          <option value="1">国有</option>
+          <option value="2">民营</option>
         </select>
       </li>
       <li class="group clearfix">
@@ -122,16 +124,18 @@
         <label class="fl pos1">
           <i v-if="!formList.isShow">*</i>辅导特长</label>
         <select class="fl" v-model="setTeacher.speciality">
-          <option value="0">国有</option>
-          <option value="1">民营</option>
+          <option value="0">请选择</option>
+          <option value="1">国有</option>
+          <option value="2">民营</option>
         </select>
       </li>
       <li class="group clearfix">
         <label class="fl pos1">
           <i v-if="formList.isShow">*</i>技术领域</label>
         <select class="fl" v-model="setTeacher.technicalField">
-          <option value="0">国有</option>
-          <option value="1">民营</option>
+          <option value="0">请选择</option>
+          <option value="1">国有</option>
+          <option value="2">民营</option>
         </select>
       </li>
       <li class="group clearfix pos1">
@@ -188,26 +192,26 @@ export default {
         disagree: false //不同意
       },
       setTeacher: {
-        name: "",//姓名
-        sex:"",//性别
-        birthday: "",//出生日期
-        company: "",//工作单位
-        presentPost: "",//现任职务
-        inviter:"",//是否接受邀请
-        serviceCarrier: "",//服务载体
-        unitAttrbute: "",//单位属性
-        serviceArea: "",//服务区域
-        zipCode: "",//邮编
-        phone: "",//手机
-        email: "",//邮箱
-        positionalTitles: "",//职称
-        highestEducation : "",//最高学历
-        speciality: "",//辅助特长
-        technicalField: "",//技术领域
-        goodTheme: "",//擅长主题
-        resume: "",//个人简历
-        coachEnterprise: "",//辅导企业
-        employment : "",//受聘情况
+        name: "", //姓名
+        sex: "", //性别
+        birthday: "", //出生日期
+        company: "", //工作单位
+        presentPost: "", //现任职务
+        inviter: "", //是否接受邀请
+        serviceCarrier: "", //服务载体
+        unitAttrbute: "", //单位属性
+        serviceArea: "", //服务区域
+        zipCode: "", //邮编
+        phone: "", //手机
+        email: "", //邮箱
+        positionalTitles: "", //职称
+        highestEducation: "", //最高学历
+        speciality: "", //辅助特长
+        technicalField: "", //技术领域
+        goodTheme: "", //擅长主题
+        resume: "", //个人简历
+        coachEnterprise: "", //辅导企业
+        employment: "" //受聘情况
       }
     };
   },
@@ -235,13 +239,13 @@ export default {
       }
     },
     agreeInviter() {
-      if (!this.invitation.agree) {
+      if (!this.invitation.afree) {
         this.invitation.agree = !this.invitation.agree;
         this.invitation.disagree = !this.invitation.disagree;
       }
     },
     disagreeInviter() {
-      if (!this.invitation.disagree) {
+      if (!this.invitation.disafree) {
         this.invitation.disagree = !this.invitation.disagree;
         this.invitation.agree = !this.invitation.agree;
       }
@@ -281,17 +285,21 @@ export default {
       margin-bottom: 19px;
       label {
         display: inline-block;
-        width: 128px;
+        width: 116px;
         text-align: right;
         font-size: 24px;
         color: #333;
         margin-top: 20px;
         i {
-          display: inline-block;
+          display: block;
           font-size: 24px;
           color: #f35828;
-          position: relative;
+          position: absolute;
           top: 5px;
+          left: 5px;
+        }
+        .third {
+          left: 55px;
         }
       }
       .similarRadio {
@@ -380,7 +388,7 @@ export default {
       }
       input,
       select {
-        width: 530px;
+        width: 550px;
         height: 61px;
         background: #f5f5f5;
         border-radius: 6px;
@@ -388,7 +396,7 @@ export default {
         margin-left: 20px;
       }
       input {
-        width: 510px;
+        width: 530px;
         padding-left: 20px;
       }
       select {
@@ -399,21 +407,21 @@ export default {
       }
       .addeDetail {
         resize: none;
-        width: 490px;
+        width: 510px;
         height: 140px;
         background: #f5f5f5;
         border-radius: 6px;
-        margin: 10px 10px 0 0;
+        margin: 10px 5px 0 0;
         padding: 20px;
         border: none;
       }
       .investIdea {
         resize: none;
-        width: 490px;
+        width: 510px;
         height: 260px;
         background: #f5f5f5;
         border-radius: 6px;
-        margin: 10px 10px 0 0;
+        margin: 10px 5px 0 0;
         padding: 20px;
         border: none;
       }

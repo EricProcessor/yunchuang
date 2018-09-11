@@ -1,17 +1,16 @@
 <template>
   <div>
-    <!-- <mt-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore"> -->
     <ul class="listBox">
-      <li class="list_li clearfix" @click="linkInforDetail" v-for="(val,index) in item" :key="index">
+      <li class="list_li clearfix" v-if="title!='创业政策'" @click="linkInforDetail(val.fciId)" v-for="(val,index) in list" :key="index">
         <div class="fl left_div">
           <p class="text">{{val.fciTitle}}</p>
           <input type="hidden" class="fcaId" :value="val.fciId" />
-          <div class="clearfix">
+          <div class="clearfix countTip">
             <div class="fl time">{{val.fciDatetime}}</div>
             <div class="fr">
-              <p class="clearfix readCount">
-                <span class="fl icon_num"></span>
-                <span class="fl count">{{val.fciExamine}}</span>
+              <p class="readCount">
+                <span class="icon_num"></span>
+                <span class="count">{{val.fciExamine}}</span>
               </p>
             </div>
           </div>
@@ -20,41 +19,38 @@
           <img v-lazy="val.fciPath" alt="">
         </div>
       </li>
+      <li class="list_li clearfix" v-if="title=='创业政策'" @click="linkInforDetail(val.fpiId)" v-for="(val,index) in list" :key="index">
+        <div class="fl left_div">
+          <p class="text">{{val.fpiName}}</p>
+          <input type="hidden" class="fcaId" :value="val.fpiId" />
+          <div class="clearfix countTip">
+            <div class="fl time">{{val.fpiDatetime}}</div>
+            <div class="fr">
+              <p class="readCount">
+                <span class="icon_num"></span>
+                <span class="count">{{val.fpiExamine}}</span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="fl right_div">
+          <img v-lazy="val.fpiUrl" alt="">
+        </div>
+      </li>
     </ul>
-    <!-- </mt-loadmore> -->
   </div>
 
 </template>
 <script>
-import axios from "axios";
-import config from "@/config/config";
 export default {
+  props: ["list", "title"],
   data() {
-    return {
-      item: []
-    };
-  },
-  mounted() {
-    this.inforData();
+    return {};
   },
   methods: {
-    linkInforDetail() {
+    linkInforDetail(id) {
       this.$router.push({
-        path: "/information/inforDetail"
-      });
-    },
-    //获取后台数据
-    inforData() {
-      let _url = config.host + "/h5frontcarrierinfotop-home";
-      axios.get(_url).then(res => {
-        this.item = res.data.citList;
-        for (let i in this.item) {
-          //转化时间戳
-          let newTime = new Date(this.item[i].fciDatetime)
-            .toLocaleString()
-            .split(" ");
-          this.item[i].fciDatetime = newTime[0];
-        }
+        path: `/information/${id}`
       });
     }
   }
@@ -86,26 +82,30 @@ export default {
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 2;
       }
-      .time {
-        font-size: 20px;
-        color: #999;
-        margin-left: 20px;
-      }
-      .readCount {
-        margin-right: 30px;
-        .icon_num {
-          display: block;
-          width: 28px;
-          height: 24px;
-          margin-top: 8px;
-          background: url("./readNum.png") no-repeat center center;
-          background-size: 100% 100%;
-        }
-        .count {
+      .countTip {
+        line-height: 40px;
+        .time {
           font-size: 20px;
           color: #999;
-          line-height: 40px;
-          padding-left: 2px;
+          margin-left: 20px;
+        }
+        .readCount {
+          margin-right: 30px;
+          .icon_num {
+            display: inline-block;
+            width: 34px;
+            height: 30px;
+            margin-top: -3px;
+            background: url("./readNum.png") no-repeat center center;
+            background-size: 100% 100%;
+            position: relative;
+            top: 6px;
+            right: -6px;
+          }
+          .count {
+            font-size: 20px;
+            color: #999;
+          }
         }
       }
     }

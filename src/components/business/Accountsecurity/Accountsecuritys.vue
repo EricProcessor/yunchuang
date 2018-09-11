@@ -1,11 +1,10 @@
 <template>
+<div class="towLevelRouter">
     <div class="wrap">
         <!-- 头部 -->
-            <div class="head">
-                <i class="iconfont lefts" @click="go" >&#xe645;</i>
-                <span>账号安全</span>
-                <span></span>
-            </div>
+    <index-header :text="headerText" :hasSearch="false"></index-header>
+
+           
     <!-- 手机绑定 修改密码 邮箱验证 -->
         <section class="center">
             <div class="main">
@@ -26,6 +25,7 @@
                     </div>
                 </div>
                 <!-- 修改密码 -->
+                <!-- <router-link to="/mine/accountsecuritys/tel"> -->
                 <div class="lock_dl">
                    <div class="one">
                        <dl>
@@ -41,6 +41,7 @@
                         <!-- <p style="display:none">已认证</p> -->
                     </div>
                 </div>
+               <!-- </router-link> -->
                 <!-- 邮箱验证 -->
                 <div class="email_dl">
                    <div class="one">
@@ -61,56 +62,44 @@
             
         </section>
     </div>
+    
+</div>
+    
 </template>
 
 <script>
+import IndexHeader from "business/indexHeader/indexHeader";
+
 export default {
     data (){
         return {}
     },
+     created() {
+        this.headerText = "账号安全"; //设置头部显示导航内容
+     },
     methods:{
         go(){
             this.$router.go(-1);
         },
+    },
+    components:{
+        IndexHeader
     }
 }
 </script>
 
 <style lang="less" scoped>
+.towLevelRouter{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 200;
+    background: rgb(245, 245, 245);
     .wrap{
         // 头部------账号安全
-        .head{
-            .lefts{
-                color:#fff;
-                margin-left:10px;
-                font-size: 40px;
-                margin-top: 5px;
-            }
-            display:flex;
-            justify-content: space-between;
-            background: #253350;
-            height:50px;
-            padding: 10px 0;
-            span{
-                color:#ffffff;
-               
-            }
-          
-            span:nth-child(2){
-            //    width: 164px;
-                height: 37px;
-                font-family: MicrosoftYaHei;
-                font-size: 38px;
-                font-weight: normal;
-                font-stretch: normal;
-                line-height: 46px;
-                letter-spacing: 4px;
-                color: #ffffff;
-                width:60% ;
-                text-align: center;
-                margin-left: -18px;
-            }
-        }
+        
        .center{
            height:140px;
           
@@ -279,4 +268,6 @@ export default {
            }
        }
     }
+}
+    
 </style>

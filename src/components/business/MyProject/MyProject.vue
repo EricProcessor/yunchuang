@@ -16,7 +16,6 @@
           <dd>
             <h4>行业领域</h4>
             <span>{{item.fcpi}}</span>
-            
           </dd>
           <dd>
             <h4>所属阶段</h4>
@@ -28,7 +27,9 @@
           </dd>
           <dd>
             <h4>审核状态</h4>
-            <span class="cared">待审核</span>
+            <span class="pass" v-if="item.fcp_audit_status=='Y'">审核通过</span>
+            <span class="cared" v-if="item.fcp_audit_status=='M'">待审核</span>
+            <span class="" v-if="item.fcp_audit_status=='N'">不通过</span>
           </dd>
         </dl> 
           <!-- <div class="operation">
@@ -165,6 +166,9 @@ export default {
         }
         .cared {
           color: #f35828;
+        }
+        .pass {
+          color: #6ea1ff;
         }
       }
     }

@@ -8,24 +8,24 @@
     <ul class="formList">
       <li class="group clearfix">
         <label class="fl pos1">
-          <i class="third" v-if="formList.isShow">*</i>联系人</label>
-        <input class="fl" type="text" />
+          <i v-if="formList.isShow">*</i>联系人</label>
+        <input class="fl" v-model="investment.person" type="text" />
       </li>
       <li class="group clearfix">
         <label class="fl pos1">
           <i v-if="formList.isShow">*</i>联系电话</label>
-        <input class="fl" type="text" />
+        <input class="fl" v-model="investment.personTel" type="text" />
       </li>
       <li class="group clearfix">
         <label class="fl pos1">
           <i v-if="!formList.isShow">*</i>地址</label>
         <input @click="showAddr" v-model="address" class="fl" type="text" placeholder="选择省-市-区" />
-        <textarea class="addeDetail fr" placeholder="请输入详细地址"></textarea>
+        <textarea class="addeDetail fr" v-model="investment.addrDetail" placeholder="请输入详细地址"></textarea>
       </li>
       <li class="group clearfix">
         <label class="fl pos1">
           <i v-if="!formList.isShow">*</i>邮箱</label>
-        <input class="fl" type="text" />
+        <input class="fl" v-model="investment.email" type="text" />
       </li>
       <li class="group clearfix">
         <label class="fl pos1">
@@ -56,20 +56,18 @@
         <label class="fl pos1">
           <i v-if="formList.isShow">*</i>投资领域</label>
         <select class="fl">
-          <option value="0">请选择</option>
-          <option value="1">金融服务</option>
-          <option value="2">投资服务</option>
-          <option value="3">融资服务</option>
+          <option value="0">金融服务</option>
+          <option value="1">投资服务</option>
+          <option value="2">融资服务</option>
         </select>
       </li>
       <li class="group clearfix">
         <label class="fl pos1">
           <i v-if="!formList.isShow">*</i>投资阶段</label>
         <select class="fl">
-          <option value="0">请选择</option>
-          <option value="1">金融服务</option>
-          <option value="2">投资服务</option>
-          <option value="3">融资服务</option>
+          <option value="0">金融服务</option>
+          <option value="1">投资服务</option>
+          <option value="2">融资服务</option>
         </select>
       </li>
       <li class="group clearfix">
@@ -200,18 +198,17 @@ export default {
       margin-bottom: 20px;
       label {
         display: inline-block;
-        width: 116px;
+        width: 128px;
         text-align: right;
         font-size: 24px;
         color: #333;
         margin-top: 20px;
         i {
-          display: block;
+          display: inline-block;
           font-size: 24px;
           color: #f35828;
-          position: absolute;
+          position: relative;
           top: 5px;
-          left: 5px;
         }
         .third {
           left: 30px;
@@ -257,7 +254,7 @@ export default {
       }
       input,
       select {
-        width: 550px;
+        width: 540px;
         height: 61px;
         background: #f5f5f5;
         border-radius: 6px;
@@ -265,7 +262,7 @@ export default {
         margin-left: 20px;
       }
       input {
-        width: 530px;
+        width: 520px;
         padding-left: 20px;
       }
       select {
@@ -276,7 +273,7 @@ export default {
       }
       .addeDetail {
         resize: none;
-        width: 510px;
+        width: 500px;
         height: 140px;
         background: #f5f5f5;
         border-radius: 6px;
@@ -286,7 +283,7 @@ export default {
       }
       .investIdea {
         resize: none;
-        width: 510px;
+        width: 500px;
         height: 260px;
         background: #f5f5f5;
         border-radius: 6px;
@@ -317,7 +314,7 @@ export default {
         }
       }
       .addPicTip {
-        width: 255px;
+        width: 240px;
         height: 58px;
         font-size: 20px;
         line-height: 36px;
