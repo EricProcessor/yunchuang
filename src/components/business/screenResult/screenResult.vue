@@ -21,6 +21,11 @@
         data(){
           return{
              screenResult:''
+            //  area_id:'',
+            //  province_id:'',
+            //  city_id:'',
+            //  begintime:'',
+            //  endtime:''
           }        
         },
         methods: {
@@ -35,9 +40,20 @@
           }         
         },
         mounted(){
-          this.axios.post("/h5frontactivityinfo-foreshow").then(res=>{
+         3
+            
+          params.append('area_id', JSON.stringify(this.screenResult.areaId));
+           console.log(JSON.stringify(this.screenResult.areaId))
+          // console.log(this.val.areaId)
+          // params.append('province_id', 'this.val.provinceId');
+          // params.append('city_id', 'this.val.cityId');
+          // params.append('begintime', 'this.val.faiDatetime');
+          // params.append('endtime', 'this.val.faiEndDatetime');
+          this.axios.post("/h5frontactivityinfo-foreshow",{
+            
+          }).then(res=>{
             this.screenResult = res.data.list
-            console.log(this.screenResult)
+            // console.log(this.screenResult)
           })
         }
     };

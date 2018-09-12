@@ -3,7 +3,7 @@
         <index-header text="首页"></index-header>
         <swiper></swiper>
         <div class="tab-list">
-            <tabs></tabs>
+            <tabs :showBanner="false"></tabs>
             <p @click="_jump('information')">查看更多</p>
         </div>
         <div class="block">
