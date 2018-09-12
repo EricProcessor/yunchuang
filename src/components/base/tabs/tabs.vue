@@ -8,15 +8,15 @@
     <!-- tab-container -->
     <mt-tab-container v-model="selected">
       <mt-tab-container-item id="1">
-        <infor-child :banner="casePic"></infor-child>
+        <infor-child :banner="casePic" v-if="showBanner"></infor-child>
         <infor-child-list :list="item1"></infor-child-list>
       </mt-tab-container-item>
       <mt-tab-container-item id="2">
-        <infor-child :banner="casePic"></infor-child>
+        <infor-child :banner="casePic" v-if="showBanner"></infor-child>
         <infor-child-list :list="item2" :title="strTitle"></infor-child-list>
       </mt-tab-container-item>
       <mt-tab-container-item id="3">
-        <infor-child :banner="casePic"></infor-child>
+        <infor-child :banner="casePic" v-if="showBanner"></infor-child>
         <infor-child-list :list="item3"></infor-child-list>
       </mt-tab-container-item>
     </mt-tab-container>
@@ -27,6 +27,12 @@
 import InforChild from "business/inforChild/inforChild";
 import InforChildList from "business/inforChildList/inforChildList";
 export default {
+  props: {
+    showBanner: {     //是否显示banner图组件
+      type: Boolean,
+      default: true
+    }
+  },
   data() {
     return {
       item1: [],

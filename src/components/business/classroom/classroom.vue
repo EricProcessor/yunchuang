@@ -9,7 +9,7 @@
             <swiper></swiper>
         </div>
         <div class="class-list">
-            <infor-child-list ref="infor"></infor-child-list>
+            <class-tab></class-tab>
         </div>
         <router-view></router-view>
         <m-footer selected="classroom"></m-footer>
@@ -17,34 +17,16 @@
 </template>
 <script>
 import IndexHeader from 'business/indexHeader/indexHeader'
-import InforChildList from 'business/inforChildList/inforChildList'
 import MFooter from 'business/mFooter/mFooter'
+import ClassTab from 'business/classTab/classTab'
 import Swiper from 'base/swiper/swiper'
-// import axios from 'axios'
-export default {
-    data() {
-        return {
 
-        }
-    },
-    mounted() {
-        console.log(this.$refs.infor.$el)
-        this.axios({
-            url: '/h5frontcarrierinfotop-home',
-            method: 'post',
-            data: {
-                name: "xiaolei",
-                sex: "男"
-            }
-        }).then(res => {
-            // console.log(res)
-        })
-    },
+export default {
     components: {
         IndexHeader,
         MFooter,
-        InforChildList,
-        Swiper
+        Swiper,
+        ClassTab
     }
 }
 </script>

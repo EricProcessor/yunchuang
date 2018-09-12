@@ -34,7 +34,7 @@ Vue.use(Router)
 
 export default new Router({
   routes: [{
-      path: '/', //首页
+      path: '/',        //首页
       name: 'index',
       component: Index
     }, {
@@ -145,15 +145,11 @@ export default new Router({
       name: 'err404',
       component: Err404
     },
-    
-     
-      
-      {
-        path: '/emaild', //邮箱认证   
-        name: 'Emaild',
-        component: Emaild
-      },
-   
+    {
+      path: '/emaild', //邮箱认证   
+      name: 'Emaild',
+      component: Emaild
+    },
     {
       path: '/setServiceIns', //认证服务机构
       name: 'setServiceIns',
