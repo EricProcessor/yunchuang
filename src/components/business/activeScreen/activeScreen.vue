@@ -15,8 +15,7 @@
         </div>
         <footer>
             <button class="btn"  @click="deleateBox">确定</button>
-        </footer>
-    
+        </footer>   
     </div>
 </template>
 <script>
