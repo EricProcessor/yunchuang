@@ -44,7 +44,7 @@
         city:'',//市
         county:'',//县
         regionVisible:false,//弹出框是否可见
-        regionInit:false,//禁止地区选择器自动初始化，picker组件会默认进行初始化，导致一进入页面就会默认选中一个初始3级地址
+        regionInit:true,//禁止地区选择器自动初始化，picker组件会默认进行初始化，导致一进入页面就会默认选中一个初始3级地址
         //picker组件插槽
         myAddressSlots: [
           //省
@@ -99,6 +99,7 @@
           this.province = values[0]["name"];
           this.city = values[1]["name"];
           this.county = values[2]["name"];
+          
           //给市、县赋值
           picker.setSlotValues(1, this.getCityArr(values[0]["name"]));
           picker.setSlotValues(2, this.getCountyArr(values[0]["name"], values[1]["name"]));
@@ -116,6 +117,7 @@
           provinceArr.push(obj);
         });
         return provinceArr;
+        
       },
       //遍历json，返回市级对象数组
       getCityArr(province) {
