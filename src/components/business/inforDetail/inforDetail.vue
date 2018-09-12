@@ -2,7 +2,7 @@
   <div class="detailView">
     <index-header :text="headerText"></index-header>
     <!-- 资讯信息 -->
-    <div class="detailBox" v-for="(v,i) in detail" :key="i">
+    <div class="detailBox" v-if="title!='创业政策'" v-for="(v,i) in detail" :key="i">
       <div class="titleInfoBox">
         <div class="detailTile">{{v.fciTitle}}</div>
         <p class="detailFrom">{{v.fciSource}}</p>
@@ -16,24 +16,23 @@
           </div>
         </div>
       </div>
-      <div class="textInfoBox" >
-        <p class="detailText">
-          6月27日，由京东云电商创新中心、腾讯众创空间（西安）及沣创 星工厂联合主办的第一届“万象·共融科统企业博览会”在中俄丝 路创新园成功举办，来自人工智能、生物医药、电商、文创等领 域的18家园区企业在本次活动中亮相，揭开了“硬实力科统”的 神秘面纱。
-        </p>
-        <p class="showImg">
-          <img src="./inforDetail_1.jpg" alt="">
-        </p>
-        <p class="detailText">
-          6月27日，由京东云电商创新中心、腾讯众创空间（西安）及沣创 星工厂联合主办的第一届“万象·共融科统企业博览会”在中俄丝 路创新园成功举办，来自人工智能、生物医药、电商、文创等领 域的18家园区企业在本次活动中亮相，揭开了“硬实力科统”的 神秘面纱。
-        </p>
-        <p class="showImg">
-          <img src="./inforDetail_1.jpg" alt="">
-        </p>
-        <p class="detailText">
-          6月27日，由京东云电商创新中心、腾讯众创空间（西安）及沣创 星工厂联合主办的第一届“万象·共融科统企业博览会”在中俄丝 路创新园成功举办，来自人工智能、生物医药、电商、文创等领 域的18家园区企业在本次活动中亮相，揭开了“硬实力科统”的 神秘面纱。
-        </p>
-        <!-- {{v.fciContent}} -->
+      <div class="textInfoBox" v-html="v.fciContent"></div>
+    </div>
+    <div class="detailBox" v-if="title=='创业政策'" v-for="(v,i) in detail" :key="i">
+      <div class="titleInfoBox">
+        <div class="detailTile">{{v.fpiName}}</div>
+        <p class="detailFrom">{{v.fpiSource}}</p>
+        <div class="clearfix">
+          <div class="fl detailTime">{{v.fpiDatetime}}</div>
+          <div class="fr">
+            <p class="clearfix readCount">
+              <span class="fl icon_num"></span>
+              <span class="fl count">{{v.fpiExamine}}</span>
+            </p>
+          </div>
+        </div>
       </div>
+      <div class="textInfoBox" v-html="v.fpiContent"></div>
     </div>
   </div>
 </template>
@@ -44,6 +43,7 @@ export default {
   data() {
     return {
       id: "",
+      title: "",
       paicheNo: "",
       detail: []
     };
@@ -54,26 +54,63 @@ export default {
   mounted() {
     this.paicheNo = this.$route.params.paicheNo;
     this.id = this.$route.params.id;
-    this.loadInfo();
+    this.loadHeadInfo();
+    this.loadBoWenInfo();
+    this.loadPolicyInfo();
   },
   methods: {
     backBtnPre() {
       this.$router.go(-1);
     },
-    loadInfo() {
+    loadHeadInfo() {
+      //创业头条
       let infoUrl = "/h5frontcarrierinfotop-item/" + this.id;
       this.axios.post(infoUrl).then(res => {
         console.log(res.data);
         this.detail.push(res.data.ci);
-
         for (let i in this.detail) {
-          let newTime =
+          let newTime1 =
             new Date(this.detail[i].fciDatetime)
               .toLocaleDateString()
               .replace(/\//g, "-") +
             " " +
             new Date(this.detail[i].fciDatetime).toTimeString().substr(0, 8);
-          this.detail[i].fciDatetime = newTime;
+          this.detail[i].fciDatetime = newTime1;
+        }
+      });
+    },
+    loadBoWenInfo() {
+      //博文天地
+      let bowenUrl = "/h5frontcarrierinfoblog-item/" + this.id;
+      this.axios.post(bowenUrl).then(res => {
+        console.log(res.data);
+        this.detail.push(res.data.ci);
+        for (let i in this.detail) {
+          let newTime2 =
+            new Date(this.detail[i].fciDatetime)
+              .toLocaleDateString()
+              .replace(/\//g, "-") +
+            " " +
+            new Date(this.detail[i].fciDatetime).toTimeString().substr(0, 8);
+          this.detail[i].fciDatetime = newTime2;
+        }
+      });
+    },
+    loadPolicyInfo() {
+      //创业政策
+      let policyUrl = "/h5frontPolicyInfo-item/" + this.id;
+      this.axios.post(policyUrl).then(res => {
+        this.title = res.data.current_title.split("-")[0];
+        console.log(res.data);
+        this.detail.push(res.data.pi);
+        for (let i in this.detail) {
+          let newTime3 =
+            new Date(this.detail[i].fpiDatetime)
+              .toLocaleDateString()
+              .replace(/\//g, "-") +
+            " " +
+            new Date(this.detail[i].fpiDatetime).toTimeString().substr(0, 8);
+          this.detail[i].fpiDatetime = newTime3;
         }
       });
     }
@@ -85,11 +122,12 @@ export default {
 </script>
 <style lang="less" scoped>
 .detailView {
+  width: 100%;
   height: 100%;
   position: fixed;
   top: 0;
   left: 0;
-  background: #eee;
+  background: #fff;
   z-index: 105;
   overflow-y: auto;
 }
@@ -121,7 +159,7 @@ export default {
       .icon_num {
         display: block;
         width: 36px;
-        height: 30px;
+        height: 34px;
         background: url("../inforChildList/readNum.png") no-repeat center center;
         background-size: 100% 100%;
       }
@@ -134,21 +172,8 @@ export default {
     }
   }
   .textInfoBox {
-    margin-top: 60px;
+    margin-top: 40px;
     width: 100%;
-    .detailText {
-      font-size: 24px;
-      line-height: 44px;
-    }
-    .showImg {
-      width: 100%;
-      height: 458px;
-      margin: 30px 0;
-      img {
-        width: 100%;
-        height: 100%;
-      }
-    }
   }
 }
 </style>

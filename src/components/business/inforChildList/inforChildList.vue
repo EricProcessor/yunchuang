@@ -47,10 +47,13 @@ export default {
   data() {
     return {};
   },
+  // updated() {
+  //   console.log(this.title);
+  // },
   methods: {
     linkInforDetail(id) {
       this.$router.push({
-        path: `/information/${id}`
+        path: `/information/${id}` 
       });
     }
   }
