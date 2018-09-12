@@ -29,7 +29,7 @@
                </div>
                
             <div class="ipttwo">
-                <input type="password" class="txtone" @blur="newspsd" v-model="newpss.newtxt" placeholder="密码长度6-21位，由字母数字组成，区分大小写"  >
+                <input type="password" class="txtone" @blur="newspsd(newpss.newtxt)" v-model="newpss.newtxt" placeholder="密码长度6-21位，由字母数字组成，区分大小写"  >
             </div>
             
             <div class="new_pas">
@@ -44,7 +44,7 @@
                </div>
                
             <div class="new_iptthree">
-                <input type="password" class="txtone" @blur="Reaffirm" v-model="newpss.confirmtxt" placeholder="再次输入登录密码"  >
+                <input type="password" class="txtone" @blur="Reaffirm(newpss.confirmtxt)" v-model="newpss.confirmtxt" placeholder="再次输入登录密码"  >
                 
             </div>
             
@@ -76,17 +76,14 @@ export default {
         // document.cookie = 
     },
     data () {
-        return {
-            
-            
+        return {           
             old:{
-                  oldtxt:"",      //原密码
-                  oldshow:false,    //判断密码框不能为空时
-                  old_nls:"原密码不能为空",
-                  matching:false,       
-                  old_matchings:"请输入正确的格式", 
-            },
-
+                oldtxt:"",      //原密码
+                oldshow:false,    //判断密码框不能为空时
+                old_nls:"原密码不能为空",
+                matching:false,       
+                old_matchings:"请输入正确的格式", 
+            },  
           newpss:{
                 newtxt:"",      //新密码
                 newpsd:false,  //判断新密码框不能为空时
@@ -113,10 +110,10 @@ export default {
             let isPwd = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,21}$/; //密码正则
             return isPwd.test(pwd);
          },
-         //判断原密码是否为空
+         //原密码失去焦点判断
          ownPwdBlur(oldVal){
              //判断字符串为空
-            if(this.old.oldtxt == "" ){
+            if(oldVal == "" ){
                 this.old.oldshow = true; 
                this.old.matching = false;
             }else{
@@ -132,21 +129,33 @@ export default {
             
          },
          //判断新密码是否为空
-        newspsd(){
+        newspsd(newVal){
             
-            if(this.newpss.newtxt == ""){
-                this.newpss.newpsd = true;           
+            if(newVal == ""){
+                this.newpss.newpsd = true; 
+                this.newpss.formats = false
+
             }else{
                 this.newpss.newpsd = false;
+                if(this.isPwd(newVal)){
+                   this.newpss.formats = false
+                }else{
+                    this.newpss.formats = true
+                }
             }
             
         },
         //判断确认密码是否为空
-        Reaffirm(){
-            if(this.newpss.confirmtxt == ""){
+        Reaffirm(confirmVal){
+            if(confirmVal == ""){
                 this.newpss.judge = true;
             }else{
                 this.newpss.judge = false;
+                if(this.isPwd(confirmVal)){
+                   this.newpss.identical = false
+                }else{
+                   this.newpss.identical = true
+                }
             }
 
         },
@@ -161,24 +170,36 @@ export default {
             }else if(old==''){
                 alert("原密码不能为空!");
             }else if(news==''){
-alert("原密码不能为空!");
+                alert("新密码不能为空!");
             }else if(confirmtxts==''){
-                alert("原密码不能为空!");
+                alert("确认密码不能为空!");
             }else{
-                let _url="/frontcompanyaccpwdeditor-home";
-                let params={
-                    pwd:old,
-                    newpwd:news
+                if(!this.isPwd(old)||!this.isPwd(news)||!this.isPwd(confirmtxts)){
+                    alert('字母数字开头六到二十一位')
+                }else if(!this.isPwd(old)){
+                    alert('原密码格式不正确')
+                }else if(!this.isPwd(news)){
+                    alert('新密码格式不正确')
+                }else if(!this.isPwd(confirmtxts)){
+                    alert('确认密码格式不正确')
+                    
+                }else{    
+                    console.log('点击事件')
+                  
+                    document.cookie = "passWord=yongchao3" ;
+                    let _url= "/frontcompanyaccpwdeditor-home";
+                    let params={
+                        pwd:old,
+                        newpwd:news
+                    }
+                    this.axios.post(_url,params).then(res=>{
+                        console.log(res)
+                    })
                 }
-                this.axios.post(_url,params).then(res=>{
-                    console.log(res)
-                })
-            }
+                
+            }   
            
         }
-    },
-    watch:{
-        
     },
     components:{
         IndexHeader
