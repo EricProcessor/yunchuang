@@ -160,7 +160,7 @@
       </li>
     </ol>
     <ul class="clearfix operatBtn">
-      <li class="fl">重置</li>
+      <li class="fl" @click="resetBtn">重置</li>
       <li class="fl preserve">保存</li>
     </ul>
     <AddressPick @selectAddress="getAddr" ref="addr"></AddressPick>
@@ -188,26 +188,26 @@ export default {
         disagree: false //不同意
       },
       setTeacher: {
-        name: "",//姓名
-        sex:"",//性别
-        birthday: "",//出生日期
-        company: "",//工作单位
-        presentPost: "",//现任职务
-        inviter:"",//是否接受邀请
-        serviceCarrier: "",//服务载体
-        unitAttrbute: "",//单位属性
-        serviceArea: "",//服务区域
-        zipCode: "",//邮编
-        phone: "",//手机
-        email: "",//邮箱
-        positionalTitles: "",//职称
-        highestEducation : "",//最高学历
-        speciality: "",//辅助特长
-        technicalField: "",//技术领域
-        goodTheme: "",//擅长主题
-        resume: "",//个人简历
-        coachEnterprise: "",//辅导企业
-        employment : "",//受聘情况
+        name: "", //姓名
+        sex: "", //性别
+        birthday: "", //出生日期
+        company: "", //工作单位
+        presentPost: "", //现任职务
+        inviter: "", //是否接受邀请
+        serviceCarrier: "", //服务载体
+        unitAttrbute: "", //单位属性
+        serviceArea: "", //服务区域
+        zipCode: "", //邮编
+        phone: "", //手机
+        email: "", //邮箱
+        positionalTitles: "", //职称
+        highestEducation: "", //最高学历
+        speciality: "", //辅助特长
+        technicalField: "", //技术领域
+        goodTheme: "", //擅长主题
+        resume: "", //个人简历
+        coachEnterprise: "", //辅导企业
+        employment: "" //受聘情况
       }
     };
   },
@@ -245,6 +245,11 @@ export default {
         this.invitation.disagree = !this.invitation.disagree;
         this.invitation.agree = !this.invitation.agree;
       }
+    },
+
+    resetBtn() {
+      //清空所有信息
+      this.setTeacher.name="";
     }
   },
   components: {

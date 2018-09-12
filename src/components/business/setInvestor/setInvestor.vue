@@ -1,65 +1,65 @@
 <template>
-    <div class="setInvestor">
-        <index-header :text="headerText" :hasSearch="hasSearch"></index-header>
-        <p class="top clearfix">
-            <span class=" fl">带*号项为必填项，请务必如实填写</span>
-            <i class="fr"></i>
-        </p>
-        <ol class="formList">
-          <li class="group clearfix">
-            <label class="fl pos1">
-              <i class="third" v-if="formList.isShow">*</i>姓名</label>
-            <input class="fl" v-model="setTeacher.name" type="text" />
-          </li>
-          <li class="group clearfix">
-            <label class="fl pos1">
-              <i class="third" v-if="formList.isShow">*</i>性别</label>
-            <div class="fl clearfix sexBox pos1" :class="{sexManActive:sex.maleActive}">
-              <p class="sexMan fl" v-if="!sex.maleActive">
-                <img src="./man_1.png" alt="">  
-              </p>
-              <p class="sexMan fl" v-if="sex.maleActive">
-                <img src="./man_2.png" alt="">
-              </p>
-              <input type="radio" v-model="setTeacher.sex" value="男" @click="maleChange" class="maleRadio" :checked="sex.maleActive">
-              <span class="fl">男</span>
-            </div>
-            <div class="fl sexBox pos1" :class="{sexManActive:sex.femaleActive}">
-              <p class="sexMan fl" v-if="!sex.femaleActive">
-                <img src="./woman_1.png" alt="" />
-              </p>
-              <p class="sexMan fl" v-if="sex.femaleActive">
-                <img src="./woman_2.png" alt="" />
-              </p>
-              <input type="radio" v-model="setTeacher.sex" value="女" @click="femaleChange" class="maleRadio" :checked="sex.femaleActive">
-              <span class="fl">女</span>
-            </div>
-          </li>
-          <li class="group clearfix">
-            <label class="fl pos1">
-              <i v-if="formList.isShow">*</i>出生日期</label>
-            <input class="fl" v-model="setTeacher.birthday" type="text" />
-          </li>
-          <li class="group clearfix">
-            <label class="fl pos1">
-              <i v-if="formList.isShow">*</i>工作单位</label>
-            <input class="fl" v-model="setTeacher.company" type="text" />
-          </li>
-          <li class="group clearfix">
-            <label class="fl pos1">
-              <i v-if="!formList.isShow">*</i>现任职位</label>
-            <input class="fl" v-model="setTeacher.presentPost" type="text" />
-          </li>
-          <li class="group clearfix">
-            <label class="fl pos1">
-              <i v-if="formList.isShow">*</i>接受邀约</label>
-              <label>
-                <input type="radio" name="invitaer" value="male" checked> 
-                <span>接收</span>
-              </label>
-              
-              <input type="radio" name="invitaer" value="female"> 
-            <!-- <div class="fl clearfix similarRadio pos1">
+  <div class="setInvestor">
+    <index-header :text="headerText" :hasSearch="hasSearch"></index-header>
+    <p class="top clearfix" v-if="!formList.isClose">
+      <span class=" fl">带*号项为必填项，请务必如实填写</span>
+      <i class="fr" @click="closeBtn"></i>
+    </p>
+    <ol class="formList">
+      <li class="group clearfix">
+        <label class="fl pos1">
+          <i v-if="formList.isShow">*</i>姓名</label>
+        <input class="fl" v-model="setTeacher.name" type="text" />
+      </li>
+      <li class="group clearfix">
+        <label class="fl pos1">
+          <i v-if="formList.isShow">*</i>性别</label>
+        <div class="fl clearfix sexBox pos1" :class="{sexManActive:sex.maleActive}">
+          <p class="sexMan fl" v-if="!sex.maleActive">
+            <img src="./man_1.png" alt="">
+          </p>
+          <p class="sexMan fl" v-if="sex.maleActive">
+            <img src="./man_2.png" alt="">
+          </p>
+          <input type="radio" v-model="setTeacher.sex" value="男" @click="maleChange" class="maleRadio" :checked="sex.maleActive">
+          <span class="fl">男</span>
+        </div>
+        <div class="fl sexBox pos1" :class="{sexManActive:sex.femaleActive}">
+          <p class="sexMan fl" v-if="!sex.femaleActive">
+            <img src="./woman_1.png" alt="" />
+          </p>
+          <p class="sexMan fl" v-if="sex.femaleActive">
+            <img src="./woman_2.png" alt="" />
+          </p>
+          <input type="radio" v-model="setTeacher.sex" value="女" @click="femaleChange" class="maleRadio" :checked="sex.femaleActive">
+          <span class="fl">女</span>
+        </div>
+      </li>
+      <li class="group clearfix">
+        <label class="fl pos1">
+          <i v-if="formList.isShow">*</i>出生日期</label>
+        <input class="fl" v-model="setTeacher.birthday" type="text" />
+      </li>
+      <li class="group clearfix">
+        <label class="fl pos1">
+          <i v-if="formList.isShow">*</i>工作单位</label>
+        <input class="fl" v-model="setTeacher.company" type="text" />
+      </li>
+      <li class="group clearfix">
+        <label class="fl pos1">
+          <i v-if="!formList.isShow">*</i>现任职位</label>
+        <input class="fl" v-model="setTeacher.presentPost" type="text" />
+      </li>
+      <li class="group clearfix">
+        <label class="fl pos1">
+          <i v-if="formList.isShow">*</i>接受邀约</label>
+        <label>
+          <input type="radio" name="invitaer" value="male" checked>
+          <span>接收</span>
+        </label>
+
+        <input type="radio" name="invitaer" value="female">
+        <!-- <div class="fl clearfix similarRadio pos1">
               <i class="fl" v-if="invitation.agree" :class="{noborder:invitation.agree}">
                 <img src="./agree.png" alt="" />
               </i>
@@ -75,47 +75,47 @@
               <input type="radio" v-model="setTeacher.invitaer" value="不接受" class="agreeBtn" @click="disagreeInviter" :checked="invitation.disagree">
               <span class="fl">不接受</span>
             </div> -->
-          </li>
-          <li class="group clearfix">
-            <label class="fl pos1">
-              <i v-if="formList.isShow">*</i>行业领域</label>
-            <select class="fl" v-model="setTeacher.industField">
-              <option value="0">行业领域1</option>
-              <option value="1">行业领域2</option>
-              <option value="2">行业领域3</option>
-            </select>
-          </li>
-          <li class="group clearfix">
-            <label class="fl pos1">基金规模</label>
-            <input class="fl" v-model="setTeacher.fundScale" type="text" />
-          </li>
-          <li class="group clearfix">
-            <label class="fl pos1">
-              <i v-if="formList.isShow">*</i>投资阶段</label>
-            <select class="fl" v-model="setTeacher.investStage">
-              <option value="0">行业领域1</option>
-              <option value="1">行业领域2</option>
-              <option value="2">行业领域3</option>
-            </select>
-          </li>
-           <li class="group clearfix pos1">
-            <label class="fl pos1">
-              <i v-if="formList.isShow">*</i>投资理念</label>
-            <textarea v-model="setTeacher.investIdea" class="investIdea fr" maxlength="200"></textarea>
-            <span class="textCount">0/200</span>
-          </li>
-          <li class="group clearfix pos1">
-            <label class="fl pos1">
-              <i v-if="!formList.isShow">*</i>成功案例</label>
-            <textarea v-model="setTeacher.coachEnterprise" class="investIdea fr" maxlength="200"></textarea>
-            <span class="textCount">0/200</span>
-          </li>
-        </ol>
-        <ul class="clearfix operatBtn">
-          <li class="fl" @click="resetInfor">重置</li>
-          <li class="fl preserve" @click="inforData">保存</li>
-        </ul>
-    </div>
+      </li>
+      <li class="group clearfix">
+        <label class="fl pos1">
+          <i v-if="formList.isShow">*</i>行业领域</label>
+        <select class="fl" v-model="setTeacher.industField">
+          <option value="0">行业领域1</option>
+          <option value="1">行业领域2</option>
+          <option value="2">行业领域3</option>
+        </select>
+      </li>
+      <li class="group clearfix">
+        <label class="fl pos1">基金规模</label>
+        <input class="fl" v-model="setTeacher.fundScale" type="text" />
+      </li>
+      <li class="group clearfix">
+        <label class="fl pos1">
+          <i v-if="formList.isShow">*</i>投资阶段</label>
+        <select class="fl" v-model="setTeacher.investStage">
+          <option value="0">行业领域1</option>
+          <option value="1">行业领域2</option>
+          <option value="2">行业领域3</option>
+        </select>
+      </li>
+      <li class="group clearfix pos1">
+        <label class="fl pos1">
+          <i v-if="formList.isShow">*</i>投资理念</label>
+        <textarea v-model="setTeacher.investIdea" class="investIdea fr" maxlength="200"></textarea>
+        <span class="textCount">0/200</span>
+      </li>
+      <li class="group clearfix pos1">
+        <label class="fl pos1">
+          <i v-if="!formList.isShow">*</i>成功案例</label>
+        <textarea v-model="setTeacher.coachEnterprise" class="investIdea fr" maxlength="200"></textarea>
+        <span class="textCount">0/200</span>
+      </li>
+    </ol>
+    <ul class="clearfix operatBtn">
+      <li class="fl" @click="resetInfor">重置</li>
+      <li class="fl preserve" @click="inforData">保存</li>
+    </ul>
+  </div>
 </template>
 <script>
 import IndexHeader from "business/indexHeader/indexHeader";
@@ -123,7 +123,8 @@ export default {
   data() {
     return {
       formList: {
-        isShow: true //是否显示*
+        isShow: true, //是否显示*
+        isClose: false
       },
       sex: {
         //性别
@@ -156,6 +157,10 @@ export default {
     this.hasSearch = false;
   },
   methods: {
+    closeBtn() {
+      //关闭提示
+      this.formList.isClose = !this.formList.isClose;
+    },
     //性别选择
     maleChange() {
       if (!this.sex.maleActive) {
@@ -199,13 +204,8 @@ export default {
     },
     //获取后台数据
     inforData() {
-      console.log(1111);
       let _url = "/h5frontsearch-home";
-      // let params = new URLSearchParams();
-      // params.append("selType", this.serachSend.SearchClass);
-      // params.append("KeyWord", encodeURI(encodeURI(this.serachSend.searchVal)));
-      this.axios
-        .post(_url, {
+      this.axios.post(_url, {
           userName: "yuanna",
           sex: "女",
           birthday: "2000.01.01",
@@ -243,10 +243,11 @@ export default {
     }
     i {
       display: inline-block;
-      width: 24px;
-      height: 24px;
-      background: #f00;
-      margin: 18px 20px;
+      width: 30px;
+      height: 30px;
+      background:url("./close.png") no-repeat center center;
+      background-size: 100% 100%;
+      margin: 14px 16px;
     }
   }
   .formList {
@@ -256,21 +257,18 @@ export default {
       margin-bottom: 19px;
       label {
         display: inline-block;
-        width: 116px;
+        width: 128px;
         text-align: right;
         font-size: 24px;
         color: #333;
         margin-top: 20px;
         i {
-          display: block;
+          display: inline-block;
           font-size: 24px;
           color: #f35828;
-          position: absolute;
+          position: relative;
           top: 5px;
-          left: 5px;
-        }
-        .third {
-          left: 55px;
+          right: 2px;
         }
       }
       .similarRadio {
@@ -359,7 +357,7 @@ export default {
       }
       input,
       select {
-        width: 550px;
+        width: 530px;
         height: 61px;
         background: #f5f5f5;
         border-radius: 6px;
@@ -367,7 +365,7 @@ export default {
         margin-left: 20px;
       }
       input {
-        width: 530px;
+        width: 510px;
         padding-left: 20px;
       }
       input[type="radio"] {
@@ -381,9 +379,9 @@ export default {
           font-size: 24px;
         }
       }
-      .addeDetail {
+      .addrDetail {
         resize: none;
-        width: 510px;
+        width: 500px;
         height: 140px;
         background: #f5f5f5;
         border-radius: 6px;
@@ -393,7 +391,7 @@ export default {
       }
       .investIdea {
         resize: none;
-        width: 510px;
+        width: 500px;
         height: 260px;
         background: #f5f5f5;
         border-radius: 6px;
