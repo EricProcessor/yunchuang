@@ -40,11 +40,12 @@ export default new Router({
     }, {
       path: '/information', //资讯页面
       name: 'Information',
-      component: Information
-    }, {
-      path: '/infordetail',
-      name: 'inforDetail',
-      component: InforDetail
+      component: Information,
+      children: [{ //资讯详情页面
+        path: ':id/:title',
+        name: 'inforDetail',
+        component: InforDetail
+      }, ]
     }, {
       path: '/activity', //活动页面
       name: 'activity',
@@ -107,6 +108,11 @@ export default new Router({
               name: 'Changepassword',
               component: Changepassword
             },
+            {
+              path: 'emaild', //邮箱认证   
+              name: 'Emaild',
+              component: Emaild
+            },
           ]
         },
         {
@@ -145,11 +151,7 @@ export default new Router({
       name: 'err404',
       component: Err404
     },
-    {
-      path: '/emaild', //邮箱认证   
-      name: 'Emaild',
-      component: Emaild
-    },
+   
     {
       path: '/setServiceIns', //认证服务机构
       name: 'setServiceIns',
