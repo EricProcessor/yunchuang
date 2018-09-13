@@ -19,7 +19,7 @@
           <span></span>已认证</p>
       </li>
     </ul>
-    <ul v-if="account.isCompany">
+    <ul v-if="!account.isCompany">
       <li class="clearfix" @click="linkTeacherHref">
         <i class="fl teacher"></i>
         <p class="fl">认证导师</p>
