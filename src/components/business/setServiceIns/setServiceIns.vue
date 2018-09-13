@@ -126,13 +126,11 @@ export default {
     },
     resetBtn() {
       //重置信息
-      this.serviceIns.companyName = "";
-      this.serviceIns.serviceType = "0";
-      this.serviceIns.person = "";
-      this.serviceIns.phone = "";
-      this.serviceIns.email = "";
-      this.serviceIns.websit = "";
-      this.serviceIns.addrDetail = "";
+      for (let key in this.serviceIns) {
+        if (this.setTeacher[key] != "") {
+          this.setTeacher[key] = "";
+        }
+      }
       this.inputImg = [];
     },
     preservation() {

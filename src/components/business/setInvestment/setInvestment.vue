@@ -99,7 +99,7 @@
       </li>
     </ul>
     <ul class="clearfix operatBtn">
-      <li class="fl">重置</li>
+      <li class="fl" @click="resetBtn">重置</li>
       <li class="fl preserve">保存</li>
     </ul>
     <addressPick @selectAddress="getAddr" ref="addr"></addressPick>
@@ -164,6 +164,14 @@ export default {
         this.investment.disagree = !this.investment.disagree;
         this.investment.agree = !this.investment.agree;
       }
+    },
+    resetBtn() {
+      for (let key in this.investment) {
+        if (this.investment[key] != "") {
+          this.investment[key] = "";
+        }
+      }
+      this.inputImg=[];
     }
   },
   components: {
