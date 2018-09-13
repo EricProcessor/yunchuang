@@ -107,6 +107,11 @@ export default new Router({
               name: 'Changepassword',
               component: Changepassword
             },
+            {
+              path: 'emaild', //邮箱认证   
+              name: 'Emaild',
+              component: Emaild
+            },
           ]
         },
         {
@@ -145,11 +150,7 @@ export default new Router({
       name: 'err404',
       component: Err404
     },
-    {
-      path: '/emaild', //邮箱认证   
-      name: 'Emaild',
-      component: Emaild
-    },
+   
     {
       path: '/setServiceIns', //认证服务机构
       name: 'setServiceIns',
