@@ -41,8 +41,8 @@ export default new Router({
       path: '/information', //资讯页面
       name: 'Information',
       component: Information,
-      children: [{
-        path: ':id',
+      children: [{ //资讯详情页面
+        path: ':id/:title',
         name: 'inforDetail',
         component: InforDetail
       }, ]

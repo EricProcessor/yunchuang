@@ -5,7 +5,9 @@
 </template>
 <script>
 export default {
-  props:["banner"]
+   data() {
+    return {};
+  },
 };
 </script>
 <style lang="less" scoped>

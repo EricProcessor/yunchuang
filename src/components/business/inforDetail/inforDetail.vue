@@ -54,9 +54,14 @@ export default {
   mounted() {
     this.paicheNo = this.$route.params.paicheNo;
     this.id = this.$route.params.id;
-    this.loadHeadInfo();
-    this.loadBoWenInfo();
-    this.loadPolicyInfo();
+    this.title = this.$route.params.title;
+    if (this.title == "创业头条") {
+      this.loadHeadInfo();
+    } else if (this.title == "创业政策") {
+      this.loadPolicyInfo();
+    } else {
+      this.loadBoWenInfo();
+    }
   },
   methods: {
     backBtnPre() {
@@ -66,8 +71,8 @@ export default {
       //创业头条
       let infoUrl = "/h5frontcarrierinfotop-item/" + this.id;
       this.axios.post(infoUrl).then(res => {
-        console.log(res.data);
         this.detail.push(res.data.ci);
+        console.log(this.detail);
         for (let i in this.detail) {
           let newTime1 =
             new Date(this.detail[i].fciDatetime)
@@ -100,8 +105,7 @@ export default {
       //创业政策
       let policyUrl = "/h5frontPolicyInfo-item/" + this.id;
       this.axios.post(policyUrl).then(res => {
-        this.title = res.data.current_title.split("-")[0];
-        console.log(res.data);
+        // console.log(res.data);
         this.detail.push(res.data.pi);
         for (let i in this.detail) {
           let newTime3 =
@@ -111,8 +115,18 @@ export default {
             " " +
             new Date(this.detail[i].fpiDatetime).toTimeString().substr(0, 8);
           this.detail[i].fpiDatetime = newTime3;
+          this.detail[i].fpiContent=this.unescapeHTML(this.detail[i].fpiContent);
         }
       });
+    },
+    unescapeHTML: function(html) {
+      html = "" + html;
+      return html
+        .replace(/&lt;/g, "<")
+        .replace(/&gt;/g, ">")
+        .replace(/&amp;/g, "&")
+        .replace(/&quot;/g, '"')
+        .replace(/&apos;/g, "'");
     }
   },
   components: {
