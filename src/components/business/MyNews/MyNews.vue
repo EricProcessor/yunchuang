@@ -4,17 +4,12 @@
     <ul class="myIntCon">
       <li @click.stop="linkInforDetail(item.fmm_id)" :id="item.fmm_id" v-for="(item,index) in items" :key="index">
         <div>
-          
-        </div>
-          <div class="myIntNew">
+           <div class="myIntNew">
             <span>{{item.fmm_title}}</span>
             <span>{{item.fmi_datetime | formatDate}}</span>
           </div>
-          <p class="myDelate" @click.stop="_deleate(item.fmm_id)">删除</p>
-          <!-- <p class="myDelate" @click.stop="deleateBox(item.fmm_id)">删除</p> -->
-          <!-- <button class="mint-button mint-button--default mint-button--large">
-            <label class="mint-button-text">打开 confirm 提示框</label>
-          </button> --> 
+          <p class="myDelate" @click.stop="deleateBox(item.fmm_id)">删除</p>
+        </div>
       </li>
     </ul>
     <router-view></router-view>
@@ -72,7 +67,7 @@ export default {
       let _url = "/memberMessage-del";
       axios
         .post(_url, {
-          Integer: [fmm_id]
+          ids: fmm_id
         })
         .then(res => {
           // this.items = res.data.messageList;
@@ -80,7 +75,7 @@ export default {
           // console.log(res.data.messageList);
         });
     },
-    // 点击列表跳转到详情
+    // 点击列表跳转到详情`
     linkInforDetail(Id) {
       // this.$router.push("/inforDetail");
       console.log(Id);
@@ -124,12 +119,16 @@ export default {
 //我的项目内容区域
 .myIntCon {
   // overflow: hidden;
-  overflow-x: scroll;
+
   li {
     background-color: #fff;
     margin-top: 20px;
-    width: 870px;
+    // width: 870px;
     height: 88px;
+    overflow-x: scroll;
+    > div {
+      width: 870px;
+    }
     .myIntNew {
       width: 690px;
       padding: 0 30px;
