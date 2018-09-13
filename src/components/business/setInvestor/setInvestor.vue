@@ -11,29 +11,16 @@
           <i v-if="formList.isShow">*</i>姓名</label>
         <input class="fl" v-model="setTeacher.name" type="text" />
       </li>
-      <li class="group clearfix">
-        <label class="fl pos1">
-          <i v-if="formList.isShow">*</i>性别</label>
-        <div class="fl clearfix sexBox pos1" :class="{sexManActive:sex.maleActive}">
-          <p class="sexMan fl" v-if="!sex.maleActive">
-            <img src="./man_1.png" alt="">
-          </p>
-          <p class="sexMan fl" v-if="sex.maleActive">
-            <img src="./man_2.png" alt="">
-          </p>
-          <input type="radio" v-model="setTeacher.sex" value="男" @click="maleChange" class="maleRadio" :checked="sex.maleActive">
-          <span class="fl">男</span>
-        </div>
-        <div class="fl sexBox pos1" :class="{sexManActive:sex.femaleActive}">
-          <p class="sexMan fl" v-if="!sex.femaleActive">
-            <img src="./woman_1.png" alt="" />
-          </p>
-          <p class="sexMan fl" v-if="sex.femaleActive">
-            <img src="./woman_2.png" alt="" />
-          </p>
-          <input type="radio" v-model="setTeacher.sex" value="女" @click="femaleChange" class="maleRadio" :checked="sex.femaleActive">
-          <span class="fl">女</span>
-        </div>
+      <li class="group clearfix sexLi" >
+        <label class="fl pos1"><i v-if="formList.isShow">*</i>性别</label>
+        <label style="margin-right: 14px">
+          <input type="radio" name="peoSex" value="Y" v-model="setTeacher.sex" checked> 
+          <span class="sexBorder"><a class="malea"></a><b>男</b></span>
+        </label>
+        <label>
+          <input type="radio" name="peoSex" value="N" v-model="setTeacher.sex"> 
+          <span class="sexBorder"><a class="femalea"></a><b>女</b></span>
+        </label>
       </li>
       <li class="group clearfix">
         <label class="fl pos1">
@@ -51,38 +38,21 @@
         <input class="fl" v-model="setTeacher.presentPost" type="text" />
       </li>
       <li class="group clearfix">
-        <label class="fl pos1">
-          <i v-if="formList.isShow">*</i>接受邀约</label>
+        <label class="fl pos1"><i v-if="formList.isShow">*</i>接受邀约</label>
         <label>
-          <input type="radio" name="invitaer" value="male" checked>
-          <span>接收</span>
+          <input type="radio" name="invitaer" value="Y" checked v-model="setTeacher.inviter"> 
+          <span class="receive"><a></a><b>接受</b></span>
         </label>
-
-        <input type="radio" name="invitaer" value="female">
-        <!-- <div class="fl clearfix similarRadio pos1">
-              <i class="fl" v-if="invitation.agree" :class="{noborder:invitation.agree}">
-                <img src="./agree.png" alt="" />
-              </i>
-              <i class="fl" v-if="!invitation.agree"></i>
-              <input type="radio" v-model="setTeacher.invitaer" value="接受" class="agreeBtn" @click="agreeInviter" :checked="invitation.agree">
-              <span class="fl">接受</span>
-            </div>
-            <div class="fl clearfix similarRadio pos1">
-              <i class="fl" v-if="invitation.disagree" :class="{noborder:!invitation.agree}">
-                <img src="./agree.png" alt="" />
-              </i>
-              <i class="fl" v-if="!invitation.disagree"></i>
-              <input type="radio" v-model="setTeacher.invitaer" value="不接受" class="agreeBtn" @click="disagreeInviter" :checked="invitation.disagree">
-              <span class="fl">不接受</span>
-            </div> -->
+        <label>
+          <input type="radio" name="invitaer" value="N" v-model="setTeacher.inviter"> 
+          <span class="receive"><a></a><b>不接受</b></span>
+        </label>
       </li>
       <li class="group clearfix">
         <label class="fl pos1">
           <i v-if="formList.isShow">*</i>行业领域</label>
         <select class="fl" v-model="setTeacher.industField">
-          <option value="0">行业领域1</option>
-          <option value="1">行业领域2</option>
-          <option value="2">行业领域3</option>
+          <option :value="item.fswId" v-for="(item,index) in industrys" :key="index">{{item.fswName}}</option>
         </select>
       </li>
       <li class="group clearfix">
@@ -93,9 +63,7 @@
         <label class="fl pos1">
           <i v-if="formList.isShow">*</i>投资阶段</label>
         <select class="fl" v-model="setTeacher.investStage">
-          <option value="0">行业领域1</option>
-          <option value="1">行业领域2</option>
-          <option value="2">行业领域3</option>
+          <option :value="item.fswId" v-for="(item,index) in stages" :key="index">{{item.fswName}}</option>
         </select>
       </li>
       <li class="group clearfix pos1">
@@ -126,97 +94,89 @@ export default {
         isShow: true, //是否显示*
         isClose: false
       },
-      sex: {
-        //性别
-        male: false, //男
-        female: false, //女
-        maleActive: true,
-        femaleActive: false
-      },
-      invitation: {
-        agree: true, //同意
-        disagree: false //不同意
-      },
       setTeacher: {
         name: "", //姓名
-        sex: "", //性别
+        sex: "Y", //性别
         birthday: "", //出生日期
         company: "", //工作单位
         presentPost: "", //现任职务
-        inviter: "", //是否接受邀请
+        inviter: "Y", //是否接受邀请
         industField: "", //行业领域
         fundScale: "", //基金规模
         investStage: "", //投资阶段
         investIdea: "", //投资理念
-        coachEnterprise: "" //辅导企业
-      }
+        coachEnterprise: "" //成功案例
+      },
+      industrys: [], //行业领域备选
+      stages: [] //投资阶段
     };
   },
   created() {
     this.headerText = "认证投资人"; //设置头部显示导航内容
     this.hasSearch = false;
   },
+  mounted() {
+    //行业领域
+    this.alternativeData("行业领域");
+    //投资阶段
+    this.alternativeData("投资阶段");
+  },
   methods: {
     closeBtn() {
       //关闭提示
       this.formList.isClose = !this.formList.isClose;
     },
-    //性别选择
-    maleChange() {
-      if (!this.sex.maleActive) {
-        this.sex.maleActive = !this.sex.maleActive;
-        this.sex.femaleActive = !this.sex.femaleActive;
-      }
-    },
-    femaleChange() {
-      if (!this.sex.femaleActive) {
-        this.sex.femaleActive = !this.sex.femaleActive;
-        this.sex.maleActive = !this.sex.maleActive;
-      }
-    },
-    //接受邀约选择
-    agreeInviter() {
-      if (!this.invitation.agree) {
-        this.invitation.agree = !this.invitation.agree;
-        this.invitation.disagree = !this.invitation.disagree;
-      }
-    },
-    disagreeInviter() {
-      if (!this.invitation.disagree) {
-        this.invitation.disagree = !this.invitation.disagree;
-        this.invitation.agree = !this.invitation.agree;
-      }
-    },
     //重置数据
     resetInfor() {
       let that = this.setTeacher;
       that.name = ""; //姓名
-      that.sex = ""; //性别
+      that.sex = "Y"; //性别
       that.birthday = ""; //出生日期
       that.company = ""; //工作单位
       that.presentPost = ""; //现任职务
-      that.inviter = ""; //是否接受邀请
+      that.inviter = "Y"; //是否接受邀请
       that.industField = ""; //行业领域
       that.fundScale = ""; //基金规模
       that.investStage = ""; //投资阶段
       that.investIdea = ""; //投资理念
-      that.coachEnterprise = ""; //辅导企业
+      that.coachEnterprise = ""; //成功案例
+    },
+    //行业领域投资阶段获取备选项
+    alternativeData(Name) {
+      let _url = "/fronttutorauthenticationselect-home";
+      this.axios
+        .post(_url, {
+          name: Name
+        })
+        .then(res => {
+          if (Name == "行业领域") {
+            this.industrys = res.data;
+            console.log(this.industrys);
+          } else {
+            this.stages = res.data;
+            console.log(this.stages);
+          }
+        });
     },
     //获取后台数据
     inforData() {
-      let _url = "/h5frontsearch-home";
-      this.axios.post(_url, {
-          userName: "yuanna",
-          sex: "女",
-          birthday: "2000.01.01",
-          workPosition: "北京市朝阳区青年路",
-          wordName: "web前端",
-          yaoyue: "1",
-          lingyu: "计算机",
-          guimo: "",
-          tzjieduan: "b轮",
-          guanmian: "aaaaa",
-          anli: "bbbbb"
+      let that = this.setTeacher;
+      let _url = "/fronttutorauthenticationsave-home";
+      this.axios
+        .post(_url, {
+          fciBirthday: "that.birthday", //出生日期
+          fciCase: "that.coachEnterprise", //成功案例
+          fciFlag: "that.inviter", //是否接受邀请
+          fciIdea: "that.investIdea", //投资理念
+          fciName: "that.name", //姓名
+          fciOrgName: "that.company", //工作单位
+          fciPosition: "that.presentPost", //现任职务
+          fciScale: "that.fundScale", //基金规模
+          fciSex: "that.sex", //性别
+          fifId: "that.industField", //行业领域
+          fisId: "that.investStage", //投资阶段
+          fmiType: "R",
+          investstage: "investstage"
         })
         .then(res => {
           this.items = res.data.List;
@@ -245,7 +205,7 @@ export default {
       display: inline-block;
       width: 30px;
       height: 30px;
-      background:url("./close.png") no-repeat center center;
+      background: url("./close.png") no-repeat center center;
       background-size: 100% 100%;
       margin: 14px 16px;
     }
@@ -253,6 +213,10 @@ export default {
   .formList {
     padding: 30px;
     padding-bottom: 100px;
+    // 性别选择样式.sexLi
+    .sexLi {
+      height: 64px;
+    }
     .group {
       margin-bottom: 19px;
       label {
@@ -306,55 +270,6 @@ export default {
           margin-top: 18px;
         }
       }
-      .sexBox {
-        width: 120px;
-        height: 60px;
-        margin-left: 20px;
-        line-height: 60px;
-        text-align: center;
-        background: #fff;
-        border-radius: 6px;
-        border: 2px solid #e0e0ee;
-        .sexMan {
-          width: 36px;
-          height: 36px;
-          margin-left: 23px;
-          margin-top: 9px;
-          img {
-            width: 100%;
-            height: 100%;
-          }
-        }
-        span {
-          font-size: 24px;
-          color: #999;
-        }
-        .maleRadio {
-          width: 120px;
-          height: 60px;
-          position: absolute;
-          top: 0;
-          left: 0;
-          z-index: 3;
-          margin: 0;
-          opacity: 0;
-        }
-      }
-      .sexManActive {
-        border-color: #6ea1ff;
-        span {
-          color: #6ea1ff;
-        }
-      }
-      .sexBox:last-child {
-        .sexMan {
-          margin-top: 10px;
-        }
-      }
-      .similarRadio:last-child,
-      .sexBox:last-child {
-        margin-left: 40px;
-      }
       input,
       select {
         width: 530px;
@@ -368,11 +283,73 @@ export default {
         width: 510px;
         padding-left: 20px;
       }
+      // 接受邀请样式
       input[type="radio"] {
         width: 0px;
         height: 0px;
+        margin: 0px;
       }
-
+      input + .receive {
+        display: flex;
+        align-items: center;
+        position: relative;
+        top: -26px;
+        left: 20px;
+        a {
+          display: inline-block;
+          width: 40px;
+          height: 40px;
+          border: 1px solid #dfdfdf;
+          border-radius: 50%;
+          margin-right: 10px;
+        }
+      }
+      input:checked + .receive {
+        a {
+          background: url(./agree.png);
+          background-size: 100%;
+        }
+      }
+      //性别选择样式
+      input + .sexBorder {
+        border: 1px solid #dfdfdf;
+        width: 120px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        border-radius: 6px;
+        justify-content: center;
+        position: relative;
+        top: -14px;
+        left: 20px;
+        float: left;
+        a {
+          display: inline-block;
+          width: 36px;
+          height: 36px;
+        }
+        .malea {
+          background: url(./man_1.png);
+          background-size: 100%;
+        }
+        .femalea {
+          background: url(./woman_1.png);
+          background-size: 100%;
+        }
+      }
+      input:checked + .sexBorder {
+        border: 1px solid #6ea1ff;
+        color: #6ea1ff;
+        .malea {
+          background: url(./man_2.png);
+          background-size: 100%;
+        }
+        .femalea {
+          background: url(./woman_2.png);
+          background-size: 100%;
+        }
+      }
+      //性别选择样式end
       select {
         option {
           color: #666;

@@ -8,16 +8,16 @@
     <!-- tab-container -->
     <mt-tab-container v-model="selected">
       <mt-tab-container-item id="1">
-        <infor-child :banner="casePic" v-if="showBanner"></infor-child>
-        <infor-child-list :list="item1"></infor-child-list>
+        <infor-child></infor-child>
+        <infor-child-list :list="item1" :title="strTitle1"></infor-child-list>
       </mt-tab-container-item>
       <mt-tab-container-item id="2">
-        <infor-child :banner="casePic" v-if="showBanner"></infor-child>
-        <infor-child-list :list="item2" :title="strTitle"></infor-child-list>
+        <infor-child></infor-child>
+        <infor-child-list :list="item2" :title="strTitle2"></infor-child-list>
       </mt-tab-container-item>
       <mt-tab-container-item id="3">
-        <infor-child :banner="casePic" v-if="showBanner"></infor-child>
-        <infor-child-list :list="item3"></infor-child-list>
+        <infor-child></infor-child>
+        <infor-child-list :list="item3" :title="strTitle3"></infor-child-list>
       </mt-tab-container-item>
     </mt-tab-container>
 
@@ -27,18 +27,14 @@
 import InforChild from "business/inforChild/inforChild";
 import InforChildList from "business/inforChildList/inforChildList";
 export default {
-  props: {
-    showBanner: {     //是否显示banner图组件
-      type: Boolean,
-      default: true
-    }
-  },
   data() {
     return {
       item1: [],
       item2: [],
       item3: [],
-      strTitle: "",
+      strTitle1: "",
+      strTitle2: "",
+      strTitle3: "",
       selected: "1",
       casePic:[]
     };
@@ -54,6 +50,7 @@ export default {
     headlineData() {
       let _url = "/h5frontcarrierinfotop-home";
       this.axios.get(_url).then(res => {
+        this.strTitle1 = res.data.current_title;
         this.item1 = res.data.citList;
         // console.log(this.item1);
         for (let i in this.item1) {
@@ -69,7 +66,7 @@ export default {
     policyData() {
       let policyUrl = "/h5frontPolicyInfo-home";
       this.axios.get(policyUrl).then(res => {
-        this.strTitle = res.data.current_title;
+        this.strTitle2 = res.data.current_title;
         this.item2 = res.data.list;
         // console.log(this.item2);
         for (let i in this.item2) {
@@ -88,6 +85,7 @@ export default {
     bowenWorld() {
       let bowenUrl = "/h5frontcarrierinfoblog-home";
       this.axios.get(bowenUrl).then(res => {
+        this.strTitle3 = res.data.current_title;
         this.item3 = res.data.cibList;
         for (let i in this.item3) {
           //转化时间戳

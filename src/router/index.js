@@ -40,11 +40,12 @@ export default new Router({
     }, {
       path: '/information', //资讯页面
       name: 'Information',
-      component: Information
-    }, {
-      path: '/infordetail',
-      name: 'inforDetail',
-      component: InforDetail
+      component: Information,
+      children: [{ //资讯详情页面
+        path: ':id/:title',
+        name: 'inforDetail',
+        component: InforDetail
+      }, ]
     }, {
       path: '/activity', //活动页面
       name: 'activity',

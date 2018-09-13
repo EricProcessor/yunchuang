@@ -1,9 +1,9 @@
 <template>
   <div class="investBox">
     <index-header :text="headerText" :hasSearch="hasSearch"></index-header>
-    <p class="top clearfix">
+    <p class="top clearfix" v-if="!formList.isClose">
       <span class=" fl">带*号项为必填项，请务必如实填写</span>
-      <i class="fr"></i>
+      <i class="fr" @click="closeBtn"></i>
     </p>
     <ul class="formList">
       <li class="group clearfix">
@@ -30,7 +30,7 @@
       <li class="group clearfix">
         <label class="fl pos1">
           <i v-if="!formList.isShow">*</i>网址</label>
-        <input class="fl" type="text" />
+        <input class="fl" v-model="investment.website" type="text" />
       </li>
       <li class="group clearfix">
         <label class="fl pos1">
@@ -55,7 +55,7 @@
       <li class="group clearfix">
         <label class="fl pos1">
           <i v-if="formList.isShow">*</i>投资领域</label>
-        <select class="fl">
+        <select class="fl" v-model="investment.field">
           <option value="0">金融服务</option>
           <option value="1">投资服务</option>
           <option value="2">融资服务</option>
@@ -64,7 +64,7 @@
       <li class="group clearfix">
         <label class="fl pos1">
           <i v-if="!formList.isShow">*</i>投资阶段</label>
-        <select class="fl">
+        <select class="fl" v-model="investment.stage">
           <option value="0">金融服务</option>
           <option value="1">投资服务</option>
           <option value="2">融资服务</option>
@@ -73,18 +73,18 @@
       <li class="group clearfix">
         <label class="fl pos1">
           <i v-if="!formList.isShow">*</i>基金规模</label>
-        <input class="fl" type="text" />
+        <input class="fl" v-model="investment.scale" type="text" />
       </li>
       <li class="group clearfix pos1">
         <label class="fl pos1">
           <i v-if="!formList.isShow">*</i>投资理念</label>
-        <textarea class="investIdea fr" maxlength="200"></textarea>
+        <textarea class="investIdea fr" v-model="investment.idea" maxlength="200"></textarea>
         <span class="textCount">0/200</span>
       </li>
       <li class="group clearfix pos1">
         <label class="fl pos1">
           <i v-if="!formList.isShow">*</i>成功案例</label>
-        <textarea class="investIdea fr" maxlength="200"></textarea>
+        <textarea class="investIdea fr" v-model="investment.succCase" maxlength="200"></textarea>
         <span class="textCount">0/200</span>
       </li>
       <li class="group clearfix pos1">
@@ -102,7 +102,6 @@
       <li class="fl">重置</li>
       <li class="fl preserve">保存</li>
     </ul>
-
     <addressPick @selectAddress="getAddr" ref="addr"></addressPick>
   </div>
 </template>
@@ -114,7 +113,8 @@ export default {
   data() {
     return {
       formList: {
-        isShow: true //是否显示*
+        isShow: true, //是否显示*
+        isClose: false
       },
       address: "", //地址
       inputImg: [], //上传的图片
@@ -147,6 +147,9 @@ export default {
     },
     inputGetImg(arr) {
       this.inputImg = arr;
+    },
+    closeBtn() {
+      this.formList.isClose = !this.formList.isClose;
     },
     agreeInviter() {
       if (!this.investment.agree) {
@@ -185,10 +188,11 @@ export default {
     }
     i {
       display: inline-block;
-      width: 24px;
-      height: 24px;
-      background: #f00;
-      margin: 18px 20px;
+      width: 30px;
+      height: 30px;
+      background: url("./close.png") no-repeat center center;
+      background-size: 100% 100%;
+      margin: 14px 16px;
     }
   }
   .formList {
@@ -209,6 +213,7 @@ export default {
           color: #f35828;
           position: relative;
           top: 5px;
+          right: 2px;
         }
         .third {
           left: 30px;
