@@ -19,7 +19,8 @@ export default {
         return {
             slots: [{
                 flex: 1,    
-                values: Object.keys(address),
+                // values: Object.keys(address),
+                values: [],
                 className: 'slot1',
                 textAlign: 'center'
             }, {
@@ -28,7 +29,8 @@ export default {
                 className: 'slot2'
             }, {
                 flex: 1,
-                values: Object.keys(address["北京市"]),
+                // values: Object.keys(address["北京市"]),
+                values: [],
                 className: 'slot3',
                 textAlign: 'center'
             }, {
@@ -37,16 +39,31 @@ export default {
                 className: 'slot4'
             }, {
                 flex: 1,
-                values: address["北京市"]["市辖区"],
+                // values: address["北京市"]["市辖区"],
+                values: [],
                 className: 'slot5',
                 textAlign: 'center'
             }],
+            oneLevelAddress: [],    //储存一级地址数组
+            secondLevelAddress: [],     //储存二级地址数组
+            thirdLevelAddress: [],      //储存三级地址数组
             addressShow: false,     //控制该组件显示/隐藏
             addressProvince: '',    //省
             addressCity: '',        //市
             addressCounty: '',       //县
             address: ''         //由以上三个拼接好的 地址
         }
+    },
+    created() {
+        //第一次请求，获取一级数据
+        // this._getAddress('', 'P').then((res) => {
+        //     this.oneLevelAddress = res
+        //     return res
+        // }).then((oneAddress) => {
+        //     this._getAddress(oneAddress[0].ca_id, 'C').then(res => {
+
+        //     })
+        // })
     },
     methods: {
         _changeAddress(picker, values) {              //地址选择组件改变后调用的  回调函数
@@ -62,6 +79,25 @@ export default {
 
                 this.$emit('selectAddress', this.address)   //给父组件传出地址数值
             }
+        },
+        //获取地址Ajax请求
+        _getAddress(arg, type) {
+            return new Promise((resolve, reject) => {
+                this.axios({
+                    url: "/frontbaseinfosetareaselect-home",
+                    method: 'post',
+                    data: {
+                        arg,
+                        type 
+                    }
+                }).then(res => {
+                    resolve(res)
+                })
+            })
+        },
+        //获取二级地址
+        _getSecondAddress() {
+
         },
         //请求用户数据后，设置指定的地点用，格式["省","市", "县/镇"]（注意，设置的地点名称数组，对应地址json数据中必须有，否则失效）
         setAddress() {
