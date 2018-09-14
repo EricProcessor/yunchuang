@@ -50,32 +50,30 @@ export default {
         // },
        commitBox() {
            this.$router.push({
-                path: "/screenResult"
+                path: "/screenResult",
+                query:{
+                    begintime:this.simpDateD1,
+                    endtime:this.simpDateD2
+                }
             });
-            this.axios.post("/h5frontactivityinfo-foreshow",{
-             begintime:'this.simpDateD1',
-             endtime:'this.simpDateD2' 
-            //  console.log(val) 
-          }).then(res=>{
-            this.screenResult = res.data.list
-            // console.log(this.screenResult)
-          })            
+            
+        //   console.log(this.simpDateD1)   
+        //    console.log(this.simpDateD2)       
         },
         selectFromD1(val){
-            this.simpDateD1 = val
-            
+            this.simpDateD1 = val           
         },
          selectFromD2(val){
             this.simpDateD2 = val
-            // console.log(val)
+            // console.log(this.simpDateD2)
         }    
     },
     components:{
         'mt-popup':Popup,
         'mt-picker':Picker,
-        activeScreenOne,
-        activeScreenTwo,
-        activeScreenC3
+         activeScreenOne,
+         activeScreenTwo,
+         activeScreenC3
     }    
     
 }
@@ -92,7 +90,7 @@ export default {
   height: 86px;
   line-height: 86px;
   text-align: center;
-  font-size: 32px;
+  font-size: 36px;
   color: #fff;
   background: #253350;
   position: fixed;
@@ -114,7 +112,6 @@ export default {
 .middle{
     flex: 1;
 }
-
 .actice-place{
     margin-top:108px;
     margin-left: 20px;
@@ -137,8 +134,7 @@ export default {
     .actice-input{
         position: relative;
         display: flex;
-    }
-    
+    }   
 }   
 footer{
     width: 100%;
