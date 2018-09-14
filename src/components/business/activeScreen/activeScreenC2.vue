@@ -25,22 +25,32 @@ export default {
   data () {
     return {
       birthday: "",
+      date:'',
+      second:'',
       dateTime: new Date() ,
     }
   },
   methods: {
     openPicker () {
       this.$refs.picker.open()
+            // let year = date.getFullYear(),
+            //     month = date.getMonth() - 0 + 1,
+            //     day = date.getDate()
+            // this.date = `${year} ${month} ${day}`
+            // this.second = Date.parse(this.date)
+            // console.log(this.second)
+            // this.$emit("selectDateOne",this.second)
     },
     handleConfirm(date){
-      console.log(date)
+      // console.log(date)
         let year = date.getFullYear(),
                 month = date.getMonth() - 0 + 1,
                 day = date.getDate()
             this.birthday = `${year}-${month}-${day}`
-            
+            this.date = `${year} ${month} ${day}`
+            this.second = Date.parse(this.date)
+            this.$emit("selectDateOne",this.second)
     },
-
   },
   
 }

@@ -11,35 +11,35 @@
       </div>
       <ul>
         <li>
-          <label><i>●</i><i>目标定位</i></label>
+          <label><i></i><i>目标定位</i></label>
           <p>{{this.activeDetail.faiGoal}}</p>
         </li>
         <li>
-          <label><i>●</i><i>举办时间</i></label>
+          <label><i></i><i>举办时间</i></label>
           <p>{{this.activeDetail.faiDatetime | formatDate}} ─ {{this.activeDetail.faiEndDatetime | formatDate}}</p>
         </li>
         <li>
-          <label><i>●</i><i>举办地点</i></label>
+          <label><i></i><i>举办地点</i></label>
           <p>{{this.activeDetail.faiAddress}}</p>
         </li>
         <li>
-          <label><i>●</i><i>活动主题</i></label>
+          <label><i></i><i>活动主题</i></label>
           <p>{{this.activeDetail.faiTitle}}</p>
         </li>
         <li>
-          <label><i>●</i><i>参与人员</i></label>
+          <label><i></i><i>参与人员</i></label>
           <p>{{this.activeDetail.faiParticipant}}</p>
         </li>
         <li>
-          <label><i>●</i><i>报名人数</i></label>
+          <label><i></i><i>报名人数</i></label>
           <p>{{this.activeDetail.faiPerNum}}</p>
         </li>
         <li>
-          <label><i>●</i><i>活动内容</i></label>
+          <label><i></i><i>活动内容</i></label>
           <p>{{this.activeDetail.faiContent}}</p>
         </li>
         <li>
-          <label><i>●</i><i>联系人</i></label>
+          <label><i></i><i>联系人</i></label>
           <p>{{this.activeDetail.faiLinkman}}:{{this.activeDetail.faiTel}}</p>
         </li>
       </ul>  
@@ -50,35 +50,41 @@
         <i @click="closeAddressPicker">✖</i>
         <ul>
             <li>
-              <label>活动名称：</label><span>2018中国创业舞林大会</span>
+              <label>活动名称：</label><span>{{this.activeDetail.faiName}}</span>
             </li>
             <li class="mh">
-              <label>活动时间：</label><span>2018年6月19日<br>上午12：00到0:00</span>
+              <label>活动时间：</label><span>{{this.activeDetail.faiDatetime | formatDate}} ─ {{this.activeDetail.faiEndDatetime | formatDate}}</span>
             </li>
             <li class="mh">
-              <label>活动地点：</label><span>创新园京东云电商创新中心5F路演大厅</span>
+              <label>活动地点：</label><span>{{this.activeDetail.faiAddress}}</span>
             </li>
             <li>
-              <label class="mw">联系人：</label><input type="text"/>
+              <label class="mw">联系人：</label><input v-model="userInfo.userName" type="text"/>
             </li>
             <li>
-              <label>联系电话：</label><input type="text"/>
+              <label>联系电话：</label><input v-model="userInfo.tel" type="text"/>
             </li>
         </ul>
-        <button>提交</button>
+        <button @click="commitBtn">提交</button>
       </div>
     </mt-popup>
   </div>
 </template>
 <script>
 import Vue from 'vue'
-import { Popup } from 'mint-ui';
+import { Popup } from 'mint-ui'
+import Install from "@/config/checkRule";
 Vue.component(Popup.name, Popup);
 export default {
   data() {
     return {
       popupVisible:false,
-      activeDetail:[]
+      activeDetail:[],
+       userInfo: {
+        //登录信息
+        userName: "",
+        tel: "",
+      }
     };
   },
   methods: {
@@ -92,6 +98,32 @@ export default {
     //关闭popup
     closeAddressPicker(){
       this.popupVisible = false;
+    },
+    commitBtn() {
+      //登录信息
+      if (this.userInfo.userName == "" && this.userInfo.tel == "") {
+        alert("请输入联系人和手机号！");
+      } else if (this.userInfo.userName == "") {
+        alert("联系人不能为空！");
+      } else if (this.userInfo.password == "") {
+        alert("手机号码不能为空！");
+      } else if (!Install.isPhone(this.userInfo.tel)) {
+        alert("请输入正确的手机号码！");
+      } else {
+        let url = "/frontactivityapply-add";       
+        let params = {
+          faaPerson: this.userInfo.userName,
+          faaTel: this.userInfo.tel,
+          faiId:this.activeDetail.faiId,
+          fmiId:this.activeDetail.fmiId,
+        };
+        console.log(this.activeDetail.faiId)  
+        this.axios.post(url, params).then(res => {
+          if (res.data.msg) {
+            alert(res.data.msg);
+          } 
+        });
+      }
     },
   },
   filters: {
@@ -115,8 +147,11 @@ export default {
     var id = this.$route.params.id
     // console.log(id)
     this.axios.post("/h5frontactivityinfo-item/"+id+"").then(res => {
-          this.activeDetail=res.data.ai       
+          this.activeDetail=res.data.ai     
+         
     }) 
+    //  return this.activeDetail.faiId
+    
   }
 };
 </script>
@@ -147,36 +182,70 @@ export default {
 }
 .detail {
   margin-top: 90px;
-  padding: 0 1rem;
+  padding: 0 26px;
     .detail-title {
       width: 100%;
-      padding: .4rem 0;
-      font-size: .425rem;
+      padding: 30px 0;
+      font-size: 34px;
       font-stretch: normal;
     }
    ul{
      li:nth-child(1){
-       margin-top: .2125rem;
+       margin-top: 15px;
+     }
+     li i:nth-child(1){
+       display: block;
+       font-size: 22px;
+       width: 50px;
+       height:50px;
+       margin-top:-5px;
+       transform: scale(0.5,0.5)
+     }
+     li:nth-child(1) i:nth-child(1){
+       background: url("./Goal.png") no-repeat; 
+     }
+     li:nth-child(2) i:nth-child(1){
+       background: url("./date.png") no-repeat;
+     }
+     li:nth-child(3) i:nth-child(1){
+       background: url("./address.png") no-repeat;
+     }
+     li:nth-child(4) i:nth-child(1){
+       background: url("./title.png") no-repeat;
+     }
+     li:nth-child(5) i:nth-child(1){
+       background: url("./per.png") no-repeat;
+     }
+     li:nth-child(6) i:nth-child(1){
+       background: url("./num.png") no-repeat;
+     }
+     li:nth-child(7) i:nth-child(1){
+       background: url("./content.png") no-repeat;
+     }
+     li:nth-child(8) i:nth-child(1){
+       background: url("./tel.png") no-repeat;
      }
      li{
        width: 100%;
        display: flex;
        flex-direction: column;
-       margin-top: 75px;
+       margin-top: 50px;
        label{
          width: 100%;
-         height:.425rem;
-         line-height: .425rem;
-         font-size: .285rem;
+         height:40px;
+         margin-left: -10px;
+         line-height: 40px;
+         font-size: 22px;
          color: #666;
+         display: flex;
        }
        p{
-         width: 100%;
-         height:.425rem;
-         line-height: .425rem;
-         font-size: .275rem;
+         width: 92%;
+         height:40px;
+         line-height: 40px;
+         font-size: 20px;
          color: #333;
-         margin-left: .1975rem;
+         margin-left: 40px;
        }
      }    
    }

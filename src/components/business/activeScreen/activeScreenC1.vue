@@ -92,7 +92,8 @@
       },
       //picker组件的change事件，进行取值赋值
       addressChange(picker, values){
-        // console.log(picker);
+        // console.log(values);
+
         if (this.regionInit){
           //取值并赋值
           this.region = values[0]["name"] + "-" + values[1]["name"] + "-" + values[2]["name"];
@@ -106,6 +107,7 @@
         }else {
           this.regionInit = true;
         }
+        // this.region = values[0].name + values[1].name + values[2].name
       },
       //遍历json，返回省级对象数组
       getProvinceArr() {

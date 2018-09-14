@@ -8,13 +8,13 @@
             <div class="actice-time">
                 <span>活动时间</span>
                 <div class="actice-input">
-                    <activeScreenTwo></activeScreenTwo>
-                    <activeScreenC3></activeScreenC3>
+                    <activeScreenTwo @selectDateOne="selectFromD1"></activeScreenTwo>
+                    <activeScreenC3 @selectDateTwo="selectFromD2"></activeScreenC3>
                 </div>
             </div>             
         </div>
         <footer>
-            <button class="btn"  @click="deleateBox">确定</button>
+            <button class="btn"  @click="commitBox">确定</button>
         </footer>   
     </div>
 </template>
@@ -25,34 +25,55 @@ import activeScreenC3 from "business/activeScreen/activeScreenC3";
 import { MessageBox } from "mint-ui";
 import {Popup} from 'mint-ui';
 import {Picker} from 'mint-ui';
-
 export default {
+     data() {
+        return {
+            simpDateD1: "",         //简单日期         
+             area_id:'',
+             province_id:'',
+             city_id:'',
+             begintime:'',
+             endtime:''   
+        }
+    },
     methods: {
         backBtnPre() {
           this.$router.go(-1);
+        },
+        selectDateOne(){
+
         },
         // screenResult(){
         //     this.$router.push({
         //       path: "/screenResult"
         //     });
         // },
-        deleateBox() {
-            MessageBox({
-                title: "提示",
-                message: "确定执行此操作?",
-                showCancelButton: true
-            }).then(action=>{this.$router.push({
-                path: "/screenResult"
+       commitBox() {
+           this.$router.push({
+                path: "/screenResult",
+                query:{
+                    begintime:this.simpDateD1,
+                    endtime:this.simpDateD2
+                }
             });
-            })            
+            
+        //   console.log(this.simpDateD1)   
+        //    console.log(this.simpDateD2)       
+        },
+        selectFromD1(val){
+            this.simpDateD1 = val           
+        },
+         selectFromD2(val){
+            this.simpDateD2 = val
+            // console.log(this.simpDateD2)
         }    
     },
     components:{
         'mt-popup':Popup,
         'mt-picker':Picker,
-        activeScreenOne,
-        activeScreenTwo,
-        activeScreenC3
+         activeScreenOne,
+         activeScreenTwo,
+         activeScreenC3
     }    
     
 }
@@ -69,7 +90,7 @@ export default {
   height: 86px;
   line-height: 86px;
   text-align: center;
-  font-size: 32px;
+  font-size: 36px;
   color: #fff;
   background: #253350;
   position: fixed;
@@ -91,7 +112,6 @@ export default {
 .middle{
     flex: 1;
 }
-
 .actice-place{
     margin-top:108px;
     margin-left: 20px;
@@ -114,8 +134,7 @@ export default {
     .actice-input{
         position: relative;
         display: flex;
-    }
-    
+    }   
 }   
 footer{
     width: 100%;
