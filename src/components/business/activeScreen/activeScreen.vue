@@ -8,13 +8,13 @@
             <div class="actice-time">
                 <span>活动时间</span>
                 <div class="actice-input">
-                    <activeScreenTwo></activeScreenTwo>
-                    <activeScreenC3></activeScreenC3>
+                    <activeScreenTwo @selectDateOne="selectFromD1"></activeScreenTwo>
+                    <activeScreenC3 @selectDateTwo="selectFromD2"></activeScreenC3>
                 </div>
             </div>             
         </div>
         <footer>
-            <button class="btn"  @click="deleateBox">确定</button>
+            <button class="btn"  @click="commitBox">确定</button>
         </footer>   
     </div>
 </template>
@@ -25,26 +25,49 @@ import activeScreenC3 from "business/activeScreen/activeScreenC3";
 import { MessageBox } from "mint-ui";
 import {Popup} from 'mint-ui';
 import {Picker} from 'mint-ui';
-
 export default {
+     data() {
+        return {
+            simpDateD1: "",         //简单日期         
+             area_id:'',
+             province_id:'',
+             city_id:'',
+             begintime:'',
+             endtime:''   
+        }
+    },
     methods: {
         backBtnPre() {
           this.$router.go(-1);
+        },
+        selectDateOne(){
+
         },
         // screenResult(){
         //     this.$router.push({
         //       path: "/screenResult"
         //     });
         // },
-        deleateBox() {
-            MessageBox({
-                title: "提示",
-                message: "确定执行此操作?",
-                showCancelButton: true
-            }).then(action=>{this.$router.push({
+       commitBox() {
+           this.$router.push({
                 path: "/screenResult"
             });
-            })            
+            this.axios.post("/h5frontactivityinfo-foreshow",{
+             begintime:'this.simpDateD1',
+             endtime:'this.simpDateD2' 
+            //  console.log(val) 
+          }).then(res=>{
+            this.screenResult = res.data.list
+            // console.log(this.screenResult)
+          })            
+        },
+        selectFromD1(val){
+            this.simpDateD1 = val
+            
+        },
+         selectFromD2(val){
+            this.simpDateD2 = val
+            // console.log(val)
         }    
     },
     components:{

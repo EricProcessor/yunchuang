@@ -11,35 +11,35 @@
       </div>
       <ul>
         <li>
-          <label><i>●</i><i>目标定位</i></label>
+          <label><i></i><i>目标定位</i></label>
           <p>{{this.activeDetail.faiGoal}}</p>
         </li>
         <li>
-          <label><i>●</i><i>举办时间</i></label>
+          <label><i></i><i>举办时间</i></label>
           <p>{{this.activeDetail.faiDatetime | formatDate}} ─ {{this.activeDetail.faiEndDatetime | formatDate}}</p>
         </li>
         <li>
-          <label><i>●</i><i>举办地点</i></label>
+          <label><i></i><i>举办地点</i></label>
           <p>{{this.activeDetail.faiAddress}}</p>
         </li>
         <li>
-          <label><i>●</i><i>活动主题</i></label>
+          <label><i></i><i>活动主题</i></label>
           <p>{{this.activeDetail.faiTitle}}</p>
         </li>
         <li>
-          <label><i>●</i><i>参与人员</i></label>
+          <label><i></i><i>参与人员</i></label>
           <p>{{this.activeDetail.faiParticipant}}</p>
         </li>
         <li>
-          <label><i>●</i><i>报名人数</i></label>
+          <label><i></i><i>报名人数</i></label>
           <p>{{this.activeDetail.faiPerNum}}</p>
         </li>
         <li>
-          <label><i>●</i><i>活动内容</i></label>
+          <label><i></i><i>活动内容</i></label>
           <p>{{this.activeDetail.faiContent}}</p>
         </li>
         <li>
-          <label><i>●</i><i>联系人</i></label>
+          <label><i></i><i>联系人</i></label>
           <p>{{this.activeDetail.faiLinkman}}:{{this.activeDetail.faiTel}}</p>
         </li>
       </ul>  
@@ -72,7 +72,7 @@
 </template>
 <script>
 import Vue from 'vue'
-import { Popup } from 'mint-ui';
+import { Popup } from 'mint-ui'
 Vue.component(Popup.name, Popup);
 export default {
   data() {
@@ -157,6 +157,38 @@ export default {
    ul{
      li:nth-child(1){
        margin-top: .2125rem;
+     }
+     li i{
+       display: flex;
+       display: block;
+       font-size: 22px;
+       width: 44px;
+       height:48px;
+       transform: scale(0.5,0.5)
+     }
+     li:nth-child(1) i:nth-child(1){
+       background: url("./Goal.png") no-repeat; 
+     }
+     li:nth-child(2) i:nth-child(1){
+       background: url("./date.png") no-repeat;
+     }
+     li:nth-child(3) i:nth-child(1){
+       background: url("./address.png") no-repeat;
+     }
+     li:nth-child(4) i:nth-child(1){
+       background: url("./title.png") no-repeat;
+     }
+     li:nth-child(5) i:nth-child(1){
+       background: url("./per.png") no-repeat;
+     }
+     li:nth-child(6) i:nth-child(1){
+       background: url("./num.png") no-repeat;
+     }
+     li:nth-child(7) i:nth-child(1){
+       background: url("./content.png") no-repeat;
+     }
+     li:nth-child(8) i:nth-child(1){
+       background: url("./tel.png") no-repeat;
      }
      li{
        width: 100%;

@@ -52,14 +52,12 @@ export default {
         _changeAddress(picker, values) {              //地址选择组件改变后调用的  回调函数
             // console.log(values)             //values为当前选中的地址数组
             if(address[values[0]]) {
-
                 picker.setSlotValues(1, Object.keys(address[values[0]]))    //设置二级联动的内容，这里是城市。第二个参数为内容数组
                 picker.setSlotValues(2, address[values[0]][values[1]])    //设置三级联动的内容，这里是县/区。第三个参数为
                 this.addressProvince = values[0]
                 this.addressCity = values[1]
                 this.addressCounty = values[2]
                 this.address = `${values[0]} - ${values[1]} - ${values[2]}`
-
                 this.$emit('selectAddress', this.address)   //给父组件传出地址数值
             }
         },

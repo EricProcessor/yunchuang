@@ -40,10 +40,9 @@
           }         
         },
         mounted(){
-         3
-            
-          params.append('area_id', JSON.stringify(this.screenResult.areaId));
-           console.log(JSON.stringify(this.screenResult.areaId))
+                   
+          // params.append('area_id', JSON.stringify(this.screenResult.areaId));
+          //  console.log(JSON.stringify(this.screenResult.areaId))
           // console.log(this.val.areaId)
           // params.append('province_id', 'this.val.provinceId');
           // params.append('city_id', 'this.val.cityId');

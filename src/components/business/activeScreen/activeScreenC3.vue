@@ -24,7 +24,9 @@ Vue.component(DatetimePicker.name, DatetimePicker)
 export default {
   data () {
     return {
-      birthdays: "",
+      birthdays: "",//三个拼接好的 地址
+      date:'', //自定义日期
+      second:'',//自定义毫秒数
       dateTime: new Date()
     }
   },
@@ -38,7 +40,10 @@ export default {
                 month = date.getMonth() - 0 + 1,
                 day = date.getDate()
             this.birthdays = `${year}-${month}-${day}`
-            
+            this.date = `${year} ${month} ${day}`
+            this.second = Date.parse(this.date)
+            // console.log(this.second)
+            this.$emit("selectDateTwo",this.second)       
     },
   },
   
