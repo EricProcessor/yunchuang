@@ -205,7 +205,7 @@ export default {
                   var d = new Date();
                     d.setTime(d.getTime() + 1 * 24 * 60 * 60 * 1000);
                     var expires = "expires=" + d.toUTCString();
-                    document.cookie = "SESSION=65377cf7-3101-466c-9396-67a3cbdab7c5" + "," + expires;
+                    document.cookie = "SESSION=6988c996-9d9a-489b-b33c-fd9d81f65ff7" + "," + expires;
                     let _url = "/frontmypasswordedit-home";
                     let params = {
                         pwd: old,
@@ -213,10 +213,12 @@ export default {
                     };
                     this.axios.post(_url, params).then(res => {
                             console.log(res.data);
-                            if(res.data == false){
-                                this.old.falseMatching = true
+                            if(res.data == true){
+                                this.old.falseMatching = false;
+                                alert("修改成功");
+                                this.$router.push("/mine")
                             }else{
-                                this.old.falseMatching = false 
+                                this.old.falseMatching = true
                             }
                     });
               }else{

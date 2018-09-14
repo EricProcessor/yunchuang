@@ -38,26 +38,26 @@
 .activity-title {
     position: relative;
     width: 100%;
-    height: 1.25rem;
+    height: 88px;
     text-align: center;
-    line-height: 1.25rem;
-    font-size: 0.4375rem;
+    line-height: 88px;
+    font-size: 36px;
     color: #fff;
     background: #253350;
     position: fixed;
     top: 0;
     left: 0;
   .acticity-screen{
-    height: 1.25rem;
-    line-height: 1.25rem;
+    height: 88px;
+    line-height: 88px;
     position: absolute;
-    right:.325rem;
-    font-size: .375rem;
+    right:20px;
+    font-size: 28px;
     color: #fff;
   }
 }
 .ac-tab {
-  margin-top: 1.25rem;
-  margin-bottom: 1.25rem;
+  margin-top: 88px;
+  margin-bottom: 88px;
 }
 </style>

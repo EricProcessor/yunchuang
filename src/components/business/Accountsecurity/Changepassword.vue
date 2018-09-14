@@ -13,7 +13,7 @@
             </div>
         </div>
         <div class="iptBox">
-          <div class="iptBoxone" >
+          <div class="iptBoxone">
                <div class="zhu">
                    <p>输入手机号<span>(必填)</span></p>
                </div>
@@ -23,20 +23,21 @@
                 <button class="btn"  @click="yanzheng(Obtain.tels)" v-if="Obtain.count==time" >获取验证码</button>
                 <!-- html中 不要写this -->
                 <button class="btn" style="background:#ccc" v-else>{{Obtain.count}}秒后发送</button>
-
             </div>
+          </div>
+          <div class="VerificationBox">
+              <p>手机号的值不能为空</p>
           </div>
 
         <div class="iptBoxtwo" >
                <div class="zhu">
                    <p>输入验证码<span>(必填)</span></p>
                </div>
-               
             <div class="ipt">
                 <input type="text" class="txt" >
                 
             </div>
-            <div class="err" style="display:none">
+            <div class="err" >
                 <p class="Verification">验证码错误</p>
             </div>
           </div>
@@ -59,6 +60,7 @@ export default {
                 tels:"", //获取手机input框中手机号
                 count: 0, //验证码重新获取倒计时
                 timer: null, //定时器
+
             },
             // ok:'true'
            
@@ -73,48 +75,38 @@ export default {
         go(){
             this.$router.go(-1);
         },
-        //点击获取验证码
+        //点击获取验证码    
         yanzheng(telephone){
             console.log(telephone)
            var tel = 11 && /^((13|14|15|17|18|)[0-9]{1}\d{8})$/;
             if(telephone == ""){
-                alert('请输入手机号码')
-                return;
-            }
-            if(!tel.test(telephone)){
+                alert('请输入手机号码');
+                
+            }else{
+                if(!tel.test(telephone)){
                 alert('手机号格式不正确')
                 return;
-            }else{            
-                // var d = new Date();
-                //     d.setTime(d.getTime() + 1 * 24 * 60 * 60 * 1000);
-                //     var expires = "expires=" + d.toUTCString();
-                //     document.cookie = "SESSION=65377cf7-3101-466c-9396-67a3cbdab7c5" + "," + expires;
-                    let _url = "/frontmyaccphoneupdatephone-home";
-                    let params = {
-                        phone:telephone,
-                    };
-                    this.axios.post(_url, params).then(res => {
-                            console.log(res); 
+            }else{         
+                  let phoneUrl = "/frontcompanyinfomile-checkAcc";
+                    let params = { fmiAcc: telephone };
+                    this.axios.post(phoneUrl, params).then(res => {
+                         console.log(res);
+                        // if (res.data.flag) {
+                        // } else {
+                        // this.ownData.ownPhone.isExist = false;
+                        // }
                     });
-                     console.log(this.Obtain.count)
-                    let id = setInterval(()=>{
-                        --this.Obtain.count;
-                        if(!this.Obtain.count){
-                            this.Obtain.count=this.time
-                            clearInterval(id);
-                        }
-                    },1000)
-            //     this.ok = false;
-            //     this.disabled = true;
-            //     setInterval(function(){
-            //     this.Obtain.count--;
-            //     that.Obtain.count = this.Obtain.count + '秒后发送';
-            //     if(index <= 0 ){
-            //         that.Obtain.count = '重新发送';
-            //         clearInterval(id);
-            //         this.disabled = false;
-            //     }
-            // },1000)
+                    
+                    //  console.log(this.Obtain.count)
+                    // let id = setInterval(()=>{
+                    //     --this.Obtain.count;
+                    //     if(!this.Obtain.count){
+                    //         this.Obtain.count=this.time
+                    //         clearInterval(id);
+                    //     }
+                    // },1000)
+           
+          
                 
                 //axios 成功   .then(data=>{   **   })
                 
@@ -125,6 +117,8 @@ export default {
                 //}
 
             }
+            }
+            
         },
        
 
@@ -192,7 +186,15 @@ export default {
             }
         }
         .iptBox{
-            
+            .VerificationBox{
+                height: 30px;
+                color: red;
+                text-align: right;
+                letter-spacing: 2px;
+                margin-right: 20px;
+               // margin-top: 5px;
+                display: none;
+            }
             .iptBoxone{
                 margin-left: 40px;
                 

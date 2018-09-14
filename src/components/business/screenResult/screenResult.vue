@@ -20,12 +20,12 @@
     export default {
         data(){
           return{
-             screenResult:''
-            //  area_id:'',
-            //  province_id:'',
-            //  city_id:'',
-            //  begintime:'',
-            //  endtime:''
+             screenResult:'',
+             area_id:'',
+             province_id:'',
+             city_id:'',
+             begintime:'',
+             endtime:''
           }        
         },
         methods: {
@@ -48,12 +48,16 @@
           // params.append('city_id', 'this.val.cityId');
           // params.append('begintime', 'this.val.faiDatetime');
           // params.append('endtime', 'this.val.faiEndDatetime');
+          // this.$route.query.begintime
+          // this.$route.query.endtime
           this.axios.post("/h5frontactivityinfo-foreshow",{
-            
+              begintime:'this.$route.query.begintime',
+              endtime:'this.$route.query.endtime' 
           }).then(res=>{
             this.screenResult = res.data.list
             // console.log(this.screenResult)
           })
+          console.log(this.$route.query.begintime) 
         }
     };
 </script>s
@@ -66,7 +70,7 @@
     height: 86px;
     text-align: center;
     line-height: 86px;
-    font-size: 30px;
+    font-size: 34px;
     color: #fff;
     background: #253350;
     position: fixed;
