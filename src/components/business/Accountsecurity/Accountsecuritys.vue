@@ -102,12 +102,9 @@ export default {
     bottom: 0;
     z-index: 200;
     background: rgb(245, 245, 245);
-    
         // 头部------账号安全
-        
        .center{
            height:140px;
-          
            .main{
             //    手机绑定
                .main_dl{
@@ -118,23 +115,19 @@ export default {
                    justify-content: space-between;
                     align-items: center;
                     .one{
-                        
                       dl{
                             display: flex;
                             dt{
                                 margin-left:15%;
-                                
                                 img{
                                     width: 90%;
                                     padding-right: 5%;
-
                                 }
                             }
                             dd{
                                     margin-left: 10px;
                               //  margin-left:5px;
                                 p:first-child{
-                               
                                     height: 33px;
                                     font-family: MicrosoftYaHei;
                                     font-size: 20px;
@@ -171,23 +164,18 @@ export default {
                    justify-content: space-between;
                     align-items: center;
                     .one{
-                        
                       dl{
                             display: flex;
                             dt{
-                                margin-left:7%;
-                                
+                                margin-left:7%; 
                                 img{
                                     width: 80%;
-                                   
-
                                 }
                             }
                             dd{
                                  margin-left: 8px;
                                 width: 119%;
                                 p:first-child{
-                               
                                     height: 33px;
                                     font-family: MicrosoftYaHei;
                                     font-size: 20px;
@@ -198,7 +186,6 @@ export default {
                                 }
                                 p:last-child{
                                     color: #999999;
-                                    
                                 }
                             }
                       }
@@ -225,7 +212,6 @@ export default {
                    justify-content: space-between;
                     align-items: center;
                     .one{
-                        
                       dl{
                             display: flex;
                             dt{
@@ -233,15 +219,12 @@ export default {
                                 
                                 img{
                                     width: 80%;
-                                   
-
                                 }
                             }
                             dd{
                                  margin-left: 8px;
                                 width: 119%;
                                 p:first-child{
-                               
                                     height: 33px;
                                     font-family: MicrosoftYaHei;
                                     font-size: 20px;
@@ -270,7 +253,6 @@ export default {
                }
            }
        }
-    
 }
     
 </style>

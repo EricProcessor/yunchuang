@@ -37,7 +37,6 @@
                
             <div class="email_ipttwo">
                 <input type="text" class="txtemail" >
-                
             </div>
             <div class="wrong">
                 <p>验证码错误</p>
@@ -78,13 +77,22 @@ export default {
             
             if(emVal==""){
                 this.emNulls = true;
-                this.emFormat = false
+                this.emFormat = false;
             }else{
                 this.emNulls = false;
                 if(this.isEmail(emVal)){
-                    this.emFormat = false
+                    this.emFormat = false;
+                   
+                        let _urls = '/frontcompanyinfo-checkAcc';
+                        let params = {
+                            fmiMile: emVal
+                        }
+                       this.axios.post(_urls,params).then((res)=>{
+                           console.log(res)
+                       }) 
+                    
                 }else{
-                    this.emFormat = true            
+                    this.emFormat = true               
                 }
             }
            
