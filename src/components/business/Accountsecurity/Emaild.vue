@@ -36,7 +36,7 @@
                </div>
                
             <div class="email_ipttwo">
-                <input type="text" class="txtone" >
+                <input type="text" class="txtemail" >
                 
             </div>
             <div class="wrong">
@@ -77,7 +77,8 @@ export default {
         emails(emVal){
             
             if(emVal==""){
-                this.emNulls = true
+                this.emNulls = true;
+                this.emFormat = false
             }else{
                 this.emNulls = false;
                 if(this.isEmail(emVal)){
@@ -94,6 +95,13 @@ export default {
 
 <style lang="less" scoped>
     .to{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: #fff;
+        z-index: 200;
+        height: 100%;
         .emails{
             .lefts{
                 color:#fff;
@@ -156,6 +164,7 @@ export default {
                         border: none;
                         width: 96%;
                         height: 59px;
+                        background: #f5f5f5;
                     }
                     
                 }
@@ -190,10 +199,11 @@ export default {
                     }
                 }
                 .email_ipttwo{
-                    .txtone{
+                    .txtemail{
                         border: none;
                         width: 96%;
                         height: 59px;
+                       background: #f5f5f5;
                     }
                     
                 }

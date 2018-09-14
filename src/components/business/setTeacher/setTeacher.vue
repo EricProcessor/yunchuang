@@ -1,9 +1,9 @@
 <template>
   <div class="setTeacher">
     <index-header :text="headerText" :hasSearch="hasSearch"></index-header>
-    <p class="top clearfix">
+    <p class="top clearfix" v-if="!formList.isClose">
       <span class=" fl">带*号项为必填项，请务必如实填写</span>
-      <i class="fr"></i>
+      <i class="fr" @click="closeBtn"></i>
     </p>
     <ol class="formList">
       <li class="group clearfix">
@@ -72,7 +72,7 @@
       </li>
       <li class="group clearfix">
         <label class="fl pos1">
-          <i v-if="formList.isShow">*</i>服务载体</label>
+          <i v-if="formList.isShow">*</i>{{selectName.carrier}}</label>
         <select class="fl" v-model="setTeacher.serviceCarrier">
           <option value="0">金融服务</option>
           <option value="1">投资服务</option>
@@ -81,7 +81,7 @@
       </li>
       <li class="group clearfix">
         <label class="fl pos1">
-          <i v-if="formList.isShow">*</i>单位属性</label>
+          <i v-if="formList.isShow">*</i>{{selectName.unit}}</label>
         <select class="fl" v-model="setTeacher.unitAttrbute">
           <option value="0">国有</option>
           <option value="1">民营</option>
@@ -120,7 +120,7 @@
       </li>
       <li class="group clearfix">
         <label class="fl pos1">
-          <i v-if="!formList.isShow">*</i>辅导特长</label>
+          <i v-if="!formList.isShow">*</i>{{selectName.tutorship}}</label>
         <select class="fl" v-model="setTeacher.speciality">
           <option value="0">国有</option>
           <option value="1">民营</option>
@@ -128,7 +128,7 @@
       </li>
       <li class="group clearfix">
         <label class="fl pos1">
-          <i v-if="formList.isShow">*</i>技术领域</label>
+          <i v-if="formList.isShow">*</i>{{selectName.technicalField}}</label>
         <select class="fl" v-model="setTeacher.technicalField">
           <option value="0">国有</option>
           <option value="1">民营</option>
@@ -172,21 +172,32 @@ import AddressPick from "base/addressPick/addressPick";
 export default {
   data() {
     return {
+      //是否显示*
       formList: {
-        isShow: true //是否显示*
+        isShow: true,
+        isClose: false
       },
       address: "", //地址
+      //性别
       sex: {
-        //性别
         male: false, //男
         female: false, //女
         maleActive: true,
         femaleActive: false
       },
+      //接受邀请
       invitation: {
         agree: true, //同意
         disagree: false //不同意
       },
+      //select name
+      selectName: {
+        carrier: "服务载体",
+        unit: "单位属性",
+        tutorship: "辅导特长",
+        technicalField:"技术领域"
+      },
+      //整体数据
       setTeacher: {
         name: "", //姓名
         sex: "", //性别
@@ -202,12 +213,14 @@ export default {
         email: "", //邮箱
         positionalTitles: "", //职称
         highestEducation: "", //最高学历
-        speciality: "", //辅助特长
+        speciality: "", //辅导特长
         technicalField: "", //技术领域
         goodTheme: "", //擅长主题
         resume: "", //个人简历
         coachEnterprise: "", //辅导企业
-        employment: "" //受聘情况
+        employment: "", //受聘情况
+        fciLatitude: "",
+        fciLongitude: ""
       }
     };
   },
@@ -215,12 +228,18 @@ export default {
     this.headerText = "认证导师"; //设置头部显示导航内容
     this.hasSearch = false;
   },
+  mounted() {
+    this.getServiceCarrier();
+  },
   methods: {
     showAddr() {
       this.$refs.addr.showAddressComponent();
     },
     getAddr(val) {
       this.address = val;
+    },
+    closeBtn() {
+      this.formList.isClose = !this.formList.isClose;
     },
     maleChange() {
       if (!this.sex.maleActive) {
@@ -246,10 +265,41 @@ export default {
         this.invitation.agree = !this.invitation.agree;
       }
     },
-
+    //获取服务载体
+    getServiceCarrier() {
+      let _url="/fronttutorauthenticationselect-home";
+      this.axios.post(_url,{name:this.selectName.carrier}).then(res=>{
+        console.log(res);
+      });
+    },
+    //获取单位类型
+    getUnitAttribute() {
+      let _url="/fronttutorauthenticationselect-home";
+      this.axios.post(_url,{name:this.selectName.unit}).then(res=>{
+        console.log(res);
+      });
+    },
+    //获取辅导特长
+    getTutorship() {
+      let _url="/fronttutorauthenticationselect-home";
+      this.axios.post(_url,{name:this.selectName.tutorship}).then(res=>{
+        console.log(res);
+      });
+    },
+    //获取技术领域
+    getTechnicalField() {
+      let _url="/fronttutorauthenticationselect-home";
+      this.axios.post(_url,{name:this.selectName.technicalField}).then(res=>{
+        console.log(res);
+      });
+    },
+    //清空所有信息
     resetBtn() {
-      //清空所有信息
-      this.setTeacher.name="";
+      for (let key in this.setTeacher) {
+        if (this.setTeacher[key] != "") {
+          this.setTeacher[key] = "";
+        }
+      }
     }
   },
   components: {
@@ -273,10 +323,11 @@ export default {
     }
     i {
       display: inline-block;
-      width: 24px;
-      height: 24px;
-      background: #f00;
-      margin: 18px 20px;
+      width: 30px;
+      height: 30px;
+      background: url("./close.png") no-repeat center center;
+      background-size: 100% 100%;
+      margin: 14px 16px;
     }
   }
   .formList {

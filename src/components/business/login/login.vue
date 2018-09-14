@@ -49,11 +49,6 @@ export default {
       //记住密码
       this.userInfo.checked = !this.userInfo.checked;
       this.userInfo.showImg = !this.userInfo.showImg;
-      if (this.userInfo.showImg == true) {
-        console.log(123);
-      } else {
-        console.log(456);
-      }
     },
     forgotPwdBtn() {
       //忘记密码
@@ -79,8 +74,10 @@ export default {
           if (res.data.msg) {
             alert(res.data.msg);
           } else {
-            localStorage.setItem("userName", this.userInfo.userName);
-            localStorage.setItem("pwd", this.userInfo.password);
+            if (this.userInfo.showImg) {
+              this.setCookie("userName", this.userInfo.userName, 7);
+              this.setCookie("pwd", this.userInfo.password, 7);
+            }
             this.$router.push("/");
           }
         });
@@ -88,6 +85,16 @@ export default {
     },
     goToRegister() {
       this.$router.push("/register");
+    },
+    //设置cookie
+    setCookie(c_name, value, expiredays) {
+      let exdate = new Date();
+      exdate.setDate(exdate.getDate() + expiredays);
+      document.cookie =
+        c_name +
+        "=" +
+        escape(value) +
+        (expiredays == null ? "" : ";expires=" + exdate.toGMTString());
     }
   }
 };

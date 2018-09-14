@@ -2,17 +2,14 @@
   <div class="towLevelRouter">
     <index-header :text="headerText" :hasSearch="false"></index-header>
     <ul class="myIntCon">
-      <li @click.stop="linkInforDetail(item.fmm_id)" :id="item.fmm_id" v-for="(item,index) in items" :key="index">
-        <div>
-           <div class="myIntNew">
-            <span>{{item.fmm_title}}</span>
-            <span>{{item.fmi_datetime | formatDate}}</span>
+      <li>
+          <div class="myIntNew">
+            <span>{{item.fmmTitle}}</span>
+            <span>{{item.fmiDatetime | formatDate}}</span>
           </div>
-          <p class="myDelate" @click.stop="deleateBox(item.fmm_id)">删除</p>
-        </div>
-      </li>
+          <div class="detail">{{item.fmmContent}}</div>
+      </li>    
     </ul>
-    <router-view></router-view>
   </div>
 </template>
 <script type="text/ecmascript-6">
@@ -24,11 +21,11 @@ export default {
   data() {
     return {
       message: "",
-      items: []
+      item: []
     };
   },
   created() {
-    this.headerText = "我的消息"; //设置头部显示导航内容
+    this.headerText = "消息"; //设置头部显示导航内容
   },
 
   components: {
@@ -40,49 +37,27 @@ export default {
   methods: {
     //获取后台数据
     inforData() {
-      let _url = "/h5frontmessage-home";
+      let _url = "/h5memberMessage-read";
       let params = new URLSearchParams();
-      // params.append("selType", this.serachSend.SearchClass);
+      params.append("fmmId", "174");
       // params.append("KeyWord", encode  URI(encodeURI(this.serachSend.searchVal)));
-      axios.post(_url).then(res => {
-        this.items = res.data.messageList;
-        console.log(res.data.messageList);
-      });
-    },
-    //删除该条消息弹出框
-    deleateBox(fmm_id) {
-      MessageBox({
-        title: "",
-        message: "确定执行此操作?",
-        showCancelButton: true,
-        showConfirmButton: true
-      });
-      MessageBox.confirm("确定执行此操作?").then(action => {
-        this._deleate(fmm_id);
-      });
-    },
-    // 删除该条信息
-    _deleate(fmm_id) {
-      console.log(fmm_id);
-      let _url = "/memberMessage-del";
       axios
         .post(_url, {
-          ids: fmm_id
+          fmmId: this.$route.params.itemId
         })
         .then(res => {
-          // this.items = res.data.messageList;
-          this.inforData();
-          // console.log(res.data.messageList);
+          this.item = res.data.mm;
+          console.log(res.data);
+          console.log(res.data.mm);
         });
     },
-    // 点击列表跳转到详情`
-    linkInforDetail(Id) {
-      // this.$router.push("/inforDetail");
-      console.log(Id);
-      this.$router.push({
-        name: "MyNewsDetail",
-        params: { itemId: Id }
+    deleateBox() {
+      MessageBox({
+        title: "提示",
+        message: "确定执行此操作?",
+        showCancelButton: true
       });
+      MessageBox.confirm("确定执行此操作", "提示");
     }
   },
   //将时间戳转化成时间
@@ -119,24 +94,32 @@ export default {
 //我的项目内容区域
 .myIntCon {
   // overflow: hidden;
-
+  overflow-x: scroll;
   li {
     background-color: #fff;
     margin-top: 20px;
     // width: 870px;
-    height: 88px;
-    overflow-x: scroll;
+    // height: 88px;
+    overflow: hidden;
     > div {
-      width: 870px;
+      float: left;
+      padding: 0 30px;
+    }
+    .detail {
+      font-size: 30px;
+      font-weight: normal;
+      font-stretch: normal;
+      line-height: 60px;
+      letter-spacing: 3px;
+      color: #333333;
+      margin: 10px 0 20px;
     }
     .myIntNew {
       width: 690px;
-      padding: 0 30px;
       display: flex;
       justify-content: space-between;
       height: 88px;
       line-height: 88px;
-      float: left;
     }
     .myDelate {
       float: left;
@@ -148,21 +131,5 @@ export default {
       background-color: #f35828;
     }
   }
-}
-</style>
-<style>
-.mint-msgbox-header {
-  padding: 20px 0;
-}
-.mint-msgbox-content {
-  padding: 80px 0;
-  font-size: 30px;
-  letter-spacing: 3px;
-}
-.mint-msgbox-message {
-  color: #333333;
-}
-.mint-msgbox-btns {
-  height: 80px;
 }
 </style>

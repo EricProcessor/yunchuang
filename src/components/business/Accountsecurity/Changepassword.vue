@@ -20,7 +20,7 @@
                
             <div class="ipt">
                 <input type="text" class="txt" v-model="Obtain.tels" >
-                <button class="btn"  @click="yanzheng()" v-if="Obtain.count==time" >获取验证码</button>
+                <button class="btn"  @click="yanzheng(Obtain.tels)" v-if="Obtain.count==time" >获取验证码</button>
                 <!-- html中 不要写this -->
                 <button class="btn" style="background:#ccc" v-else>{{Obtain.count}}秒后发送</button>
 
@@ -74,17 +74,36 @@ export default {
             this.$router.go(-1);
         },
         //点击获取验证码
-        yanzheng(){
-           var tel = 11 && /^((13|14|15|17|18|)[0-9]{1}\d{8})$/
-            if(this.Obtain.tels == ""){
+        yanzheng(telephone){
+            console.log(telephone)
+           var tel = 11 && /^((13|14|15|17|18|)[0-9]{1}\d{8})$/;
+            if(telephone == ""){
                 alert('请输入手机号码')
                 return;
             }
-            if(!tel.test(this.Obtain.tels)){
+            if(!tel.test(telephone)){
                 alert('手机号格式不正确')
                 return;
-            }else{
-                
+            }else{            
+                // var d = new Date();
+                //     d.setTime(d.getTime() + 1 * 24 * 60 * 60 * 1000);
+                //     var expires = "expires=" + d.toUTCString();
+                //     document.cookie = "SESSION=65377cf7-3101-466c-9396-67a3cbdab7c5" + "," + expires;
+                    let _url = "/frontmyaccphoneupdatephone-home";
+                    let params = {
+                        phone:telephone,
+                    };
+                    this.axios.post(_url, params).then(res => {
+                            console.log(res); 
+                    });
+                     console.log(this.Obtain.count)
+                    let id = setInterval(()=>{
+                        --this.Obtain.count;
+                        if(!this.Obtain.count){
+                            this.Obtain.count=this.time
+                            clearInterval(id);
+                        }
+                    },1000)
             //     this.ok = false;
             //     this.disabled = true;
             //     setInterval(function(){
@@ -100,14 +119,7 @@ export default {
                 //axios 成功   .then(data=>{   **   })
                 
                 //if(data){
-                    console.log(this.Obtain.count)
-                    let id = setInterval(()=>{
-                        --this.Obtain.count;
-                        if(!this.Obtain.count){
-                            this.Obtain.count=this.time
-                            clearInterval(id);
-                        }
-                    },1000)
+                   
 
 
                 //}
@@ -122,6 +134,13 @@ export default {
 
 <style lang="less" scoped>
     .box{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: #fff;
+        z-index: 200;
+        height: 100%;
         // 头部
         .head{
             .lefts{
@@ -192,6 +211,7 @@ export default {
                         border: none;
                         width: 70%;
                         height: 59px;
+                        background: #f5f5f5
                     }
                     .btn{
                        display: inline-block;
@@ -225,6 +245,7 @@ export default {
                         border: none;
                         width: 96%;
                         height: 59px;
+                        background: #f5f5f5;
                     }
                     
                 }
