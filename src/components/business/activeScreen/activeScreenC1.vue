@@ -2,12 +2,12 @@
      <div class="actice-place">
           <span>活动区域</span>
           <div class="actice-input">
-              <input type="text" placeholder="选择省-市-区" v-model="region"  @click="showAddressPicker"/>
+              <input type="text" placeholder="选择省-市-区" v-model="simpAddress"  @click="showAddressPopup"/>
               <i>▼</i>
           </div>
-          <mt-popup v-model="regionVisible" position="bottom" class="region-popup">
+          <mt-popup v-model="addressShow" position="bottom" class="region-popup">
             <div class="address">
-              <p class="address-p">热门城市</p><p @click="closeAddressPicker">✖</p>
+              <p class="address-p">热门城市</p><p @click="closeAddressComponent">✖</p>
             </div>
             <ul>
               <li>北京</li>
@@ -23,7 +23,7 @@
               <li>宁波</li>
               <li>郑州</li>
             </ul>
-            <mt-picker :slots="myAddressSlots"  valueKey="name"  :visibleItemCount	="3" @change="addressChange" :itemHeight="40"></mt-picker>
+            <mt-picker :slots="slots" valueKey="name"  @change="_changeAddress"></mt-picker>
           </mt-popup>
           
       </div>   
@@ -34,132 +34,140 @@
   Vue.component(Popup.name, Popup);
   import { Picker } from 'mint-ui';
   Vue.component(Picker.name, Picker);
-  import threeLevelAddress from './threeLevelAddress.json'//引入省市区数据json文件
+import address from '@/config/address.json'  
  
-  export default {
-    data(){
-      return{
-        region:'',//三级地址
-        province:'',//省
-        city:'',//市
-        county:'',//县
-        regionVisible:false,//弹出框是否可见
-        regionInit:true,//禁止地区选择器自动初始化，picker组件会默认进行初始化，导致一进入页面就会默认选中一个初始3级地址
-        //picker组件插槽
-        myAddressSlots: [
-          //省
-          {
-            flex: 1,
-            values: this.getProvinceArr(), //省份数组
-            className: 'slot1',
-            textAlign: 'center'
-          },
-           //分隔符
-          {
-            divider: true,
-            content: '-',
-            className: 'slot2'
-          },
-          //市
-          {
-            flex: 1,
-            values: this.getCityArr("北京市"),
-            className: 'slot3',
-            textAlign: 'center'
-          },
-          {
-            divider: true,
-            content: '-',
-            className: 'slot4'
-          },
-          //县
-          {
-            flex: 1,
-            values: this.getCountyArr("北京市","北京市"),
-            className: 'slot5',
-            textAlign: 'center'
-          }
-        ],
-      }
-    },
-    methods:{
-      //打开地址选择器
-      showAddressPicker(){
-        this.regionVisible = true;
-      },
-      closeAddressPicker(){
-        this.regionVisible = false;
-      },
-      //picker组件的change事件，进行取值赋值
-      addressChange(picker, values){
-        // console.log(values);
-
-        if (this.regionInit){
-          //取值并赋值
-          this.region = values[0]["name"] + "-" + values[1]["name"] + "-" + values[2]["name"];
-          this.province = values[0]["name"];
-          this.city = values[1]["name"];
-          this.county = values[2]["name"];
-          
-          //给市、县赋值
-          picker.setSlotValues(1, this.getCityArr(values[0]["name"]));
-          picker.setSlotValues(2, this.getCountyArr(values[0]["name"], values[1]["name"]));
-        }else {
-          this.regionInit = true;
-        }
-        // this.region = values[0].name + values[1].name + values[2].name
-      },
-      //遍历json，返回省级对象数组
-      getProvinceArr() {
-        let provinceArr = [];
-        threeLevelAddress.forEach(function (item) {
-          let obj = {};
-          obj.name = item.name
-          obj.code = item.code;
-          provinceArr.push(obj);
-        });
-        return provinceArr;
+export default {
+    props: {
         
-      },
-      //遍历json，返回市级对象数组
-      getCityArr(province) {
-        // console.log("省：" + province);
-        let cityArr = [];
-        threeLevelAddress.forEach(function (item) {
-          if (item.name === province) {
-            item.children.forEach(function (args) {
-              let obj = {};
-              obj.name = args.name;
-              obj.code = args.code;
-              cityArr.push(obj);
-            });
-          }
-        });
-        return cityArr;
-      },
-      //遍历json，返回县级对象数组
-      getCountyArr(province,city){
-        let countyArr = [];
-        threeLevelAddress.forEach(function(item){
-          if (item.name === province){
-            item.children.forEach(function (args) {
-              if (args.name === city){
-                args.children.forEach(function (param) {
-                  let obj = {};
-                  obj.name=param.name;
-                  obj.code=param.code;
-                  countyArr.push(obj);
-                })
-              }
-            });
-          }
-        });
-        // console.log(countyArr);
-        return countyArr;
-      },
+        position: {             //弹出方向设置，默认下方弹出
+            type: String,
+            default: 'bottom'
+        }
     },
-  }
- 
+    data() {
+        return {
+            simpAddress:"",
+            simpId:"",
+            slots: [{
+                flex: 1,    
+                values: Object.keys(address),
+                values: address.map(item => {
+                    return item.ca_name
+                }),
+                className: 'slot1',
+                textAlign: 'center'
+            }, {
+                divider: true,
+                content: '-',
+                className: 'slot2'
+            }, {
+                flex: 1,
+                // values: Object.keys(address["北京市"]),
+                values: address[0].shi.map(item => {
+                    return item.ca_name
+                }),
+                className: 'slot3',
+                textAlign: 'center'
+            }, {
+                divider: true,
+                content: '-',
+                className: 'slot4'
+            }, {
+                flex: 1,
+                // values: address["北京市"]["市辖区"],
+                values: address[0].shi[0].qu.map(item => {
+                    return item.ca_name
+                }),
+                className: 'slot5',
+                textAlign: 'center'
+            }],
+            // oneLevelAddress: [],    //储存一级地址数组
+            // secondLevelAddress: [],     //储存二级地址数组
+            // thirdLevelAddress: [],      //储存三级地址数组
+            addressShow: false,     //控制该组件显示/隐藏
+            addressProvince: {},    //省
+            addressCity: {},        //市
+            addressCounty: {},       //县
+            address: []         //由以上三个拼接好 地址信息数组
+        }
+    },
+    methods: {
+        //使用本地地址json信息文件
+        _changeAddress(picker, values) {              //地址选择组件改变后调用的  回调函数
+            // console.log(values)             //values为当前选中的地址数组
+            
+                //设置二级联动的内容，这里是城市。第二个参数为内容数组
+
+                let second = []
+                for (let i = 0; i < address.length; i ++) {
+                    if (address[i].ca_name === values[0]) {
+                        this.addressProvince = {        //保存用于导出的一级地址
+                            ca_name: address[i].ca_name,
+                            ca_id: address[i].ca_id
+                        }
+
+                        second = address[i].shi         //保存获取的对应二级，用于遍历名称，及获取三级用
+                        break
+                    }
+                }
+                picker.setSlotValues(1, second.map(item => {
+                    return item.ca_name
+                }))    
+                
+                //设置三级联动的内容，这里是县/区。第三个参数为
+                let third = []
+                for (let i = 0; i < second.length; i ++ ) {
+                    if (second[i].ca_name === values[1]) {
+                        this.addressCity = {        //保存用于导出的二级地址
+                            ca_name: second[i].ca_name,
+                            ca_id: second[i].ca_id
+                        }
+                        third = second[i].qu            //保存获取的对应三级，用于三级遍历名称用
+                    }
+                }
+                picker.setSlotValues(2, third.map(item => {
+                    return item.ca_name
+                }))
+
+                //获取用于导出的三级地址
+                for (let i = 0; i < third.length; i ++) {
+                    if (third[i].ca_name === values[2]) {
+                        this.addressCounty = {      //保存用于导出的三级地址
+                            ca_name: third[i].ca_name,
+                            ca_id: third[i].ca_id
+                        }
+                    }
+                }
+
+                //地址数据整合
+                this.address = [this.addressProvince, this.addressCity, this.addressCounty]
+                // console.log(this.addressProvince.ca_id)
+                this.simpAddress= this.address.map(item => {
+                      return item.ca_name
+                  }).join("-")
+                  
+                this.simpId= this.address.map(item => {
+                      return item.ca_id
+                })
+                // console.log(this.simAddress)
+                this.$emit('selectAddress', this.simpId)   //给父组件传出地址数值
+        },
+        showAddressPopup() {       //地址选择栏弹出显示
+            // this.$refs.addressPopup.open()
+            this.addressShow = true
+        },
+        //请求用户数据后，设置指定的地点用，格式["省","市", "县/镇"]（注意，设置的地点名称数组，对应地址json数据中必须有，否则失效）
+        setAddress() {
+            picker.setValues(["北京市","市辖区"]["东城区"])
+        },
+        // showAddressComponent() {        //显示地址选择弹窗
+            
+        // },
+        closeAddressComponent(){
+          this.addressShow = false
+        }
+    }
+}
 </script>
 <style lang="less" scoped>
 .actice-place{
