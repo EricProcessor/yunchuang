@@ -28,12 +28,12 @@
       <li class="group clearfix">
         <label class="fl pos1">
           <i v-if="formList.isShow">*</i>联系电话</label>
-        <input class="fl" @blur="phoneBlur" type="text" v-model="serviceIns.phone" />
+        <input class="fl"  type="text" v-model="serviceIns.phone" />
       </li>
       <li class="group clearfix">
         <label class="fl pos1">
           <i v-if="!formList.isShow">*</i>邮箱</label>
-        <input class="fl" @blur="emailBlur" type="text" v-model="serviceIns.email" />
+        <input class="fl" type="text" v-model="serviceIns.email" />
       </li>
       <li class="group clearfix">
         <label class="fl pos1">
@@ -43,7 +43,7 @@
       <li class="group clearfix">
         <label class="fl pos1">
           <i v-if="!formList.isShow">*</i>地址</label>
-        <input @click="showAddr" v-model="address" class="fl" type="text" placeholder="选择省-市-区" />
+        <input @click="showAddr" readonly v-model="address" class="fl" type="text" placeholder="选择省-市-区" />
         <textarea class="addeDetail fr" v-model="serviceIns.addrDetail" placeholder="请输入详细地址"></textarea>
       </li>
       <li class="group clearfix pos1">
@@ -110,19 +110,12 @@ export default {
       //关闭提示
       this.formList.isClose = !this.formList.isClose;
     },
-    phoneBlur() {
-      if (this.serviceIns.phone == "") {
-        alert("请输入手机号码！");
-      } else if (!Install.isPhone(this.serviceIns.phone)) {
-        alert("请输入正确的手机号码！");
-      }
-    },
-    emailBlur() {
-      if (this.serviceIns.email == "") {
-        alert("邮箱不能为空！");
-      } else if (!Install.isEmail(this.serviceIns.email)) {
-        alert("邮箱格式不正确！");
-      }
+    //获得服务类型
+    getServiceType(){
+      let typeUrl="/frontmessage";
+      this.axios.post(typeUrl).then(res=>{
+        console.log(res)
+      });
     },
     resetBtn() {
       //重置信息

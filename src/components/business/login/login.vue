@@ -52,7 +52,7 @@ export default {
     },
     forgotPwdBtn() {
       //忘记密码
-      alert("忘记密码");
+      this.$router.push("/findPwd");
     },
     loginBtn() {
       //登录信息
