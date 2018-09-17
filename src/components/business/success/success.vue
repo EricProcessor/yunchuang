@@ -38,6 +38,7 @@ export default {
           // window.location.href = "../index.html";
           //页面路由跳转方法
           this.$router.push(this.sucOption.path);
+          this.sucOption.showSuccess == false;
           clearInterval(intervalid);
         }
         i--;

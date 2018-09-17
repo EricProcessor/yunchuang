@@ -92,7 +92,7 @@
         @confirm="_handleTime"
         :startDate="new Date('1900-01-01')"
     ></mt-datetime-picker>
-    <success :sucOption="sucOption" v-show="sucOption.showSuccess"></success>
+    <success :sucOption="sucOption" v-if="sucOption.showSuccess"></success>
     <!-- <div class="regSucc">
       <header>注册</header>
       <div class="top_div"></div>
