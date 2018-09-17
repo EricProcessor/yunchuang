@@ -93,7 +93,8 @@ export default {
             email: "",              //邮箱
             simpAddress: "",              //简单地址
             address: "",             //详细地址
-            picList: []            //保存上传图片文件的数组，元素是file对象
+            picList: [],            //保存上传图片文件的数组，元素是file对象
+            headPicUrl: ''          //保存上传的 图片的url地址
         }
     },
     created() {
@@ -152,7 +153,7 @@ export default {
             this.birthday = ""          //生日
             this.telephone = ""         //手机号
             this.email = ""           //邮箱
-            this.simpAddress = "",              //简单地址
+            this.simpAddress = "",              //用于显示用的城市三级地址信息
             this.address = ""             //详细地址
         },
         _saveEvent() {               //保存信息
@@ -162,8 +163,15 @@ export default {
         getUploadImg(imgList) {     //获得上传的图片数组
             this.picList = imgList
         },
+        //开始上传头像
+        _upLoadImg(imgList) {
+            var fd = new FormData()
+            fd.append("")
+        },
         _getAddress(val) {      //获取选择的地址
-            this.simpAddress = val
+            this.simpAddress = val.map(item => {
+                return item.ca_name
+            }).join("-")
         }
     },
     components: {
