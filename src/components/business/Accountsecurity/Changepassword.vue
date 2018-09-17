@@ -17,7 +17,7 @@
                <div class="zhu">
                    <p>输入手机号<span>(必填)</span></p>
                </div>
-               
+                
             <div class="ipt">
                 <input type="text" class="txt" v-model="Obtain.tels" >
                 <button class="btn"  @click="yanzheng(Obtain.tels)" v-if="Obtain.count==time" >获取验证码</button>
@@ -26,16 +26,14 @@
             </div>
           </div>
           <div class="VerificationBox">
-              <p>手机号的值不能为空</p>
+              <p v-show="Obtain.Nulls">{{Obtain.ObtainNull}}</p>
           </div>
-
         <div class="iptBoxtwo" >
                <div class="zhu">
                    <p>输入验证码<span>(必填)</span></p>
                </div>
             <div class="ipt">
-                <input type="text" class="txt" >
-                
+                <input type="text" class="txt" v-model="Obtain.verificationCode" >
             </div>
             <div class="err" >
                 <p class="Verification">验证码错误</p>
@@ -44,7 +42,7 @@
         </div>
         <!-- 尾部提交 -->
         <div class="foot">
-            <div class="btn">
+            <div class="btn" @click="addBtn(Obtain.tels,Obtain.verificationCode)">
                 <p class="foot_btn">提交</p>
             </div>
         </div>
@@ -60,7 +58,9 @@ export default {
                 tels:"", //获取手机input框中手机号
                 count: 0, //验证码重新获取倒计时
                 timer: null, //定时器
-
+                verificationCode:"",
+                ObtainNull:"输入的值不能为空",
+                Nulls:false
             },
             // ok:'true'
            
@@ -80,21 +80,33 @@ export default {
             console.log(telephone)
            var tel = 11 && /^((13|14|15|17|18|)[0-9]{1}\d{8})$/;
             if(telephone == ""){
-                alert('请输入手机号码');
-                
+             
+                this.Obtain.Nulls=true;
             }else{
+                this.Obtain.Nulls=false;
+
                 if(!tel.test(telephone)){
                 alert('手机号格式不正确')
                 return;
             }else{         
-                  let phoneUrl = "/frontcompanyinfomile-checkAcc";
+                  let phoneUrl = "/frontcompanyinfomile-checkAcc";  //获取手机号是否注册接口
                     let params = { fmiAcc: telephone };
                     this.axios.post(phoneUrl, params).then(res => {
+                       
                          console.log(res);
-                        // if (res.data.flag) {
-                        // } else {
-                        // this.ownData.ownPhone.isExist = false;
-                        // }
+                        if (res.data.flag == false) {
+                            //获取短信验证码
+                             let phone_url = '/frontmyaccphonesendmessage-home';
+                              let params = {
+                                   phone: telephone,
+                               };
+                              this.axios.post(phone_url,params).then(data =>{
+                                  console.log(data);
+                                  
+                              })
+                        } else {
+                                  this.ownData.ownPhone.isExist = false;                      
+                        }
                     });
                     
                     //  console.log(this.Obtain.count)
@@ -120,7 +132,14 @@ export default {
             }
             
         },
-       
+       //提交按钮
+       addBtn(txtVal,verificationVal){
+           
+           console.log("手机号input框:" +txtVal)
+          
+           console.log("验证码"+verificationVal);
+
+       }
 
     }
 }
@@ -187,13 +206,13 @@ export default {
         }
         .iptBox{
             .VerificationBox{
-                height: 30px;
                 color: red;
                 text-align: right;
                 letter-spacing: 2px;
                 margin-right: 20px;
-               // margin-top: 5px;
-                display: none;
+                margin-top: 5px;
+          
+              
             }
             .iptBoxone{
                 margin-left: 40px;

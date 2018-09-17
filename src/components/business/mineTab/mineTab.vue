@@ -12,6 +12,7 @@
 export default {
   data() {
     return {
+      newSumShow: "false",
       tabList: [
         {
           path: "/MyIndex",
@@ -58,6 +59,7 @@ export default {
   },
   mounted() {
     this.saveUserMessage();
+    this.getNewsSumAjax();
   },
   methods: {
     _pageJump(path) {
@@ -66,13 +68,32 @@ export default {
         path: "/mine" + path
       });
     },
+    //获取直播预告视频列表数据
+    getNewsSumAjax() {
+      this.axios({
+        url: "/frontmessage",
+        method: "post"
+      }).then(res => {
+        console.log(res);
+        if (res.status === 200) {
+          this.show = res.data.msg;
+          if (res.data.msg == "s") {
+            this.newSumShow = true;
+            console.log(this.newSumShow);
+          } else {
+            this.newSumShow = false;
+            console.log(this.newSumShow);
+          }
+        }
+      });
+    },
     saveUserMessage() {
       var d = new Date();
       d.setTime(d.getTime() + 1 * 24 * 60 * 60 * 1000);
       var expires = "expires=" + d.toUTCString();
       // console.info(cname + "=" + +"; " + expires);
       document.cookie =
-        "SESSION=30b65cdf-d6ea-41b7-a28b-f5ff3100edb2" + "; " + expires;
+        "SESSION=3b5cb60c-ee8e-4507-8bd2-6d164efc8142" + "; " + expires;
       console.info(document.cookie);
       //   var user = {
       //     fmi_id: "183",

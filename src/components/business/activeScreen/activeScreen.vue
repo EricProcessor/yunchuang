@@ -4,7 +4,7 @@
             <span class="icon_back" @click="backBtnPre"></span> 
         </header>
         <div class="middle">
-            <activeScreenOne></activeScreenOne>
+            <activeScreenOne @selectAddress="selectAddress"></activeScreenOne>
             <div class="actice-time">
                 <span>活动时间</span>
                 <div class="actice-input">
@@ -28,7 +28,9 @@ import {Picker} from 'mint-ui';
 export default {
      data() {
         return {
-            simpDateD1: "",         //简单日期         
+             simpDateD1: "", 
+             simpDateD2:"",               
+             simpAddress:"",
              area_id:'',
              province_id:'',
              city_id:'',
@@ -52,6 +54,9 @@ export default {
            this.$router.push({
                 path: "/screenResult",
                 query:{
+                    province_id:this.province_id,
+                    city_id:this.city_id,
+                    area_id:this.area_id,
                     begintime:this.simpDateD1,
                     endtime:this.simpDateD2
                 }
@@ -66,6 +71,14 @@ export default {
          selectFromD2(val){
             this.simpDateD2 = val
             // console.log(this.simpDateD2)
+        },
+        selectAddress(val){        
+            this.province_id = val[0]
+            console.log(this.province_id)
+            this.city_id = val[1]
+            console.log(this.city_id)
+            this.area_id = val[2]
+            console.log(this.area_id)
         }    
     },
     components:{
