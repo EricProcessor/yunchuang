@@ -26,13 +26,12 @@ export default {
 
             this._handleFiles(e.target.files)  //批量处理图片
 
-            e.target.value = ""        //清空file值，便于继续上传另一张图片
-            
-            this.$emit("getImg", this.imgList)
+            e.target.value = ""        //清空file值，便于继续上传另一张图片  
         },
 
         _handleFiles(files) {        //图片文件逐个批量导入专门的处理方法
             for (let i = 0; i < files.length; i ++) {
+                
                 this._fileAdd(files[i])
             }
         },
@@ -50,8 +49,10 @@ export default {
                 //是否支持多图判定
                 _this.supportMore ? this.vue.imgList.push(file) : _this.$set(this.vue.imgList, 0, file)    
                 //这里不能用数组索引直接赋值的方式存值，因为javascript的限制，vue不能监听到。
-                _this.startUpload()
+                // _this.startUpload()
 
+                //导出图片文件（由于是异步，必须在这里导出，否则在onload之前导出，会发生获取不到的错误）
+                _this.$emit("getImg", this.vue.imgList)
             }
         },
         _checkSize(file) {              //文件大小检查过滤

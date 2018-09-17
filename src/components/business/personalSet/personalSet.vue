@@ -21,8 +21,8 @@
                     <ul>
                         <li class="column-left"><i>*</i>性别</li>
                         <li class="column-right align-left">
-                            <span :class="{ active: sex == '男'}" @click="_setSex('男')"><img src="./man.png" />男</span>
-                            <span :class="{ active: sex == '女'}" @click="_setSex('女')"><img src="./woman.png" />女</span>
+                            <span :class="{ active: sex === 'Y'}" @click="_setSex('Y')"><img src="./man.png" />男</span>
+                            <span :class="{ active: sex === 'X'}" @click="_setSex('X')"><img src="./woman.png" />女</span>
                         </li>
                     </ul>
                 </div>
@@ -54,7 +54,7 @@
                     <ul>
                         <li class="column-left"></li>
                         <li class="column-right">
-                            <textarea name="" placeholder="请输入详细地址" v-model="address" id="" cols="30" rows="10"></textarea>
+                            <textarea name="" placeholder="请输入详细地址" v-model="complexAddress" id="" cols="30" rows="10"></textarea>
                         </li>
                     </ul>
                 </div>
@@ -87,14 +87,17 @@ export default {
         return {
             remind: true,       //弹窗提示
             name: "",       //姓名
-            sex: "男",            //性别
+            sex: "Y",            //性别
             birthday: "",           //生日
             telephone: "",          //手机号
             email: "",              //邮箱
-            simpAddress: "",              //简单地址
-            address: "",             //详细地址
+            provinceId: 0,          //省份id
+            cityId: 0,              //城市id
+            areaId: 0,               //区域id
+            simpAddress: "",            //保存用于显示用的地址字符串
+            complexAddress: "",             //详细地址
             picList: [],            //保存上传图片文件的数组，元素是file对象
-            headPicUrl: ''          //保存上传的 图片的url地址
+            headPicUrl: ''          //保存上传的 头像图片的url地址
         }
     },
     created() {
@@ -115,6 +118,7 @@ export default {
         // }).then(res => {
         //     console.log(res)
         // })
+        this._getPersonMsg()
     },
     methods: {
         _closeRemind() {    //关闭提示窗
@@ -137,6 +141,15 @@ export default {
         _setSex(val) {      //设置性别
             this.sex = val
         },
+        //获取用户已经设置好的信息内容
+        _getPersonMsg() {
+            this.axios({
+                method: 'post',
+                url: '/h5frontbaseinfoset-home'
+            }).then(res => {
+                console.log(res)
+            })
+        },
         _resetEvent() {          //重置事件
             MessageBox({
                 title: '提示',
@@ -154,24 +167,90 @@ export default {
             this.telephone = ""         //手机号
             this.email = ""           //邮箱
             this.simpAddress = "",              //用于显示用的城市三级地址信息
-            this.address = ""             //详细地址
+            this.complexAddress = ""             //详细地址
         },
+        //点击“保存”按钮，进行个人信息保存
         _saveEvent() {               //保存信息
+            var _this = this
             //进行ajax请求
+            //保存用户个人信息
+            let sendMsg = () => {
+                return this.axios({
+                    url: "/frontsavebaseinfoset-home",
+                    method: 'post',
+                    data: {
+                        fciName: _this.name,      //姓名
+                        fciSex: _this.sex,       //性别
+                        fciBirthday: _this.birthday,      //生日  2001-08-06这种形式
+                        fciTel: _this.telephone,           //手机号
+                        fciMile: _this.email,          //邮箱
+                        provinceId: _this.provinceId,          //省份id
+                        cityId: _this.cityId,              //城市id
+                        areaId: _this.areaId,           //地区id
+                        fciAddress: _this.complexAddress             //详细地址
+                    }
+                })
+            }
 
+            //上传图片路径
+            let sendPic = () => {
+                return this.axios({
+                    url: '/frontbaseheadupdate-home',
+                    method: 'post',
+                    data: {
+                        url: _this.headPicUrl
+                    }
+                })
+            }
+
+            //并发请求
+            this.axios.all([sendMsg(), sendPic()])
+                .then(this.axios.spread(function(acct, perms) {
+                    //这个时候两个请求都完成了
+                    // console.log(acct, perms)
+                    MessageBox({
+                        title: '提示',
+                        message: "个人信息设置成功"
+                    })
+                }))
+            
         },
         getUploadImg(imgList) {     //获得上传的图片数组
             this.picList = imgList
+
+            this._upLoadImg(this.picList[0])    //开始上传头像
         },
+
         //开始上传头像
-        _upLoadImg(imgList) {
+        _upLoadImg(file) {
+
             var fd = new FormData()
-            fd.append("")
+            fd.append("myFile", file)
+
+            this.axios({
+                url: 'upload-file',
+                method: 'post',
+                noQs: true,     //不进行fs参数处理
+                data: fd
+            }).then(res => {
+                MessageBox({
+                    title: '提示',
+                    message: res.data.msg,
+                })
+                if (res.status === 200) {
+                    this.headPicUrl = res.data.url
+                }  
+            })
         },
-        _getAddress(val) {      //获取选择的地址
+
+        _getAddress(val) {      //获取选择的地址对象信息
             this.simpAddress = val.map(item => {
                 return item.ca_name
             }).join("-")
+
+            this.provinceId = val[0].ca_id
+            this.cityId = val[0].ca_id
+            this.areaId = val[0].ca_id
         }
     },
     components: {
