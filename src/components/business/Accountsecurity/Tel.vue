@@ -205,7 +205,7 @@ export default {
                   var d = new Date();
                     d.setTime(d.getTime() + 1 * 24 * 60 * 60 * 1000);
                     var expires = "expires=" + d.toUTCString();
-                    document.cookie = "SESSION=6988c996-9d9a-489b-b33c-fd9d81f65ff7" + "," + expires;
+                    document.cookie = "079eabee-db2d-450a-b06e-338f1ce0144d" + "," + expires;
                     let _url = "/frontmypasswordedit-home";
                     let params = {
                         pwd: old,
