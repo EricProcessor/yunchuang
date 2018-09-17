@@ -3,78 +3,62 @@
         <mt-navbar v-model="selected">
             <mt-tab-item id="1">直播预告</mt-tab-item>
             <mt-tab-item id="2">精选视频</mt-tab-item>
-            <mt-tab-item id="3">往期视频</mt-tab-item>
         </mt-navbar>
         <mt-tab-container v-model="selected">
             <mt-tab-container-item id="1">
-                <class-list :list-data="featureVideoData"></class-list>
-            </mt-tab-container-item>
-            <mt-tab-container-item id="2">
                 <class-list :list-data="livePreviewData"></class-list>
             </mt-tab-container-item>
-            <mt-tab-container-item id="3">
-                <class-list :list-data="pastVideoData"></class-list>
+            <mt-tab-container-item id="2">
+                <class-list :list-data="featureVideoData"></class-list>
+               
             </mt-tab-container-item>
         </mt-tab-container>
     </div>
 </template>
 <script>
-import ClassList from 'business/classList/classList'
+import ClassList from "business/classList/classList";
 export default {
-    data() {
-        return {
-            selected: "1",
-            featureVideoData: [],       //保存课堂精选视频列表数据
-            livePreviewData: [],        //保存直播预告视频列表数据
-            pastVideoData: []           //保存往期视频列表数据
+  data() {
+    return {
+      selected: "1",
+      featureVideoData: [], //保存课堂精选视频列表数据
+      livePreviewData: [] //保存直播预告视频列表数据
+    };
+  },
+  created() {
+    this._getFeatureVideoAjax();
+    this._getLivePreviewAjax();
+  },
+  methods: {
+    //获取“课堂精选视频列表数据”方法
+    _getFeatureVideoAjax() {
+      this.axios({
+        url: "/h5frontclassroom-sift",
+        method: "post"
+      }).then(res => {
+        if (res.status === 200) {
+          this.featureVideoData = res.data.dpList;
         }
+      });
     },
-    created() {
-        this._getFeatureVideoAjax()
-        this._getLivePreviewAjax()
-        this._getPastVideoAjax()
-    },
-    methods: {
-        //获取“课堂精选视频列表数据”方法
-        _getFeatureVideoAjax() {
-            this.axios({
-                url: '/h5frontclassroom-sift',
-                method: 'post',
-            }).then(res => {
-                if (res.status === 200) {
-                    this.featureVideoData = res.data.dpList
-                }
-            })
-        },
-        //获取直播预告视频列表数据
-        _getLivePreviewAjax() {
-            this.axios({
-                url: '/h5frontclassroom-notice',
-                method: 'post',
-            }).then(res => {
-                console.log(res)
-                if (res.status === 200) {
-                    // this.livePreviewData = res.data
-                }
-            })
-        },
-        //获取往期视频列表数据
-        _getPastVideoAjax() {
-            this.axios({
-                url: '/h5frontclassroom-notice',
-                method: 'post',
-            }).then(res => {
-                console.log(res)
-                if (res.status === 200) {
-                    // this.pastVideoData = res.data
-                }
-            })
+    //获取直播预告视频列表数据
+    _getLivePreviewAjax() {
+      this.axios({
+        // url: "/h5frontclassroom-notice",
+        url: "/frontmessage",
+        method: "post"
+      }).then(res => {
+        console.log(res);
+        if (res.status === 200) {
+          this.livePreviewData = res.data.dpList;
         }
-    },
-    components: {
-        ClassList
+      });
     }
-}    
+  },
+  components: {
+    ClassList
+  }
+};
 </script>
 <style lang="less" scoped>
 .class-tab {

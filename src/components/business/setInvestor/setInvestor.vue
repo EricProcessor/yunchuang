@@ -25,7 +25,9 @@
       <li class="group clearfix">
         <label class="fl pos1">
           <i v-if="formList.isShow">*</i>出生日期</label>
-        <input class="fl" v-model="setTeacher.birthday" type="text" />
+        <!-- <input class="fl" v-model="setTeacher.birthday" type="text" /> -->
+        <div class="column-right" @click.prevent="_openPicker"><input type="text" disabled v-model="setTeacher.birthday" placeholder="点击选择" /></div>
+        <!-- <mt-field label="" placeholder="请输入生日" type="date" v-model="setTeacher.birthday"></mt-field> -->
       </li>
       <li class="group clearfix">
         <label class="fl pos1">
@@ -83,10 +85,32 @@
       <li class="fl" @click="resetInfor">重置</li>
       <li class="fl preserve" @click="inforData">保存</li>
     </ul>
+    <!--日期选择组件-->
+    <mt-datetime-picker 
+        ref="datePicker"
+        type="date"
+        @confirm="_handleTime"
+        :startDate="new Date('1900-01-01')"
+    ></mt-datetime-picker>
+    <success :sucOption="sucOption" v-if="sucOption.showSuccess"></success>
+    <!-- <div class="regSucc">
+      <header>注册</header>
+      <div class="top_div"></div>
+      <div class="succBox">
+        <p class="succImg">
+          <img src="./succSure.png" alt="">
+        </p>
+        <p class="succTxt">注册成功</p>
+        <p class="succTime">
+          <span></span>秒后自动跳转到“我的”页面</p>
+        <router-link class="succBtn" to="/" tag="p">跳过</router-link>
+      </div>
+    </div> -->
   </div>
 </template>
 <script>
 import IndexHeader from "business/indexHeader/indexHeader";
+import success from "business/success/success";
 export default {
   data() {
     return {
@@ -108,7 +132,13 @@ export default {
         coachEnterprise: "" //成功案例
       },
       industrys: [], //行业领域备选
-      stages: [] //投资阶段
+      stages: [], //投资阶段
+      sucOption: {
+        title: "认证投资人",
+        sucName: "保存成功",
+        showSuccess: false,
+        path: "/mine/companyAccount"
+      }
     };
   },
   created() {
@@ -151,12 +181,25 @@ export default {
         .then(res => {
           if (Name == "行业领域") {
             this.industrys = res.data;
-            console.log(this.industrys);
+            this.setTeacher.industField = this.industrys[0].fswId; //行业领域默认选中
           } else {
             this.stages = res.data;
-            console.log(this.stages);
+            this.setTeacher.investStage = this.stages[0].fswId; //投资阶段默认选中
           }
         });
+    },
+    _openPicker() {
+      //打开时间选择器
+      this.$refs.datePicker.open();
+    },
+    _handleTime(date) {
+      //转换得到的时间格式
+      console.log(date);
+
+      let year = date.getFullYear(),
+        month = date.getMonth() - 0 + 1,
+        day = date.getDate();
+      this.setTeacher.birthday = `${year}-${month}-${day}`;
     },
     //获取后台数据
     inforData() {
@@ -164,27 +207,31 @@ export default {
       let _url = "/fronttutorauthenticationsave-home";
       this.axios
         .post(_url, {
-          fciBirthday: "that.birthday", //出生日期
-          fciCase: "that.coachEnterprise", //成功案例
-          fciFlag: "that.inviter", //是否接受邀请
-          fciIdea: "that.investIdea", //投资理念
-          fciName: "that.name", //姓名
-          fciOrgName: "that.company", //工作单位
-          fciPosition: "that.presentPost", //现任职务
-          fciScale: "that.fundScale", //基金规模
-          fciSex: "that.sex", //性别
-          fifId: "that.industField", //行业领域
-          fisId: "that.investStage", //投资阶段
+          fciBirthday: that.birthday, //出生日期
+          fciCase: that.coachEnterprise, //成功案例
+          fciFlag: that.inviter, //是否接受邀请
+          fciIdea: that.investIdea, //投资理念
+          fciName: that.name, //姓名
+          fciOrgName: that.company, //工作单位
+          fciPosition: that.presentPost, //现任职务
+          fciScale: that.fundScale, //基金规模
+          fciSex: that.sex, //性别
+          fifId: that.industField, //行业领域
+          fisId: that.investStage, //投资阶段
           fmiType: "R",
           investstage: "investstage"
         })
         .then(res => {
           this.items = res.data.List;
+          // if (res == "ture") {
+          this.sucOption.showSuccess == ture;
+          // }
         });
     }
   },
   components: {
-    IndexHeader
+    IndexHeader,
+    success
   }
 };
 </script>
@@ -426,6 +473,58 @@ export default {
     li:last-child {
       width: 60%;
       background: #6ea1ff;
+    }
+  }
+  .regSucc {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 33;
+    background: #fff;
+    padding-top: 60px;
+    .succBox {
+      .succImg {
+        padding-top: 120px;
+        margin: 0 auto;
+        width: 180px;
+        height: 180px;
+        img {
+          width: 100%;
+          height: 100%;
+        }
+      }
+      .succTxt {
+        text-align: center;
+        margin-top: 40px;
+        font-size: 60px;
+        letter-spacing: 6px;
+        color: #37bef0;
+      }
+      .succTime {
+        margin: 140px 0 60px 0;
+        text-align: center;
+        font-size: 30px;
+        letter-spacing: 3px;
+        color: #333;
+        span {
+          font-size: 30px;
+          color: #6ea1ff;
+        }
+      }
+      .succBtn {
+        width: 260px;
+        height: 60px;
+        line-height: 60px;
+        text-align: center;
+        background: #6ea1ff;
+        border-radius: 6px;
+        margin: 0 auto;
+        font-size: 30px;
+        color: #fff;
+      }
     }
   }
 }
