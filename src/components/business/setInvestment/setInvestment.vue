@@ -54,20 +54,16 @@
       </li>
       <li class="group clearfix">
         <label class="fl pos1">
-          <i v-if="formList.isShow">*</i>投资领域</label>
+          <i v-if="formList.isShow">*</i>{{investName.field}}</label>
         <select class="fl" v-model="investment.field">
           <option value="0">金融服务</option>
-          <option value="1">投资服务</option>
-          <option value="2">融资服务</option>
         </select>
       </li>
       <li class="group clearfix">
         <label class="fl pos1">
-          <i v-if="!formList.isShow">*</i>投资阶段</label>
+          <i v-if="!formList.isShow">*</i>{{investName.stage}}</label>
         <select class="fl" v-model="investment.stage">
-          <option value="0">金融服务</option>
-          <option value="1">投资服务</option>
-          <option value="2">融资服务</option>
+          <option v-for="(v,i) in investName.stageArr" :key="i" :value="v.fswId">{{v.fswName}}</option>
         </select>
       </li>
       <li class="group clearfix">
@@ -103,21 +99,44 @@
       <li class="fl preserve">保存</li>
     </ul>
     <addressPick @selectAddress="getAddr" ref="addr"></addressPick>
+    <!-- 保存成功 -->
+    <success :sucOption="sucOption" v-if="sucOption.showSuccess"></success>
   </div>
 </template>
 <script>
 import IndexHeader from "business/indexHeader/indexHeader";
 import AddressPick from "base/addressPick/addressPick";
 import UploadImg from "base/uploadImg/uploadImg";
+import Success from "business/success/success";
 export default {
   data() {
     return {
+      sucOption: {
+        title: "账号认证", //这个是传的跳转到页面的名称
+        sucName: "保存成功", //(保存成功、注册成功)
+        showSuccess: false, //是否显示组件
+        path: "/mine/companyAccount" //成功后条状的路径
+      },
       formList: {
         isShow: true, //是否显示*
         isClose: false
       },
+      //地址ID
+      addrId: {
+        province: "",
+        city: "",
+        area: ""
+      },
       address: "", //地址
       inputImg: [], //上传的图片
+      //投资
+      investName: {
+        field: "投资领域",
+        stage: "投资阶段",
+        stageArr: [],
+        fieldArr: []
+      },
+      //数据
       investment: {
         person: "", //联系人
         personTel: "", //联系人电话
@@ -138,12 +157,23 @@ export default {
     this.headerText = "认证投资机构"; //设置头部显示导航内容
     this.hasSearch = false;
   },
+  mounted() {
+    this.getFieldData();
+    this.getInvestStage();
+  },
   methods: {
     showAddr() {
       this.$refs.addr.showAddressComponent();
     },
     getAddr(val) {
-      this.address = val;
+      this.address = val
+        .map(item => {
+          return item.ca_name;
+        })
+        .join("-");
+      this.addrId.province = val[0].ca_id;
+      this.addrId.city = val[1].ca_id;
+      this.addrId.area = val[2].ca_id;
     },
     inputGetImg(arr) {
       this.inputImg = arr;
@@ -165,13 +195,28 @@ export default {
         this.investment.agree = !this.investment.agree;
       }
     },
+    //重置信息
     resetBtn() {
       for (let key in this.investment) {
         if (this.investment[key] != "") {
           this.investment[key] = "";
         }
       }
-      this.inputImg=[];
+      this.inputImg = [];
+    },
+    //获得投资领域数据
+    getFieldData() {
+      let _url = "/fronttutorauthenticationselect-home";
+      this.axios.post(_url, { name: this.investName.field }).then(res => {
+        console.log(res);
+      });
+    },
+    //获得投资阶段数据
+    getInvestStage() {
+      let _url = "/fronttutorauthenticationselect-home";
+      this.axios.post(_url, { name: this.investName.stage }).then(res => {
+        this.investName.stageArr = res.data;
+      });
     }
   },
   components: {
@@ -316,7 +361,8 @@ export default {
       .addPic {
         width: 281px;
         height: 181px;
-        background: #f5f5f5;
+        background: url("./addPic.png") no-repeat #f5f5f5 center center;
+        background-size: 30% 45%;
         border-radius: 6px;
         margin-left: 20px;
         .picture {

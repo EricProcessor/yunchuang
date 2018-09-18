@@ -249,8 +249,8 @@ export default {
             }).join("-")
 
             this.provinceId = val[0].ca_id
-            this.cityId = val[0].ca_id
-            this.areaId = val[0].ca_id
+            this.cityId = val[1].ca_id
+            this.areaId = val[2].ca_id
         }
     },
     components: {
