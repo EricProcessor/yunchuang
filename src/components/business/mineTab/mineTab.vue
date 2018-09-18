@@ -94,7 +94,7 @@ export default {
       // console.info(cname + "=" + +"; " + expires);
       
       document.cookie =
-        "SESSION=8abdb394-5e8c-4713-9c8b-89b13d7378cd" + "; " + expires;
+        "SESSION=d1b64bbc-fcf6-4d1c-9a3b-9086366e2067" + "; " + expires;
       console.info(document.cookie);
       //   var user = {
       //     fmi_id: "183",

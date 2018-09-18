@@ -1,66 +1,73 @@
 <template>
-    <div class="password">
-        <index-header :text="headerText" :hasSearch="hasSearch"></index-header>
-        <ol class="clearfix tabs">
-            <li class="fl" :class="{active:pwd.isTab}" @click="phoneBack">手机号找回</li>
-            <li class="fl" :class="{active:!pwd.isTab}" @click="emailBack">邮箱找回</li>
-        </ol>
-        <ul class="list" v-if="pwd.isTab">
-            <li>
-                <p>手机号码
-                    <span>（必填）</span>
-                </p>
-                <input type="text" v-model="pwd.phone" maxlength="11" placeholder="请输入手机号码">
-            </li>
-            <li>
-                <p>验证码
-                    <span>（必填）</span>
-                </p>
-                <div class="clearfix pos1">
-                    <input type="text" v-model="pwd.code" class="fl code" placeholder="请输入6位验证码">
-                    <i v-if="!phoneCode" @click="getPhoneCode">获取验证码</i>
-                    <i class="again" v-if="phoneCode">重新发送（{{pwd.minutePhone}}）</i>
-                </div>
-            </li>
-        </ul>
-        <ul class="list" v-if="!pwd.isTab">
-            <li>
-                <p>邮箱
-                    <span>（必填）</span>
-                </p>
-                <input type="text" v-model="pwd.email" placeholder="请输入邮箱">
-            </li>
-            <li>
-                <p>验证码
-                    <span>（必填）</span>
-                </p>
-                <div class="clearfix pos1">
-                    <input type="text" class="fl code" placeholder="请输入6位验证码">
-                    <i v-if="!emailCode" @click="getEmailCode">获取验证码</i>
-                    <i class="again" v-if="emailCode">重新发送（{{pwd.minuteEmail}}）</i>
-                </div>
-            </li>
-        </ul>
-        <p class="postBtn" @click="putInBtn">提交</p>
-    </div>
+  <div class="password">
+    <index-header :text="headerText" :hasSearch="hasSearch"></index-header>
+    <ol class="clearfix tabs">
+      <li class="fl" :class="{active:pwd.isTab}" @click="phoneBack">{{pwd.phoneName}}</li>
+      <li class="fl" :class="{active:!pwd.isTab}" @click="emailBack">{{pwd.emailName}}</li>
+    </ol>
+    <ul class="list" v-if="pwd.isTab">
+      <li>
+        <p>手机号码
+          <span>（必填）</span>
+        </p>
+        <input type="text" v-model="pwd.phone" maxlength="11" placeholder="请输入手机号码">
+      </li>
+      <li>
+        <p>验证码
+          <span>（必填）</span>
+        </p>
+        <div class="clearfix pos1">
+          <input type="text" v-model="pwd.code" class="fl code" placeholder="请输入6位验证码">
+          <i v-if="!phoneCodes" @click="getPhoneCode">获取验证码</i>
+          <i class="again" v-if="phoneCodes">重新发送（{{pwd.minutePhone}}）</i>
+        </div>
+      </li>
+    </ul>
+    <ul class="list" v-if="!pwd.isTab">
+      <li>
+        <p>邮箱
+          <span>（必填）</span>
+        </p>
+        <input type="text" @blur="getEmailCode" v-model="pwd.email" placeholder="请输入邮箱">
+      </li>
+      <li>
+        <p>验证码
+          <span>（必填）</span>
+        </p>
+        <div class="clearfix pos1">
+          <input type="text" class="fl" placeholder="请输入6位验证码">
+        </div>
+      </li>
+    </ul>
+    <p class="postBtn" @click="putInBtn">提交</p>
+    <!-- 保存成功 -->
+    <success :sucOption="sucOption" v-if="sucOption.showSuccess"></success>
+  </div>
 </template>
 <script>
 import IndexHeader from "business/indexHeader/indexHeader";
 import Install from "@/config/checkRule";
+import Success from "business/success/success";
 export default {
   data() {
     return {
+      sucOption: {
+        title: "登录", //这个是传的跳转到页面的名称
+        sucName: "保存成功", //(保存成功、注册成功)
+        showSuccess: false, //是否显示组件
+        path: "/login" //成功后条状的路径
+      },
       pwd: {
-        istime: 5,
+        phoneName: "手机号找回",
+        emailName: "邮箱找回",
         isTab: true,
         phone: "",
         email: "",
         code: "",
-        minutePhone: 59,
-        minuteEmail: 59
+        minutePhone: 59
       },
-      phoneCode: false,
-      emailCode: false
+      code: "",
+      phoneCodes: false
     };
   },
   created() {
@@ -84,9 +91,12 @@ export default {
         alert("请输入手机号码！");
       } else {
         if (Install.isPhone(this.pwd.phone)) {
-          this.phoneCode = !this.phoneCode;
           this.axios.post(codeUrl1, { phoneCode: this.pwd.phone }).then(res => {
-            console.log(res);
+            if (res.data.flag) {
+              this.code = res.data.msg;
+            } else {
+              alert(res.data.msg);
+            }
           });
           setInterval(this.cutDownTime1, 1000);
         } else {
@@ -98,49 +108,57 @@ export default {
       let codeUrl2 = "/frontnote-send";
       if (this.pwd.email == "") {
         alert("请输入邮箱！");
+        return;
       } else {
         if (Install.isEmail(this.pwd.email)) {
-          this.emailCode = !this.emailCode;
           this.axios.post(codeUrl2, { phoneCode: this.pwd.email }).then(res => {
-            console.log(res);
+            if (res.data.flag) {
+              this.code = res.data.msg;
+            } else {
+              alert(res.data.msg);
+            }
           });
-          setInterval(this.cutEamilTime, 1000);
         } else {
           alert("邮箱不正确！");
         }
       }
     },
     cutDownTime1() {
-      if (this.phoneCode == true) {
+      if (this.phoneCodes == true) {
         this.pwd.minutePhone--;
         if (this.pwd.minutePhone == 0) {
-          this.phoneCode = false;
+          this.phoneCodes = false;
           this.pwd.minutePhone = 59;
         }
       }
     },
-    cutEamilTime() {
-      if (this.emailCode == true) {
-        this.pwd.minuteEmail--;
-        if (this.pwd.minuteEmail == 0) {
-          this.emailCode = false;
-          this.pwd.minuteEmail = 59;
+    putInBtn() {
+      let _url = "/frontpwdfindoperate-phone";
+      if (this.pwd.phoneName == "手机号找回") {
+        if (this.pwd.phone == "" && this.pwd.code == "") {
+          alert("信息不能为空!");
+        } else if (this.pwd.phone == "") {
+          alert("手机号码不能为空!");
+          return;
+        } else if (this.pwd.code == "") {
+          alert("验证码不能为空!");
+          return;
+        } else if (this.pwd.code == this.code) {
+          this.axops.get(_url).then(res => {});
+        }
+      } else {
+        if (this.pwd.email == "" && this.pwd.code == "") {
+          alert("信息不能为空!");
+        } else if (this.pwd.email == "") {
+          alert("邮箱不能为空！");
+          return;
+        } else if (this.pwd.code == "") {
+          alert("验证码不能为空");
+          return;
+        } else if (this.pwd.code == this.code) {
+          this.axops.get(_url).then(res => {});
         }
       }
-    },
-    putInBtn() {
-        if(this.$children.phone==""&&this.pwd.email==""){
-            alert("信息不能为空!");
-        }else if(this.pwd.email==""){
-            alert("验证码不能为空！");
-        }else if(this.pwd.phoneemail==""){
-            alert("手机号码不能为空");
-        }else{
-           let _url="/frontpwdfindoperate-phone?fmiAcc=";
-           this.axops.get(_url).then(res=>{
-
-           }); 
-        }
     }
   },
   beforeDestroy() {
@@ -219,7 +237,7 @@ export default {
         right: 0;
       }
       .again {
-        width: 201px;
+        width: 221px;
         background: #ccc;
         color: #333;
       }

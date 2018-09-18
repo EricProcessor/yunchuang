@@ -81,11 +81,21 @@ export default {
         go(){
             this.$router.go(-1);
         },
+       
         modify(){
             this.$router.push({
                 path: "/mine/accountsecuritys/tel"
             })
         },
+        getData(){
+            let getUrl = "/h5frontmyaccsafety-home";
+            this.axios.post(getUrl).then((res)=>{
+                console.log(res)
+            })
+        },
+    },
+    mounted(){
+        this.getData();
     },
     components:{
         IndexHeader

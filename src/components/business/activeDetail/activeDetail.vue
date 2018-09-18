@@ -112,12 +112,12 @@ export default {
       } else {
         let url = "/frontactivityapply-add";       
         let params = {
-          faaPerson: this.userInfo.userName,
-          faaTel: this.userInfo.tel,
-          faiId:this.activeDetail.faiId,
-          fmiId:this.activeDetail.fmiId,
+          faaPerson: this.userInfo.userName,  //联系人
+          faaTel: this.userInfo.tel,          //联系电话
+          faiId:this.activeDetail.faiId,      
+          fmiId:183
         };
-        console.log(this.activeDetail.faiId)  
+        console.log(this.userInfo.tel)  
         this.axios.post(url, params).then(res => {
           if (res.data.msg) {
             alert(res.data.msg);
@@ -126,7 +126,7 @@ export default {
       }
     },
   },
-  filters: {
+  filters: {                     //转换日期
       formatDate: function (value) {
         let date = new Date(value);
         let y = date.getFullYear();
@@ -143,6 +143,15 @@ export default {
         return y + '-' + MM + '-' + d + ' ' + h + ':' + m + ':' + s;
       }
   },
+  //  saveUserMessage() {
+  //     var d = new Date();
+  //     d.setTime(d.getTime() + 1 * 24 * 60 * 60 * 1000);
+  //     var expires = "expires=" + d.toUTCString();
+  //     // console.info(cname + "=" + +"; " + expires);
+  //     document.cookie =
+  //       "SESSION=3b5cb60c-ee8e-4507-8bd2-6d164efc8142" + "; " + expires;
+  //     console.info(document.cookie);
+  //  },    
   mounted(){
     var id = this.$route.params.id
     // console.log(id)
@@ -151,6 +160,7 @@ export default {
          
     }) 
     //  return this.activeDetail.faiId
+    
     
   }
 };

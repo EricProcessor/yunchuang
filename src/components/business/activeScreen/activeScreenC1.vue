@@ -46,7 +46,9 @@ export default {
     },
     data() {
         return {
+            address: "",      //由以上三个拼接好 地址信息数组
             simpAddress:"",
+            regionInit:false,
             simpId:"",
             slots: [{
                 flex: 1,    
@@ -87,8 +89,8 @@ export default {
             addressShow: false,     //控制该组件显示/隐藏
             addressProvince: {},    //省
             addressCity: {},        //市
-            addressCounty: {},       //县
-            address: []         //由以上三个拼接好 地址信息数组
+            addressCounty: {}      //县
+            
         }
     },
     methods: {
@@ -140,29 +142,33 @@ export default {
                 }
 
                 //地址数据整合
-                this.address = [this.addressProvince, this.addressCity, this.addressCounty]
-                // console.log(this.addressProvince.ca_id)
-                this.simpAddress= this.address.map(item => {
-                      return item.ca_name
-                  }).join("-")
-                  
-                this.simpId= this.address.map(item => {
-                      return item.ca_id
-                })
-                // console.log(this.simAddress)
-                this.$emit('selectAddress', this.simpId)   //给父组件传出地址数值
+                if(this.regionInit){
+                    this.address = [this.addressProvince, this.addressCity, this.addressCounty]
+                    // console.log(this.addressProvince.ca_id)
+                    this.simpAddress= this.address.map(item => {
+                          return item.ca_name
+                      }).join("-")
+                      
+                    this.simpId= this.address.map(item => {
+                          return item.ca_id
+                    })
+                    // console.log(this.simAddress)
+                    this.$emit('selectAddress', this.simpId)   //给父组件传出地址数值
+                }
+                else{
+                  this.regionInit = true
+                }
+               
         },
         showAddressPopup() {       //地址选择栏弹出显示
             // this.$refs.addressPopup.open()
+            
             this.addressShow = true
         },
         //请求用户数据后，设置指定的地点用，格式["省","市", "县/镇"]（注意，设置的地点名称数组，对应地址json数据中必须有，否则失效）
         setAddress() {
             picker.setValues(["北京市","市辖区"]["东城区"])
         },
-        // showAddressComponent() {        //显示地址选择弹窗
-            
-        // },
         closeAddressComponent(){
           this.addressShow = false
         }
