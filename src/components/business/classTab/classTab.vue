@@ -6,11 +6,10 @@
         </mt-navbar>
         <mt-tab-container v-model="selected">
             <mt-tab-container-item id="1">
-                <class-list :list-data="livePreviewData"></class-list>
+                <class-list :list-data="livePreviewData" :itemType="1"></class-list>
             </mt-tab-container-item>
             <mt-tab-container-item id="2">
-                <class-list :list-data="featureVideoData"></class-list>
-               
+                <class-list :list-data="featureVideoData" :itemType="2"></class-list>
             </mt-tab-container-item>
         </mt-tab-container>
     </div>
@@ -37,15 +36,15 @@ export default {
         method: "post"
       }).then(res => {
         if (res.status === 200) {
-          this.featureVideoData = res.data.dpList;
+          this.featureVideoData = res.data.dpluList;
         }
       });
     },
     //获取直播预告视频列表数据
     _getLivePreviewAjax() {
       this.axios({
-        // url: "/h5frontclassroom-notice",
-        url: "/frontmessage",
+        url: "/h5frontclassroom-notice",
+        // url: "/frontmessage",
         method: "post"
       }).then(res => {
         console.log(res);
