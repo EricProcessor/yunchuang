@@ -6,12 +6,14 @@
       <span class="screen-result" @click="activeScreen">筛选</span>
     </header>
     <ul>
-      <li v-for="(val,index) in screenResult" :key="index"  @click="activeDetail">
+      <li v-for="(val,index) in screenResult" :key="index"  @click="activeDetail(val.faiId)">
         <div class="screen-con">
           <p class="pOne">{{val.faiName}}</p>
           <p class="pTwo"><i></i> {{val.faiAddress}}</p>
         </div>
-        <div class="screen-img"><img :src="val.faiPath" alt=""></div>
+        <div class="screen-img">
+          
+          <img :src="val.faiPath" alt=""></div>
       </li>
     </ul>
   </div>
@@ -21,43 +23,41 @@
         data(){
           return{
              screenResult:'',
-             area_id:'',
-             province_id:'',
-             city_id:'',
-             begintime:'',
-             endtime:''
+              area_id:'',     // 区/县
+             province_id:'', // 省
+             city_id:'',     //市
+             begintime:'',   //开始时间
+             endtime:'' ,    //结束时间  
+             type:"Y"
+
           }        
         },
         methods: {
-          backBtnPre() {
+          backBtnPre() {                        //返回上一级
             this.$router.go(-1);
           },
-          activeDetail() {
-            this.$router.push('/activeDetail');
+          activeDetail(id) {
+            this.$router.push('/activeDetail/'+id); //跳转详情页
           },
-          activeScreen(){
+          activeScreen(){                         //跳转结果页
             this.$router.push('/activeScreen');
           }         
         },
         mounted(){
-                   
-          // params.append('area_id', JSON.stringify(this.screenResult.areaId));
-          //  console.log(JSON.stringify(this.screenResult.areaId))
-          // console.log(this.val.areaId)
-          // params.append('province_id', 'this.val.provinceId');
-          // params.append('city_id', 'this.val.cityId');
-          // params.append('begintime', 'this.val.faiDatetime');
-          // params.append('endtime', 'this.val.faiEndDatetime');
-          // this.$route.query.begintime
-          // this.$route.query.endtime
-          this.axios.post("/h5frontactivityinfo-foreshow",{
-              begintime:'this.$route.query.begintime',
-              endtime:'this.$route.query.endtime' 
-          }).then(res=>{
+          let url = "/h5frontactivityinfo-foreshow";
+          let params={
+            province_id:this.$route.query.province_id,
+            city_id:this.$route.query.city_id,
+            area_id:this.$route.query.area_id,
+            begintime:this.$route.query.begintime,
+            endtime:this.$route.query.endtime,
+            type:"Y"
+          }
+          this.axios.post(url,params).then(res=>{
             this.screenResult = res.data.list
             // console.log(this.screenResult)
           })
-          console.log(this.$route.query.begintime) 
+          // console.log(this.$route.query.begintime) 
         }
     };
 </script>s

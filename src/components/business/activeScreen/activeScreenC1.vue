@@ -154,15 +154,13 @@ export default {
         },
         showAddressPopup() {       //地址选择栏弹出显示
             // this.$refs.addressPopup.open()
+            
             this.addressShow = true
         },
         //请求用户数据后，设置指定的地点用，格式["省","市", "县/镇"]（注意，设置的地点名称数组，对应地址json数据中必须有，否则失效）
         setAddress() {
             picker.setValues(["北京市","市辖区"]["东城区"])
         },
-        // showAddressComponent() {        //显示地址选择弹窗
-            
-        // },
         closeAddressComponent(){
           this.addressShow = false
         }

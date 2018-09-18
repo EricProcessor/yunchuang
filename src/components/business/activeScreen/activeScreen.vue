@@ -28,51 +28,44 @@ import {Picker} from 'mint-ui';
 export default {
      data() {
         return {
-             simpDateD1: "", 
-             simpDateD2:"",               
-             simpAddress:"",
-             area_id:'',
-             province_id:'',
-             city_id:'',
-             begintime:'',
-             endtime:''   
+            //  simpDateD1: "",
+            //  simpDateD2:"",           
+            //  simpAddress:"", //地址
+             area_id:'',     // 区/县
+             province_id:'', // 省
+             city_id:'',     //市
+             begintime:'',   //开始时间
+             endtime:'' ,    //结束时间  
+             type:"Y"
         }
     },
     methods: {
         backBtnPre() {
           this.$router.go(-1);
         },
-        selectDateOne(){
-
-        },
-        // screenResult(){
-        //     this.$router.push({
-        //       path: "/screenResult"
-        //     });
-        // },
-       commitBox() {
+        commitBox() {
            this.$router.push({
-                path: "/screenResult",
+                path: "/screenResult/",
                 query:{
                     province_id:this.province_id,
                     city_id:this.city_id,
                     area_id:this.area_id,
                     begintime:this.simpDateD1,
-                    endtime:this.simpDateD2
+                    endtime:this.simpDateD2,
+                    type:"Y"
                 }
             });
             
         //   console.log(this.simpDateD1)   
         //    console.log(this.simpDateD2)       
         },
-        selectFromD1(val){
-            this.simpDateD1 = val           
+        selectFromD1(val){   //接收开始时间子组件传来的值
+            this.simpDateD1 = val    
         },
-         selectFromD2(val){
+         selectFromD2(val){  //接收结束子组件传来的值
             this.simpDateD2 = val
-            // console.log(this.simpDateD2)
         },
-        selectAddress(val){        
+        selectAddress(val){   //接收地域子组件传来的值     
             this.province_id = val[0]
             console.log(this.province_id)
             this.city_id = val[1]
