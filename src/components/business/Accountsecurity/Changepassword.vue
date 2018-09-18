@@ -84,7 +84,6 @@ export default {
                 this.Obtain.Nulls=true;
             }else{
                 this.Obtain.Nulls=false;
-
                 if(!tel.test(telephone)){
                 alert('手机号格式不正确')
                 return;
@@ -138,7 +137,14 @@ export default {
            console.log("手机号input框:" +txtVal)
           
            console.log("验证码"+verificationVal);
-
+           let _url = '/frontmyaccphoneupdatephone-home',
+               params = {
+                    phone:txtVal,
+                    code:verificationVal
+               }
+          this.axios.post(_url,params).then(res =>{
+              console.log(res)
+          })
        }
 
     }
