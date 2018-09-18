@@ -28,15 +28,16 @@ import {Picker} from 'mint-ui';
 export default {
      data() {
         return {
-            //  simpDateD1: "",
-            //  simpDateD2:"",           
-            //  simpAddress:"", //地址
-             area_id:'',     // 区/县
-             province_id:'', // 省
-             city_id:'',     //市
+            simpId:"",
+             simpDateD1: "",
+             simpDateD2:"",           
+             simpAddress:"", //地址
+             area_id:"",     // 区/县
+             province_id:"", // 省
+             city_id:"",     //市
              begintime:'',   //开始时间
              endtime:'' ,    //结束时间  
-             type:"Y"
+            //  type:"",
         }
     },
     methods: {
@@ -52,7 +53,7 @@ export default {
                     area_id:this.area_id,
                     begintime:this.simpDateD1,
                     endtime:this.simpDateD2,
-                    type:"Y"
+                    // type:"Y"
                 }
             });
             

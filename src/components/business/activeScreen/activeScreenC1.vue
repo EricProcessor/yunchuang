@@ -46,7 +46,9 @@ export default {
     },
     data() {
         return {
+            address: "",      //由以上三个拼接好 地址信息数组
             simpAddress:"",
+            regionInit:false,
             simpId:"",
             slots: [{
                 flex: 1,    
@@ -87,8 +89,8 @@ export default {
             addressShow: false,     //控制该组件显示/隐藏
             addressProvince: {},    //省
             addressCity: {},        //市
-            addressCounty: {},       //县
-            address: []         //由以上三个拼接好 地址信息数组
+            addressCounty: {}      //县
+            
         }
     },
     methods: {
@@ -140,17 +142,23 @@ export default {
                 }
 
                 //地址数据整合
-                this.address = [this.addressProvince, this.addressCity, this.addressCounty]
-                // console.log(this.addressProvince.ca_id)
-                this.simpAddress= this.address.map(item => {
-                      return item.ca_name
-                  }).join("-")
-                  
-                this.simpId= this.address.map(item => {
-                      return item.ca_id
-                })
-                // console.log(this.simAddress)
-                this.$emit('selectAddress', this.simpId)   //给父组件传出地址数值
+                if(this.regionInit){
+                    this.address = [this.addressProvince, this.addressCity, this.addressCounty]
+                    // console.log(this.addressProvince.ca_id)
+                    this.simpAddress= this.address.map(item => {
+                          return item.ca_name
+                      }).join("-")
+                      
+                    this.simpId= this.address.map(item => {
+                          return item.ca_id
+                    })
+                    // console.log(this.simAddress)
+                    this.$emit('selectAddress', this.simpId)   //给父组件传出地址数值
+                }
+                else{
+                  this.regionInit = true
+                }
+               
         },
         showAddressPopup() {       //地址选择栏弹出显示
             // this.$refs.addressPopup.open()

@@ -115,7 +115,7 @@ export default {
           faaPerson: this.userInfo.userName,  //联系人
           faaTel: this.userInfo.tel,          //联系电话
           faiId:this.activeDetail.faiId,      
-          // fmiId:this.get
+          fmiId:183
         };
         console.log(this.userInfo.tel)  
         this.axios.post(url, params).then(res => {
@@ -143,6 +143,15 @@ export default {
         return y + '-' + MM + '-' + d + ' ' + h + ':' + m + ':' + s;
       }
   },
+  //  saveUserMessage() {
+  //     var d = new Date();
+  //     d.setTime(d.getTime() + 1 * 24 * 60 * 60 * 1000);
+  //     var expires = "expires=" + d.toUTCString();
+  //     // console.info(cname + "=" + +"; " + expires);
+  //     document.cookie =
+  //       "SESSION=3b5cb60c-ee8e-4507-8bd2-6d164efc8142" + "; " + expires;
+  //     console.info(document.cookie);
+  //  },    
   mounted(){
     var id = this.$route.params.id
     // console.log(id)
@@ -151,6 +160,7 @@ export default {
          
     }) 
     //  return this.activeDetail.faiId
+    
     
   }
 };
