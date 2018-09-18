@@ -641,6 +641,7 @@ export default {
           this.axios.post(companyRegUrl, params).then(res => {
             if (res.data.flag) {
               this.regInfo.isRegSucc = true;
+              // localStorage.setItem();
             } else {
               this.regInfo.isRegSucc = false;
             }
