@@ -1,7 +1,7 @@
 <template>
     <div class="index-content">
         <index-header text="首页"></index-header>
-        <swiper></swiper>
+        <swiper :data="carouselData"></swiper>
         <div class="tab-list">
             <tabs :showBanner="false"></tabs>
             <p @click="_jump('information')">查看更多</p>
@@ -52,10 +52,12 @@ export default {
     data() {
         return {     
             activeData: [],         //创业活动保存数据
-            classroomData: []       //创业课堂保存数据
+            classroomData: [],       //创业课堂保存数据
+            carouselData: []            //轮播图数据保存
         }
     },
     created() {
+        this._getCarouselData()             //获取轮播图数据
         this._getEntrepreneurshipData()     //获取创业活动列表信息
         this._getClassroomData()            //获取创业课堂列表信息
     },
@@ -67,6 +69,17 @@ export default {
             })
             //改变导航栏对应的选中状态
             this.$emit("changeSelect", path)
+        },
+        //获取轮播图信息
+        _getCarouselData() {
+            this.axios({
+                url: 'h5frontpageList-home',
+                method: 'post'
+            }).then(res => {
+                if (res.status === 200) {
+                    this.carouselData = res.data.atiList
+                }
+            })
         },
         //获取创业活动列表信息
         _getEntrepreneurshipData() {
