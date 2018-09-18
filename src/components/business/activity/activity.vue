@@ -47,6 +47,7 @@
     position: fixed;
     top: 0;
     left: 0;
+    z-index: 1000;
   .acticity-screen{
     height: 88px;
     line-height: 88px;

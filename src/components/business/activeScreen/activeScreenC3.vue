@@ -35,15 +35,15 @@ export default {
       this.$refs.picker.open()
     },
     handleConfirms(date){
-        console.log(date)
+        // console.log(date)
         let year = date.getFullYear(),
                 month = date.getMonth() - 0 + 1,
                 day = date.getDate()
             this.birthdays = `${year}-${month}-${day}`
-            this.date = `${year} ${month} ${day}`
-            this.second = Date.parse(this.date)
+            this.date = `${year} ${month} ${day}` //转换格式
+            this.second = Date.parse(this.date)  //日期转毫秒数
             // console.log(this.second)
-            this.$emit("selectDateTwo",this.second)       
+            this.$emit("selectDateTwo",this.second)       //向父组件传值
     },
   },
   

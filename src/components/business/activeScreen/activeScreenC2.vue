@@ -33,13 +33,6 @@ export default {
   methods: {
     openPicker () {
       this.$refs.picker.open()
-            // let year = date.getFullYear(),
-            //     month = date.getMonth() - 0 + 1,
-            //     day = date.getDate()
-            // this.date = `${year} ${month} ${day}`
-            // this.second = Date.parse(this.date)
-            // console.log(this.second)
-            // this.$emit("selectDateOne",this.second)
     },
     handleConfirm(date){
       // console.log(date)
@@ -47,9 +40,9 @@ export default {
                 month = date.getMonth() - 0 + 1,
                 day = date.getDate()
             this.birthday = `${year}-${month}-${day}`
-            this.date = `${year} ${month} ${day}`
-            this.second = Date.parse(this.date)
-            this.$emit("selectDateOne",this.second)
+            this.date = `${year} ${month} ${day}` //转换格式
+            this.second = Date.parse(this.date)   //日期转毫秒数
+            this.$emit("selectDateOne",this.second) //向父组件传值
     },
   },
   

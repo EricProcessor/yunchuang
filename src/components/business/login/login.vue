@@ -75,8 +75,8 @@ export default {
             alert(res.data.msg);
           } else {
             if (this.userInfo.showImg) {
-              this.setCookie("userName", this.userInfo.userName, 7);
-              this.setCookie("pwd", this.userInfo.password, 7);
+              localStorage.setItem("userName", this.userInfo.userName);
+              localStorage.setItem("pwd", this.userInfo.password);
             }
             this.$router.push("/");
           }
@@ -86,16 +86,6 @@ export default {
     goToRegister() {
       this.$router.push("/register");
     },
-    //设置cookie
-    setCookie(c_name, value, expiredays) {
-      let exdate = new Date();
-      exdate.setDate(exdate.getDate() + expiredays);
-      document.cookie =
-        c_name +
-        "=" +
-        escape(value) +
-        (expiredays == null ? "" : ";expires=" + exdate.toGMTString());
-    }
   }
 };
 </script>

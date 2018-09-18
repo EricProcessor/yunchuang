@@ -164,15 +164,24 @@
     <mt-datetime-picker ref="datePicker" type="date" @confirm="_handleTime" :startDate="new Date('1970-01-01')"></mt-datetime-picker>
     <!-- 地址 -->
     <AddressPick @selectAddress="getAddr" ref="addr"></AddressPick>
+    <!-- 保存成功 -->
+    <success :sucOption="sucOption" v-if="sucOption.showSuccess"></success>
   </div>
 </template>
 <script>
 import IndexHeader from "business/indexHeader/indexHeader";
 import AddressPick from "base/addressPick/addressPick";
 import Install from "@/config/checkRule";
+import Success from "business/success/success";
 export default {
   data() {
     return {
+      sucOption: {
+        title: "账号认证", //这个是传的跳转到页面的名称
+        sucName: "保存成功", //(保存成功、注册成功)
+        showSuccess: false, //是否显示组件
+        path: "/mine/companyAccount" //成功后条状的路径
+      },
       //是否显示*
       formList: {
         isShow: true,
@@ -180,7 +189,6 @@ export default {
       },
       //地址 地址id
       address: "",
-      addrIdArr: [],
       addrId: {
         province: "", //省
         city: "", //市
@@ -255,15 +263,14 @@ export default {
     },
     //获得地址-城市信息
     getAddr(val) {
-      let addressArr = [];
-      for (let i in val) {
-        addressArr.push(val[i].ca_name);
-        this.addrIdArr.push(val[i].ca_id);
-      }
-      this.address = addressArr[0] + "-" + addressArr[1] + "-" + addressArr[2];
-      this.addrId.province = this.addrIdArr[0];
-      this.addrId.city = this.addrIdArr[1];
-      this.addrId.area = this.addrIdArr[2];
+      this.address = val
+        .map(item => {
+          return item.ca_name;
+        })
+        .join("-");
+      this.addrId.province = val[0].ca_id;
+      this.addrId.city = val[1].ca_id;
+      this.addrId.area = val[2].ca_id;    
     },
     //关闭顶部提示
     closeBtn() {
@@ -332,11 +339,9 @@ export default {
     //获取技术领域
     getTechnicalField() {
       let _url = "/fronttutorauthenticationselect-home";
-      this.axios
-        .post(_url, { name: this.selectName.technicalField })
-        .then(res => {
-          this.selectName.technicalFieldArr = res.data;
-        });
+      this.axios.post(_url, { name: this.selectName.technical }).then(res => {
+        this.selectName.technicalFieldArr = res.data;
+      });
     },
     //重置所有信息
     resetBtn() {
@@ -359,7 +364,7 @@ export default {
         Install.isEmail(this.setTeacher.email) &&
         this.setTeacher.positionalTitles != "" &&
         this.setTeacher.highestEducation != "" &&
-        this.setTeacher.goodTheme == "" &&
+        this.setTeacher.technicalField != "" &&
         this.setTeacher.resume != ""
       ) {
         let _serviceUrl = "/fronttutorauthenticationsave-home";
@@ -392,8 +397,14 @@ export default {
           areaId: this.addrId.area //区
         };
         this.axios.post(_serviceUrl, datas).then(res => {
-          console.log(res);
+          if (res) {
+            this.sucOption.showSuccess = true;
+          }
         });
+      } else if (!Install.isEmail(this.setTeacher.email)) {
+        alert("邮箱格式不正确！");
+      } else if (!Install.isPhone(this.setTeacher.phone)) {
+        alert("手机号码格式不正确！");
       } else {
         for (let key in this.setTeacher) {
           if (key == "name" && this.setTeacher[key] == "") {
@@ -418,23 +429,11 @@ export default {
           ) {
             alert("服务区域不能为空！");
             return;
-          } else if (key == "phone") {
-            if (this.setTeacher[key] == "") {
-              alert("手机号不能为空");
-            } else {
-              if (!Install.isPhone(this.setTeacher[key])) {
-                alert("手机号码格式不正确！");
-              }
-            }
+          } else if (key == "phone" && this.setTeacher[key] == "") {
+            alert("手机号不能为空");
             return;
-          } else if (key == "eamil") {
-            if (this.setTeacher[key] == "") {
-              alert("邮箱不能为空");
-            } else {
-              if (!Install.isEmail(this.setTeacher[key])) {
-                alert("邮箱格式不正确！");
-              }
-            }
+          } else if (key == "eamil" && this.setTeacher[key] == "") {
+            alert("邮箱不能为空");
             return;
           } else if (key == "positionalTitles" && this.setTeacher[key] == "") {
             alert("职称不能为空！");
@@ -442,7 +441,7 @@ export default {
           } else if (key == "highestEducation" && this.setTeacher[key] == "") {
             alert("最高学历不能为空！");
             return;
-          } else if (key == "goodTheme" && this.setTeacher[key] == "") {
+          } else if (key == "technicalField" && this.setTeacher[key] == "") {
             alert("技术领域不能为空！");
             return;
           } else if (key == "resume" && this.setTeacher[key] == "") {
@@ -455,7 +454,8 @@ export default {
   },
   components: {
     IndexHeader,
-    AddressPick
+    AddressPick,
+    Success
   }
 };
 </script>

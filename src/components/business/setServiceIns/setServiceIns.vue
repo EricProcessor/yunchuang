@@ -13,11 +13,9 @@
       </li>
       <li class="group clearfix">
         <label class="fl pos1">
-          <i v-if="!formList.isShow">*</i>服务类型</label>
+          <i v-if="!formList.isShow">*</i>{{serType.name}}</label>
         <select class="fl" v-model="serviceIns.serviceType">
-          <option value="0">金融服务</option>
-          <option value="1">投资服务</option>
-          <option value="2">融资服务</option>
+          <option v-for="(v,i) in serType.typeArr" :key="i" :value="v.fswId">{{v.fswName}}</option>
         </select>
       </li>
       <li class="group clearfix">
@@ -28,7 +26,7 @@
       <li class="group clearfix">
         <label class="fl pos1">
           <i v-if="formList.isShow">*</i>联系电话</label>
-        <input class="fl"  type="text" v-model="serviceIns.phone" />
+        <input class="fl" type="text" v-model="serviceIns.phone" />
       </li>
       <li class="group clearfix">
         <label class="fl pos1">
@@ -62,6 +60,8 @@
       <li class="fl preserve" @click="preservation">保存</li>
     </ul>
     <AddressPick @selectAddress="getAddr" ref="addr"></AddressPick>
+    <!-- 保存成功 -->
+    <success :sucOption="sucOption" v-if="sucOption.showSuccess"></success>
   </div>
 </template>
 <script>
@@ -69,13 +69,29 @@ import IndexHeader from "business/indexHeader/indexHeader";
 import UploadImg from "base/uploadImg/uploadImg";
 import AddressPick from "base/addressPick/addressPick";
 import Install from "@/config/checkRule";
+import Success from "business/success/success";
 export default {
   data() {
     return {
+      sucOption: {
+        title: "账号认证", //这个是传的跳转到页面的名称
+        sucName: "保存成功", //(保存成功、注册成功)
+        showSuccess: false, //是否显示组件
+        path: "/mine/companyAccount" //成功后条状的路径
+      },
       formList: {
         isShow: true, //是否显示*
         isClose: false
       },
+      serType: {
+        name: "服务类型",
+        typeArr: []
+      },
+      addrId: {
+        province: "",
+        city: "",
+        area: ""
+      }, //地址ID
       address: "", //地址
       serviceIns: {
         companyName: "",
@@ -93,6 +109,9 @@ export default {
     this.headerText = "认证服务机构"; //设置头部显示导航内容
     this.hasSearch = false;
   },
+  mounted() {
+    this.getServiceType();
+  },
   methods: {
     showAddr() {
       //显示地址弹出层
@@ -100,21 +119,49 @@ export default {
     },
     getAddr(val) {
       //展示地址
-      this.address = val;
+      this.address = val
+        .map(item => {
+          return item.ca_name;
+        })
+        .join("-");
+      this.addrId.province = val[0].ca_id;
+      this.addrId.city = val[1].ca_id;
+      this.addrId.area = val[2].ca_id;
     },
     inputGetImg(arr) {
-      //上传图片
+      //获得上传图片的数组
       this.inputImg = arr;
+      // this._upLoadImg(this.inputImg[0]);
     },
+    //开始上传头像
+    // _upLoadImg(file) {
+    //   var fd = new FormData();
+    //   fd.append("myFile", file);
+
+    //   this.axios({
+    //     url: "upload-file",
+    //     method: "post",
+    //     noQs: true, //不进行fs参数处理
+    //     data: fd
+    //   }).then(res => {
+    //     MessageBox({
+    //       title: "提示",
+    //       message: res.data.msg
+    //     });
+    //     if (res.status === 200) {
+    //       this.headPicUrl = res.data.url;
+    //     }
+    //   });
+    // },
     closeBtn() {
       //关闭提示
       this.formList.isClose = !this.formList.isClose;
     },
     //获得服务类型
-    getServiceType(){
-      let typeUrl="/frontmessage";
-      this.axios.post(typeUrl).then(res=>{
-        console.log(res)
+    getServiceType() {
+      let typeUrl = "/fronttutorauthenticationselect-home";
+      this.axios.post(typeUrl, { name: this.serType.name }).then(res => {
+        this.serType.typeArr = res.data;
       });
     },
     resetBtn() {
@@ -134,6 +181,12 @@ export default {
         this.serviceIns.phone == ""
       ) {
         alert("信息不完整！");
+      } else if (this.serviceIns.companyName == "") {
+        alert("公司名称不能为空！");
+      } else if (this.serviceIns.person == "") {
+        alert("联系人不能为空！");
+      } else if (this.serviceIns.phone == "") {
+        alert("手机号不能为空！");
       } else {
         if (Install.isPhone(this.serviceIns.phone)) {
           //提交成功
@@ -147,6 +200,8 @@ export default {
             f: this.serviceIns.websit,
             g: addr
           };
+        } else {
+          alert("手机号格式不正确！");
         }
       }
     }
@@ -235,9 +290,10 @@ export default {
       .addPic {
         width: 281px;
         height: 181px;
-        background: #f5f5f5;
         border-radius: 6px;
         margin-left: 20px;
+        background: url("./addPic.png") no-repeat #f5f5f5 center center;
+        background-size: 30% 45%;
         .picture {
           width: 80px;
           height: 80px;
