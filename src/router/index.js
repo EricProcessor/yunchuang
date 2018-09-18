@@ -21,20 +21,21 @@ import PersonalSet from 'business/personalSet/personalSet';
 import Err404 from 'business/err404/err404';
 import Accountsecuritys from 'business/Accountsecurity/Accountsecuritys.vue' //账号安全
 import CompanyAccount from 'business/companyAccount/companyAccount';
-import Changepassword from 'business/Accountsecurity/Changepassword.vue'  //手机绑定
-import Tel from 'business/Accountsecurity/Tel.vue'  //修改密码
-import Emaild from 'business/Accountsecurity/Emaild.vue'  //邮箱认证
+import Changepassword from 'business/Accountsecurity/Changepassword.vue' //手机绑定
+import Tel from 'business/Accountsecurity/Tel.vue' //修改密码
+import Emaild from 'business/Accountsecurity/Emaild.vue' //邮箱认证
 import EnterpriseSet from 'business/enterpriseSet/enterpriseSet'
 import SetServiceIns from 'business/SetServiceIns/SetServiceIns';
 import SetInvestment from 'business/setInvestment/setInvestment';
 import SetTeacher from 'business/setTeacher/setTeacher';
 import SetInvestor from 'business/setInvestor/setInvestor';
-import ClassVideo from 'business/classVideo/classVideo'
+import ClassVideo from 'business/classVideo/classVideo';
+import FindPwd from 'business/findPwd/findPwd';
 Vue.use(Router)
 
 export default new Router({
   routes: [{
-      path: '/',        //首页
+      path: '/', //首页
       name: 'index',
       component: Index
     }, {
@@ -51,11 +52,11 @@ export default new Router({
       name: 'activity',
       component: Activity
     }, {
-      path: '/screenResult',//筛选结果页面
+      path: '/screenResult', //筛选结果页面
       name: 'screenResult',
       component: ScreenResult
     }, {
-      path: '/activeScreen',//活动筛选页面
+      path: '/activeScreen', //活动筛选页面
       name: 'activeScreen',
       component: ActiveScreen
     },
@@ -64,7 +65,7 @@ export default new Router({
       name: 'classroom',
       component: Classroom,
       children: [{
-        path: ':id',      //课堂视频页面
+        path: ':id', //课堂视频页面
         name: 'classVideo',
         component: ClassVideo
       }]
@@ -97,10 +98,9 @@ export default new Router({
           path: 'accountsecuritys', //账号安全 
           name: 'Accountsecuritys',
           component: Accountsecuritys,
-          children:[
-            {
+          children: [{
               path: 'tel', //修改密码   
-              name: 'Tel', 
+              name: 'Tel',
               component: Tel
             },
             {
@@ -130,7 +130,7 @@ export default new Router({
         },
       ]
     }, {
-      path: '/activeDetail/:id',//活动详情页面
+      path: '/activeDetail/:id', //活动详情页面
       name: 'activeDetail',
       component: ActiveDetail
     }, {
@@ -151,7 +151,11 @@ export default new Router({
       name: 'err404',
       component: Err404
     },
-   
+    {
+      path: '/findPwd', //找回密码
+      name: 'findPwd',
+      component: FindPwd
+    },
     {
       path: '/setServiceIns', //认证服务机构
       name: 'setServiceIns',

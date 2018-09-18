@@ -88,7 +88,7 @@
       <li class="group clearfix">
         <label class="fl pos1">
           <i v-if="formList.isShow">*</i>服务区域</label>
-        <input @click="showAddr" v-model="address" class="fl" type="text" placeholder="选择省-市-区" />
+        <input @click="showAddr" v-model="address" readonly class="fl" type="text" placeholder="选择省-市-区" />
         <textarea v-model="setTeacher.serviceArea" class="addeDetail fr" placeholder="请输入详细地址"></textarea>
       </li>
       <li class="group clearfix">
@@ -125,7 +125,7 @@
       </li>
       <li class="group clearfix">
         <label class="fl pos1">
-          <i v-if="formList.isShow">*</i>{{selectName.technicalField}}</label>
+          <i v-if="formList.isShow">*</i>{{selectName.technical}}</label>
         <select class="fl" v-model="setTeacher.technicalField">
           <option v-for="(v,i) in selectName.technicalFieldArr" :key="i" :value="v.fswId">{{v.fswName}}</option>
         </select>
@@ -159,6 +159,7 @@
       <li class="fl" @click="resetBtn">重置</li>
       <li class="fl preserve" @click="conserveBtn">保存</li>
     </ul>
+
     <!-- 日期picker -->
     <mt-datetime-picker ref="datePicker" type="date" @confirm="_handleTime" :startDate="new Date('1970-01-01')"></mt-datetime-picker>
     <!-- 地址 -->
@@ -177,7 +178,14 @@ export default {
         isShow: true,
         isClose: false
       },
-      address: "", //地址
+      //地址 地址id
+      address: "",
+      addrIdArr: [],
+      addrId: {
+        province: "", //省
+        city: "", //市
+        area: "" //区
+      },
       //性别
       sex: {
         male: false, //男
@@ -195,7 +203,7 @@ export default {
         carrier: "服务载体",
         unit: "单位属性",
         tutorship: "辅导特长",
-        technicalField: "技术领域",
+        technical: "技术领域",
         carrierType: "载体类型",
         torship: "辅助特长",
         carrierArr: [],
@@ -247,7 +255,15 @@ export default {
     },
     //获得地址-城市信息
     getAddr(val) {
-      this.address = val;
+      let addressArr = [];
+      for (let i in val) {
+        addressArr.push(val[i].ca_name);
+        this.addrIdArr.push(val[i].ca_id);
+      }
+      this.address = addressArr[0] + "-" + addressArr[1] + "-" + addressArr[2];
+      this.addrId.province = this.addrIdArr[0];
+      this.addrId.city = this.addrIdArr[1];
+      this.addrId.area = this.addrIdArr[2];
     },
     //关闭顶部提示
     closeBtn() {
@@ -333,93 +349,106 @@ export default {
     //保存信息
     conserveBtn() {
       //信息验证
-      for (let key in this.setTeacher) {
-        if (key == "name" && this.setTeacher[key] == "") {
-          alert("姓名不能为空");
-          return;
-        } else if (key == "birthday" && this.setTeacher[key] == "") {
-          alert("出生日期不能为空！");
-          return;
-        } else if (key == "company" && this.setTeacher[key] == "") {
-          alert("工作单位不能为空！");
-          return;
-        } else if (key == "serviceCarrier" && this.setTeacher[key] == "") {
-          alert("服务载体不能为空！");
-          return;
-        } else if (key == "unitAttrbute" && this.setTeacher[key] == "") {
-          alert("单位属性不能为空！");
-          return;
-        } else if (
-          key == "serviceArea" &&
-          this.setTeacher[key] == "" &&
-          this.address == ""
-        ) {
-          alert("服务区域不能为空！");
-          return;
-        } else if (key == "phone") {
-          if (this.setTeacher[key] == "") {
-            alert("手机号不能为空");
-          } else {
-            if (!Install.isPhone(this.setTeacher[key])) {
-              alert("手机号码格式不正确！");
+      if (
+        this.setTeacher.name != "" &&
+        this.setTeacher.birthday != "" &&
+        this.setTeacher.company != "" &&
+        this.setTeacher.serviceCarrier != "" &&
+        this.setTeacher.unitAttrbute != "" &&
+        Install.isPhone(this.setTeacher.phone) &&
+        Install.isEmail(this.setTeacher.email) &&
+        this.setTeacher.positionalTitles != "" &&
+        this.setTeacher.highestEducation != "" &&
+        this.setTeacher.goodTheme == "" &&
+        this.setTeacher.resume != ""
+      ) {
+        let _serviceUrl = "/fronttutorauthenticationsave-home";
+        let set_addr = this.address + " " + this.setTeacher.serviceArea;
+        let datas = {
+          fciName: this.setTeacher.name, //名字
+          fciSex: this.setTeacher.sex, //性别
+          fciBirthday: this.setTeacher.birthday, //生日
+          fciOrgName: this.setTeacher.company, //工作单位
+          fciPosition: this.setTeacher.presentPost, //职务
+          fciFlag: this.setTeacher.inviter, //是否接收邀请
+          fcciId: this.setTeacher.serviceCarrier, //服务载体
+          fciAttribute: this.setTeacher.unitAttrbute, //单位属性
+          fciAddress: set_addr, //地址
+          fciPostcode: this.setTeacher.zipCode, //邮编
+          fciTel: this.setTeacher.phone, //手机
+          fciMile: this.setTeacher.email, //邮箱
+          fciTechnical: this.setTeacher.positionalTitles, //职称
+          fciEducation: this.setTeacher.highestEducation, //学历
+          fciPoint: this.setTeacher.speciality, //辅导特长
+          fciDomain: this.setTeacher.technicalField, //技术领域
+          fciTheme: this.setTeacher.goodTheme, //擅长主题
+          fciResume: this.setTeacher.resume, //个人简历
+          fciEnterprise: this.setTeacher.coachEnterprise, //辅导企业
+          fciAppointment: this.setTeacher.employment, //受聘情况
+          fciLatitude: this.setTeacher.fciLatitude, //
+          fciLongitude: this.setTeacher.fciLongitude, //
+          provinceId: this.addrId.province, //省
+          cityId: this.addrId.city, //市
+          areaId: this.addrId.area //区
+        };
+        this.axios.post(_serviceUrl, datas).then(res => {
+          console.log(res);
+        });
+      } else {
+        for (let key in this.setTeacher) {
+          if (key == "name" && this.setTeacher[key] == "") {
+            alert("姓名不能为空");
+            return;
+          } else if (key == "birthday" && this.setTeacher[key] == "") {
+            alert("出生日期不能为空！");
+            return;
+          } else if (key == "company" && this.setTeacher[key] == "") {
+            alert("工作单位不能为空！");
+            return;
+          } else if (key == "serviceCarrier" && this.setTeacher[key] == "") {
+            alert("服务载体不能为空！");
+            return;
+          } else if (key == "unitAttrbute" && this.setTeacher[key] == "") {
+            alert("单位属性不能为空！");
+            return;
+          } else if (
+            key == "serviceArea" &&
+            this.setTeacher[key] == "" &&
+            this.address == ""
+          ) {
+            alert("服务区域不能为空！");
+            return;
+          } else if (key == "phone") {
+            if (this.setTeacher[key] == "") {
+              alert("手机号不能为空");
+            } else {
+              if (!Install.isPhone(this.setTeacher[key])) {
+                alert("手机号码格式不正确！");
+              }
             }
-          }
-          return;
-        } else if (key == "eamil") {
-          if (this.setTeacher[key] == "") {
-            alert("邮箱不能为空");
-          } else {
-            if (!Install.isEmail(this.setTeacher[key])) {
-              alert("邮箱格式不正确！");
+            return;
+          } else if (key == "eamil") {
+            if (this.setTeacher[key] == "") {
+              alert("邮箱不能为空");
+            } else {
+              if (!Install.isEmail(this.setTeacher[key])) {
+                alert("邮箱格式不正确！");
+              }
             }
+            return;
+          } else if (key == "positionalTitles" && this.setTeacher[key] == "") {
+            alert("职称不能为空！");
+            return;
+          } else if (key == "highestEducation" && this.setTeacher[key] == "") {
+            alert("最高学历不能为空！");
+            return;
+          } else if (key == "goodTheme" && this.setTeacher[key] == "") {
+            alert("技术领域不能为空！");
+            return;
+          } else if (key == "resume" && this.setTeacher[key] == "") {
+            alert("个人简历不能为空！");
+            return;
           }
-          return;
-        } else if (key == "positionalTitles" && this.setTeacher[key] == "") {
-          alert("职称不能为空！");
-          return;
-        } else if (key == "highestEducation" && this.setTeacher[key] == "") {
-          alert("最高学历不能为空！");
-          return;
-        } else if (key == "goodTheme" && this.setTeacher[key] == "") {
-          alert("技术领域不能为空！");
-          return;
-        } else if (key == "resume" && this.setTeacher[key] == "") {
-          alert("个人简历不能为空！");
-          return;
-        } else {
-          console.log(key, this.setTeacher[key]);
-          let _serviceUrl = "/fronttutorauthenticationsave-home";
-          let set_addr = this.address + " " + this.setTeacher.serviceArea;
-          let datas = {
-            fciName: this.setTeacher.name, //名字
-            fciSex: this.setTeacher.sex, //性别
-            fciBirthday: this.setTeacher.birthday, //生日
-            fciOrgName: this.setTeacher.company, //工作单位
-            fciPosition: this.setTeacher.presentPost, //职务
-            fciFlag: this.setTeacher.inviter, //是否接收邀请
-            fcciId: this.setTeacher.serviceCarrier, //服务载体
-            fciAttribute: this.setTeacher.unitAttrbute, //单位属性
-            fciAddress: set_addr, //地址
-            fciPostcode: this.setTeacher.zipCode, //邮编
-            fciTel: this.setTeacher.phone, //手机
-            fciMile: this.setTeacher.email, //邮箱
-            fciTechnical: this.setTeacher.positionalTitles, //职称
-            fciEducation: this.setTeacher.highestEducation, //学历
-            fciPoint: this.setTeacher.speciality, //辅导特长
-            fciDomain: this.setTeacher.technicalField, //技术领域
-            fciTheme: this.setTeacher.goodThememe, //擅长主题
-            fciResume: this.setTeacher.resume, //个人简历
-            fciEnterprise: this.setTeacher.coachEnterprise, //辅导企业
-            fciAppointment: this.setTeacher.employment, //受聘情况
-            fciLatitude: this.setTeacher.fciLatitude, //
-            fciLongitude: this.setTeacher.fciLongitude //
-            // provinceId: this.setTeacher.name,  //省
-            //cityId: this.setTeacher.name, //市
-            // areaId : this.setTeacher.name //区
-          };
-          this.axios.post(_serviceUrl,datas).then(res => {
-            console.log(res);
-          });
         }
       }
     }

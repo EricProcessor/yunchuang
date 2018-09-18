@@ -19,7 +19,7 @@
       <li class="group clearfix">
         <label class="fl pos1">
           <i v-if="!formList.isShow">*</i>地址</label>
-        <input @click="showAddr" v-model="address" class="fl" type="text" placeholder="选择省-市-区" />
+        <input @click="showAddr" readonly v-model="address" class="fl" type="text" placeholder="选择省-市-区" />
         <textarea class="addeDetail fr" v-model="investment.addrDetail" placeholder="请输入详细地址"></textarea>
       </li>
       <li class="group clearfix">

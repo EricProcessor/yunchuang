@@ -22,7 +22,7 @@
                </div>
                
             <div class="email_iptone">
-                <input type="text"  v-model="em" @blur="emails(em)" class="txtone" >
+                <input type="email"  v-model="em" @blur="emails(em)" class="txtone" >
                 
             </div>
             <div class="wrong_two" >
@@ -74,23 +74,29 @@ export default {
             return isEmail.test(pwd);
          },
         emails(emVal){
-            
+            console.log(emVal)
             if(emVal==""){
                 this.emNulls = true;
                 this.emFormat = false;
             }else{
                 this.emNulls = false;
                 if(this.isEmail(emVal)){
-                    this.emFormat = false;
-                   
+                    this.emFormat = false;  
+                    
                         let _urls = '/frontcompanyinfo-checkAcc';
                         let params = {
                             fmiMile: emVal
                         }
                        this.axios.post(_urls,params).then((res)=>{
-                           console.log(res)
+                           console.log(res);
+                          if(res.data==false){
+                              let _urltwo = '/frontmyaccupdatemail-home',
+                                  params = {
+                                      fmiMile :emVal
+                                  }
+                          }
+                          this.axios.post()
                        }) 
-                    
                 }else{
                     this.emFormat = true               
                 }

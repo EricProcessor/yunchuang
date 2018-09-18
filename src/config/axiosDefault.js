@@ -13,7 +13,8 @@ axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded
 axios.interceptors.request.use(config => {
     //修正post请求，传参以request payload的形式。改为和jq.ajax相同的Form Data形式传参
     if (config.method === 'post') {
-        config.data = qs.stringify(config.data)
+        //参数是否需要qs处理判定
+        config.noQs || (config.data = qs.stringify(config.data))
     }
     // console.log(config)
     return config
