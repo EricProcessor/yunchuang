@@ -37,7 +37,8 @@ export default {
              city_id:"",     //市
              begintime:'',   //开始时间
              endtime:'' ,    //结束时间  
-            //  type:"",
+             type:"",
+             selTab:""
         }
     },
     methods: {
@@ -45,23 +46,40 @@ export default {
           this.$router.go(-1);
         },
         commitBox() {
-           this.$router.push({
-                path: "/screenResult/",
-                query:{
-                    province_id:this.province_id,
-                    city_id:this.city_id,
-                    area_id:this.area_id,
-                    begintime:this.simpDateD1,
-                    endtime:this.simpDateD2,
-                    // type:"Y"
-                }
-            });
             
-        //   console.log(this.simpDateD1)   
-        //    console.log(this.simpDateD2)       
+            this.selTab=this.$route.query.selTab
+            console.log(this.selTab)
+            if(this.selTab==2){
+                 this.$router.push({
+                    path: "/screenResult/",
+                    query:{
+                        province_id:this.province_id,
+                        city_id:this.city_id,
+                        area_id:this.area_id,
+                        begintime:this.simpDateD1,
+                        endtime:this.simpDateD2,
+                        type:"W"
+                    }
+                    
+                });
+            }else{
+                this.$router.push({
+                    path: "/screenResult/",
+                    query:{
+                        province_id:this.province_id,
+                        city_id:this.city_id,
+                        area_id:this.area_id,
+                        begintime:this.simpDateD1,
+                        endtime:this.simpDateD2,
+                        type:"Y"
+                    }
+                    
+                });
+            }      
         },
         selectFromD1(val){   //接收开始时间子组件传来的值
-            this.simpDateD1 = val    
+            this.simpDateD1 = val  
+            console.log(this.simpDateD1)  
         },
          selectFromD2(val){  //接收结束子组件传来的值
             this.simpDateD2 = val
@@ -73,7 +91,7 @@ export default {
             console.log(this.city_id)
             this.area_id = val[2]
             console.log(this.area_id)
-        }    
+        }, 
     },
     components:{
         'mt-popup':Popup,

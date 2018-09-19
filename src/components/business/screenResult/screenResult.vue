@@ -28,7 +28,7 @@
              city_id:'',     //市
              begintime:'',   //开始时间
              endtime:'' ,    //结束时间  
-            //  type:""
+             type:""
 
           }        
         },
@@ -51,7 +51,7 @@
             area_id:this.$route.query.area_id,
             begintime:this.$route.query.begintime,
             endtime:this.$route.query.endtime,
-            // type:"W"
+            type:this.$route.query.type
           }
           this.axios.post(url,params).then(res=>{
             this.screenResult = res.data.list
