@@ -20,7 +20,7 @@
         <label class="fl pos1">
           <i v-if="!formList.isShow">*</i>地址</label>
         <input @click="showAddr" readonly v-model="address" class="fl" type="text" placeholder="选择省-市-区" />
-        <textarea class="addeDetail fr" v-model="investment.addrDetail" placeholder="请输入详细地址"></textarea>
+        <textarea class="addeDetail fr" v-model="investment.addeDetail" placeholder="请输入详细地址"></textarea>
       </li>
       <li class="group clearfix">
         <label class="fl pos1">
@@ -56,7 +56,7 @@
         <label class="fl pos1">
           <i v-if="formList.isShow">*</i>{{investName.field}}</label>
         <select class="fl" v-model="investment.field">
-          <option value="0">金融服务</option>
+          <option v-for="(v,i) in investName.fieldArr" :key="i" :value="v.fswId">{{v.fswName}}</option>
         </select>
       </li>
       <li class="group clearfix">
@@ -96,7 +96,7 @@
     </ul>
     <ul class="clearfix operatBtn">
       <li class="fl" @click="resetBtn">重置</li>
-      <li class="fl preserve">保存</li>
+      <li class="fl preserve" @click="saveSth">保存</li>
     </ul>
     <addressPick @selectAddress="getAddr" ref="addr"></addressPick>
     <!-- 保存成功 -->
@@ -108,6 +108,7 @@ import IndexHeader from "business/indexHeader/indexHeader";
 import AddressPick from "base/addressPick/addressPick";
 import UploadImg from "base/uploadImg/uploadImg";
 import Success from "business/success/success";
+import Install from "@/config/checkRule";
 export default {
   data() {
     return {
@@ -129,6 +130,7 @@ export default {
       },
       address: "", //地址
       inputImg: [], //上传的图片
+      headPicUrl: "",
       //投资
       investName: {
         field: "投资领域",
@@ -149,7 +151,8 @@ export default {
         stage: "", //投资阶段
         scale: "", //基金规模
         idea: "", //投资理念
-        succCase: "" //成功案例
+        succCase: "", //成功案例
+        flag: "M"
       }
     };
   },
@@ -177,6 +180,24 @@ export default {
     },
     inputGetImg(arr) {
       this.inputImg = arr;
+      this._upLoadImg(this.inputImg[0]);
+    },
+    //开始上传头像
+    _upLoadImg(myFile) {
+      var fd = new FormData();
+      fd.append("myFile", myFile);
+
+      this.axios({
+        url: "upload-file",
+        method: "post",
+        noQs: true, //不进行fs参数处理
+        data: fd
+      }).then(res => {
+        // console.log(res)
+        if (res.status === 200) {
+          this.headPicUrl = res.data.url;
+        }
+      });
     },
     closeBtn() {
       this.formList.isClose = !this.formList.isClose;
@@ -185,14 +206,14 @@ export default {
       if (!this.investment.agree) {
         this.investment.agree = !this.investment.agree;
         this.investment.disagree = !this.investment.disagree;
-      } else {
-        return;
+        this.investment.flag = "M";
       }
     },
     disagreeInviter() {
       if (!this.investment.disagree) {
         this.investment.disagree = !this.investment.disagree;
         this.investment.agree = !this.investment.agree;
+        this.investment.flag = "Y";
       }
     },
     //重置信息
@@ -208,7 +229,7 @@ export default {
     getFieldData() {
       let _url = "/fronttutorauthenticationselect-home";
       this.axios.post(_url, { name: this.investName.field }).then(res => {
-        console.log(res);
+        this.investName.fieldArr = res.data;
       });
     },
     //获得投资阶段数据
@@ -217,12 +238,58 @@ export default {
       this.axios.post(_url, { name: this.investName.stage }).then(res => {
         this.investName.stageArr = res.data;
       });
+    },
+    //保存信息
+    saveSth() {
+      if (
+        this.investment.person == "" &&
+        this.investment.personTel == "" &&
+        this.investment.field == ""
+      ) {
+        alert("信息不完整！");
+      } else if (this.investment.person == "") {
+        alert("联系人不能为空！");
+      } else if (this.investment.personTel == "") {
+        alert("手机号不能为空！");
+      } else if (this.investment.field == "") {
+        alert("投资领域不能为空！");
+      } else {
+        if (Install.isPhone(this.investment.personTel)) {
+          let _url = "/frontcompanyauthenticationserviceaddpage-home";
+          let _address = this.address + " " + this.investment.addeDetail;
+          let params = {
+            provinceId: this.addrId.province,
+            cityId: this.addrId.city,
+            areaId: this.addrId.area,
+            address: _address, //地址
+            fciUrl: this.investment.website, //网址
+            fciMile: this.investment.email, //邮箱
+            fciTel: this.investment.personTel, //联系电话
+            fciName: this.investment.person, //联系人
+            fciIdea: this.investment.idea, //投资理念
+            fciScale: this.investment.scale, //基金规模
+            fciCase: this.investment.succCase, //成功案例
+            fifId: this.investment.stage, //投资阶段
+            fisId: this.investment.field, //投资领域
+            fciFlag: this.investment.flag //是否接受邀约
+          };
+          this.axios.post(_url, params).then(res => {
+            if (res.data.flag) {
+              this.sucOption.showSuccess = true;
+            }else{
+              alert(res.data.msg);
+            }
+            
+          });
+        }
+      }
     }
   },
   components: {
     IndexHeader,
     AddressPick,
-    UploadImg
+    UploadImg,
+    Success
   }
 };
 </script>
@@ -365,6 +432,10 @@ export default {
         background-size: 30% 45%;
         border-radius: 6px;
         margin-left: 20px;
+        img{
+          width: 100%;
+          height: 100%;
+        }
         .picture {
           width: 80px;
           height: 80px;

@@ -52,7 +52,22 @@ export default {
     },
     forgotPwdBtn() {
       //忘记密码
-      this.$router.push("/findPwd");
+      if (this.userInfo.userName == "") {
+        alert("请输入用户名！");
+      } else {
+        let _this_url = "/frontcompanyinompanyCheckAcc-checkAcc";
+        this.axios
+          .post(_this_url, { fmiAcc: this.userInfo.userName })
+          .then(res => {
+            if (res.data.flag) {
+              this.$router.push({
+                path: `/findPwd/${this.userInfo.userName}`
+              });
+            }else{
+              alert("该用户名不存在！");
+            }
+          });
+      }
     },
     loginBtn() {
       //登录信息
@@ -62,12 +77,10 @@ export default {
         alert("用户名不能为空！");
       } else if (this.userInfo.password == "") {
         alert("密码不能为空！");
-      } else if (!Install.isPhone(this.userInfo.userName)) {
-        alert("请输入正确的手机号码！");
       } else {
         let url = "/frontloginoperate-login";
         let params = {
-          fmiTel: this.userInfo.userName,
+          fmiAcc: this.userInfo.userName,
           fmiPwd: this.userInfo.password
         };
         this.axios.post(url, params).then(res => {
@@ -85,7 +98,7 @@ export default {
     },
     goToRegister() {
       this.$router.push("/register");
-    },
+    }
   }
 };
 </script>
