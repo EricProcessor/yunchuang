@@ -9,19 +9,19 @@
         <section class="center">
             <div class="main">
                 <!-- 手机验证 -->
-                <div class="main_dl">
+                <div class="main_dl" @click="phoneCode(dataList.phonestatus)">
                    <div class="one">
                        <dl>
                            <dt><img src="./tel.png" alt=""></dt>
                            <dd>
                                <p>手机绑定</p>
-                               <p>123****4356</p>
+                               <p>{{dataList.phone}}</p>
                            </dd>
                        </dl>
                    </div>
                     <div class="two">
-                        <p>未认证</p>
                         <p>已认证</p>
+                        <p>未认证</p>
                     </div>
                 </div>
                 <!-- 修改密码 -->
@@ -41,7 +41,7 @@
                         <!-- <p style="display:none">已认证</p> -->
                     </div>
                 </div>
-               <!-- </router-link> -->
+               <!-- </router-link> -->  
                 <!-- 邮箱验证 -->
                 <div class="email_dl">
                    <div class="one">
@@ -53,9 +53,9 @@
                            </dd>
                        </dl>
                    </div>
-                    <div class="two">
+                    <div class="two"  >
                         <p>未完成</p>
-                        <p style="display:none">已完成</p>
+                        <p>已完成</p>
                     </div>
                 </div>
             </div>
@@ -72,7 +72,11 @@ import IndexHeader from "business/indexHeader/indexHeader";
 
 export default {
     data (){
-        return {}
+        return {
+            dataList:{},
+            ok:false,
+            errNo:false,
+        }
     },
      created() {
         this.headerText = "账号安全"; //设置头部显示导航内容
@@ -91,8 +95,20 @@ export default {
             let getUrl = "/h5frontmyaccsafety-home";
             this.axios.post(getUrl).then((res)=>{
                 console.log(res)
+                this.dataList = res.data;
+                
             })
         },
+        phoneCode(codeVal){
+            console.log(codeVal);
+            if(codeVal=="Y"){
+                this.ok = true;
+                this.errNo = false
+            }else{
+                this.$router.push("/mine/accountsecuritys/Changepassword");
+                this.errNo = true
+            }
+        }
     },
     mounted(){
         this.getData();
@@ -161,7 +177,7 @@ export default {
                         p:last-child{
                             color: #6ea1ff;
                             font-size: 24px;
-                            display: none;
+                            //display: none;
                         }
                     }
                }
