@@ -65,7 +65,7 @@
                 </div>
             </div>
             <!--地址选择组件-->
-                <address-pick ref="addressPopup" @selectAddress="_getAddress"></address-pick>
+                <address-pick v-if="areaId" ref="addressPopup" :defaultProvinceId="provinceId" :defaultCityId="cityId" :defaultAreaId="areaId"  @selectAddress="_getAddress"></address-pick>
             <!--地址选择组件-->
             <div class="butt">
                 <div @click="_resetEvent" class="reset">重置</div>
@@ -83,13 +83,14 @@ export default {
     data() {
         return {
             remind: true,       //弹窗提示
+            userId: 182,          //用户的fciId       暂时写死，后边要从登陆保存的用户信息中获取fciId
             name: "",       //企业名称
             telephone: "",          //联系方式
             website: "",            //网址
             email: "",              //邮箱
-            provinceId: 0,             //省份id
-            cityId: 0,                 //城市ID
-            areaId: 0,                 //地区id
+            provinceId: 2,             //省份id
+            cityId: 52,                 //城市ID
+            areaId: 500,                 //地区id
             simpAddress: "",              //简单地址
             complexAddress: "",             //详细地址
             picList: [],            //保存头像上传图片文件的数组，元素是file对象
@@ -108,26 +109,27 @@ export default {
         _showAddressPopup() {       //地址选择栏弹出显示
             this.$refs.addressPopup.showAddressComponent()
         },
-        //获取已经设置好的企业信息内容。接口还未完成
+        //获取已经设置好的企业信息内容。接口还未完成。后期 改为在本地获取（登陆后保存的用户信息）
         _getMsg() {
             this.axios({
                 method: 'post',
                 url: '/h5frontmembercentre-home'
             }).then(res => {
                 if (res.status === 200) {
-                    // this._initMsg(res.data)
+                    this._initMsg(res.data)
                 }
             })
         },
         //初始化公司信息操作：将请求来的公司数据填充到页面上
         _initMsg(data) {
-            this.name = data.fci_name
-            this.sex = data.fmiMailVerify
-            this.telephone = data.fci_tel
+            this.name = data.fmiUsername
+            this.telephone = data.fmiTel
             this.email = data.fmiMile
             this.picList = [{src: data.fmiPath}]
-            this.picList2 = [{src: data.fmiPath}]
+            // this.picList2 = [{src: data.fmiPath}]
             this.headPicUrl = data.fmiPath
+            // this.picture = data.fmiPath
+
             
         },
         //重置事件
@@ -168,6 +170,7 @@ export default {
                     url: "/frontcompanysavebaseinfoset-home",
                     method: 'post',
                     data: {
+                        fciId: _this.userId,        //ID
                         fciName: _this.name,      //姓名
                         fciTel: _this.telephone,    //联系方式
                         fciUrl: _this.website,      //网址

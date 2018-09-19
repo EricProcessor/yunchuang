@@ -68,7 +68,7 @@
                 ></mt-datetime-picker>
             <!--日期选择组件-->
             <!--地址选择组件-->
-                <address-pick ref="addressPopup" @selectAddress="_getAddress"></address-pick>
+                <address-pick v-if="areaId" ref="addressPopup" :defaultProvinceId="provinceId" :defaultCityId="cityId" :defaultAreaId="areaId"  @selectAddress="_getAddress"></address-pick>
             <!--地址选择组件-->
             <div class="butt">
                 <div @click="_resetEvent" class="reset">重置</div>
@@ -91,9 +91,9 @@ export default {
             birthday: "",           //生日
             telephone: "",          //手机号
             email: "",              //邮箱
-            provinceId: 0,          //省份id
-            cityId: 0,              //城市id
-            areaId: 0,               //区域id
+            provinceId: 4,          //省份id
+            cityId: 54,              //城市id
+            areaId: 532,               //区域id
             simpAddress: "",            //保存用于显示用的地址字符串
             complexAddress: "",             //详细地址
             picList: [],            //保存上传图片文件的数组，元素是file对象
@@ -141,7 +141,7 @@ export default {
         _setSex(val) {      //设置性别
             this.sex = val
         },
-        //获取用户已经设置好的信息内容
+        //获取用户已经设置好的信息内容。后期改为本地获取用户信息
         _getPersonMsg() {
             this.axios({
                 method: 'post',
@@ -155,7 +155,7 @@ export default {
         _resetEvent() {          //重置事件
             MessageBox({
                 title: '提示',
-                message: "确定要执行此操作吗？",
+                message: "确定要执行重置操作吗？",
                 showCancelButton: true,
                 showConfirmButton: true,
             }).then( action => {
@@ -164,10 +164,10 @@ export default {
         },
         //初始化用户信息操作：将请求来的用户数据填充到页面上
         _initPerson(data) {
-            this.name = data.fci_name
+            this.name = data.fmiUsername
             this.sex = data.fmiMailVerify
             this._handleTime(new Date(data.fmiDatetimes))    //时间数据转换，并保存给this.birthday
-            this.telephone = data.fci_tel
+            this.telephone = data.fmiTel
             this.email = data.fmiMile
             this.picList = [{src: data.fmiPath}]
             this.headPicUrl = data.fmiPath
