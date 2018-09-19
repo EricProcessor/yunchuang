@@ -641,9 +641,9 @@ export default {
           this.axios.post(companyRegUrl, params).then(res => {
             if (res.data.flag) {
               this.regInfo.isRegSucc = true;
-              // localStorage.setItem();
             } else {
               this.regInfo.isRegSucc = false;
+              alert("改组织机构代码已注册！");
             }
           });
         } else {
@@ -674,6 +674,7 @@ export default {
               this.regInfo.isRegSucc = true;
             } else {
               this.regInfo.isRegSucc = false;
+              alert("该用户名已存在！");
             }
           });
         } else {

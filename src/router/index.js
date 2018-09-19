@@ -31,6 +31,9 @@ import SetTeacher from 'business/setTeacher/setTeacher';
 import SetInvestor from 'business/setInvestor/setInvestor';
 import ClassVideo from 'business/classVideo/classVideo';
 import FindPwd from 'business/findPwd/findPwd';
+import FindPwdChange from 'business/findPwdChange/findPwdChange';
+
+
 Vue.use(Router)
 
 export default new Router({
@@ -152,9 +155,13 @@ export default new Router({
       component: Err404
     },
     {
-      path: '/findPwd', //找回密码
+      path: '/findPwd/:userName', //找回密码
       name: 'findPwd',
       component: FindPwd
+    }, {
+      path: '/findPwdChange/:userName', //找回密码--修改密码
+      name: 'findPwdChange',
+      component: FindPwdChange
     },
     {
       path: '/setServiceIns', //认证服务机构
