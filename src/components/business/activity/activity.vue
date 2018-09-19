@@ -5,7 +5,7 @@
       <span class="acticity-screen" @click="activeScreen">筛选</span>
     </header>
     <!-- tab部分 -->
-    <acTab class="ac-tab"></acTab>
+    <acTab class="ac-tab" @selectTab="selectTab"></acTab>
      <m-footer :selected="selected"></m-footer>
   </div>
 </template>
@@ -16,21 +16,30 @@
     export default {
       data() {
         return {
-          selected: "activity"//设置导航栏选中栏目
-          
+          selected: "activity",//设置导航栏选中栏目
+          tValue:"",
+          selTab:1
+
         }
       },
-        components: {
-            AcTab,
-            MFooter
+      components: {
+          AcTab,
+          MFooter
+      },
+      methods:{
+        activeScreen(){
+          this.$router.push({
+            path: "/activeScreen/",
+            query:{
+              selTab:this.tValue
+            }
+          });
         },
-        methods:{
-          activeScreen(){
-            this.$router.push({
-              path: "/activeScreen"
-            });
-          }
+        selectTab(val){
+          this.tValue = val
+          // console.log(val)
         }
+      }
        
     };
 </script>

@@ -115,7 +115,7 @@ export default {
           faaPerson: this.userInfo.userName,  //联系人
           faaTel: this.userInfo.tel,          //联系电话
           faiId:this.activeDetail.faiId,      
-          fmiId:183
+          fmiId:185
         };
         console.log(this.userInfo.tel)  
         this.axios.post(url, params).then(res => {
