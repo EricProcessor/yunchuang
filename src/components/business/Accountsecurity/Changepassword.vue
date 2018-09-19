@@ -60,10 +60,10 @@ export default {
                 timer: null, //定时器
                 verificationCode:"",
                 ObtainNull:"输入的值不能为空",
-                Nulls:false
+                Nulls:false,
+                str:"",         //页面渲染手机号,显示成*号
             },
             // ok:'true'
-           
             verificationCodez:{
                 errCode:false,
                 codeerrorTxt:"验证码错误"
@@ -83,7 +83,6 @@ export default {
             console.log(telephone)
            var tel = 11 && /^((13|14|15|17|18|)[0-9]{1}\d{8})$/;
             if(telephone == ""){
-             
                 this.Obtain.Nulls=true;
             }else{
                 this.Obtain.Nulls=false;
@@ -109,9 +108,6 @@ export default {
                                  alert(res.data.msg2)                     
                         }
                     });
-                    
-                 
-
             }
             }
             
