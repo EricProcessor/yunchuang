@@ -22,7 +22,7 @@
                </div>
                
             <div class="email_iptone">
-                <input type="email"  v-model="em" @blur="emails(em)" class="txtone" >
+                <input type="email"  v-model="em" @blur="emailss(em)" class="txtone" >
                 
             </div>
             <div class="wrong_two" >
@@ -36,7 +36,7 @@
                </div>
                
             <div class="email_ipttwo">
-                <input type="text" class="txtemail" >
+                <input type="text" class="txtemail" v-model="yanzheng" >
             </div>
             <div class="wrong">
                 <p>验证码错误</p>
@@ -47,7 +47,7 @@
 
     <!-- footer -->
         <div class="footer">
-            <div class="btnone">
+            <div class="btnone" @click="emailBtn(em,yanzheng)">
                 <p class="foot_btns">提交</p>
             </div>
         </div>
@@ -60,9 +60,11 @@ export default {
         return {
             em:'',       //邮箱账号信息
             emNulls:false,   //判断邮箱为空的验证
-            emFormat:false  //判断邮箱格式不正确时验证
+            emFormat:false,  //判断邮箱格式不正确时验证
+            yanzheng:""        //邮箱验证码
         }
     },
+    
     methods:{
         go(){
                 this.$router.go(-1);
@@ -73,35 +75,50 @@ export default {
             let isEmail = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
             return isEmail.test(pwd);
          },
-        emails(emVal){
-            console.log(emVal)
-            if(emVal==""){
+        emailss(emailVal){   
+            console.log(document.cookie);
+            console.log(emailVal)
+            if(emailVal==""){          //input框为空时
                 this.emNulls = true;
                 this.emFormat = false;
             }else{
                 this.emNulls = false;
-                if(this.isEmail(emVal)){
+                if(this.isEmail(emailVal)){        //正则匹配
                     this.emFormat = false;  
-                    
-                        let _urls = '/frontcompanyinfo-checkAcc';
-                        let params = {
-                            fmiMile: emVal
-                        }
-                       this.axios.post(_urls,params).then((res)=>{
-                           console.log(res);
-                          if(res.data==false){
-                              let _urltwo = '/frontmyaccupdatemail-home',
+                              //获取邮箱验证码
+                              let _urltwo = "/frontmyaccsendcodemail-home",
                                   params = {
-                                      fmiMile :emVal
+                                      mail:emailVal
                                   }
-                          }
-                          this.axios.post()
-                       }) 
+                    this.axios.post(_urltwo,params).then(res =>{
+                        console.log(res)
+                    })   
                 }else{
                     this.emFormat = true               
                 }
             }
            
+        },
+        emailBtn(emailVal,codeVal){
+            console.log("邮箱:"+emailVal)
+            console.log("验证码:"+codeVal)
+            if(emailVal=="" && codeVal==""){
+                alert("信息不完整")
+            }else if(emailVal==""){
+                alert("邮箱不能为空")
+            }else if(codeVal==""){
+                alert("验证码不能为空")
+            }else{
+                //邮箱验证接口
+                let addUrl="/frontmyaccupdatemail-home",
+                    params = {
+                        mail:emailVal,
+                        code:codeVal
+                    };
+                this.axios.post(addUrl,params).then((res)=>{
+                    console.log(res)
+                })
+            }
         }
     }
 }

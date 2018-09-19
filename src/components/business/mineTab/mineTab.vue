@@ -92,6 +92,7 @@ export default {
       d.setTime(d.getTime() + 1 * 24 * 60 * 60 * 1000);
       var expires = "expires=" + d.toUTCString();
       // console.info(cname + "=" + +"; " + expires);
+      
       document.cookie =
         "SESSION=d1b64bbc-fcf6-4d1c-9a3b-9086366e2067" + "; " + expires;
       console.info(document.cookie);

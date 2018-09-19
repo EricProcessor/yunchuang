@@ -224,7 +224,7 @@ export default {
         .then(res => {
           this.items = res.data.List;
           // if (res == "ture") {
-          this.sucOption.showSuccess == ture;
+          this.sucOption.showSuccess = true;
           // }
         });
     }

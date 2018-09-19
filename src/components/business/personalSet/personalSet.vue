@@ -118,7 +118,7 @@ export default {
         // }).then(res => {
         //     console.log(res)
         // })
-        this._getPersonMsg()
+        this._getPersonMsg()        //获取用户已经设置好的信息内容
     },
     methods: {
         _closeRemind() {    //关闭提示窗
@@ -145,9 +145,11 @@ export default {
         _getPersonMsg() {
             this.axios({
                 method: 'post',
-                url: '/h5frontbaseinfoset-home'
+                url: '/h5frontmembercentre-home'
             }).then(res => {
-                console.log(res)
+                if (res.status === 200) {
+                    this._initPerson(res.data)
+                }
             })
         },
         _resetEvent() {          //重置事件
@@ -160,14 +162,30 @@ export default {
                 (action === "confirm") && this._reset()     //如果点击确定，那么进行重置操作
             })
         },
+        //初始化用户信息操作：将请求来的用户数据填充到页面上
+        _initPerson(data) {
+            this.name = data.fci_name
+            this.sex = data.fmiMailVerify
+            this._handleTime(new Date(data.fmiDatetimes))    //时间数据转换，并保存给this.birthday
+            this.telephone = data.fci_tel
+            this.email = data.fmiMile
+            this.picList = [{src: data.fmiPath}]
+            this.headPicUrl = data.fmiPath
+            
+        },
         _reset() {            //重置信息操作
             this.name = ""       //姓名
-            this.sex = ""            //性别
+            this.sex = "Y"            //性别
             this.birthday = ""          //生日
             this.telephone = ""         //手机号
             this.email = ""           //邮箱
-            this.simpAddress = "",              //用于显示用的城市三级地址信息
             this.complexAddress = ""             //详细地址
+            this.provinceId = 0             //省份id
+            this.cityId = 0                 //城市ID
+            this.areaId = 0                 //地区id
+            this.picList = []            //保存上传图片文件的数组，元素是file对象
+            this.headPicUrl = ''          //保存上传的 头像图片的url地址
+            this._saveEvent()
         },
         //点击“保存”按钮，进行个人信息保存
         _saveEvent() {               //保存信息

@@ -65,7 +65,7 @@ export default new Router({
       name: 'classroom',
       component: Classroom,
       children: [{
-        path: ':id', //课堂视频页面
+        path: '/classVideo', //课堂视频页面
         name: 'classVideo',
         component: ClassVideo
       }]

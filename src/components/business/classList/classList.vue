@@ -16,7 +16,7 @@
                                 <span class="icon_num"></span>
                                 <span class="count">{{val.fpdExamine}}</span>
 
-                                <span class="icon_num1"></span>
+                                <span class="icon_num1" @click.stop="Fabulous(val.fdpId)"></span>
                                 <span class="count">{{val.fpdPraise}}</span>
                             </p>
                         </div>
@@ -30,18 +30,39 @@
     </div>
 </template>
 <script>
+import axios from "axios";
 export default {
-    props: {
-        listData: {
-            type: Array
-        }
-    },
-    methods: {
-        _routerGo() {
-          
-        }
+  props: {
+    listData: {
+      type: Array
     }
-}
+  },
+  methods: {
+    _routerGo(fdpId) {
+      this.$router.push({
+        name: "classVideo",
+        params: { fdpId: fdpId }
+      });
+    },
+    // 点赞
+    Fabulous(fdpId) {
+      alert("1");
+      let _url = "/frontclassroom-praise";
+      axios
+        .post(_url, {
+          fdpId: fdpId,
+          fpdPraise: "",
+          flag: "1"
+        })
+        .then(res => {
+          // this.items = res.data.messageList;
+          console.log(res.data);
+          if ((res.data = true)) {
+          }
+        });
+    }
+  }
+};
 </script>
 <style lang="less" scoped>
 .list-box {

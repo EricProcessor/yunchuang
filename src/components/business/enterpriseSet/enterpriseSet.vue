@@ -32,7 +32,7 @@
                 <div class="column">
                     <ul>
                         <li class="column-left">网址</li>
-                        <li class="column-right"><input type="text" disabled v-model="website" /></li>
+                        <li class="column-right"><input type="text" v-model="website" /></li>
                     </ul>
                 </div>
                 <div class="column">
@@ -45,7 +45,7 @@
                     <ul>
                         <li class="column-left"></li>
                         <li class="column-right">
-                            <textarea name="" placeholder="请输入详细地址" v-model="address" id="" cols="30" rows="10"></textarea>
+                            <textarea name="" placeholder="请输入详细地址" v-model="complexAddress" id="" cols="30" rows="10"></textarea>
                         </li>
                     </ul>
                 </div>
@@ -87,30 +87,19 @@ export default {
             telephone: "",          //联系方式
             website: "",            //网址
             email: "",              //邮箱
+            provinceId: 0,             //省份id
+            cityId: 0,                 //城市ID
+            areaId: 0,                 //地区id
             simpAddress: "",              //简单地址
-            address: "",             //详细地址
+            complexAddress: "",             //详细地址
             picList: [],            //保存头像上传图片文件的数组，元素是file对象
-            picList2: []            //保存照片上传图片文件的数组，元素是file对象
+            picList2: [],            //保存照片上传图片文件的数组，元素是file对象
+            headPicUrl: '',          //保存上传的头像返回的 url地址
+            picture: ''             //保存上传的照片返回的 url地址
         }
     },
     created() {
-        // axios({
-        //     url: config.host + "/frontcompanyinfoperson-checkAcc",
-        //     method: 'post',
-        //     data: {
-        //         fmiTel: "15130038144",
-        //         fmiMile: "15130038144@163.com"
-        //     }
-        // }).then(res => {
-        //     console.log(res)
-        // })
-
-        // axios.post(config.host + "/frontcompanyinfoperson-checkAcc", {
-        //     fmiTel: "15130038144",
-        //     fmiMile: "15130038144@163.com"
-        // }).then(res => {
-        //     console.log(res)
-        // })
+       this._getMsg()       //设置数据
     },
     methods: {
         _closeRemind() {    //关闭提示窗
@@ -119,7 +108,30 @@ export default {
         _showAddressPopup() {       //地址选择栏弹出显示
             this.$refs.addressPopup.showAddressComponent()
         },
-        _resetEvent() {          //重置事件
+        //获取已经设置好的企业信息内容。接口还未完成
+        _getMsg() {
+            this.axios({
+                method: 'post',
+                url: '/h5frontmembercentre-home'
+            }).then(res => {
+                if (res.status === 200) {
+                    // this._initMsg(res.data)
+                }
+            })
+        },
+        //初始化公司信息操作：将请求来的公司数据填充到页面上
+        _initMsg(data) {
+            this.name = data.fci_name
+            this.sex = data.fmiMailVerify
+            this.telephone = data.fci_tel
+            this.email = data.fmiMile
+            this.picList = [{src: data.fmiPath}]
+            this.picList2 = [{src: data.fmiPath}]
+            this.headPicUrl = data.fmiPath
+            
+        },
+        //重置事件
+        _resetEvent() {      
             MessageBox({
                 title: '提示',
                 message: "确定要执行此操作吗？",
@@ -129,26 +141,112 @@ export default {
                 (action === "confirm") && this._reset()     //如果点击确定，那么进行重置操作
             })
         },
-        _reset() {            //重置信息操作
+        //重置信息操作
+        _reset() {
             this.name = ""       //姓名
             this.website = ""            //网址
             this.telephone = ""         //联系方式
             this.email = ""           //邮箱
-            this.simpAddress = "",              //简单地址
-            this.address = ""             //详细地址
-        },
-        _saveEvent() {               //保存信息
-            //进行ajax请求
+            this.complexAddress = "",              //详细地址
+            this.provinceId = 0,        //省份
+            this.cityId = 0,            //城市
+            this.areaId = 0,            //区域
+            this.picList = []           //头像信息
+            this.picList2 = []          //照片图片信息
+            this.picture = ""           //照片上传路径清空
+            this.headPicUrl = ""        //头像上传路径清空
 
+            this._saveEvent()           //设置
+        },
+        //点击“保存”按钮，进行个人信息保存
+        _saveEvent() {               //保存信息
+            var _this = this
+            //进行ajax请求
+            //保存用户个人信息
+            let sendMsg = () => {
+                return this.axios({
+                    url: "/frontcompanysavebaseinfoset-home",
+                    method: 'post',
+                    data: {
+                        fciName: _this.name,      //姓名
+                        fciTel: _this.telephone,    //联系方式
+                        fciUrl: _this.website,      //网址
+                        fciMile: _this.email,       //邮箱
+                        fciAddress: _this.complexAddress,      //详细地址
+                        provinceId: _this.provinceId,             //省份id
+                        cityId: _this.cityId,                 //城市ID
+                        areaId: _this.areaId,                 //地区id
+                        fciPath: _this.picture,         //上传的照片返回的 url地址
+                        picList: [],            //保存头像上传图片文件的数组，元素是file对象
+                        picList2: [],            //保存照片上传图片文件的数组，元素是file对象
+                    }
+                })
+            }
+
+            //上传图片路径
+            let sendPic = () => {
+                return this.axios({
+                    url: '/frontbaseheadupdate-home',
+                    method: 'post',
+                    data: {
+                        url: _this.headPicUrl
+                    }
+                })
+            }
+
+            //并发请求
+            this.axios.all([sendMsg(), sendPic()])
+                .then(this.axios.spread(function(acct, perms) {
+                    //这个时候两个请求都完成了
+                    // console.log(acct, perms)
+                    MessageBox({
+                        title: '提示',
+                        message: "企业信息设置成功"
+                    })
+                }))
+            
         },
         getHeadUploadImg(imgList) {     //获得上传的头像图片数组
             this.picList = imgList
+
+            //开始上传头像
+            this._upLoadImg(this.picList[0], "headPicUrl")
         },
-        getUploadImg(imgList) {         //获得上传的照片图片数组
+        getUploadImg(imgList) {         //获得上传的照片图片数组。
             this.picList2 = imgList
+
+            //开始上传照片
+            this._upLoadImg(this.picList2[0], "picture")
+        },
+        //开始上传头像。第一个参数是 图片文件对象， 第二个参数是 用来判断是要保存哪个图片
+        _upLoadImg(file, imgType) {
+
+            var fd = new FormData()
+            fd.append("myFile", file)
+
+            this.axios({
+                url: 'upload-file',
+                method: 'post',
+                noQs: true,     //不进行fs参数处理
+                data: fd
+            }).then(res => {
+                MessageBox({
+                    title: '提示',
+                    message: res.data.msg,
+                })
+                if (res.status === 200) {
+                    imgType === "headPicUrl" ? this.headPicUrl = res.data.url : this.picture = res.data.url
+                }  
+            })
         },
         _getAddress(val) {      //获取选择的地址
-            this.simpAddress = val
+            this.simpAddress = val.map(item => {
+                return item.ca_name
+            }).join("-")
+
+            this.provinceId = val[0].ca_id
+            this.cityId = val[0].ca_id
+            this.areaId = val[0].ca_id
         }
     },
     components: {
