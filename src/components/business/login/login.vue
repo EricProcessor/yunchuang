@@ -106,9 +106,9 @@ export default {
   height: 1334px;
   background: #253350;
   .logo {
-    width: 300px;
-    height: 88px;
-    padding: 300px 0 220px 0;
+    width: 400px;
+    height: 108px;
+    padding: 300px 0 160px 0;
     margin: 0 auto;
     img {
       width: 100%;
