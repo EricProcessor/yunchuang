@@ -36,7 +36,7 @@
                 <input type="text" class="txt" v-model="Obtain.verificationCode" >
             </div>
             <div class="err" >
-                <p class="Verification">验证码错误</p>
+                <p class="Verification" v-show="verificationCodez.errCode">{{verificationCodez.codeerrorTxt}}</p>
             </div>
           </div>
         </div>
@@ -60,11 +60,14 @@ export default {
                 timer: null, //定时器
                 verificationCode:"",
                 ObtainNull:"输入的值不能为空",
-                Nulls:false
+                Nulls:false,
+                str:"",         //页面渲染手机号,显示成*号
             },
             // ok:'true'
-           
-
+            verificationCodez:{
+                errCode:false,
+                codeerrorTxt:"验证码错误"
+            }
         }
     },
     created(){
@@ -80,7 +83,6 @@ export default {
             console.log(telephone)
            var tel = 11 && /^((13|14|15|17|18|)[0-9]{1}\d{8})$/;
             if(telephone == ""){
-             
                 this.Obtain.Nulls=true;
             }else{
                 this.Obtain.Nulls=false;
@@ -91,7 +93,7 @@ export default {
                   let phoneUrl = "/frontcompanyinfomile-checkAcc";  //获取手机号是否注册接口
                     let params = { fmiAcc: telephone };
                     this.axios.post(phoneUrl, params).then(res => {
-                       
+                        
                          console.log(res);
                         if (res.data.flag == false) {
                             //获取短信验证码
@@ -101,52 +103,40 @@ export default {
                                };
                               this.axios.post(phone_url,params).then(data =>{
                                   console.log(data);
-                                  
                               })
                         } else {
-                                  this.ownData.ownPhone.isExist = false;                      
+                                 alert(res.data.msg2)                     
                         }
                     });
-                    
-                    //  console.log(this.Obtain.count)
-                    // let id = setInterval(()=>{
-                    //     --this.Obtain.count;
-                    //     if(!this.Obtain.count){
-                    //         this.Obtain.count=this.time
-                    //         clearInterval(id);
-                    //     }
-                    // },1000)
-           
-          
-                
-                //axios 成功   .then(data=>{   **   })
-                
-                //if(data){
-                   
-
-
-                //}
-
             }
             }
             
         },
        //提交按钮
        addBtn(txtVal,verificationVal){
-           
-           console.log("手机号input框:" +txtVal)
-          
+           console.log("手机号input框:" +txtVal);
            console.log("验证码"+verificationVal);
-           let _url = '/frontmyaccphoneupdatephone-home',
-               params = {
-                    phone:txtVal,
-                    code:verificationVal
-               }
-          this.axios.post(_url,params).then(res =>{
-              console.log(res)
-          })
+           if(txtVal=="" &&verificationVal==""){
+               alert('信息不完整')
+           }else if(txtVal==""){
+               alert("请输入手机号")
+           }else if(verificationVal==""){
+               alert("请输入验证码")
+           }else{
+                let _url = '/frontmyaccphoneupdatephone-home',
+                params = {
+                        phone:txtVal,
+                        code:verificationVal
+                }
+                this.axios.post(_url,params).then(res =>{
+                    console.log(res)
+                    if(res.data == false){
+                        this.verificationCodez.errCode = true
+                    }
+                })
+           }
+       
        }
-
     }
 }
 </script>

@@ -15,8 +15,7 @@
                             <p class="readCount">
                                 <span class="icon_num"></span>
                                 <span class="count">{{val.fpdExamine}}</span>
-
-                                <span class="icon_num1" @click.stop="Fabulous(val.fdpId)"></span>
+                                <span :class="{icon_num1: !val.isGood, icon_num2: val.isGood}" @click.stop="Fabulous(val.fdpId,val.fpdPraise, index)"></span>
                                 <span class="count">{{val.fpdPraise}}</span>
                             </p>
                         </div>
@@ -45,21 +44,28 @@ export default {
       });
     },
     // 点赞
-    Fabulous(fdpId) {
-      alert("1");
+    Fabulous(fdpId, fpdPraise, index) {
       let _url = "/frontclassroom-praise";
-      axios
-        .post(_url, {
-          fdpId: fdpId,
-          fpdPraise: "",
-          flag: "1"
-        })
-        .then(res => {
-          // this.items = res.data.messageList;
-          console.log(res.data);
-          if ((res.data = true)) {
-          }
-        });
+      console.log(this.listData[index].isGood);
+      if (this.listData[index].isGood != true) {
+        axios
+          .post(_url, {
+            fdpId: fdpId,
+            fpdPraise: fpdPraise,
+            flag: "1"
+          })
+          .then(res => {
+            // this.items = res.data.messageList;
+            console.log(res.data);
+            if ((res.data = true)) {
+              this.listData[index].fpdPraise++;
+              this.listData[index].isGood = true;
+            }
+          });
+      } else {
+        this.listData[index].fpdPraise--;
+        this.listData[index].isGood = false;
+      }
     }
   }
 };

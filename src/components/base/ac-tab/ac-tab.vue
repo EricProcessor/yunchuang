@@ -23,19 +23,30 @@ import config from "@/config/config";
 export default {
   data() {
     return {
+      // selected:'',
       selected: "1",
-      activeList:[]
+      activeList:[],
+      tabValue:""
     };
-  },
+  }, 
   components: {
     ActiveListone,
     ActiveListtwo
   },
+  watch: {
+      selected: function (val, oldVal) {
+           //val     切换后 id
+           //oldVal  切换前 id 
+           this.tabValue = val
+          //  console.log(this.tabValue)
+           this.$emit('selectTab', this.tabValue)   //给父组件传出地址数值
+      }
+    },
   mounted(){
           this.axios.post("/h5frontactivityinfo-foreshow?type=Y").then(res => {
             this.activeList=res.data.list
             // console.log(this.activeList)
-         })      
+         })            
   }
 };
 </script>

@@ -9,19 +9,20 @@
         <section class="center">
             <div class="main">
                 <!-- 手机验证 -->
-                <div class="main_dl">
+                <div class="main_dl" @click="phoneCode(dataList.phonestatus)">
                    <div class="one">
                        <dl>
                            <dt><img src="./tel.png" alt=""></dt>
                            <dd>
                                <p>手机绑定</p>
-                               <p>123****4356</p>
+                               <p>{{str}}</p>
                            </dd>
                        </dl>
                    </div>
                     <div class="two">
-                        <p>未认证</p>
-                        <p>已认证</p>
+                        
+                        <p class="p2" v-if="dataList.phonestatus!='Y'" >未认证</p>
+                        <p class="p1" v-else >已认证</p>
                     </div>
                 </div>
                 <!-- 修改密码 -->
@@ -41,9 +42,9 @@
                         <!-- <p style="display:none">已认证</p> -->
                     </div>
                 </div>
-               <!-- </router-link> -->
+               <!-- </router-link> -->  
                 <!-- 邮箱验证 -->
-                <div class="email_dl">
+                <div class="email_dl" @click="emailCode(dataList.mailstatus)" >
                    <div class="one">
                        <dl>
                            <dt><img src="./email.png" alt=""></dt>
@@ -53,9 +54,9 @@
                            </dd>
                        </dl>
                    </div>
-                    <div class="two">
-                        <p>未完成</p>
-                        <p style="display:none">已完成</p>
+                    <div class="two"  >
+                        <p v-if="dataList.mailstatus=='N'">未完成</p>
+                        <p v-else>已完成</p>
                     </div>
                 </div>
             </div>
@@ -72,7 +73,12 @@ import IndexHeader from "business/indexHeader/indexHeader";
 
 export default {
     data (){
-        return {}
+        return {
+            dataList:{},
+            ok:false,
+            errNo:false,
+            str:"",
+        }
     },
      created() {
         this.headerText = "账号安全"; //设置头部显示导航内容
@@ -91,8 +97,23 @@ export default {
             let getUrl = "/h5frontmyaccsafety-home";
             this.axios.post(getUrl).then((res)=>{
                 console.log(res)
+                this.dataList = res.data;
+                this.str = res.data.phone
+              this.str = this.str.substr(0,3)+"****"+this.str.substr(7);
+              console.log(this.str)
             })
         },
+        emailCode(emaildVal){
+            if(emaildVal=="N"){
+                this.$router.push("/mine/accountsecuritys/emaild")
+            }
+        },
+        phoneCode(codeVal){
+            console.log(codeVal);
+            if(codeVal != "Y"){
+                this.$router.push("/mine/accountsecuritys/Changepassword")
+            }
+        }
     },
     mounted(){
         this.getData();
@@ -154,14 +175,15 @@ export default {
                     }
                     .two{
                        width: 13%;
-                        p:first-child{
-                            color: red;
+                        .p1{
+                             color: #6ea1ff;
+                           
                             font-size: 24px;
                         }
-                        p:last-child{
-                            color: #6ea1ff;
+                        .p2{
+                            color: red;
                             font-size: 24px;
-                            display: none;
+                            //display: none;
                         }
                     }
                }
@@ -252,11 +274,12 @@ export default {
                      .two{
                        width: 13%;
                         p:first-child{
-                            color: red;
+                              color: #6ea1ff;
+                           
                             font-size: 24px;
                         }
                         p:last-child{
-                            color: #6ea1ff;
+                           color: red;
                             font-size: 24px;
                         }
                     }

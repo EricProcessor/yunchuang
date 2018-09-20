@@ -177,29 +177,29 @@ export default {
 </script>
 <style lang="less" scoped>
 .actice-place{
-    margin-top:108px;
-    margin-left: 20px;
+  margin-top:108px;
+  margin-left: 20px;
     span{
-        height:58px;
-        line-height: 58px;
-        font-size: 28px;
-        color: #333;
+      height:58px;
+      line-height: 58px;
+      font-size: 28px;
+      color: #333;
     }
     .actice-input{
-        position: relative;
+      position: relative;
         input{
-            width: 95%;
-            height:58px;
-            background: #e9e7e7;
-            border:1px solid #f2f2f2;
-            padding-left:10px;
-            border-radius: 4px;
-            color:#666;
+          width: 95%;
+          height:58px;
+          background: #e9e7e7;
+          border:1px solid #f2f2f2;
+          padding-left:10px;
+          border-radius: 4px;
+          color:#666;
         }
         i{
-            position: absolute;
-            right:40px;
-            top:20px;
+          position: absolute;
+          right:40px;
+          top:20px;
         }
     }
 }  
@@ -207,32 +207,32 @@ export default {
   width: 100%;
   height:700px;
   margin-bottom: 85px;
-  .address{
-    padding-top: 20px;
-    width: 96%;
-    margin-left: 2%;
-    display: flex;
-    justify-content:space-between;
-    .address-p{
-      color: #6ea1ff;
+    .address{
+      padding-top: 20px;
+      width: 96%;
+      margin-left: 2%;
+      display: flex;
+      justify-content:space-between;
+      .address-p{
+        color: #6ea1ff;
+      }
     }
-  }
-  ul{
-    width: 96%;
-    margin-left: 2%;
-    margin-top: 15px;
-    li{
-      width: 20%;
-      height:55px;
-      line-height: 55px;
-      text-align: center;
-      display: inline-block;
-      border:1px solid #f2f2f2;
-      margin: 13px;
+    ul{
+      width: 96%;
+      margin-left: 2%;
+      margin-top: 15px;
+      li{
+        width: 20%;
+        height:55px;
+        line-height: 55px;
+        text-align: center;
+        display: inline-block;
+        border:1px solid #f2f2f2;
+        margin: 13px;
+      }
+      li:hover{
+        color: #6ea1ff;
+      }
     }
-    li:hover{
-      color: #6ea1ff;
-    }
-  }
 }
 </style>
