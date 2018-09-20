@@ -13,7 +13,7 @@
 export default {
   data() {
     return {
-      newSumShow: false,
+      newSumShow: false,                        
       tabList: [
         {
           path: "/MyIndex",
@@ -95,7 +95,7 @@ export default {
       // console.info(cname + "=" + +"; " + expires);
 
       document.cookie =
-        "SESSION=b189c7e2-9bc8-4a19-8614-1a62637b92c0" + "; " + expires;
+        "SESSION=836241fe-98a3-4894-8d8f-75a64d50656b" + "; " + expires;
       console.info(document.cookie);
       //   var user = {
       //     fmi_id: "183",

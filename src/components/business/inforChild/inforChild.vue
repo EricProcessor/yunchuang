@@ -1,13 +1,35 @@
 <template>
   <div class="inforImgBox">
-    <img class="inforImg" src="/static/images/business_1.jpg" alt="">
+    <!-- <img class="inforImg" src="/static/images/business_1.jpg" alt=""> -->
+    <Swiper :data="carouselData"></Swiper>
   </div>
 </template>
 <script>
+import Swiper from "base/swiper/swiper";
 export default {
-   data() {
-    return {};
+  data() {
+    return {
+      carouselData: []
+    };
   },
+  methods: {
+    _getCarouselData() {
+      this.axios({
+        url: "h5frontpageList-home",
+        method: "post"
+      }).then(res => {
+        if (res.status === 200) {
+          this.carouselData = res.data.atiList;
+        }
+      });
+    }
+  },
+  mounted(){
+    this._getCarouselData();
+  },
+  components: {
+    Swiper
+  }
 };
 </script>
 <style lang="less" scoped>
