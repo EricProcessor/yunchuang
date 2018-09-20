@@ -72,7 +72,7 @@ export default {
         } else {
           this.password.err2 = "密码格式不正确！";
         }
-        if (this.password.pwd == this.password.pwd2) {
+        if (Install.isPwd(this.password.pwd)&&(this.password.pwd == this.password.pwd2)) {
           let pew_url = "/frontresetpwdoperate-reset";
           this.axios
             .post(pew_url, { fmiAcc: this.userName, fmiPwd: this.password.pwd })
