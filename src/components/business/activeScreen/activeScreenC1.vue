@@ -2,7 +2,7 @@
      <div class="actice-place">
           <span>活动区域</span>
           <div class="actice-input">
-              <input type="text" placeholder="选择省-市-区" v-model="simpAddress" disabled  @click="showAddressPopup"/>
+              <input type="text" placeholder="选择省-市-区" disabled v-model="simpAddress"  @click="showAddressPopup"/>
               <i>▼</i>
           </div>
           <mt-popup v-model="addressShow" position="bottom" class="region-popup">

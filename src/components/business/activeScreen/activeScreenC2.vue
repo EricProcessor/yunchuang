@@ -2,7 +2,7 @@
     <!--日期选择器-->
 <div>
     <div class="time-left">
-        <input type="text" @click="openPicker" v-model="birthday" disabled placeholder="开始时间" />
+        <input type="text" @click="openPicker" disabled v-model="birthday"  placeholder="开始时间" />
         <i></i>
     </div>
    <mt-datetime-picker
