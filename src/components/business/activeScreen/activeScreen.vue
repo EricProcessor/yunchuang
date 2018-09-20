@@ -14,7 +14,7 @@
             </div>             
         </div>
         <footer>
-            <button class="btn"  @click="commitBox">确定</button>
+            <span class="btn"  @click="commitBox">确定</span>
         </footer>   
     </div>
 </template>
@@ -167,15 +167,16 @@ footer{
     position: fixed;
     bottom:0;
       .btn {
-     width: 100%;
-     height:85px;
-     background: #6ea1ff;
-     text-align: center;
-     line-height: 85px;
-     color: #fff;
-     font-size: 24px;
-     border-radius: 2px;
-   }
+        display: block;   
+        width: 100%;
+        height:85px;
+        background: #6ea1ff;
+        text-align: center;
+        line-height: 85px;
+        color: #fff;
+        font-size: 24px;
+        border-radius: 2px;
+      }
 } 
 </style>
 

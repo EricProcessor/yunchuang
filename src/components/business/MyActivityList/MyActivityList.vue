@@ -1,6 +1,6 @@
 <template>
   <ul class="myIntCon" >
-    <li :id='item.fai_id' v-for="(item,index) in items" :key="index">
+    <li :id='item.fai_id' v-for="(item,index) in items" :key="index"  @click="activeDetail(item.fai_id)">
       <div class="myIntConImg" :id="item.id">
         <img :src="item.fai_path" alt="">
       </div>
@@ -37,15 +37,18 @@ export default {
   methods: {
     //获取后台数据
     inforData() {
-      let _url = "h5frontmyactivity-home";
+      let _url = "/h5frontmyactivity-home";
       let params = new URLSearchParams();
       // params.append("selType", this.serachSend.SearchClass);
       // params.append("KeyWord", encodeURI(encodeURI(this.serachSend.searchVal)));
       axios.post(_url).then(res => {
         this.items = res.data.activityList;
-        // console.log(res.data.activityList);
+        console.log(res.data.activityList);
       });
     }
+  },
+  activeDetail(id) {
+      this.$router.push('/activeDetail/'+id); //跳转详情页
   },
   //将时间戳转化成时间
   filters: {
