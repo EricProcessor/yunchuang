@@ -122,13 +122,20 @@ export default {
         },
         //初始化公司信息操作：将请求来的公司数据填充到页面上
         _initMsg(data) {
-            this.name = data.fmiUsername
-            this.telephone = data.fmiTel
-            this.email = data.fmiMile
-            this.picList = [{src: data.fmiPath}]
+            this.userId = data.fciId
+            this.name = data.fciName
+            this.telephone = data.fciTel
+            this.email = data.fciMile
+            this.website = data.fciUrl
+            this.picList = [{src: data.fciPath}]
             // this.picList2 = [{src: data.fmiPath}]
-            this.headPicUrl = data.fmiPath
+            this.headPicUrl = data.fciPath
             // this.picture = data.fmiPath
+            this.complexAddress = data.fciAddress
+            this.provinceId = data.provinceid
+            this.cityId = data.cityid
+            this.areaId = data.areaid
+
 
             
         },
