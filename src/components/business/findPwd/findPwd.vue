@@ -5,6 +5,7 @@
       <li class="fl" :class="{active:pwd.isTab}" @click="phoneBack">{{pwd.phoneName}}</li>
       <li class="fl" :class="{active:!pwd.isTab}" @click="emailBack">{{pwd.emailName}}</li>
     </ol>
+
     <ul class="list" v-if="pwd.isTab">
       <li>
         <p>手机号码
@@ -40,23 +41,14 @@
       </li>
     </ul>
     <p class="postBtn" @click="putInBtn">提交</p>
-    <!-- 保存成功 -->
-    <success :sucOption="sucOption" v-if="sucOption.showSuccess"></success>
   </div>
 </template>
 <script>
 import IndexHeader from "business/indexHeader/indexHeader";
 import Install from "@/config/checkRule";
-import Success from "business/success/success";
 export default {
   data() {
     return {
-      sucOption: {
-        title: "登录", //这个是传的跳转到页面的名称
-        sucName: "保存成功", //(保存成功、注册成功)
-        showSuccess: false, //是否显示组件
-        path: "/login" //成功后条状的路径
-      },
       pwd: {
         phoneName: "手机号找回",
         emailName: "邮箱找回",
@@ -66,13 +58,17 @@ export default {
         code: "",
         minutePhone: 59
       },
-      code: "",
-      phoneCodes: false
+      phoneCodes: false,
+      userName: ""
     };
   },
   created() {
     this.headerText = "找回密码"; //设置头部显示导航内容
     this.hasSearch = false;
+  },
+  mounted() {
+    this.userName = this.$route.params.userName;
+    this.getUserTel();
   },
   methods: {
     phoneBack() {
@@ -93,7 +89,7 @@ export default {
         if (Install.isPhone(this.pwd.phone)) {
           this.axios.post(codeUrl1, { phoneCode: this.pwd.phone }).then(res => {
             if (res.data.flag) {
-              this.code = res.data.msg;
+              console.log(res.data.flag);
             } else {
               alert(res.data.msg);
             }
@@ -123,6 +119,14 @@ export default {
         }
       }
     },
+    getUserTel() {
+      let tel_url = "/h5frontpwdfind-phone";
+      this.axios.post(tel_url, { fmiAcc: this.userName }).then(res => {
+        // console.log(res)
+        this.pwd.phone = res.data.fmi_tel;
+        this.pwd.email = res.data.fmi_mile;
+      });
+    },
     cutDownTime1() {
       if (this.phoneCodes == true) {
         this.pwd.minutePhone--;
@@ -133,8 +137,8 @@ export default {
       }
     },
     putInBtn() {
-      let _url = "/frontpwdfindoperate-phone";
       if (this.pwd.phoneName == "手机号找回") {
+        //手机号找回
         if (this.pwd.phone == "" && this.pwd.code == "") {
           alert("信息不能为空!");
         } else if (this.pwd.phone == "") {
@@ -143,10 +147,22 @@ export default {
         } else if (this.pwd.code == "") {
           alert("验证码不能为空!");
           return;
-        } else if (this.pwd.code == this.code) {
-          this.axops.get(_url).then(res => {});
+        } else {
+          let _url = "/frontpwdfindoperate-phone";
+          this.axios
+            .post(_url, { fmiAcc: this.pwd.phone, verify: this.pwd.code })
+            .then(res => {
+              if (res.data.flag) {
+                this.$router.push({
+                  path: `/findPwdChange/${this.userName}`
+                });
+              } else {
+                alert(res.data.msg);
+              }
+            });
         }
       } else {
+        //邮箱找回---未解决
         if (this.pwd.email == "" && this.pwd.code == "") {
           alert("信息不能为空!");
         } else if (this.pwd.email == "") {
@@ -155,8 +171,18 @@ export default {
         } else if (this.pwd.code == "") {
           alert("验证码不能为空");
           return;
-        } else if (this.pwd.code == this.code) {
-          this.axops.get(_url).then(res => {});
+        } else {
+          // this.axios
+          //   .post(_url, { phone: this.pwd.email, code: this.pwd.code })
+          //   .then(res => {
+          //     console.log(res.data);
+          //     if (res.data.flag) {
+          //       // this.$router.push("/tel");
+          //     } else {
+          //       // alert(res.data.msg);
+          //       this.$router.push("mine/accountsecuritys/tel");
+          //     }
+          //   });
         }
       }
     }
@@ -164,7 +190,6 @@ export default {
   beforeDestroy() {
     //销毁定时器
     clearInterval(this.cutDownTime);
-    clearInterval(this.cutEamilTime);
   },
   components: {
     IndexHeader

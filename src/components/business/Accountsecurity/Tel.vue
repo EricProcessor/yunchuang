@@ -12,18 +12,14 @@
                </div>
                
             <div class="iptone">
-                <input type="password"  class="txtone"  @blur="ownPwdBlur(old.oldtxt)" v-model="old.oldtxt" placeholder="请输入原密码"  >
-                
+                <input type="password"  class="txtone"  @blur="ownPwdBlur(old.oldtxt)" v-model="old.oldtxt" placeholder="请输入原密码"  > 
             </div>
-            
-            
             <div class="cuo_old" >
                 <p class="old_nl" v-show="old.oldshow" >{{old.old_nls}}</p>
                 <p class="old_matching" v-show="old.matching" >{{old.old_matchings}}</p>
                 <p v-show="old.falseMatching">{{old.Nomatching}}</p>
             </div>
           </div>
-
         <div class="yuanone">
                <div class="passwo">
                    <p>新密码<span>(必填)</span></p>
@@ -46,8 +42,7 @@
                </div>
                
             <div class="new_iptthree">
-                <input type="password" class="txtone" @blur="Reaffirm(newpss.confirmtxt)" v-model="newpss.confirmtxt" placeholder="再次输入登录密码"  >
-                
+                <input type="password" class="txtone" @blur="Reaffirm(newpss.confirmtxt)" v-model="newpss.confirmtxt" placeholder="再次输入登录密码"  > 
             </div>
             
             <div class="cuo" >
@@ -55,7 +50,6 @@
                 <p class="cuo_p" v-show="newpss.identical"  >{{newpss.newendold}}</p>  
                 <!-- 确认密码不能为空 -->
                  <p class="cuo_null" v-show="newpss.judge" >{{newpss.nulls}}</p>
-                
             </div>
           </div>
         </div>

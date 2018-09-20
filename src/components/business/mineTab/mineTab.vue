@@ -5,6 +5,7 @@
         <div><img :src="item.tabImg" alt=""><span>{{item.title}}</span></div>
         <img src="./gd.png" alt="">
       </li>
+        <i :class="{'news':!newSumShow}"></i>
     </ul>
   </div>
 </template>
@@ -12,7 +13,7 @@
 export default {
   data() {
     return {
-      newSumShow: "false",
+      newSumShow: false,                        
       tabList: [
         {
           path: "/MyIndex",
@@ -79,10 +80,10 @@ export default {
           this.show = res.data.msg;
           if (res.data.msg == "s") {
             this.newSumShow = true;
-            console.log(this.newSumShow);
+            // console.log(this.newSumShow);
           } else {
             this.newSumShow = false;
-            console.log(this.newSumShow);
+            // console.log(this.newSumShow);
           }
         }
       });
@@ -92,9 +93,9 @@ export default {
       d.setTime(d.getTime() + 1 * 24 * 60 * 60 * 1000);
       var expires = "expires=" + d.toUTCString();
       // console.info(cname + "=" + +"; " + expires);
-      
+
       document.cookie =
-        "SESSION=d1b64bbc-fcf6-4d1c-9a3b-9086366e2067" + "; " + expires;
+        "SESSION=836241fe-98a3-4894-8d8f-75a64d50656b" + "; " + expires;
       console.info(document.cookie);
       //   var user = {
       //     fmi_id: "183",
@@ -153,6 +154,19 @@ export default {
         padding-right: 20px;
       }
     }
+  }
+  i {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #f35828;
+    float: right;
+    top: -72px;
+    position: relative;
+    left: 14px;
+  }
+  .news {
+    display: none;
   }
 }
 </style>

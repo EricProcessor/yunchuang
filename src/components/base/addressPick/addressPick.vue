@@ -16,15 +16,15 @@ export default {
         },
         defaultProvinceId: {
             type: Number,
-            default: 0
+            default: 2
         },
         defaultCityId: {
             type: Number,
-            default: 0
+            default: 52
         },
         defaultAreaId: {
             type: Number,
-            default: 0
+            default: 500
         }
     },
     data() {
@@ -75,7 +75,7 @@ export default {
     methods: {
         //使用本地地址json信息文件
         _changeAddress(picker, values) {              //地址选择组件改变后调用的  回调函数
-            console.log(values)             //values为当前选中的地址数组
+            // console.log(values)             //values为当前选中的地址数组
             if (!this.first) {
                 //根据传入的默认地址ID，显示默认地址。
                 this.setAddress(picker)
@@ -128,14 +128,14 @@ export default {
 
             //地址数据整合
             this.address = [this.addressProvince, this.addressCity, this.addressCounty]
-            console.log(this.address)
+            // console.log(this.address)
             this.$emit('selectAddress', this.address)   //给父组件传出地址数值
         },
         //请求用户数据后，设置指定的地点用，格式["省","市", "县/镇"]（注意，设置的地点名称数组，对应地址json数据中必须有，否则失效）
         setAddress(picker) {
 
             let second = []
-            console.log(this.defaultProvinceId)
+            // console.log(this.defaultProvinceId)
             for (let i = 0; i < address.length; i ++) {
                 if (address[i].ca_id === this.defaultProvinceId) {
                     this.addressProvince = {        //保存用于导出的一级地址
@@ -173,9 +173,9 @@ export default {
                     }
                 }
             }
-            console.log(this.addressProvince.ca_name)
-            console.log(this.addressCity.ca_name)
-            console.log(this.addressCounty.ca_name)
+            // console.log(this.addressProvince.ca_name)
+            // console.log(this.addressCity.ca_name)
+            // console.log(this.addressCounty.ca_name)
 
             // picker.setSlotValue(1, this.addressProvince.ca_name)
             // picker.setSlotValue(2, this.addressCity.ca_name)

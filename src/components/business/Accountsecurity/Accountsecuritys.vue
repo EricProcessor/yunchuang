@@ -9,25 +9,25 @@
         <section class="center">
             <div class="main">
                 <!-- 手机验证 -->
-                <div class="main_dl">
+                <div class="main_dl" @click="phoneCode(dataList.phonestatus)">
                    <div class="one">
                        <dl>
                            <dt><img src="./tel.png" alt=""></dt>
                            <dd>
                                <p>手机绑定</p>
-                               <p>123****4356</p>
+                               <p>{{str}}12345678912</p>
                            </dd>
                        </dl>
                    </div>
                     <div class="two">
-                        <p>未认证</p>
-                        <p>已认证</p>
+                        <p class="p2" v-if="dataList.phonestatus!='Y'" >未认证</p>
+                        <p class="p1" v-else >已认证</p>
                     </div>
                 </div>
                 <!-- 修改密码 -->
                 <!-- <router-link to="/mine/accountsecuritys/tel"> -->
                 <div class="lock_dl" @click="modify" >
-                   <div class="one">
+                   <div class="onepsd">
                        <dl>
                            <dt><img src="./lock.png" alt=""></dt>
                            <dd>
@@ -36,15 +36,15 @@
                            </dd>
                        </dl>
                    </div>
-                    <div class="two">
+                    <div class="twopsd">
                         <p>修改</p>
                         <!-- <p style="display:none">已认证</p> -->
                     </div>
                 </div>
-               <!-- </router-link> -->
+               <!-- </router-link> -->  
                 <!-- 邮箱验证 -->
-                <div class="email_dl">
-                   <div class="one">
+                <div class="email_dl" @click="emailCode(dataList.mailstatus)" >
+                   <div class="oneemail">
                        <dl>
                            <dt><img src="./email.png" alt=""></dt>
                            <dd>
@@ -53,9 +53,9 @@
                            </dd>
                        </dl>
                    </div>
-                    <div class="two">
-                        <p>未完成</p>
-                        <p style="display:none">已完成</p>
+                    <div class="twoemail"  >
+                        <p class="okemail" v-if="dataList.mailstatus=='N'">未完成</p>
+                        <p class="okemaildOne" v-else>已完成</p>
                     </div>
                 </div>
             </div>
@@ -72,7 +72,12 @@ import IndexHeader from "business/indexHeader/indexHeader";
 
 export default {
     data (){
-        return {}
+        return {
+            dataList:{},
+            ok:false,
+            errNo:false,
+            str:"",
+        }
     },
      created() {
         this.headerText = "账号安全"; //设置头部显示导航内容
@@ -89,10 +94,30 @@ export default {
         },
         getData(){
             let getUrl = "/h5frontmyaccsafety-home";
-            this.axios.post(getUrl).then((res)=>{
+            this.axios.get(getUrl).then((res)=>{
                 console.log(res)
+                this.dataList = res.data;
+                this.str = res.data.phone;
+                if(this.dataList.phonestatus == "N"){
+                     return
+                }else{
+                    this.str = this.str.substr(0,3)+"****"+this.str.substr(7);
+                    console.log(this.str)
+                }
+              
             })
         },
+        emailCode(emaildVal){
+            if(emaildVal=="N"){
+                this.$router.push("/mine/accountsecuritys/emaild")
+            }
+        },
+        phoneCode(codeVal){
+            console.log(codeVal);
+            if(codeVal != "Y"){
+                this.$router.push("/mine/accountsecuritys/Changepassword")
+            }
+        }
     },
     mounted(){
         this.getData();
@@ -128,16 +153,15 @@ export default {
                       dl{
                             display: flex;
                             dt{
-                                margin-left:15%;
+                                margin-left:30px;
                                 img{
-                                    width: 90%;
-                                    padding-right: 5%;
+                                    width: 62%;   
                                 }
                             }
                             dd{
-                                    margin-left: 10px;
                               //  margin-left:5px;
                                 p:first-child{
+                                    width: 119%;
                                     height: 33px;
                                     font-family: MicrosoftYaHei;
                                     font-size: 20px;
@@ -148,20 +172,22 @@ export default {
                                 }
                                 p:last-child{
                                     color: #6ea1ff;
+                                    margin-top: 10px;
                                 }
                             }
                       }
                     }
                     .two{
                        width: 13%;
-                        p:first-child{
-                            color: red;
+                        .p1{
+                             color: #6ea1ff;
+                           
                             font-size: 24px;
                         }
-                        p:last-child{
-                            color: #6ea1ff;
+                        .p2{
+                            color: red;
                             font-size: 24px;
-                            display: none;
+                            //display: none;
                         }
                     }
                }
@@ -173,18 +199,19 @@ export default {
                    display: flex;
                    justify-content: space-between;
                     align-items: center;
-                    .one{
+                    .onepsd{
                       dl{
+                         
                             display: flex;
                             dt{
-                                margin-left:7%; 
+                                margin-left:30px; 
                                 img{
-                                    width: 80%;
+                                    width: 100%;
                                 }
                             }
                             dd{
-                                 margin-left: 8px;
-                                width: 119%;
+                                margin-left: 30px;
+                                width: 129%;
                                 p:first-child{
                                     height: 33px;
                                     font-family: MicrosoftYaHei;
@@ -195,12 +222,13 @@ export default {
                                     color: #333333;
                                 }
                                 p:last-child{
+                                    margin-top: 5px;
                                     color: #999999;
                                 }
                             }
                       }
                     }
-                     .two{
+                     .twopsd{
                        width: 13%;
                         p:first-child{
                             color: #6ea1ff;
@@ -221,18 +249,18 @@ export default {
                    display: flex;
                    justify-content: space-between;
                     align-items: center;
-                    .one{
+                    .oneemail{
                       dl{
                             display: flex;
                             dt{
-                                margin-left:7%;
+                                margin-left:30px;
                                 
                                 img{
-                                    width: 80%;
+                                    width: 100%;
                                 }
                             }
                             dd{
-                                 margin-left: 8px;
+                                 margin-left: 30px;
                                 width: 119%;
                                 p:first-child{
                                     height: 33px;
@@ -244,19 +272,20 @@ export default {
                                     color: #333333;
                                 }
                                 p:last-child{
+                                    margin-top: 8px;
                                       color: #999999;
                                 }
                             }
                       }
                     }
-                     .two{
+                     .twoemail{
                        width: 13%;
-                        p:first-child{
-                            color: red;
+                        .okemaildOne{
+                              color: #6ea1ff;
                             font-size: 24px;
                         }
-                        p:last-child{
-                            color: #6ea1ff;
+                        .okemail{
+                           color: red;
                             font-size: 24px;
                         }
                     }

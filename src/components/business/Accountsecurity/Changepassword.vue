@@ -6,7 +6,7 @@
                 <span>手机绑定</span>
                 <span></span>
         </div>
-        <div class="yellows">
+        <div class="yellows" @click="headNone"  >
             <div class="one_p">
                 <p><span>手机账户登陆：</span>可直接使用手机登录:</p>
                 <p><span>找回账户密码：</span>忘记密码时，可使用手机找回密码。</p>
@@ -17,7 +17,6 @@
                <div class="zhu">
                    <p>输入手机号<span>(必填)</span></p>
                </div>
-                
             <div class="ipt">
                 <input type="text" class="txt" v-model="Obtain.tels" >
                 <button class="btn"  @click="yanzheng(Obtain.tels)" v-if="Obtain.count==time" >获取验证码</button>
@@ -26,7 +25,7 @@
             </div>
           </div>
           <div class="VerificationBox">
-              <p v-show="Obtain.Nulls">{{Obtain.ObtainNull}}</p>
+              <!-- <p v-show="Obtain.Nulls">{{Obtain.ObtainNull}}</p> -->
           </div>
         <div class="iptBoxtwo" >
                <div class="zhu">
@@ -36,7 +35,7 @@
                 <input type="text" class="txt" v-model="Obtain.verificationCode" >
             </div>
             <div class="err" >
-                <p class="Verification">验证码错误</p>
+                <p class="Verification" v-show="verificationCodez.errCode">{{verificationCodez.codeerrorTxt}}</p>
             </div>
           </div>
         </div>
@@ -50,6 +49,7 @@
 </template>
 
 <script>
+import { Toast } from 'mint-ui';
 export default {
     data(){
         return {
@@ -60,11 +60,14 @@ export default {
                 timer: null, //定时器
                 verificationCode:"",
                 ObtainNull:"输入的值不能为空",
-                Nulls:false
+                Nulls:false,
+                str:"",         //页面渲染手机号,显示成*号
             },
             // ok:'true'
-           
-
+            verificationCodez:{
+                errCode:false,
+                codeerrorTxt:"验证码错误"
+            }
         }
     },
     created(){
@@ -75,13 +78,17 @@ export default {
         go(){
             this.$router.go(-1);
         },
+        //点击黄色框,隐藏
+        headNone(){
+            
+        },
         //点击获取验证码    
         yanzheng(telephone){
             console.log(telephone)
            var tel = 11 && /^((13|14|15|17|18|)[0-9]{1}\d{8})$/;
             if(telephone == ""){
-             
-                this.Obtain.Nulls=true;
+                alert("手机号不能为空")
+               // this.Obtain.Nulls=true;
             }else{
                 this.Obtain.Nulls=false;
                 if(!tel.test(telephone)){
@@ -90,8 +97,7 @@ export default {
             }else{         
                   let phoneUrl = "/frontcompanyinfomile-checkAcc";  //获取手机号是否注册接口
                     let params = { fmiAcc: telephone };
-                    this.axios.post(phoneUrl, params).then(res => {
-                       
+                    this.axios.post(phoneUrl, params).then(res => { 
                          console.log(res);
                         if (res.data.flag == false) {
                             //获取短信验证码
@@ -101,52 +107,38 @@ export default {
                                };
                               this.axios.post(phone_url,params).then(data =>{
                                   console.log(data);
-                                  
                               })
                         } else {
-                                  this.ownData.ownPhone.isExist = false;                      
+                                 alert(res.data.msg2)                     
                         }
                     });
-                    
-                    //  console.log(this.Obtain.count)
-                    // let id = setInterval(()=>{
-                    //     --this.Obtain.count;
-                    //     if(!this.Obtain.count){
-                    //         this.Obtain.count=this.time
-                    //         clearInterval(id);
-                    //     }
-                    // },1000)
-           
-          
-                
-                //axios 成功   .then(data=>{   **   })
-                
-                //if(data){
-                   
-
-
-                //}
-
             }
             }
-            
         },
        //提交按钮
        addBtn(txtVal,verificationVal){
-           
-           console.log("手机号input框:" +txtVal)
-          
+           console.log("手机号input框:" +txtVal);
            console.log("验证码"+verificationVal);
-           let _url = '/frontmyaccphoneupdatephone-home',
-               params = {
-                    phone:txtVal,
-                    code:verificationVal
-               }
-          this.axios.post(_url,params).then(res =>{
-              console.log(res)
-          })
+           if(txtVal=="" &&verificationVal==""){
+               alert('信息不完整')
+           }else if(txtVal==""){
+               alert("请输入手机号")
+           }else if(verificationVal==""){
+               alert("请输入验证码")
+           }else{
+                let _url = '/frontmyaccphoneupdatephone-home',
+                params = {
+                        phone:txtVal,
+                        code:verificationVal
+                }
+                this.axios.post(_url,params).then(res =>{
+                    console.log(res)
+                    if(res.data == false){
+                        this.verificationCodez.errCode = true
+                    }
+                })
+           }
        }
-
     }
 }
 </script>
@@ -175,7 +167,6 @@ export default {
             padding: 10px 0;
             span{
                 color:#ffffff;
-               
             }
             span:nth-child(2){
             //    width: 164px;
@@ -202,7 +193,6 @@ export default {
                         }
                 p:first-child{
                     padding:28px 0;
-                    
                 }
                 p:last-child{
                     
@@ -211,6 +201,7 @@ export default {
             }
         }
         .iptBox{
+            margin-top: 20px;
             .VerificationBox{
                 color: red;
                 text-align: right;

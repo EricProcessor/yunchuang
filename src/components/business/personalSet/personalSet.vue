@@ -21,8 +21,8 @@
                     <ul>
                         <li class="column-left"><i>*</i>性别</li>
                         <li class="column-right align-left">
-                            <span :class="{ active: sex === 'Y'}" @click="_setSex('Y')"><img src="./man.png" />男</span>
-                            <span :class="{ active: sex === 'X'}" @click="_setSex('X')"><img src="./woman.png" />女</span>
+                            <span :class="{ active: sex === '男'}" @click="_setSex('男')"><img src="./man.png" />男</span>
+                            <span :class="{ active: sex === '女'}" @click="_setSex('女')"><img src="./woman.png" />女</span>
                         </li>
                     </ul>
                 </div>
@@ -87,13 +87,13 @@ export default {
         return {
             remind: true,       //弹窗提示
             name: "",       //姓名
-            sex: "Y",            //性别
+            sex: "男",            //性别
             birthday: "",           //生日
             telephone: "",          //手机号
             email: "",              //邮箱
-            provinceId: 4,          //省份id
-            cityId: 54,              //城市id
-            areaId: 532,               //区域id
+            provinceId: 0,          //省份id
+            cityId: 0,              //城市id
+            areaId: 0,               //区域id
             simpAddress: "",            //保存用于显示用的地址字符串
             complexAddress: "",             //详细地址
             picList: [],            //保存上传图片文件的数组，元素是file对象
@@ -164,18 +164,21 @@ export default {
         },
         //初始化用户信息操作：将请求来的用户数据填充到页面上
         _initPerson(data) {
-            this.name = data.fmiUsername
-            this.sex = data.fmiMailVerify
-            this._handleTime(new Date(data.fmiDatetimes))    //时间数据转换，并保存给this.birthday
-            this.telephone = data.fmiTel
-            this.email = data.fmiMile
-            this.picList = [{src: data.fmiPath}]
-            this.headPicUrl = data.fmiPath
-            
+            this.name = data.member.fmiUsername
+            this.sex = data.sex
+            this._handleTime(new Date(data.fciBirthday))    //时间数据转换，并保存给this.birthday
+            this.telephone = data.member.fmiTel
+            this.email = data.member.fmiMile
+            this.picList = [{src: data.member.fmiPath}]
+            this.headPicUrl = data.member.fmiPath
+            this.provinceId = data.provinceid
+            this.cityId = data.cityid
+            this.areaId = data.areaid
+            this.complexAddress = data.fciAddress
         },
         _reset() {            //重置信息操作
             this.name = ""       //姓名
-            this.sex = "Y"            //性别
+            this.sex = "男"            //性别
             this.birthday = ""          //生日
             this.telephone = ""         //手机号
             this.email = ""           //邮箱
@@ -435,13 +438,13 @@ export default {
             color: #fff;
             font-size: 30px;
             .reset {
-                width: 270px;
+                width: 36%;
                 line-height: 88px;
                 background: #aeaeae;
                 text-align: center;
             }
             .save {
-                width: 480px;
+                width: 64%;
                 line-height: 88px;
                 background: #6ea1ff;
                 text-align: center;

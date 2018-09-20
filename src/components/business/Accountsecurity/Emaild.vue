@@ -42,9 +42,7 @@
                 <p>验证码错误</p>
             </div>
           </div>
-        
         </div>
-
     <!-- footer -->
         <div class="footer">
             <div class="btnone" @click="emailBtn(em,yanzheng)">
@@ -55,6 +53,7 @@
 </template>
 
 <script>
+
 export default {
     data() {
         return {
@@ -76,8 +75,7 @@ export default {
             return isEmail.test(pwd);
          },
         emailss(emailVal){   
-            console.log(document.cookie);
-            console.log(emailVal)
+          
             if(emailVal==""){          //input框为空时
                 this.emNulls = true;
                 this.emFormat = false;
@@ -86,22 +84,20 @@ export default {
                 if(this.isEmail(emailVal)){        //正则匹配
                     this.emFormat = false;  
                               //获取邮箱验证码
-                              let _urltwo = "/frontmyaccsendcodemail-home",
-                                  params = {
+                              let _urltwo = "/frontmyaccsendcodemail-home";
+                              let params = {
                                       mail:emailVal
                                   }
                     this.axios.post(_urltwo,params).then(res =>{
-                        console.log(res)
                     })   
                 }else{
                     this.emFormat = true               
                 }
             }
-           
+            
         },
         emailBtn(emailVal,codeVal){
-            console.log("邮箱:"+emailVal)
-            console.log("验证码:"+codeVal)
+           
             if(emailVal=="" && codeVal==""){
                 alert("信息不完整")
             }else if(emailVal==""){
@@ -109,6 +105,7 @@ export default {
             }else if(codeVal==""){
                 alert("验证码不能为空")
             }else{
+                
                 //邮箱验证接口
                 let addUrl="/frontmyaccupdatemail-home",
                     params = {

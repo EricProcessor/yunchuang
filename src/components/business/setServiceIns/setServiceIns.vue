@@ -100,9 +100,12 @@ export default {
         phone: "",
         email: "",
         websit: "",
-        addrDetail: ""
+        addrDetail: "",
+        fciLongitude: "",
+        fciLatitude: ""
       },
-      inputImg: [] //上传的图片
+      inputImg: [], //上传的图片
+      headPicUrl: ""
     };
   },
   created() {
@@ -111,6 +114,7 @@ export default {
   },
   mounted() {
     this.getServiceType();
+      
   },
   methods: {
     showAddr() {
@@ -131,28 +135,25 @@ export default {
     inputGetImg(arr) {
       //获得上传图片的数组
       this.inputImg = arr;
-      // this._upLoadImg(this.inputImg[0]);
+      this._upLoadImg(this.inputImg[0]);
     },
     //开始上传头像
-    // _upLoadImg(file) {
-    //   var fd = new FormData();
-    //   fd.append("myFile", file);
+    _upLoadImg(myFile) {
+      var fd = new FormData();
+      fd.append("myFile", myFile);
 
-    //   this.axios({
-    //     url: "upload-file",
-    //     method: "post",
-    //     noQs: true, //不进行fs参数处理
-    //     data: fd
-    //   }).then(res => {
-    //     MessageBox({
-    //       title: "提示",
-    //       message: res.data.msg
-    //     });
-    //     if (res.status === 200) {
-    //       this.headPicUrl = res.data.url;
-    //     }
-    //   });
-    // },
+      this.axios({
+        url: "upload-file",
+        method: "post",
+        noQs: true, //不进行fs参数处理
+        data: fd
+      }).then(res => {
+        // console.log(res)
+        if (res.status === 200) {
+          this.headPicUrl = res.data.url;
+        }
+      });
+    },
     closeBtn() {
       //关闭提示
       this.formList.isClose = !this.formList.isClose;
@@ -189,27 +190,44 @@ export default {
         alert("手机号不能为空！");
       } else {
         if (Install.isPhone(this.serviceIns.phone)) {
+          let _this_url = "/frontcompanyauthenticationserviceaddpage-home";
           //提交成功
           let addr = this.address + " " + this.serviceIns.addrDetail;
           let datas = {
-            a: this.serviceIns.companyName,
-            b: this.serviceIns.serviceType,
-            c: this.serviceIns.person,
-            d: this.serviceIns.phone,
-            e: this.serviceIns.email,
-            f: this.serviceIns.websit,
-            g: addr
+            // fciName: this.serviceIns.companyName,//企业名称
+            fstId: this.serviceIns.serviceType, //服务类型
+            fciName: this.serviceIns.person, //联系人
+            fciTel: this.serviceIns.phone, //手机号
+            fciMile: this.serviceIns.email, //邮箱
+            fciUrl: this.serviceIns.websit, //网址
+            address: addr, //地址
+            fciPath: this.headPicUrl, //上传图片的地址
+            provinceId: this.addrId.province, //省ID
+            cityId: this.addrId.city, //市ID
+            areaId: this.addrId.area, //区域ID
+            fciLatitude: this.serviceIns.fciLatitude, //纬度
+            fciLongitude: this.serviceIns.fciLongitude //经度
           };
+          this.axios.post(_this_url, datas).then(res => {
+            console.log(res);
+            if (res.data.flag) {
+              alert(res.data.msg);
+              this.sucOption.showSuccess = true;
+            } else {
+              alert(res.data.msg);
+            }
+          });
         } else {
           alert("手机号格式不正确！");
         }
       }
-    }
+    },
   },
   components: {
     IndexHeader,
     UploadImg,
-    AddressPick
+    AddressPick,
+    Success
   }
 };
 </script>
