@@ -468,13 +468,13 @@ export default {
             color: #fff;
             font-size: 30px;
             .reset {
-                width: 270px;
+                width: 36%;
                 line-height: 88px;
                 background: #aeaeae;
                 text-align: center;
             }
             .save {
-                width: 480px;
+                width: 64%;
                 line-height: 88px;
                 background: #6ea1ff;
                 text-align: center;
