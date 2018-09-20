@@ -14,7 +14,7 @@
 </template>
 <script type="text/ecmascript-6">
 import IndexHeader from "business/indexHeader/indexHeader";
-import axios from "axios";
+// import axios from "axios";
 import config from "@/config/config";
 import { MessageBox } from "mint-ui";
 export default {
@@ -38,17 +38,14 @@ export default {
     //获取后台数据
     inforData() {
       let _url = "/h5memberMessage-read";
-      let params = new URLSearchParams();
-      params.append("fmmId", "174");
-      // params.append("KeyWord", encode  URI(encodeURI(this.serachSend.searchVal)));
-      axios
+      let _this = this;
+      this.axios
         .post(_url, {
-          fmmId: this.$route.params.itemId
+          fmmId: _this.$route.params.id
         })
         .then(res => {
-          this.item = res.data.mm;
-          console.log(res.data);
-          console.log(res.data.mm);
+          console.log(res);
+          // this.item = res.data.mm;
         });
     },
     deleateBox() {

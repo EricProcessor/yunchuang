@@ -11,6 +11,7 @@ import MyActivity from 'business/MyActivity/MyActivity';
 import MyInterview from 'business/MyInterview/MyInterview';
 import MyProject from 'business/MyProject/MyProject';
 import MyNews from 'business/MyNews/MyNews';
+import MyNewsDetail from 'business/MyNewsDetail/MyNewsDetail';
 import ActiveDetail from 'business/activeDetail/activeDetail';
 import ScreenResult from 'business/screenResult/screenResult';
 import ActiveScreen from 'business/activeScreen/activeScreen';
@@ -95,7 +96,13 @@ export default new Router({
         }, {
           path: 'MyNews', // 我的消息页面
           name: 'MyNews',
-          component: MyNews
+          component: MyNews,
+          children: [{
+            path: ':id', //我的消息详情
+            name: 'MyNewsDetail',
+            component: MyNewsDetail
+          }],
+
         },
         {
           path: 'accountsecuritys', //账号安全 

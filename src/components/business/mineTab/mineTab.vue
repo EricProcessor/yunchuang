@@ -1,9 +1,12 @@
 <template>
   <div class="mine_tab">
     <ul>
-      <li @click="_pageJump(item.path)" v-for="(item,index) in tabList" :key="index">
-        <div><img :src="item.tabImg" alt=""><span>{{item.title}}</span></div>
-        <img src="./gd.png" alt="">
+      <li  v-for="(item,index) in tabList" :key="index">
+        <div class="libox" @click="_pageJump(item.path,item.title)">
+          <div><img :src="item.tabImg" alt=""><span>{{item.title}}</span></div>
+          <img src="./gd.png" alt="">
+        </div>
+        
       </li>
         <i :class="{'news':!newSumShow}"></i>
     </ul>
@@ -14,6 +17,7 @@ export default {
   data() {
     return {
       newSumShow: false,
+      isOwn: "",
       tabList: [
         {
           path: "/MyIndex",
@@ -59,15 +63,24 @@ export default {
     };
   },
   mounted() {
-    this.saveUserMessage();
+    // this.saveUserMessage();
     this.getNewsSumAjax();
+    this.local();
   },
   methods: {
-    _pageJump(path) {
-      //页面路由跳转方法
-      this.$router.push({
-        path: "/mine" + path
-      });
+    _pageJump(path, title) {
+      if (this.isOwn == "G" || this.isOwn == "Q") {
+        //页面路由跳转方法
+        console.log(title);
+        this.$router.push({
+          path: "/mine" + path
+        });
+      } else {
+        //页面路由跳转方法
+        this.$router.push({
+          path: "/login"
+        });
+      }
     },
     //获取直播预告视频列表数据
     getNewsSumAjax() {
@@ -75,7 +88,6 @@ export default {
         url: "/frontmessage",
         method: "post"
       }).then(res => {
-        console.log(res);
         if (res.status === 200) {
           this.show = res.data.msg;
           if (res.data.msg == "s") {
@@ -88,42 +100,15 @@ export default {
         }
       });
     },
-    saveUserMessage() {
-      var d = new Date();
-      d.setTime(d.getTime() + 1 * 24 * 60 * 60 * 1000);
-      var expires = "expires=" + d.toUTCString();
-      // console.info(cname + "=" + +"; " + expires);
-
-      document.cookie =
-        "SESSION=b189c7e2-9bc8-4a19-8614-1a62637b92c0" + "; " + expires;
-      console.info(document.cookie);
-      //   var user = {
-      //     fmi_id: "183",
-      //     fmi_acc: "haoqing",
-      //     fmi_username: "张超",
-      //     fmi_pwd: "yongchao3",
-      //     fmi_pwd_jm: "e1ec2061a7167ebfc2f6c29d3c6b8f09",
-      //     fmi_tel: "15010142698",
-      //     fmi_status: "Y",
-      //     fmi_path: "",
-      //     fmi_group: "G",
-      //     fmi_type: "R",
-      //     fmi_mile: "369800761@qq.com",
-      //     fmi_datetimes: "2017/12/4  16:32:01",
-      //     fmi_pho_verify: "N",
-      //     fmi_mail_verify: "N"
-      //   };
-      //   // 存储值：将对象转换为Json字符串
-      //   sessionStorage.setItem("memberInfo", JSON.stringify(user));
-      //   localStorage.setItem("memberInfo", JSON.stringify(user));
-
-      //   // 取值时：把获取到的Json字符串转换回对象
-
-      //   var userJsonStr = sessionStorage.getItem("memberInfo");
-
-      //   var userEntity = JSON.parse(userJsonStr);
-      //   console.log(userEntity);
-      //   // console.log(userEntity.name); // => james
+    local() {
+      this.isOwn = localStorage.getItem("isOwn");
+      if (this.isOwn == "Q") {
+        this.tabList[6].title = "企业设置";
+        this.tabList[6].path = "/enterpriseSet";
+      } else {
+        this.tabList[6].title = "个人设置";
+        this.tabList[6].path = "/personalSet";
+      }
     }
   }
 };
@@ -134,24 +119,29 @@ export default {
   margin: 0 30px;
   border-top: 1px solid #dfdfdf;
   li {
+    overflow: hidden;
     line-height: 88px;
     height: 88px;
     border-bottom: 1px solid #dfdfdf;
     font-size: 24px;
     color: #000000;
     letter-spacing: 2px;
-    display: flex;
-    justify-content: space-between;
+
     align-items: center;
-    > img {
-      height: 30px;
-    }
-    div {
+    .libox {
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      img {
-        width: 32px;
-        padding-right: 20px;
+      > img {
+        height: 30px;
+      }
+      div {
+        display: flex;
+        align-items: center;
+        img {
+          width: 32px;
+          padding-right: 20px;
+        }
       }
     }
   }
