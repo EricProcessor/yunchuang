@@ -86,7 +86,6 @@ export default {
         go(){
             this.$router.go(-1);
         },
-       
         modify(){
             this.$router.push({
                 path: "/mine/accountsecuritys/tel"
@@ -95,16 +94,13 @@ export default {
         getData(){
             let getUrl = "/h5frontmyaccsafety-home";
             this.axios.get(getUrl).then((res)=>{
-                console.log(res)
                 this.dataList = res.data;
                 this.str = res.data.phone;
                 if(this.dataList.phonestatus == "N"){
                      return
                 }else{
                     this.str = this.str.substr(0,3)+"****"+this.str.substr(7);
-                    console.log(this.str)
                 }
-              
             })
         },
         emailCode(emaildVal){
@@ -113,7 +109,6 @@ export default {
             }
         },
         phoneCode(codeVal){
-            console.log(codeVal);
             if(codeVal != "Y"){
                 this.$router.push("/mine/accountsecuritys/Changepassword")
             }

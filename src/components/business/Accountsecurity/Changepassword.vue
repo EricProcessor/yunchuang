@@ -74,6 +74,10 @@ export default {
         this.Obtain.count = this.time;
     },
     methods:{
+        phonepwd(pwd){
+           let tels = 11 && /^((13|14|15|17|18|)[0-9]{1}\d{8})$/;
+            return tels.test(pwd)
+        },
         //返回上一层
         go(){
             this.$router.go(-1);
@@ -84,21 +88,22 @@ export default {
         },
         //点击获取验证码    
         yanzheng(telephone){
-            console.log(telephone)
-           var tel = 11 && /^((13|14|15|17|18|)[0-9]{1}\d{8})$/;
+            
+          
             if(telephone == ""){
-                alert("手机号不能为空")
+               // alert("手机号不能为空");
+                Toast('手机号不能为空');
                // this.Obtain.Nulls=true;
             }else{
                 this.Obtain.Nulls=false;
-                if(!tel.test(telephone)){
-                alert('手机号格式不正确')
+                if(!this.phonepwd(telephone)){
+                Toast('手机号格式不正确');
                 return;
             }else{         
                   let phoneUrl = "/frontcompanyinfomile-checkAcc";  //获取手机号是否注册接口
                     let params = { fmiAcc: telephone };
                     this.axios.post(phoneUrl, params).then(res => { 
-                         console.log(res);
+                        
                         if (res.data.flag == false) {
                             //获取短信验证码
                              let phone_url = '/frontmyaccphonesendmessage-home';
@@ -106,7 +111,7 @@ export default {
                                    phone: telephone,
                                };
                               this.axios.post(phone_url,params).then(data =>{
-                                  console.log(data);
+                            
                               })
                         } else {
                                  alert(res.data.msg2)                     
@@ -117,14 +122,13 @@ export default {
         },
        //提交按钮
        addBtn(txtVal,verificationVal){
-           console.log("手机号input框:" +txtVal);
-           console.log("验证码"+verificationVal);
+         
            if(txtVal=="" &&verificationVal==""){
-               alert('信息不完整')
+               Toast('信息不完整')
            }else if(txtVal==""){
-               alert("请输入手机号")
+               Toast("请输入手机号")
            }else if(verificationVal==""){
-               alert("请输入验证码")
+               Toast("请输入验证码")
            }else{
                 let _url = '/frontmyaccphoneupdatephone-home',
                 params = {
@@ -132,9 +136,16 @@ export default {
                         code:verificationVal
                 }
                 this.axios.post(_url,params).then(res =>{
-                    console.log(res)
+                
                     if(res.data == false){
-                        this.verificationCodez.errCode = true
+                        this.verificationCodez.errCode = true;
+                        Toast("验证码不正确")
+                    }else{
+                        this.$router.push("/mine/accountsecuritys/");
+                        Toast({
+                            message: '操作成功',
+                            iconClass: 'icon icon-success'
+                        });
                     }
                 })
            }

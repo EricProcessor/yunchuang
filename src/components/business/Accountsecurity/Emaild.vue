@@ -39,7 +39,7 @@
                 <input type="text" class="txtemail" v-model="yanzheng" >
             </div>
             <div class="wrong">
-                <p>验证码错误</p>
+                <p v-show="errEmaild">验证码错误</p>
             </div>
           </div>
         </div>
@@ -53,6 +53,7 @@
 </template>
 
 <script>
+import { Toast } from 'mint-ui';
 
 export default {
     data() {
@@ -60,7 +61,8 @@ export default {
             em:'',       //邮箱账号信息
             emNulls:false,   //判断邮箱为空的验证
             emFormat:false,  //判断邮箱格式不正确时验证
-            yanzheng:""        //邮箱验证码
+            yanzheng:"" ,       //邮箱验证码
+            errEmaild:false,    //验证码错误提示
         }
     },
     
@@ -89,6 +91,12 @@ export default {
                                       mail:emailVal
                                   }
                     this.axios.post(_urltwo,params).then(res =>{
+                         
+                         if(res.data !=true){
+                             Toast("发送失败")
+                         }else{
+                              Toast("发送成功")
+                         }
                     })   
                 }else{
                     this.emFormat = true               
@@ -99,22 +107,33 @@ export default {
         emailBtn(emailVal,codeVal){
            
             if(emailVal=="" && codeVal==""){
-                alert("信息不完整")
+                Toast("信息不完整")
             }else if(emailVal==""){
-                alert("邮箱不能为空")
+                Toast("邮箱不能为空")
             }else if(codeVal==""){
-                alert("验证码不能为空")
+                Toast("验证码不能为空")
             }else{
+                if(this.isEmail(emailVal)){
+                        //邮箱验证接口
+                        let addUrl="/frontmyaccupdatemail-home",
+                            params = {
+                                mail:emailVal,
+                                code:codeVal
+                            };
+                        this.axios.post(addUrl,params).then((res)=>{
+                            console.log(res)
+                            if(res.data == false){
+                                  Toast("验证码错误")
+                            }else{
+                                Toast({
+                                    message: '操作成功',
+                                    iconClass: 'icon icon-success'
+                                });
+                                this.$router.push("/mine/accountsecuritys")
+                            }
+                        })
+                }
                 
-                //邮箱验证接口
-                let addUrl="/frontmyaccupdatemail-home",
-                    params = {
-                        mail:emailVal,
-                        code:codeVal
-                    };
-                this.axios.post(addUrl,params).then((res)=>{
-                    console.log(res)
-                })
             }
         }
     }
