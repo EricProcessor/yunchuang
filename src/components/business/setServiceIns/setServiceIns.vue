@@ -208,9 +208,11 @@ export default {
             fciLongitude: this.serviceIns.fciLongitude //经度
           };
           this.axios.post(_this_url, datas).then(res => {
+            console.log(res);
             if (res.data.flag) {
+              alert(res.data.msg);
               this.sucOption.showSuccess = true;
-            }else{
+            } else {
               alert(res.data.msg);
             }
           });
@@ -218,12 +220,13 @@ export default {
           alert("手机号格式不正确！");
         }
       }
-    }
+    },
   },
   components: {
     IndexHeader,
     UploadImg,
-    AddressPick
+    AddressPick,
+    Success
   }
 };
 </script>

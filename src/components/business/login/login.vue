@@ -63,7 +63,7 @@ export default {
               this.$router.push({
                 path: `/findPwd/${this.userInfo.userName}`
               });
-            }else{
+            } else {
               alert("该用户名不存在！");
             }
           });
@@ -84,14 +84,12 @@ export default {
           fmiPwd: this.userInfo.password
         };
         this.axios.post(url, params).then(res => {
-          if (res.data.msg) {
-            alert(res.data.msg);
-          } else {
-            if (this.userInfo.showImg) {
-              localStorage.setItem("userName", this.userInfo.userName);
-              localStorage.setItem("pwd", this.userInfo.password);
-            }
+          if (res.data.flag) {
+            localStorage.setItem("ownInfo1",JSON.stringify(res.data));
+            localStorage.setItem("isOwn",res.data.info.fmiGroup);
             this.$router.push("/");
+          } else {
+            alert(res.data.msg);
           }
         });
       }
