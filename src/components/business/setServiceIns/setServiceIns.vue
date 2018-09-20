@@ -114,6 +114,7 @@ export default {
   },
   mounted() {
     this.getServiceType();
+      
   },
   methods: {
     showAddr() {

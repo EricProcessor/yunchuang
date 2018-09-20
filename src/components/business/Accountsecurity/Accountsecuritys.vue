@@ -15,12 +15,11 @@
                            <dt><img src="./tel.png" alt=""></dt>
                            <dd>
                                <p>手机绑定</p>
-                               <p>{{str}}</p>
+                               <p>{{str}}12345678912</p>
                            </dd>
                        </dl>
                    </div>
                     <div class="two">
-                        
                         <p class="p2" v-if="dataList.phonestatus!='Y'" >未认证</p>
                         <p class="p1" v-else >已认证</p>
                     </div>
@@ -28,7 +27,7 @@
                 <!-- 修改密码 -->
                 <!-- <router-link to="/mine/accountsecuritys/tel"> -->
                 <div class="lock_dl" @click="modify" >
-                   <div class="one">
+                   <div class="onepsd">
                        <dl>
                            <dt><img src="./lock.png" alt=""></dt>
                            <dd>
@@ -37,7 +36,7 @@
                            </dd>
                        </dl>
                    </div>
-                    <div class="two">
+                    <div class="twopsd">
                         <p>修改</p>
                         <!-- <p style="display:none">已认证</p> -->
                     </div>
@@ -45,7 +44,7 @@
                <!-- </router-link> -->  
                 <!-- 邮箱验证 -->
                 <div class="email_dl" @click="emailCode(dataList.mailstatus)" >
-                   <div class="one">
+                   <div class="oneemail">
                        <dl>
                            <dt><img src="./email.png" alt=""></dt>
                            <dd>
@@ -54,9 +53,9 @@
                            </dd>
                        </dl>
                    </div>
-                    <div class="two"  >
-                        <p v-if="dataList.mailstatus=='N'">未完成</p>
-                        <p v-else>已完成</p>
+                    <div class="twoemail"  >
+                        <p class="okemail" v-if="dataList.mailstatus=='N'">未完成</p>
+                        <p class="okemaildOne" v-else>已完成</p>
                     </div>
                 </div>
             </div>
@@ -87,7 +86,6 @@ export default {
         go(){
             this.$router.go(-1);
         },
-       
         modify(){
             this.$router.push({
                 path: "/mine/accountsecuritys/tel"
@@ -95,12 +93,14 @@ export default {
         },
         getData(){
             let getUrl = "/h5frontmyaccsafety-home";
-            this.axios.post(getUrl).then((res)=>{
-                console.log(res)
+            this.axios.get(getUrl).then((res)=>{
                 this.dataList = res.data;
-                this.str = res.data.phone
-              this.str = this.str.substr(0,3)+"****"+this.str.substr(7);
-              console.log(this.str)
+                this.str = res.data.phone;
+                if(this.dataList.phonestatus == "N"){
+                     return
+                }else{
+                    this.str = this.str.substr(0,3)+"****"+this.str.substr(7);
+                }
             })
         },
         emailCode(emaildVal){
@@ -109,7 +109,6 @@ export default {
             }
         },
         phoneCode(codeVal){
-            console.log(codeVal);
             if(codeVal != "Y"){
                 this.$router.push("/mine/accountsecuritys/Changepassword")
             }
@@ -149,16 +148,15 @@ export default {
                       dl{
                             display: flex;
                             dt{
-                                margin-left:15%;
+                                margin-left:30px;
                                 img{
-                                    width: 90%;
-                                    padding-right: 5%;
+                                    width: 62%;   
                                 }
                             }
                             dd{
-                                    margin-left: 10px;
                               //  margin-left:5px;
                                 p:first-child{
+                                    width: 119%;
                                     height: 33px;
                                     font-family: MicrosoftYaHei;
                                     font-size: 20px;
@@ -169,6 +167,7 @@ export default {
                                 }
                                 p:last-child{
                                     color: #6ea1ff;
+                                    margin-top: 10px;
                                 }
                             }
                       }
@@ -195,18 +194,19 @@ export default {
                    display: flex;
                    justify-content: space-between;
                     align-items: center;
-                    .one{
+                    .onepsd{
                       dl{
+                         
                             display: flex;
                             dt{
-                                margin-left:7%; 
+                                margin-left:30px; 
                                 img{
-                                    width: 80%;
+                                    width: 100%;
                                 }
                             }
                             dd{
-                                 margin-left: 8px;
-                                width: 119%;
+                                margin-left: 30px;
+                                width: 129%;
                                 p:first-child{
                                     height: 33px;
                                     font-family: MicrosoftYaHei;
@@ -217,12 +217,13 @@ export default {
                                     color: #333333;
                                 }
                                 p:last-child{
+                                    margin-top: 5px;
                                     color: #999999;
                                 }
                             }
                       }
                     }
-                     .two{
+                     .twopsd{
                        width: 13%;
                         p:first-child{
                             color: #6ea1ff;
@@ -243,18 +244,18 @@ export default {
                    display: flex;
                    justify-content: space-between;
                     align-items: center;
-                    .one{
+                    .oneemail{
                       dl{
                             display: flex;
                             dt{
-                                margin-left:7%;
+                                margin-left:30px;
                                 
                                 img{
-                                    width: 80%;
+                                    width: 100%;
                                 }
                             }
                             dd{
-                                 margin-left: 8px;
+                                 margin-left: 30px;
                                 width: 119%;
                                 p:first-child{
                                     height: 33px;
@@ -266,19 +267,19 @@ export default {
                                     color: #333333;
                                 }
                                 p:last-child{
+                                    margin-top: 8px;
                                       color: #999999;
                                 }
                             }
                       }
                     }
-                     .two{
+                     .twoemail{
                        width: 13%;
-                        p:first-child{
+                        .okemaildOne{
                               color: #6ea1ff;
-                           
                             font-size: 24px;
                         }
-                        p:last-child{
+                        .okemail{
                            color: red;
                             font-size: 24px;
                         }

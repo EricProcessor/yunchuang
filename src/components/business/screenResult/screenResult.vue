@@ -54,7 +54,11 @@
             type:this.$route.query.type
           }
           this.axios.post(url,params).then(res=>{
-            this.screenResult = res.data.list
+            if(res.data.list){
+              this.screenResult = res.data.list
+            }else{
+              alert("没有筛选到数据")
+            }
             // console.log(this.screenResult)
           })
           // console.log(this.$route.query.begintime) 

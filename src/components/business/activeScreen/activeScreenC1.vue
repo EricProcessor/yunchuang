@@ -2,11 +2,11 @@
      <div class="actice-place">
           <span>活动区域</span>
           <div class="actice-input">
-              <input type="text" placeholder="选择省-市-区" v-model="simpAddress"  @click="showAddressPopup"/>
+              <input type="text" placeholder="选择省-市-区" disabled v-model="simpAddress"  @click="showAddressPopup"/>
               <i>▼</i>
           </div>
           <mt-popup v-model="addressShow" position="bottom" class="region-popup">
-            <div class="address">
+            <!-- <div class="address">
               <p class="address-p">热门城市</p><p @click="closeAddressComponent">✖</p>
             </div>
             <ul>
@@ -22,7 +22,7 @@
               <li>东莞</li>
               <li>宁波</li>
               <li>郑州</li>
-            </ul>
+            </ul> -->
             <mt-picker :slots="slots" valueKey="name"  @change="_changeAddress"></mt-picker>
           </mt-popup>
           

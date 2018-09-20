@@ -87,13 +87,13 @@ export default {
         return {
             remind: true,       //弹窗提示
             name: "",       //姓名
-            sex: "Y",            //性别
+            sex: "男",            //性别
             birthday: "",           //生日
             telephone: "",          //手机号
             email: "",              //邮箱
-            provinceId: 4,          //省份id
-            cityId: 54,              //城市id
-            areaId: 532,               //区域id
+            provinceId: 0,          //省份id
+            cityId: 0,              //城市id
+            areaId: 0,               //区域id
             simpAddress: "",            //保存用于显示用的地址字符串
             complexAddress: "",             //详细地址
             picList: [],            //保存上传图片文件的数组，元素是file对象
@@ -164,10 +164,10 @@ export default {
         },
         //初始化用户信息操作：将请求来的用户数据填充到页面上
         _initPerson(data) {
-            this.name = data.member.fci_name
+            this.name = data.member.fmiUsername
             this.sex = data.sex
             this._handleTime(new Date(data.fciBirthday))    //时间数据转换，并保存给this.birthday
-            this.telephone = data.member.fci_tel
+            this.telephone = data.member.fmiTel
             this.email = data.member.fmiMile
             this.picList = [{src: data.member.fmiPath}]
             this.headPicUrl = data.member.fmiPath
@@ -438,13 +438,13 @@ export default {
             color: #fff;
             font-size: 30px;
             .reset {
-                width: 270px;
+                width: 36%;
                 line-height: 88px;
                 background: #aeaeae;
                 text-align: center;
             }
             .save {
-                width: 480px;
+                width: 64%;
                 line-height: 88px;
                 background: #6ea1ff;
                 text-align: center;
