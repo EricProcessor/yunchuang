@@ -86,8 +86,8 @@ export default {
                 if(this.isEmail(emailVal)){        //正则匹配
                     this.emFormat = false;  
                               //获取邮箱验证码
-                              let _urltwo = "/frontmyaccsendcodemail-home",
-                                  params = {
+                              let _urltwo = "/frontmyaccsendcodemail-home";
+                              let params = {
                                       mail:emailVal
                                   }
                     this.axios.post(_urltwo,params).then(res =>{
@@ -97,7 +97,7 @@ export default {
                     this.emFormat = true               
                 }
             }
-           
+            
         },
         emailBtn(emailVal,codeVal){
             console.log("邮箱:"+emailVal)
@@ -109,6 +109,7 @@ export default {
             }else if(codeVal==""){
                 alert("验证码不能为空")
             }else{
+                
                 //邮箱验证接口
                 let addUrl="/frontmyaccupdatemail-home",
                     params = {
