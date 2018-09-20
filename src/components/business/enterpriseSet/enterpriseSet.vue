@@ -135,9 +135,6 @@ export default {
             this.provinceId = data.provinceid
             this.cityId = data.cityid
             this.areaId = data.areaid
-
-
-            
         },
         //重置事件
         _resetEvent() {      
