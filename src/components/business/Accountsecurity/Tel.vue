@@ -66,6 +66,7 @@
 
 <script>
 import IndexHeader from "business/indexHeader/indexHeader";
+import { Toast } from 'mint-ui';
 
 export default {
   created() {
@@ -128,8 +129,9 @@ export default {
     },
     //判断新密码是否为空
     newspsd(newVal) {
-       console.log("新密码" + newVal)
+      
       if (newVal == "") {
+        
         this.newpss.newpsd = true;
         this.newpss.formats = false;
         //this.newpss.oldNonew = false;
@@ -153,7 +155,7 @@ export default {
     },
     //判断确认密码是否为空
     Reaffirm(confirmVal) {
-        console.log("确认密码" + confirmVal)
+      
       if (confirmVal == "") {
         this.newpss.judge = true;
       } else {
@@ -171,27 +173,27 @@ export default {
         news = this.newpss.newtxt,
         confirmtxts = this.newpss.confirmtxt;
       if (old == "" && news == "" && confirmtxts == "") {
-        alert("信息不完整!");
+        Toast("信息不完整!");
       } else if (old == "") {
-        alert("原密码不能为空!");
+        Toast("原密码不能为空!");
       } else if (news == "") {
-        alert("新密码不能为空!");
+        Toast("新密码不能为空!");
       } else if (confirmtxts == "") {
-        alert("确认密码不能为空!");
+        Toast("确认密码不能为空!");
       } else {
-        if (!this.isPwd(old) || !this.isPwd(news) || !this.isPwd(confirmtxts)) {
-          alert("字母数字开头六到二十一位");
+        if (!this.isPwd(old) && !this.isPwd(news) && !this.isPwd(confirmtxts)) {
+          Toast("字母数字开头六到二十一位");
         } else if (!this.isPwd(old)) {
-          alert("原密码格式不正确");
+          Toast("原密码格式不正确");
         } else if (!this.isPwd(news)) {
-          alert("新密码格式不正确");
+          Toast("新密码格式不正确");
         } else if (!this.isPwd(confirmtxts)) {
-          alert("确认密码格式不正确");
+          Toast("确认密码格式不正确");
         } else {
-          console.log("点击事件");
+         
           
           if(this.old.oldtxt == this.newpss.newtxt){
-              alert("新密码不能和原密码相同")
+              Toast("新密码不能和原密码相同")
           }else{
               //输入的新密码不能和原密码一致的判断
               this.newpss.oldNonew = false;
@@ -206,17 +208,20 @@ export default {
                         newpwd: news
                     };
                     this.axios.post(_url, params).then(res => {
-                            console.log(res.data);
+                    
                             if(res.data == true){
                                 this.old.falseMatching = false;
-                                alert("修改成功");
+                                Toast({
+                                    message: '操作成功',
+                                    iconClass: 'icon icon-success'
+                                });
                                 this.$router.push("/mine")
                             }else{
                                 this.old.falseMatching = true
                             }
                     });
               }else{
-                 alert("您的确认密码和新密码不相同,请重新输入");
+                 Toast("您的确认密码和新密码不相同,请重新输入");
                  this.newpss.identical = true;
               }
                   

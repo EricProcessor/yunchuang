@@ -1,10 +1,7 @@
 <template>
     <div class="box">
         <div class="head">
-                <!-- <span>&lt;</span> -->
-                <i class="iconfont lefts" @click="go" >&#xe645;</i>
-                <span>手机绑定</span>
-                <span></span>
+                <index-header text="手机绑定" :hasSearch="false"></index-header>
         </div>
         <div class="yellows" @click="headNone"  >
             <div class="one_p">
@@ -50,6 +47,7 @@
 
 <script>
 import { Toast } from 'mint-ui';
+import IndexHeader from "business/indexHeader/indexHeader";
 export default {
     data(){
         return {
@@ -74,39 +72,40 @@ export default {
         this.Obtain.count = this.time;
     },
     methods:{
+        phonepwd(pwd){
+           let tels = 11 && /^((13|14|15|17|18|)[0-9]{1}\d{8})$/;
+            return tels.test(pwd)
+        },
         //返回上一层
         go(){
             this.$router.go(-1);
         },
         //点击黄色框,隐藏
-        headNone(){
-            
-        },
+        headNone(){},
         //点击获取验证码    
         yanzheng(telephone){
-            console.log(telephone)
-           var tel = 11 && /^((13|14|15|17|18|)[0-9]{1}\d{8})$/;
             if(telephone == ""){
-                alert("手机号不能为空")
+               // alert("手机号不能为空");
+                Toast('手机号不能为空');
                // this.Obtain.Nulls=true;
             }else{
                 this.Obtain.Nulls=false;
-                if(!tel.test(telephone)){
-                alert('手机号格式不正确')
+                if(!this.phonepwd(telephone)){
+                Toast('手机号格式不正确');
                 return;
             }else{         
                   let phoneUrl = "/frontcompanyinfomile-checkAcc";  //获取手机号是否注册接口
                     let params = { fmiAcc: telephone };
                     this.axios.post(phoneUrl, params).then(res => { 
-                         console.log(res);
-                        if (res.data.flag == false) {
+                        
+                        if (res.data.flag == false){
                             //获取短信验证码
                              let phone_url = '/frontmyaccphonesendmessage-home';
                               let params = {
                                    phone: telephone,
                                };
                               this.axios.post(phone_url,params).then(data =>{
-                                  console.log(data);
+                                  
                               })
                         } else {
                                  alert(res.data.msg2)                     
@@ -115,16 +114,16 @@ export default {
             }
             }
         },
+        
        //提交按钮
        addBtn(txtVal,verificationVal){
-           console.log("手机号input框:" +txtVal);
-           console.log("验证码"+verificationVal);
+         
            if(txtVal=="" &&verificationVal==""){
-               alert('信息不完整')
+               Toast('信息不完整')
            }else if(txtVal==""){
-               alert("请输入手机号")
+               Toast("请输入手机号")
            }else if(verificationVal==""){
-               alert("请输入验证码")
+               Toast("请输入验证码")
            }else{
                 let _url = '/frontmyaccphoneupdatephone-home',
                 params = {
@@ -132,14 +131,24 @@ export default {
                         code:verificationVal
                 }
                 this.axios.post(_url,params).then(res =>{
-                    console.log(res)
+                
                     if(res.data == false){
-                        this.verificationCodez.errCode = true
+                        this.verificationCodez.errCode = true;
+                        Toast("验证码不正确")
+                    }else{
+                        this.$router.push("/mine/accountsecuritys/");
+                        Toast({
+                            message: '操作成功',
+                            iconClass: 'icon icon-success'
+                        });
                     }
                 })
            }
        }
-    }
+    },
+    components: {
+    IndexHeader
+  }
 }
 </script>
 

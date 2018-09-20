@@ -2,7 +2,8 @@
   <div>
     <!-- header部分 -->
     <header class="activity-title">活动
-      <span class="acticity-screen" @click="activeScreen">筛选</span>
+       <span class="icon_back" @click="backBtnPre"></span> 
+       <span class="acticity-screen" @click="activeScreen">筛选</span>
     </header>
     <!-- tab部分 -->
     <acTab class="ac-tab" @selectTab="selectTab"></acTab>
@@ -27,6 +28,9 @@
           MFooter
       },
       methods:{
+        backBtnPre() {
+          this.$router.go(-1);
+        },
         activeScreen(){
           this.$router.push({
             path: "/activeScreen/",
@@ -57,14 +61,25 @@
     top: 0;
     left: 0;
     z-index: 1000;
-  .acticity-screen{
-    height: 88px;
-    line-height: 88px;
-    position: absolute;
-    right:20px;
-    font-size: 28px;
-    color: #fff;
-  }
+    .icon_back {
+      display: block;
+      width: 40px;
+      height:46px;
+      background: url("./backBtn.png") no-repeat center center;
+      background-size: 100% 100%;
+      position: absolute;
+      top: 20px;
+      left: 30px;
+      z-index: 3;
+    }
+    .acticity-screen{
+      height: 88px;
+      line-height: 88px;
+      position: absolute;
+      right:20px;
+      font-size: 28px;
+      color: #fff;
+    }
 }
 .ac-tab {
   margin-top: 88px;
