@@ -16,15 +16,15 @@ export default {
         },
         defaultProvinceId: {
             type: Number,
-            default: 0
+            default: 2
         },
         defaultCityId: {
             type: Number,
-            default: 0
+            default: 52
         },
         defaultAreaId: {
             type: Number,
-            default: 0
+            default: 500
         }
     },
     data() {
