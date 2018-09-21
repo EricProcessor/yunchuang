@@ -177,7 +177,7 @@ export default {
 </script>
 <style lang="less" scoped>
 .actice-place{
-  margin-top:108px;
+  margin-top:50px;
   margin-left: 20px;
     span{
       height:58px;

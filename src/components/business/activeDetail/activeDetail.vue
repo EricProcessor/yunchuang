@@ -1,9 +1,7 @@
 <template>
   <div>
     <!-- header部分 -->
-    <header class="topDetail">活动详情
-      <span class="icon_back" @click="backBtnPre"></span>    
-    </header>
+    <index-header text="活动" :hasSearch="false"></index-header>
     <!-- 详情 -->
     <div class="detail">
       <div class="detail-title">
@@ -73,6 +71,7 @@
 <script>
 import Vue from 'vue'
 import { Popup } from 'mint-ui'
+import IndexHeader from "business/indexHeader/indexHeader";
 import Install from "@/config/checkRule";
 Vue.component(Popup.name, Popup);
 export default {
@@ -86,6 +85,9 @@ export default {
         tel: "",
       }
     };
+  },
+  components: {
+      IndexHeader,
   },
   methods: {
     backBtnPre() {
@@ -166,32 +168,7 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-.topDetail {
-  width: 100%;
-  height: 88px;
-  line-height: 88px;
-  text-align: center;
-  font-size: 36px;
-  color: #fff;
-  background: #253350;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 3;
-  .icon_back {
-    display: block;
-    width: 40px;
-    height:46px;
-    background: url("./backBtn.png") no-repeat center center;
-    background-size: 100% 100%;
-    position: absolute;
-    top: 20px;
-    left: 30px;
-    z-index: 3;
-  }
-}
 .detail {
-  margin-top: 90px;
   padding: 0 26px;
     .detail-title {
       width: 100%;

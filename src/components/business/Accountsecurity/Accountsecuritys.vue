@@ -15,7 +15,7 @@
                            <dt><img src="./tel.png" alt=""></dt>
                            <dd>
                                <p>手机绑定</p>
-                               <p>{{str}}12345678912</p>
+                               <p>{{str}}</p>
                            </dd>
                        </dl>
                    </div>

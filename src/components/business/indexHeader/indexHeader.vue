@@ -7,6 +7,7 @@
         <!-- </router-link> -->
         {{text}}
         <i v-if="hasSearch" data-v-5eeac47d="" class="mintui mintui-search"></i>
+        <slot></slot>
     </div>
 
   </div>
