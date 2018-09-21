@@ -1,97 +1,74 @@
 <template>
   <div class="screen">
     <!-- header部分 -->
-    <header class="screen-title">筛选结果
-      <span class="icon_back" @click="backBtnPre"></span> 
-      <span class="screen-result" @click="activeScreen">筛选</span>
-    </header>
+    <index-header text="筛选结果" :hasSearch="false">
+      <span @click="activeScreen" class="screen-result">筛选</span>
+    </index-header>
     <ul>
       <li v-for="(val,index) in screenResult" :key="index"  @click="activeDetail(val.faiId)">
         <div class="screen-con">
           <p class="pOne">{{val.faiName}}</p>
           <p class="pTwo"><i></i> {{val.faiAddress}}</p>
         </div>
-        <div class="screen-img">
-          
+        <div class="screen-img">          
           <img :src="val.faiPath" alt=""></div>
       </li>
     </ul>
   </div>
 </template>
 <script>
-    export default {
-        data(){
-          return{
-             screenResult:'',
-              area_id:'',     // 区/县
-             province_id:'', // 省
-             city_id:'',     //市
-             begintime:'',   //开始时间
-             endtime:'' ,    //结束时间  
-             type:""
-
-          }        
+import IndexHeader from "business/indexHeader/indexHeader";
+export default {
+      data(){
+        return{
+           screenResult:'',
+            area_id:'',     // 区/县
+           province_id:'', // 省
+           city_id:'',     //市
+           begintime:'',   //开始时间
+           endtime:'' ,    //结束时间  
+           type:""
+        }        
+      },
+      components: {
+        IndexHeader,
+      },
+      methods: {
+        backBtnPre() {                        //返回上一级
+          this.$router.go(-1);
         },
-        methods: {
-          backBtnPre() {                        //返回上一级
-            this.$router.go(-1);
-          },
-          activeDetail(id) {
-            this.$router.push('/activeDetail/'+id); //跳转详情页
-          },
-          activeScreen(){                         //跳转结果页
-            this.$router.push('/activeScreen');
-          }         
+        activeDetail(id) {
+          this.$router.push('/activeDetail/'+id); //跳转详情页
         },
-        mounted(){
-          let url = "/h5frontactivityinfo-foreshow";
-          let params={
-            province_id:this.$route.query.province_id,
-            city_id:this.$route.query.city_id,
-            area_id:this.$route.query.area_id,
-            begintime:this.$route.query.begintime,
-            endtime:this.$route.query.endtime,
-            type:this.$route.query.type
-          }
-          this.axios.post(url,params).then(res=>{
-            if(res.data.list){
-              this.screenResult = res.data.list
-            }else{
-              alert("没有筛选到数据")
-            }
-            // console.log(this.screenResult)
-          })
-          // console.log(this.$route.query.begintime) 
+        activeScreen(){                         //跳转结果页
+          this.$router.push('/activeScreen');
+        }         
+      },
+      mounted(){
+        let url = "/h5frontactivityinfo-foreshow";
+        let params={
+          province_id:this.$route.query.province_id,
+          city_id:this.$route.query.city_id,
+          area_id:this.$route.query.area_id,
+          begintime:this.$route.query.begintime,
+          endtime:this.$route.query.endtime,
+          type:this.$route.query.type
         }
-    };
-</script>s
+        this.axios.post(url,params).then(res=>{
+          if(res.data.list){
+            this.screenResult = res.data.list
+          }else{
+            alert("没有筛选到数据")
+          }
+          // console.log(this.screenResult)
+        })
+        // console.log(this.$route.query.begintime) 
+      }
+};
+</script>
 <style lang="less" scoped>
 .screen{
   background: #f2f2f2;
-  .screen-title {
-    position: relative;
-    width: 100%;
-    height: 86px;
-    text-align: center;
-    line-height: 86px;
-    font-size: 34px;
-    color: #fff;
-    background: #253350;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index:1000;
-    .icon_back {
-      display: block;
-      width: 40px;
-      height:46px;
-      background: url("./backBtn.png") no-repeat center center;
-      background-size: 100% 100%;
-      position: absolute;
-      top: 20px;
-      left: 30px;
-      z-index: 3;
-    }
     .screen-result{
       height: 86px;
       line-height: 86px;
@@ -99,12 +76,10 @@
       right:20px;
       font-size: 24px;;
       color: #fff;
-    }
   }
   ul{
     display: flex;
     flex-direction: column;
-    margin-top: 88px;
     li{
       width: 96%;
       height:170px;
