@@ -2,17 +2,70 @@
   <div class="mine_information"> 
     <ol>
       <li class="infor_left">
+        <img :src="fciPath" alt="" srcset="" v-if="userLogin==true">
       </li>
-      <li class="infor_right">
-        <h3>盈创兴 <img src="./nan.png" alt=""></h3>
-        <span>内蒙古自治区-包头市-东河区</span>
-        <span>注册于2107-09-19</span>
+      <li class="infor_right" v-if="userLogin==true">
+        <h3>{{fmiUsername}} <img src="./nan.png" alt="" v-if="sex=='男'"><img src="./nv.png" alt="" v-if="sex=='女'"></h3>
+        <span>{{fciAddress}}</span>
+        <span>注册于{{fmiDatetimes | formatDate}}</span>
+      </li>
+      <li class="infor_right" v-if="userLogin==false">
+        <h3>未登录</h3>
       </li>
     </ol>
   </div>
 </template>
-<script>
-export default {};
+<script type="text/ecmascript-6">
+import config from "@/config/config";
+export default {
+  data() {
+    return {
+      fmiUsername: "", //名字
+      sex: "", //性别
+      fciAddress: "", //地址
+      fmiDatetimes: "", //时间
+      fciPath: "", //头像
+      userLogin: false //用户是否登录
+    };
+  },
+  mounted() {
+    this.local();
+  },
+  methods: {
+    local() {
+      var ownInfo1 = JSON.parse(localStorage.getItem("ownInfo1"));
+      console.log(ownInfo1);
+      if (ownInfo1 != null) {
+        this.userLogin = true;
+        this.fmiUsername = ownInfo1.info.fmiUsername; //名字
+        this.sex = ownInfo1.memmberDetail.sex; //性别
+        this.fciAddress = ownInfo1.memmberDetail.fciAddress; //地址
+        this.fmiDatetimes = ownInfo1.info.fmiDatetimes; //时间
+        this.fciPath = ownInfo1.memmberDetail.fciPath; //地址
+      } else {
+        this.userLogin = false;
+      }
+    }
+  },
+  //将时间戳转化成时间
+  filters: {
+    formatDate: function(value) {
+      let date = new Date(value);
+      let y = date.getFullYear();
+      let MM = date.getMonth() + 1;
+      MM = MM < 10 ? "0" + MM : MM;
+      let d = date.getDate();
+      d = d < 10 ? "0" + d : d;
+      let h = date.getHours();
+      h = h < 10 ? "0" + h : h;
+      let m = date.getMinutes();
+      m = m < 10 ? "0" + m : m;
+      let s = date.getSeconds();
+      s = s < 10 ? "0" + s : s;
+      return y + "-" + MM + "-" + d;
+    }
+  }
+};
 </script>
 <style lang="less" scoped>
 // 我的基本信息
@@ -57,7 +110,7 @@ export default {};
         height: 48px;
         line-height: 48px;
         img {
-          transform: rotate(45deg);
+          // transform: rotate(45deg);
           width: 24px;
           position: relative;
           top: 6px;

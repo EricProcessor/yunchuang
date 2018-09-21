@@ -174,9 +174,20 @@ a {
 
 .detailView .detailBox .textInfoBox p {
   letter-spacing: 6px;
+  font-size: 26px;
+  margin: 5px 0;
+}
+
+.detailView .detailBox .textInfoBox p span {
+  letter-spacing: 4px;
+  font-size: 26px;
 
 }
 
+.detailView .detailBox .textInfoBox p span strong {
+  letter-spacing: 2px;
+  font-size: 26px;
+}
 
 .detailView .detailBox .textInfoBox img {
   max-width: 700px;

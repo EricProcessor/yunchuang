@@ -80,8 +80,7 @@ export default {
       // this.$router.push("/inforDetail");
       console.log(Id);
       this.$router.push({
-        name: "MyNewsDetail",
-        params: { itemId: Id }
+        path: `/mine/MyNews/${Id}`
       });
     }
   },
