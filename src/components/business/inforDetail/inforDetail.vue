@@ -52,7 +52,7 @@ export default {
     this.headerText = "资讯详情"; //头部显示内容
   },
   mounted() {
-    this.paicheNo = this.$route.params.paicheNo;
+    // this.paicheNo = this.$route.params.paicheNo;
     this.id = this.$route.params.id;
     this.title = this.$route.params.title;
     if (this.title == "创业头条") {
@@ -72,7 +72,6 @@ export default {
       let infoUrl = "/h5frontcarrierinfotop-item/" + this.id;
       this.axios.post(infoUrl).then(res => {
         this.detail.push(res.data.ci);
-        console.log(this.detail);
         for (let i in this.detail) {
           let newTime1 =
             new Date(this.detail[i].fciDatetime)
@@ -88,7 +87,6 @@ export default {
       //博文天地
       let bowenUrl = "/h5frontcarrierinfoblog-item/" + this.id;
       this.axios.post(bowenUrl).then(res => {
-        console.log(res.data);
         this.detail.push(res.data.ci);
         for (let i in this.detail) {
           let newTime2 =
@@ -115,7 +113,9 @@ export default {
             " " +
             new Date(this.detail[i].fpiDatetime).toTimeString().substr(0, 8);
           this.detail[i].fpiDatetime = newTime3;
-          this.detail[i].fpiContent=this.unescapeHTML(this.detail[i].fpiContent);
+          this.detail[i].fpiContent = this.unescapeHTML(
+            this.detail[i].fpiContent
+          );
         }
       });
     },

@@ -2,7 +2,7 @@
   <div class="towLevelRouter">
     <index-header :text="headerText" :hasSearch="false"></index-header>
     <ul class="myIntCon">
-      <li @click.stop="linkInforDetail(item.fmm_id)" :id="item.fmm_id" v-for="(item,index) in items" :key="index">
+      <li @click.stop="linkInforDetail(item.fmm_title,item.fmi_datetime,item.fmm_content)" :id="item.fmm_id" v-for="(item,index) in items" :key="index">
         <div>
            <div class="myIntNew">
             <span>{{item.fmm_title}}</span>
@@ -76,11 +76,14 @@ export default {
         });
     },
     // 点击列表跳转到详情`
-    linkInforDetail(Id) {
-      // this.$router.push("/inforDetail");
-      console.log(Id);
+    linkInforDetail(fmm_title, fmi_datetime, fmm_content) {
       this.$router.push({
-        path: `/mine/MyNews/${Id}`
+        name: "MyNewsDetail",
+        params: {
+          Fmm_title: fmm_title,
+          Fmi_datetime: fmi_datetime,
+          Fmm_content: fmm_content
+        }
       });
     }
   },

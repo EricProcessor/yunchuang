@@ -5,12 +5,6 @@
         </div>
         <div class="video-box">
             <video controls="" :src="item.fpdPath" id="ckplayer_a1" width="100%" height="100%" preload="metadata" :poster="item.fpdCoverPath"></video>
-            <!-- <video-player  class="video-player vjs-custom-skin"
-                ref="videoPlayer"
-                :playsinline="true"
-                :options="playerOptions"
-            ></video-player> -->
-            <!-- <video controls="" src="http://movie.ks.js.cn/flv/other/1_0.mp4" id="ckplayer_a1" width="100%" height="100%" preload="metadata" poster="http://114.67.150.8:8080/upload_file/upload/2018/07/10/c3cbadb003fd4fe4bd52c52b008e35ca.jpg"></video> -->
         </div>
         <div class="class-content">
             <h2>{{item.fdpTitle}}</h2>
@@ -52,36 +46,7 @@ export default {
   data() {
     return {
       item: [],
-      show: false,
-      playerOptions: {
-        playbackRates: [0.7, 1.0, 1.5, 2.0], //播放速度
-        autoplay: false, //如果true,浏览器准备好时开始回放。
-        muted: false, // 默认情况下将会消除任何音频。
-        loop: false, // 导致视频一结束就重新开始。
-        preload: "auto", // 建议浏览器在<video>加载元素后是否应该开始下载视频数据。auto浏览器选择最佳行为,立即开始加载视频（如果浏览器支持）
-        language: "zh-CN",
-        aspectRatio: "16:9", // 将播放器置于流畅模式，并在计算播放器的动态大小时使用该值。值应该代表一个比例 - 用冒号分隔的两个数字（例如"16:9"或"4:3"）
-        fluid: true, // 当true时，Video.js player将拥有流体大小。换句话说，它将按比例缩放以适应其容器。
-        sources: [
-          {
-            // type: "video/mp4",
-            // type: "video/avi",
-
-            type: "",
-            src: "http://v.youku.com/v_show/id_XMTYyNzAyOTU4OA==.html" //url地址
-          }
-        ],
-        poster:
-          "http://114.67.150.8:8080/upload_file/upload/2018/07/10/c3cbadb003fd4fe4bd52c52b008e35ca.jpg", //你的封面地址
-        // width: document.documentElement.clientWidth,
-        notSupportedMessage: "此视频暂无法播放，请稍后再试", //允许覆盖Video.js无法播放媒体源时显示的默认信息。
-        controlBar: {
-          timeDivider: true,
-          durationDisplay: true,
-          remainingTimeDisplay: false,
-          fullscreenToggle: true //全屏按钮
-        }
-      }
+      show: false
     };
   },
   components: {
@@ -94,7 +59,6 @@ export default {
   methods: {
     //点击“展开”显示更多
     _showMore($event) {
-      console.log($event);
       this.show = true;
     },
     onPlayerPlay(player) {
@@ -108,49 +72,6 @@ export default {
       let _url = "/h5frontclassroom-video/" + this.$route.params.fdpId;
       axios.get(_url).then(res => {
         this.item = res.data.dp;
-        // let flashvars = {
-        //   f: this.item.fpdPath, //文件地址
-        //   c: 0,
-        //   p: 2,
-        //   b: 0,
-        //   i: this.item.fpdCoverPath, //缩略图地址
-        //   loaded: "loadedHandler",
-        //   my_url: encodeURIComponent(window.location.href)
-        // };
-        // let video = ["http://movie.ks.js.cn/flv/other/1_0.mp4->video/mp4"];
-        // CKobject.embed(
-        //   "http://www.ckplayer.com/ckplayer/6.6/ckplayer.swf",
-        //   "a1",
-        //   "ckplayer_a1",
-        //   "100%",
-        //   "100%",
-        //   false,
-        //   flashvars,
-        //   video
-        // );
-        var flashvars = {
-          f: "http://v.youku.com/v_show/id_XMTYyNzAyOTU4OA==.html", //文件地址
-          c: 0,
-          p: 2,
-          b: 0,
-          i:
-            "http://114.67.150.8:8080/upload_file/upload/2018/07/10/c3cbadb003fd4fe4bd52c52b008e35ca.jpg", //缩略图地址
-          loaded: "loadedHandler",
-          my_url: encodeURIComponent(window.location.href)
-        };
-        var video = ["http://movie.ks.js.cn/flv/other/1_0.mp4->video/mp4"];
-        CKobject.embed(
-          "http://www.ckplayer.com/ckplayer/6.6/ckplayer.swf",
-          "a1",
-          "ckplayer_a1",
-          "100%",
-          "100%",
-          false,
-          flashvars,
-          video
-        );
-
-        console.log(video);
       });
     },
     //返回到上一级

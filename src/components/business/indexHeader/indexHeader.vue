@@ -3,11 +3,10 @@
     <div class="sitg"><!--占位用，撑起公共头部的高度--></div>
     <div class="index-header">
         <!-- <router-link  to="/"> -->
-          <i class="mintui mintui-back" v-if="hasBack" @click.stop="linkSearchHeader"></i>
+          <i class="mintui mintui-back" v-if="hasBack" @click.stop="linkBack"></i>
         <!-- </router-link> -->
         {{text}}
-        <i v-if="hasSearch" data-v-5eeac47d="" class="mintui mintui-search"></i>
-        <slot></slot>
+        <i v-if="hasSearch" data-v-5eeac47d="" class="mintui mintui-search" @click.stop="linkSearch" ></i>
     </div>
 
   </div>
@@ -32,12 +31,18 @@ export default {
   },
   components: {},
   methods: {
-    linkSearchHeader() {
+    linkBack() {
       // this.$router.push({
       //   path: "/HeaderSearch"
       // });
       this.$router.go(-1);
       // history.go(-1);
+    },
+    //跳转到搜索
+    linkSearch() {
+      this.$router.push({
+        path: "/HeaderSearch"
+      });
     }
   }
 };
