@@ -49,14 +49,14 @@
       <li class="group clearfix">
         <label class="fl pos1">
           <i v-if="formList.isShow">*</i>接受邀约</label>
-        <label>
+        <label class="radioLab">
           <input type="radio" name="invitaer" value="Y" checked v-model="setTeacher.inviter">
           <span class="receive">
             <a></a>
             <b>接受</b>
           </span>
         </label>
-        <label>
+        <label class="radioLab">
           <input type="radio" name="invitaer" value="N" v-model="setTeacher.inviter">
           <span class="receive">
             <a></a>
@@ -411,6 +411,9 @@ export default {
           color: #666;
           font-size: 24px;
         }
+      }
+      .radioLab {
+        width: 148px;
       }
 
       .investIdea {
