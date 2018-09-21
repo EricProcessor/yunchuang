@@ -121,7 +121,7 @@ export default {
                                 code:codeVal
                             };
                         this.axios.post(addUrl,params).then((res)=>{
-                            console.log(res)
+                          
                             if(res.data == false){
                                   Toast("验证码错误")
                             }else{
