@@ -50,7 +50,7 @@ export default new Router({
         path: ':id/:title',
         name: 'inforDetail',
         component: InforDetail
-      }, ]
+      },]
     }, {
       path: '/activity', //活动页面
       name: 'activity',
@@ -98,7 +98,7 @@ export default new Router({
           name: 'MyNews',
           component: MyNews,
           children: [{
-            path: ':id', //我的消息详情
+            path: 'MyNewsDetail', //我的消息详情
             name: 'MyNewsDetail',
             component: MyNewsDetail
           }],

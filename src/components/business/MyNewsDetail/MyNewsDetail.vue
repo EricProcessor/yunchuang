@@ -4,10 +4,10 @@
     <ul class="myIntCon">
       <li>
           <div class="myIntNew">
-            <span>{{item.fmmTitle}}</span>
-            <span>{{item.fmiDatetime | formatDate}}</span>
+            <span>{{this.$route.params.Fmm_title}}</span>
+            <span>{{this.$route.params.Fmi_datetime|formatDate}}</span>
           </div>
-          <div class="detail">{{item.fmmContent}}</div>
+          <div class="detail">{{this.$route.params.Fmm_content}}</div>
       </li>    
     </ul>
   </div>
@@ -31,23 +31,7 @@ export default {
   components: {
     IndexHeader
   },
-  mounted() {
-    this.inforData();
-  },
   methods: {
-    //获取后台数据
-    inforData() {
-      let _url = "/h5memberMessage-read";
-      let _this = this;
-      this.axios
-        .post(_url, {
-          fmmId: _this.$route.params.id
-        })
-        .then(res => {
-          console.log(res);
-          // this.item = res.data.mm;
-        });
-    },
     deleateBox() {
       MessageBox({
         title: "提示",
