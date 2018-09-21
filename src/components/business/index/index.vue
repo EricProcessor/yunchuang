@@ -112,7 +112,6 @@ export default {
         },
         //点击“创业课堂”列表跳转到详情页面
         _jumpToClassroom(id) {
-            return 
             this.$router.push({
                 path: "/classroom/" + id
             })
