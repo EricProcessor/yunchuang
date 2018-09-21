@@ -587,7 +587,7 @@ export default {
       }
       input,
       select {
-        width: 530px;
+        width: 510px;
         height: 61px;
         background: #f5f5f5;
         border-radius: 6px;
@@ -595,7 +595,7 @@ export default {
         margin-left: 20px;
       }
       input {
-        width: 510px;
+        width: 490px;
         padding-left: 20px;
       }
       select {
@@ -606,28 +606,28 @@ export default {
       }
       .addeDetail {
         resize: none;
-        width: 490px;
+        width: 470px;
         height: 140px;
         background: #f5f5f5;
         border-radius: 6px;
-        margin: 10px 10px 0 0;
+        margin: 10px 30px 0 0;
         padding: 20px;
         border: none;
       }
       .investIdea {
         resize: none;
-        width: 490px;
+        width: 470px;
         height: 260px;
         background: #f5f5f5;
         border-radius: 6px;
-        margin: 10px 10px 0 0;
+        margin: 10px 30px 0 0;
         padding: 20px;
         border: none;
       }
       .textCount {
         position: absolute;
         bottom: 20px;
-        right: 20px;
+        right: 40px;
         font-size: 20px;
         color: #666;
       }
