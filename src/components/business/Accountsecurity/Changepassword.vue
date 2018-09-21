@@ -108,7 +108,7 @@ export default {
                                      if(data.data == true){
                                          Toast("发送成功");
                                          let id = setInterval(()=>{
-                                             --this.Obtain.count;
+                                             --this.time;
                                              if(!this.Obtain.count){
                                                  this.Obtain.count = this.time
                                                  clearInterval(id)
