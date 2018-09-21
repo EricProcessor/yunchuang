@@ -98,6 +98,11 @@ export default {
       border-radius: 50%;
       width: 120px;
       height: 120px;
+      overflow: hidden;
+      img {
+        width: 100%;
+        height: 100%;
+      }
     }
     .infor_right {
       float: left;

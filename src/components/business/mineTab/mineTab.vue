@@ -82,23 +82,25 @@ export default {
         });
       }
     },
-    //获取直播预告视频列表数据
+    //获取是否有新的消息
     getNewsSumAjax() {
-      this.axios({
-        url: "/frontmessage",
-        method: "post"
-      }).then(res => {
-        if (res.status === 200) {
-          this.show = res.data.msg;
-          if (res.data.msg == "s") {
-            this.newSumShow = true;
-            // console.log(this.newSumShow);
-          } else {
-            this.newSumShow = false;
-            // console.log(this.newSumShow);
+      if (this.isOwn == "G" || this.isOwn == "Q") {
+        this.axios({
+          url: "/frontmessage",
+          method: "post"
+        }).then(res => {
+          if (res.status === 200) {
+            this.show = res.data.msg;
+            if (res.data.msg == "s") {
+              this.newSumShow = true;
+              // console.log(this.newSumShow);
+            } else {
+              this.newSumShow = false;
+              // console.log(this.newSumShow);
+            }
           }
-        }
-      });
+        });
+      }
     },
     local() {
       this.isOwn = localStorage.getItem("isOwn");
