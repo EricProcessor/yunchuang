@@ -246,7 +246,7 @@ export default {
   line-height: 85px;
   background: #6ea1ff;
   color: #fff;
-  font-size: 25px;
+  font-size: 27px;
   position: fixed;
   bottom:0;
 }
