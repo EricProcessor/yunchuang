@@ -1,7 +1,7 @@
 <template>
   <div class="accountBox towLevelRouter">
     <index-header :text="headerText" :hasSearch="hasSearch"></index-header>
-    <ul v-if="!account.isCompany">
+    <ul v-if="account.isCompany">
       <li class="clearfix" @click="linkServiceHref">
         <i class="fl serviceBg"></i>
         <p class="fl">认证服务机构</p>
