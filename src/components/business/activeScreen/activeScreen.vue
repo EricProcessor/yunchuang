@@ -132,7 +132,7 @@ footer{
         text-align: center;
         line-height: 85px;
         color: #fff;
-        font-size: 24px;
+        font-size: 27px;
         border-radius: 2px;
       }
 } 

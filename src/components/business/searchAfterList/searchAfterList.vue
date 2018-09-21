@@ -1,32 +1,21 @@
 <template>
     <div class="searchAfterList">
         <ul class="listBox">
-            <li class="list_li clearfix" id="item.faiId" @click="linkInforDetail(item.faiId)" v-for="(item,index) in items" :key="index">
+            <li class="list_li clearfix" id="item.faiId||item.fpiId||item.fciId" @click="linkInforDetail(item.faiId||item.fpiId||item.fciId)" v-for="(item,index) in items" :key="index">
                 <div class="fl left_div">
-                   <p class="text">{{item.faiAddress}}</p>
+                   <p class="text">{{item.faiAddress||item.fpiName||item.fmiUsername||item.fciTitle}}</p>
                     <div class="clearfix">
-                        <div class="fl time">{{item.faiPublishorg}}</div>
+                        <div class="fl time">{{item.faiPublishorg||item.fcaName}}</div>
                         <div class="fr">
                             <p class="clearfix readCount">
                                 <span data-v-397fe9a0="" class="fl icon_num"></span>
-                                <span class="fl count">{{item.faiSource}}</span>
+                                <span class="fl count">{{item.faiSource||item.fpiExamine||item.fciExamine}}</span>
                             </p>
                         </div>
                     </div>
-                    <!-- <p class="text">UI设计全国巡演</p>
-                    <div class="clearfix">
-                        <div class="fl time">博文天地</div>
-                        <div class="fr">
-                            <p class="clearfix readCount">
-                                <span data-v-397fe9a0="" class="fl icon_num"></span>
-                                <span class="fl count">123</span>
-                            </p>
-                        </div>
-                    </div> -->
                 </div>
                 <div class="fl right_div">
-                    <img :src="item.faiPath" alt="">
-                    <!-- <img src="../../../../static/images/business_2.jpg" alt=""> -->
+                    <img :src="item.faiPath||item.fpiUrl||item.fmiPath||item.fciPath" alt="">
                 </div>
             </li>
         </ul>
@@ -36,17 +25,32 @@
 export default {
   name: "searchAfterList",
   data() {
-    return {};
+    return {
+      Title2: ""
+    };
   },
-  props: ["items"],
+  props: ["items", "SearchClass", "fcaName"],
   methods: {
     // 点击列表跳转到详情
-    linkInforDetail(itemId) {
+    linkInforDetail(id) {
       // this.$router.push("/inforDetail");
-      this.$router.push({
-        name: "inforDetail",
-        params: { paicheNo: itemId }
-      });
+      if (this.SearchClass == "C") {
+        //创业资讯
+
+        this.$router.push({
+          path: `/information/${id}/${this.fcaName}`
+        });
+      } else if (this.SearchClass == "H") {
+        this.$router.push({
+          path: `/activeDetail/${id}/`
+        });
+        // 创业活动
+      }
+      // this.$router.push({
+      //   path: `/information/${id}/`
+      //   // name: "inforDetail",
+      //   // params: { paicheNo: itemId }
+      // });
     }
   }
 };

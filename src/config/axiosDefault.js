@@ -3,6 +3,7 @@ import qs from 'qs'
 import config from '@/config/config'
 
 axios.defaults.baseURL = config.host
+axios.defaults.withCredentials = true   //跨域时携带cookie凭证。axios默认跨域请求不带cookie
 
 //设置post请求的请求头，防止post请求以Request Payload的形式传递参数。设置utf-8格式防止传递中文参数，后端接收是乱码
 // axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded; charset=utf-8'

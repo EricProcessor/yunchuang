@@ -1,6 +1,6 @@
 <template>
     <div class="index-content">
-        <index-header text="首页"></index-header>
+        <index-header text="首页" :hasBack="false"></index-header>
         <swiper :data="carouselData"></swiper>
         <div class="tab-list">
             <tabs :showBanner="false"></tabs>
@@ -106,13 +106,12 @@ export default {
                 method: 'post'
             }).then(res => {
                 if (res.status === 200) {
-                    this.classroomData = res.data.dpList
+                    this.classroomData = res.data.dpluList
                 }
             })
         },
         //点击“创业课堂”列表跳转到详情页面
         _jumpToClassroom(id) {
-            return 
             this.$router.push({
                 path: "/classroom/" + id
             })

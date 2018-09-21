@@ -15,17 +15,10 @@
       <i class="mintui mintui-search" @click="inforData"></i> 
     </div>
   </div>
-  <!-- <div class="searchBefor"> 
-    <ul class="secrchCon" v-show="searchVal!=''" >
-      <li  @click="linkSearchList" v-show="!afertList.type" v-for="(item,index) in NewItems" :key="index"  >
-        <div class="mintui mintui-search"></div>
-        <span :value="item.value" v-text="item.name"></span>
-      </li>
-    </ul>
-    <searchHot v-show="!afertList.type"></searchHot>
-  </div> -->
-  <search-after-list :items="items"></search-after-list>
-  
+  <search-after-list :items="items" :SearchClass="serachSend.SearchClass"></search-after-list>
+  <search-after-list v-if="serachSend.SearchClass == 'C'" :items="itemsCibList" :SearchClass="serachSend.SearchClass" :fcaName="'博文天地'"></search-after-list>
+  <search-after-list v-if="serachSend.SearchClass == 'C'" :items="itemsCitList" :SearchClass="serachSend.SearchClass" :fcaName="'创业头条'"></search-after-list>
+  <search-after-list v-if="serachSend.SearchClass == 'C'" :items="itemspiList" :SearchClass="serachSend.SearchClass" :fcaName="'创业政策'"></search-after-list>
 </div>
 
 </template>
@@ -33,7 +26,6 @@
 <script>
 import searchAfterList from "../searchAfterList/searchAfterList";
 // import searchHot from "../searchHot/searchHot";
-import axios from "axios";
 import config from "@/config/config";
 export default {
   name: "",
@@ -51,17 +43,12 @@ export default {
       // value: "",
       // title: "",
       checkClass: [
-        { title: "创业服务", Ctype: "F" },
         { title: "创业资讯", Ctype: "C" },
-        { title: "创业项目", Ctype: "X" },
-        { title: "创业载体", Ctype: "Z" },
-        { title: "创业活动", Ctype: "H" },
-        { title: "投资人", Ctype: "R" },
-        { title: "创业课堂", Ctype: "D" }
+        { title: "创业活动", Ctype: "H" }
       ],
       serachSend: {
-        SearchClass: "F",
-        checkedClass: "创业服务",
+        SearchClass: "C",
+        checkedClass: "创业资讯",
         searchVal: ""
       },
       TogSelect: false,
@@ -79,7 +66,10 @@ export default {
       //     value: "bj"
       //   }
       // ]
-      items: []
+      items: [],
+      itemsCibList: [],
+      itemsCitList: [],
+      itemspiList: []
     };
   },
   mounted() {
@@ -98,18 +88,26 @@ export default {
     // },
     //选择搜索的类型
     checkSeachType(item) {
-      this.checkedClass = item.title;
+      this.serachSend.checkedClass = item.title;
       this.serachSend.SearchClass = item.Ctype;
     },
     //获取后台数据
     inforData() {
-      let _url = config.host + "/h5frontsearch-home";
-      let params = new URLSearchParams();
-      params.append("selType", this.serachSend.SearchClass);
-      params.append("KeyWord", encodeURI(encodeURI(this.serachSend.searchVal)));
-      axios.post(_url, params).then(res => {
-        this.items = res.data.List;
-      });
+      let _url = "/h5frontsearch-home";
+      this.axios
+        .post(_url, {
+          selType: this.serachSend.SearchClass,
+          KeyWord: this.serachSend.searchVal
+        })
+        .then(res => {
+          if (this.serachSend.SearchClass == "C") {
+            this.itemsCibList = res.data.cibList;
+            this.itemsCitList = res.data.citList;
+            this.itemspiList = res.data.piList;
+          } else {
+            this.items = res.data.List;
+          }
+        });
     }
   },
   computed: {

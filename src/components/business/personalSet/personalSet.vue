@@ -68,7 +68,7 @@
                 ></mt-datetime-picker>
             <!--日期选择组件-->
             <!--地址选择组件-->
-                <address-pick v-if="areaId" ref="addressPopup" :defaultProvinceId="provinceId" :defaultCityId="cityId" :defaultAreaId="areaId"  @selectAddress="_getAddress"></address-pick>
+                <address-pick ref="addressPopup" :defaultProvinceId="provinceId" :defaultCityId="cityId" :defaultAreaId="areaId"  @selectAddress="_getAddress"></address-pick>
             <!--地址选择组件-->
             <div class="butt">
                 <div @click="_resetEvent" class="reset">重置</div>
@@ -91,9 +91,9 @@ export default {
             birthday: "",           //生日
             telephone: "",          //手机号
             email: "",              //邮箱
-            provinceId: 0,          //省份id
-            cityId: 0,              //城市id
-            areaId: 0,               //区域id
+            provinceId: 2,          //省份id
+            cityId: 52,              //城市id
+            areaId: 500,               //区域id
             simpAddress: "",            //保存用于显示用的地址字符串
             complexAddress: "",             //详细地址
             picList: [],            //保存上传图片文件的数组，元素是file对象
@@ -136,6 +136,7 @@ export default {
             this.birthday = `${year}-${month}-${day}`
         },
         _showAddressPopup() {       //地址选择栏弹出显示
+            console.log(this.$refs.addressPopup)
             this.$refs.addressPopup.showAddressComponent()
         },
         _setSex(val) {      //设置性别
@@ -165,15 +166,15 @@ export default {
         //初始化用户信息操作：将请求来的用户数据填充到页面上
         _initPerson(data) {
             this.name = data.member.fmiUsername
-            this.sex = data.sex
-            this._handleTime(new Date(data.fciBirthday))    //时间数据转换，并保存给this.birthday
+            this.sex = data.sex ? data.sex : '男'
+            data.fciBirthday && this._handleTime(new Date(data.fciBirthday))    //时间数据转换，并保存给this.birthday
             this.telephone = data.member.fmiTel
             this.email = data.member.fmiMile
             this.picList = [{src: data.member.fmiPath}]
             this.headPicUrl = data.member.fmiPath
-            this.provinceId = data.provinceid
-            this.cityId = data.cityid
-            this.areaId = data.areaid
+            this.provinceId = data.provinceid ? data.provinceid : 2
+            this.cityId = data.cityid ? data.cityid : 52
+            this.areaId = data.areaid ? data.areaid : 500
             this.complexAddress = data.fciAddress
         },
         _reset() {            //重置信息操作
@@ -183,9 +184,9 @@ export default {
             this.telephone = ""         //手机号
             this.email = ""           //邮箱
             this.complexAddress = ""             //详细地址
-            this.provinceId = 0             //省份id
-            this.cityId = 0                 //城市ID
-            this.areaId = 0                 //地区id
+            this.provinceId = 2             //省份id
+            this.cityId = 52                 //城市ID
+            this.areaId = 500                 //地区id
             this.picList = []            //保存上传图片文件的数组，元素是file对象
             this.headPicUrl = ''          //保存上传的 头像图片的url地址
             this._saveEvent()

@@ -65,7 +65,7 @@
                 </div>
             </div>
             <!--地址选择组件-->
-                <address-pick v-if="areaId" ref="addressPopup" :defaultProvinceId="provinceId" :defaultCityId="cityId" :defaultAreaId="areaId"  @selectAddress="_getAddress"></address-pick>
+                <address-pick ref="addressPopup" :defaultProvinceId="provinceId" :defaultCityId="cityId" :defaultAreaId="areaId"  @selectAddress="_getAddress"></address-pick>
             <!--地址选择组件-->
             <div class="butt">
                 <div @click="_resetEvent" class="reset">重置</div>
@@ -83,7 +83,7 @@ export default {
     data() {
         return {
             remind: true,       //弹窗提示
-            userId: 182,          //用户的fciId       暂时写死，后边要从登陆保存的用户信息中获取fciId
+            userId: "",          //用户的fciId       暂时写死，后边要从登陆保存的用户信息中获取fciId
             name: "",       //企业名称
             telephone: "",          //联系方式
             website: "",            //网址
@@ -132,9 +132,9 @@ export default {
             this.headPicUrl = data.fciPath
             // this.picture = data.fmiPath
             this.complexAddress = data.fciAddress
-            this.provinceId = data.provinceid
-            this.cityId = data.cityid
-            this.areaId = data.areaid
+            this.provinceId = data.provinceid ? data.provinceid : 2
+            this.cityId = data.cityid ? data.cityid : 52
+            this.areaId = data.areaid ? data.areais : 500
         },
         //重置事件
         _resetEvent() {      
@@ -154,9 +154,9 @@ export default {
             this.telephone = ""         //联系方式
             this.email = ""           //邮箱
             this.complexAddress = "",              //详细地址
-            this.provinceId = 0,        //省份
-            this.cityId = 0,            //城市
-            this.areaId = 0,            //区域
+            this.provinceId = 2,        //省份
+            this.cityId = 52,            //城市
+            this.areaId = 500,            //区域
             this.picList = []           //头像信息
             this.picList2 = []          //照片图片信息
             this.picture = ""           //照片上传路径清空
