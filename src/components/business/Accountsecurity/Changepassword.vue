@@ -54,7 +54,7 @@ export default {
             time:60,
             Obtain:{
                 tels:"", //获取手机input框中手机号
-                count: 0, //验证码重新获取倒计时
+                count:0, //验证码重新获取倒计时
                 timer: null, //定时器
                 verificationCode:"",
                 ObtainNull:"输入的值不能为空",
@@ -85,7 +85,6 @@ export default {
         //点击获取验证码    
         yanzheng(telephone){
             if(telephone == ""){
-               // alert("手机号不能为空");
                 Toast('手机号不能为空');
                // this.Obtain.Nulls=true;
             }else{
@@ -97,7 +96,7 @@ export default {
                   let phoneUrl = "/frontcompanyinfomile-checkAcc";  //获取手机号是否注册接口
                     let params = { fmiAcc: telephone };
                     this.axios.post(phoneUrl, params).then(res => { 
-                        
+                        //代表手机未注册过
                         if (res.data.flag == false){
                             //获取短信验证码
                              let phone_url = '/frontmyaccphonesendmessage-home';
@@ -105,19 +104,32 @@ export default {
                                    phone: telephone,
                                };
                               this.axios.post(phone_url,params).then(data =>{
-                                  
+                                     console.log(data.data)
+                                     if(data.data == true){
+                                         Toast("发送成功");
+                                         let id = setInterval(()=>{
+                                             --this.Obtain.count;
+                                             if(!this.Obtain.count){
+                                                 this.Obtain.count = this.time
+                                                 clearInterval(id)
+                                             }
+                                         },1000)
+                                     }else{
+                                          Toast("发送失败")
+                                     }
                               })
+                           
                         } else {
-                                 alert(res.data.msg2)                     
+                                 Toast(res.data.msg2)      //用户已注册               
                         }
                     });
             }
             }
+           
         },
         
        //提交按钮
        addBtn(txtVal,verificationVal){
-         
            if(txtVal=="" &&verificationVal==""){
                Toast('信息不完整')
            }else if(txtVal==""){
@@ -131,7 +143,6 @@ export default {
                         code:verificationVal
                 }
                 this.axios.post(_url,params).then(res =>{
-                
                     if(res.data == false){
                         this.verificationCodez.errCode = true;
                         Toast("验证码不正确")

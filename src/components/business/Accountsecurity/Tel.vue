@@ -113,7 +113,7 @@ export default {
     //原密码失去焦点判断
     ownPwdBlur(oldVal) {
       //判断字符串为空
-      console.log("原密码" + oldVal)
+      
       if (oldVal == "") {
         this.old.oldshow = true;
         this.old.matching = false;
@@ -198,10 +198,6 @@ export default {
               //输入的新密码不能和原密码一致的判断
               this.newpss.oldNonew = false;
               if(this.newpss.newtxt == this.newpss.confirmtxt){
-                  var d = new Date();
-                    d.setTime(d.getTime() + 1 * 24 * 60 * 60 * 1000);
-                    var expires = "expires=" + d.toUTCString();
-                    document.cookie = "SESSION=5b827058-5c7f-4db6-95a7-1e7f0e2d75ad" + ";" + expires;
                     let _url = "/frontmypasswordedit-home";
                     let params = {
                         pwd: old,
@@ -223,10 +219,8 @@ export default {
               }else{
                  Toast("您的确认密码和新密码不相同,请重新输入");
                  this.newpss.identical = true;
-              }
-                  
+              }      
           }
-        
         }
       }
     }
