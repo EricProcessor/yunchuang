@@ -113,7 +113,8 @@ export default {
         //点击“创业课堂”列表跳转到详情页面
         _jumpToClassroom(id) {
             this.$router.push({
-                path: "/classroom/" + id
+                name: "classVideo",
+                params: { fdpId: id }
             })
         }
     },
