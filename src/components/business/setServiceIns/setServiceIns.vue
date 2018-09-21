@@ -276,7 +276,7 @@ export default {
       }
       input,
       select {
-        width: 540px;
+        width: 520px;
         height: 61px;
         background: #f5f5f5;
         border-radius: 6px;
@@ -284,7 +284,7 @@ export default {
         margin-left: 20px;
       }
       input {
-        width: 520px;
+        width: 500px;
         padding-left: 20px;
       }
       select {
@@ -295,11 +295,11 @@ export default {
       }
       .addeDetail {
         resize: none;
-        width: 506px;
+        width: 480px;
         height: 140px;
         background: #f5f5f5;
         border-radius: 6px;
-        margin: 10px 5px 0 0;
+        margin: 10px 20px 0 0;
         padding: 20px;
         border: none;
       }

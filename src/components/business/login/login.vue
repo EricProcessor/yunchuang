@@ -1,8 +1,10 @@
 <template>
   <div class="loginBox">
-    <p class="logo">
-      <img src="./logo.png" alt="">
-    </p>
+    <div class="logo">
+      <p>
+        <img src="./logo.png" alt="">
+      </p>
+    </div>
     <div class="formList">
       <div class="person pos1">
         <label for="person"></label>
@@ -85,8 +87,8 @@ export default {
         };
         this.axios.post(url, params).then(res => {
           if (res.data.flag) {
-            localStorage.setItem("ownInfo1",JSON.stringify(res.data));
-            localStorage.setItem("isOwn",res.data.info.fmiGroup);
+            localStorage.setItem("ownInfo1", JSON.stringify(res.data));
+            localStorage.setItem("isOwn", res.data.info.fmiGroup);
             this.$router.push("/");
           } else {
             alert(res.data.msg);
@@ -106,13 +108,17 @@ export default {
   height: 1334px;
   background: #253350;
   .logo {
-    width: 400px;
-    height: 108px;
-    padding: 300px 0 160px 0;
-    margin: 0 auto;
-    img {
-      width: 100%;
-      height: 100%;
+    width: 100%;
+    height: 600px;
+    p {
+      width: 400px;
+      height: 108px;
+      margin: 0 auto;
+      padding-top: 280px;
+      img {
+        width: 100%;
+        height: 100%;
+      }
     }
   }
   .formList {

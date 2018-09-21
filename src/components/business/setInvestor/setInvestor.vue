@@ -11,15 +11,22 @@
           <i v-if="formList.isShow">*</i>姓名</label>
         <input class="fl" v-model="setTeacher.name" type="text" />
       </li>
-      <li class="group clearfix sexLi" >
-        <label class="fl pos1"><i v-if="formList.isShow">*</i>性别</label>
+      <li class="group clearfix sexLi">
+        <label class="fl pos1">
+          <i v-if="formList.isShow">*</i>性别</label>
         <label style="margin-right: 14px">
-          <input type="radio" name="peoSex" value="Y" v-model="setTeacher.sex" checked> 
-          <span class="sexBorder"><a class="malea"></a><b>男</b></span>
+          <input type="radio" name="peoSex" value="Y" v-model="setTeacher.sex" checked>
+          <span class="sexBorder">
+            <a class="malea"></a>
+            <b>男</b>
+          </span>
         </label>
         <label>
-          <input type="radio" name="peoSex" value="N" v-model="setTeacher.sex"> 
-          <span class="sexBorder"><a class="femalea"></a><b>女</b></span>
+          <input type="radio" name="peoSex" value="N" v-model="setTeacher.sex">
+          <span class="sexBorder">
+            <a class="femalea"></a>
+            <b>女</b>
+          </span>
         </label>
       </li>
       <li class="group clearfix">
@@ -40,14 +47,21 @@
         <input class="fl" v-model="setTeacher.presentPost" type="text" />
       </li>
       <li class="group clearfix">
-        <label class="fl pos1"><i v-if="formList.isShow">*</i>接受邀约</label>
+        <label class="fl pos1">
+          <i v-if="formList.isShow">*</i>接受邀约</label>
         <label>
-          <input type="radio" name="invitaer" value="Y" checked v-model="setTeacher.inviter"> 
-          <span class="receive"><a></a><b>接受</b></span>
+          <input type="radio" name="invitaer" value="Y" checked v-model="setTeacher.inviter">
+          <span class="receive">
+            <a></a>
+            <b>接受</b>
+          </span>
         </label>
         <label>
-          <input type="radio" name="invitaer" value="N" v-model="setTeacher.inviter"> 
-          <span class="receive"><a></a><b>不接受</b></span>
+          <input type="radio" name="invitaer" value="N" v-model="setTeacher.inviter">
+          <span class="receive">
+            <a></a>
+            <b>不接受</b>
+          </span>
         </label>
       </li>
       <li class="group clearfix">
@@ -86,12 +100,7 @@
       <li class="fl preserve" @click="inforData">保存</li>
     </ul>
     <!--日期选择组件-->
-    <mt-datetime-picker 
-        ref="datePicker"
-        type="date"
-        @confirm="_handleTime"
-        :startDate="new Date('1900-01-01')"
-    ></mt-datetime-picker>
+    <mt-datetime-picker ref="datePicker" type="date" @confirm="_handleTime" :startDate="new Date('1900-01-01')"></mt-datetime-picker>
     <success :sucOption="sucOption" v-if="sucOption.showSuccess"></success>
     <!-- <div class="regSucc">
       <header>注册</header>
@@ -319,7 +328,7 @@ export default {
       }
       input,
       select {
-        width: 530px;
+        width: 510px;
         height: 61px;
         background: #f5f5f5;
         border-radius: 6px;
@@ -327,7 +336,7 @@ export default {
         margin-left: 20px;
       }
       input {
-        width: 510px;
+        width: 490px;
         padding-left: 20px;
       }
       // 接受邀请样式
@@ -403,30 +412,21 @@ export default {
           font-size: 24px;
         }
       }
-      .addrDetail {
-        resize: none;
-        width: 500px;
-        height: 140px;
-        background: #f5f5f5;
-        border-radius: 6px;
-        margin: 10px 5px 0 0;
-        padding: 20px;
-        border: none;
-      }
+
       .investIdea {
         resize: none;
-        width: 500px;
+        width: 470px;
         height: 260px;
         background: #f5f5f5;
         border-radius: 6px;
-        margin: 10px 5px 0 0;
+        margin: 10px 30px 0 0;
         padding: 20px;
         border: none;
       }
       .textCount {
         position: absolute;
         bottom: 20px;
-        right: 20px;
+        right: 40px;
         font-size: 20px;
         color: #666;
       }
