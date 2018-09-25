@@ -30,7 +30,26 @@ Vue.filter('formatDate', function (date) {
     month = date.getMonth() - 0 + 1,
     day = date.getDate()
   return `${year}-${month}-${day}`
-})
+});
+window.alert = function (name) {
+  var iframe = document.createElement("IFRAME");
+  iframe.style.display = "none";
+  document.documentElement.appendChild(iframe);
+  window.frames[0].window.alert(name);
+  iframe.parentNode.removeChild(iframe)
+}
+
+
+window.confirm = function (message) {
+  var iframe = document.createElement("IFRAME");
+  iframe.style.display = "none";
+  iframe.setAttribute("src", 'data:text/plain,');
+  document.documentElement.appendChild(iframe);
+  var alertFrame = window.frames[0];
+  var result = alertFrame.window.confirm(message);
+  iframe.parentNode.removeChild(iframe);
+  return result;
+}
 // router.beforeEach((to, from, next) => {
 //   if (to.meta.requireAuth) { // 判断该路由是否需要登录权限
 //     if (store.state.token) { // 通过vuex state获取当前的token是否存在
