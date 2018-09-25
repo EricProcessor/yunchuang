@@ -99,6 +99,13 @@ export default {
                         //代表手机未注册过
                         if (res.data.flag == false){
                             //获取短信验证码
+                            let id = setInterval(()=>{
+                                --this.time;
+                                if(!this.Obtain.count){
+                                    this.Obtain.count = this.time
+                                    clearInterval(id)
+                                }
+                            },1000)
                              let phone_url = '/frontmyaccphonesendmessage-home';
                               let params = {
                                    phone: telephone,
@@ -107,18 +114,10 @@ export default {
                                      console.log(data.data)
                                      if(data.data == true){
                                          Toast("发送成功");
-                                         let id = setInterval(()=>{
-                                             --this.time;
-                                             if(!this.Obtain.count){
-                                                 this.Obtain.count = this.time
-                                                 clearInterval(id)
-                                             }
-                                         },1000)
                                      }else{
                                           Toast("发送失败")
                                      }
                               })
-                           
                         } else {
                                  Toast(res.data.msg2)      //用户已注册               
                         }
