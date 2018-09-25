@@ -1,6 +1,6 @@
 <template>
   <div class="mine_information"> 
-    <ol>
+    <ol @click.stop="goLogin">
       <li class="infor_left">
         <img :src="fciPath" alt="" srcset="" v-if="userLogin==true">
       </li>
@@ -10,7 +10,7 @@
         <span>注册于{{fmiDatetimes | formatDate}}</span>
       </li>
       <li class="infor_right" v-if="userLogin==false">
-        <h3>未登录</h3>
+        <h3 class="unLogin">未登录</h3>
       </li>
     </ol>
   </div>
@@ -44,6 +44,14 @@ export default {
         this.fciPath = ownInfo1.memmberDetail.fciPath; //地址
       } else {
         this.userLogin = false;
+      }
+    },
+    goLogin() {
+      //页面路由跳转方法
+      if (this.userLogin == false) {
+        this.$router.push({
+          path: "/login"
+        });
       }
     }
   },
@@ -121,6 +129,9 @@ export default {
           top: 6px;
           left: 8px;
         }
+      }
+      .unLogin {
+        padding: 30px 0;
       }
       span {
         letter-spacing: 2px;
