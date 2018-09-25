@@ -78,6 +78,9 @@ export default {
     height: 100px;
 }
 .m-footer {
+    .is-fixed {
+        transform: translateZ(0)    
+    }
     .mint-tabbar {
         .mint-tab-item {
             height: 100px;
