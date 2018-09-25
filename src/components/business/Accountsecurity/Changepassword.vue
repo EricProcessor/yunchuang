@@ -111,7 +111,7 @@ export default {
                                    phone: telephone,
                                };
                               this.axios.post(phone_url,params).then(data =>{
-                                     console.log(data.data)
+                                    
                                      if(data.data == true){
                                          Toast("发送成功");
                                      }else{

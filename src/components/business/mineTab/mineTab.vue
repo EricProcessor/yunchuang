@@ -71,7 +71,7 @@ export default {
     _pageJump(path, title) {
       if (this.isOwn == "G" || this.isOwn == "Q") {
         //页面路由跳转方法
-        console.log(title);
+      
         this.$router.push({
           path: "/mine" + path
         });
@@ -93,10 +93,10 @@ export default {
             this.show = res.data.msg;
             if (res.data.msg == "s") {
               this.newSumShow = true;
-              // console.log(this.newSumShow);
+             
             } else {
               this.newSumShow = false;
-              // console.log(this.newSumShow);
+             
             }
           }
         });
