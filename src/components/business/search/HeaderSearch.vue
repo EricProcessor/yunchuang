@@ -179,6 +179,7 @@ export default {
 }
 .header-search > div[data-v-5eeac47d] {
   background: #253350;
+  height: auto;
 }
 .mint-searchbar-core {
   background: #253350;
