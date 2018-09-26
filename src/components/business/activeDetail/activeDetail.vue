@@ -79,6 +79,7 @@ export default {
     return {
       popupVisible:false,
       activeDetail:[],
+      loginId:"",
        userInfo: {
         //登录信息
         userName: "",
@@ -102,6 +103,10 @@ export default {
       this.popupVisible = false;
     },
     commitBtn() {
+      var ownInfo1 = JSON.parse(localStorage.getItem("ownInfo1"));
+      // console.log(ownInfo1.info)
+      this.loginId= ownInfo1.info.fmiId
+      console.log(this.loginId)
       //登录信息
       if (this.userInfo.userName == "" && this.userInfo.tel == "") {
         alert("请输入联系人和手机号！");
@@ -117,7 +122,7 @@ export default {
           faaPerson: this.userInfo.userName,  //联系人
           faaTel: this.userInfo.tel,          //联系电话
           faiId:this.activeDetail.faiId,      
-          fmiId:185
+          fmiId:this.loginId
         };
         console.log(this.userInfo.tel)  
         this.axios.post(url, params).then(res => {
