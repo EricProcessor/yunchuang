@@ -7,11 +7,11 @@
         <!-- </router-link> -->
         {{text}}
         <i v-if="hasSearch" data-v-5eeac47d="" class="mintui mintui-search" @click.stop="linkSearch" ></i>
+        <slot></slot>
     </div>
 
   </div>
 </template>
-
 <script>
 export default {
   props: {
