@@ -38,14 +38,14 @@ export default {
     li{
         width:97%;
         margin-left:1.5%;
-        margin-top:.15625rem;
-        margin-bottom: .15625rem;
+        margin-top:29px;
+        margin-bottom: 29px;
         display: flex;
         flex-direction: column;
         .ac-img{
             width:100%;
-            height:5rem;
-            border-radius: .125rem;
+            height:320px;
+            border-radius: 5px;
             img{
                 width: 100%;  
                 height:100%;            
@@ -53,19 +53,20 @@ export default {
         }
         .ac-mes{
             width:100%;
-            height:1.1275rem;
+            height:80px;
             display: flex;
             background: #fff;
             justify-content: space-around;
             p{
-                height:1.1275rem;
-                font-size: .39875rem;
-                line-height: 1.1275rem;
+                height:80px;
+                font-size: 28px;
+                line-height: 80px;
+                color:#333;
             }
             span{
-                height:1.1275rem;
-                line-height: 1.1275rem;
-                font-size: 0.275rem;
+                height:80px;
+                line-height: 80px;
+                font-size: 14px;
                 color: #999;
             }
         }
