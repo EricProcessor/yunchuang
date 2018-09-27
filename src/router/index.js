@@ -41,7 +41,7 @@ export default new Router({
   routes: [{
       path: '/', //首页
       name: 'index',
-      component: Index
+      component: Index,
     }, {
       path: '/information', //资讯页面
       name: 'Information',

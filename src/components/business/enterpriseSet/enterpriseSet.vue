@@ -92,9 +92,6 @@ export default {
       provinceId: 2, //省份id
       cityId: 52, //城市ID
       areaId: 500, //地区id
-      province: "", //省
-      city: "", //市
-      area: "", //区
       simpAddress: "", //简单地址
       complexAddress: "", //详细地址
       picList: [], //保存头像上传图片文件的数组，元素是file对象
@@ -140,7 +137,7 @@ export default {
       this.complexAddress = data.fciAddress;
       this.provinceId = data.provinceid ? data.provinceid : 2;
       this.cityId = data.cityid ? data.cityid : 52;
-      this.areaId = data.areaid ? data.areais : 500;
+      this.areaId = data.areaid ? data.areaid : 500;
 
       this.isEchoAjaxOver = true    //这个时候地址选择组件v-if开始渲染
     },
@@ -213,25 +210,30 @@ export default {
 
       //并发请求
       this.axios.all([sendMsg(), sendPic()]).then(
-        this.axios.spread(function(acct, perms) {
+        this.axios.spread((acct, perms) => {
           //这个时候两个请求都完成了
-          // var ownInfo1 = JSON.parse(localStorage.getItem("ownInfo1"));
           // console.log(acct, perms)
-          //修改完成重新设置本地存储
-          let ownInfo1 = JSON.parse(localStorage.getItem("ownInfo1"));
-          ownInfo1.info.fmiUsername = _this.name;
-          ownInfo1.memmberDetail.province = _this.province; //省
-          ownInfo1.memmberDetail.city = _this.city; //市
-          ownInfo1.memmberDetail.area = _this.area; //区
-          ownInfo1.info.fmiPath = _this.headPicUrl; //头像
-          localStorage.setItem("ownInfo1", JSON.stringify(ownInfo1));
-
+            this.refreshLocal()
           MessageBox({
             title: "提示",
             message: "企业信息设置成功"
           });
         })
       );
+    },
+    //更新本地localStorage内的信息，用于返回到“我的”页面时，信息更新
+    refreshLocal() {
+         //修改完成重新设置本地存储
+          let ownInfo1 = JSON.parse(localStorage.getItem("ownInfo1"));
+          ownInfo1.info.fmiUsername = this.name;
+          ownInfo1.memmberDetail.province = this.simpAddress.split('-')[0]; //省
+          ownInfo1.memmberDetail.provinceid = this.provinceId; //省
+          ownInfo1.memmberDetail.city = this.simpAddress.split('-')[1]; //市
+          ownInfo1.memmberDetail.cityid = this.cityId; //市
+          ownInfo1.memmberDetail.area = this.simpAddress.split('-')[2]; //区
+          ownInfo1.memmberDetail.areaid = this.areaId; //区
+          ownInfo1.info.fmiPath = this.headPicUrl; //头像
+          localStorage.setItem("ownInfo1", JSON.stringify(ownInfo1));
     },
     getHeadUploadImg(imgList) {
       //获得上传的头像图片数组
@@ -276,12 +278,9 @@ export default {
           return item.ca_name;
         })
         .join("-");
-      this.province = val[0].ca_name; //省
-      this.city = val[1].ca_name; //市
-      this.area = val[2].ca_name; //区
       this.provinceId = val[0].ca_id;
-      this.cityId = val[0].ca_id;
-      this.areaId = val[0].ca_id;
+      this.cityId = val[1].ca_id;
+      this.areaId = val[2].ca_id;
     }
   },
   components: {

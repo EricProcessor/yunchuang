@@ -2,7 +2,7 @@
   <div>
     <!-- header -->
     <index-header :text="headerText" :hasSearch="false" ></index-header>
-    <mine-information></mine-information>
+    <mine-information ref="mineInfo"></mine-information>
     <mine-tab></mine-tab>
     <router-view></router-view> 
     <!-- tab标签 -->
@@ -27,7 +27,14 @@ export default {
     MineInformation,
     MineTab,
     IndexHeader
-  }
+  },
+  watch: {
+    //二级路由返回时，刷新当前显示的用户信息
+      $route(to, form){
+        console.log("监听到了路由变化")
+        to.path === "/mine" && this.$refs.mineInfo.local()
+      }
+    },
 };
 </script>
 <style lang="less" scoped>
