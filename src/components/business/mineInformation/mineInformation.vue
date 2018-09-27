@@ -63,6 +63,10 @@ export default {
         this.$router.push({
           path: "/mine/personalSet"
         });
+      }else{
+        this.$router.push({
+          path: "/login"
+        });
       }
     }
   },

@@ -205,6 +205,12 @@ export default {
     _saveEvent() {
       //保存信息
       var _this = this;
+      var FciSex = "Y";
+      if (_this.sex == "女") {
+        FciSex = "X";
+      } else {
+        FciSex = "Y";
+      }
       //进行ajax请求
       //保存用户个人信息
       let sendMsg = () => {
@@ -213,14 +219,15 @@ export default {
           method: "post",
           data: {
             fciName: _this.name, //姓名
-            fciSex: _this.sex, //性别
+            fciSex: FciSex, //性别
             fciBirthday: _this.birthday, //生日  2001-08-06这种形式
             fciTel: _this.telephone, //手机号
             fciMile: _this.email, //邮箱
             provinceId: _this.provinceId, //省份id
             cityId: _this.cityId, //城市id
             areaId: _this.areaId, //地区id
-            fciAddress: _this.complexAddress //详细地址
+            fciAddress: _this.complexAddress, //详细地址
+            url: _this.headPicUrl //头像
           }
         });
       };
