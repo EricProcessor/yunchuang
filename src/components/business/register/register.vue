@@ -705,6 +705,8 @@ export default {
 </script>
 <style lang="less" scoped>
 .registerBox {
+  width: 100%;
+  height: 1334px;
   header {
     width: 100%;
     height: 88px;
@@ -757,7 +759,7 @@ export default {
       }
     }
     .regInfoBox {
-      padding: 0 30px;
+      padding: 0 30px ;
       .div_li {
         display: none;
         li {

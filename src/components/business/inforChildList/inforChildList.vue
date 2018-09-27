@@ -49,9 +49,7 @@ export default {
       pageCur: 1
     };
   },
-  updated() {
-    console.log(this.title, this.pageAll);
-  },
+ 
   methods: {
     linkInforDetail(id) {
       this.$router.push({

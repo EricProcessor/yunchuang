@@ -49,7 +49,7 @@ export default {
       pageAllNum3:"",
       pageSerial: 0,
       butnumrank: 0,
-      pageSize: 5,
+      pageSize: 10,
       udmark: "N"
     };
   },
@@ -64,11 +64,9 @@ export default {
     headlineData(pageCur , pageAll) {
       pageCur = pageCur || 1;
       pageAll = pageAll || 2;
-      // console.log(pageCur , pageAll)
       let _url = "/h5frontcarrierinfotop-home";
       let fcaId = "10041";
       if (pageCur <= pageAll) {
-        // this.pageSerial++;
         this.axios
           .post(_url, {
             pageSerial: pageCur,
@@ -78,12 +76,10 @@ export default {
             pageSize: this.pageSize
           })
           .then(res => {
-            // console.log(res.data);
             this.strTitle1 = res.data.current_title;
             for (let i in res.data.citList) {
               this.item1.push(res.data.citList[i]);
             }
-            // console.log(this.item1);
             this.pageAllNum1 = res.data.page.pageSun;
 
             for (let i in this.item1) {
@@ -117,7 +113,6 @@ export default {
             for (let i in res.data.list) {
               this.item2.push(res.data.list[i]);
             }
-            // console.log(res.data);
             this.pageAllNum2 = res.data.page.pageSun;
             for (let i in this.item2) {
               //转化时间戳
@@ -152,7 +147,6 @@ export default {
             for (let i in res.data.cibList) {
               this.item3.push(res.data.cibList[i]);
             }
-            console.log(this.item1);
             this.pageAllNum3 = res.data.page.pageSun;
             for (let i in this.item3) {
               //转化时间戳
