@@ -68,7 +68,7 @@
                 ></mt-datetime-picker>
             <!--日期选择组件-->
             <!--地址选择组件-->
-                <address-pick ref="addressPopup" :defaultProvinceId="provinceId" :defaultCityId="cityId" :defaultAreaId="areaId"  @selectAddress="_getAddress"></address-pick>
+                <address-pick v-if="isEchoAjaxOver" ref="addressPopup" :defaultProvinceId="provinceId" :defaultCityId="cityId" :defaultAreaId="areaId"  @selectAddress="_getAddress"></address-pick>
             <!--地址选择组件-->
             <div class="butt">
                 <div @click="_resetEvent" class="reset">重置</div>
@@ -86,6 +86,7 @@ export default {
   data() {
     return {
       remind: true, //弹窗提示
+      isEchoAjaxOver: false,        //用来记录回显用的ajax是否响应了。解决 地址选择组件在默认传值时，数据还没请求过来，导致没法回显的问题
       name: "", //姓名
       sex: "男", //性别
       birthday: "", //生日
@@ -185,6 +186,8 @@ export default {
       this.cityId = data.cityid ? data.cityid : 52;
       this.areaId = data.areaid ? data.areaid : 500;
       this.complexAddress = data.fciAddress;
+      
+      this.isEchoAjaxOver = true    //这个时候地址选择组件v-if开始渲染
     },
     _reset() {
       //重置信息操作

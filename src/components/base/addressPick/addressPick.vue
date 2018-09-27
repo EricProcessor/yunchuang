@@ -133,7 +133,7 @@ export default {
         },
         //请求用户数据后，设置指定的地点用，格式["省","市", "县/镇"]（注意，设置的地点名称数组，对应地址json数据中必须有，否则失效）
         setAddress(picker) {
-
+            console.log("传入到这里了: " + this.defaultProvinceId + this.defaultCityId + this.defaultAreaId)
             let second = []
             // console.log(this.defaultProvinceId)
             for (let i = 0; i < address.length; i ++) {
