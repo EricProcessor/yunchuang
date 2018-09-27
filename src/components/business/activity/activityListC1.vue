@@ -62,14 +62,14 @@ export default {
             justify-content: space-around;
             p{
                 height:80px;
-                font-size: 27px;
+                font-size: 28px;
                 line-height: 80px;
                 color:#333;
             }
             span{
                 height:80px;
                 line-height: 80px;
-                font-size: 12px;
+                font-size: 14px;
                 color: #999;
             }
         }
