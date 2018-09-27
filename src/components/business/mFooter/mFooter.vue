@@ -84,7 +84,7 @@ export default {
     position: fixed;
     bottom: 0;
     left: 0;
-    z-index: 200;
+    z-index: 10;
     width: 100%;
     background: red;
     -webkit-overflow-scrolling: touch;
