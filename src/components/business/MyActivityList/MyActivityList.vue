@@ -48,7 +48,7 @@ export default {
     }
   },
   activeDetail(id) {
-      this.$router.push('/activeDetail/'+id); //跳转详情页
+    this.$router.push("/activeDetail/" + id); //跳转详情页
   },
   //将时间戳转化成时间
   filters: {
@@ -76,11 +76,12 @@ export default {
   overflow: hidden;
   li {
     width: 750px;
-    height: 180px;
+    min-height: 140px;
     background-color: #fff;
     margin: 10px 0;
     display: flex;
     align-items: center;
+    padding: 20px 0;
     .myIntConImg {
       width: 120px;
       height: 120px;
@@ -92,10 +93,13 @@ export default {
       }
     }
     .myIntConInf {
+      padding-right: 104px;
+      width: 448px;
       h3 {
         font-size: 30px;
-        height: 48px;
+        // height: 48px;
         // line-height: 60px;
+        padding-bottom: 20px;
         color: #333333;
         letter-spacing: 3px;
       }

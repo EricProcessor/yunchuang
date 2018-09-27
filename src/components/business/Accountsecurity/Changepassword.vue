@@ -100,7 +100,7 @@ export default {
                         if (res.data.flag == false){
                             //获取短信验证码
                             let id = setInterval(()=>{
-                                --this.time;
+                                --this.Obtain.count;
                                 if(!this.Obtain.count){
                                     this.Obtain.count = this.time
                                     clearInterval(id)
@@ -111,7 +111,7 @@ export default {
                                    phone: telephone,
                                };
                               this.axios.post(phone_url,params).then(data =>{
-                                     console.log(data.data)
+                                    
                                      if(data.data == true){
                                          Toast("发送成功");
                                      }else{
@@ -146,10 +146,10 @@ export default {
                         this.verificationCodez.errCode = true;
                         Toast("验证码不正确")
                     }else{
-                        this.$router.push("/mine/accountsecuritys/");
+                          this.$router.push("/mine")
                         Toast({
                             message: '操作成功',
-                            iconClass: 'icon icon-success'
+                           
                         });
                     }
                 })

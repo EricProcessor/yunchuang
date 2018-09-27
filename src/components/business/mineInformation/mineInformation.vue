@@ -1,16 +1,16 @@
 <template>
   <div class="mine_information"> 
-    <ol>
-      <li class="infor_left">
-        <img :src="fciPath" alt="" srcset="" v-if="userLogin==true">
+    <ol @click.stop="goLogin">
+      <li class="infor_left" @click.stop="goPersonalSet">
+        <img :src="fmiPath" alt="" srcset="" v-if="userLogin==true">
       </li>
-      <li class="infor_right" v-if="userLogin==true">
+      <li class="infor_right" v-if="userLogin==true" @click.stop="goPersonalSet">
         <h3>{{fmiUsername}} <img src="./nan.png" alt="" v-if="sex=='男'"><img src="./nv.png" alt="" v-if="sex=='女'"></h3>
-        <span>{{fciAddress}}</span>
+        <span>{{province}}-{{city}}-{{area}}</span>
         <span>注册于{{fmiDatetimes | formatDate}}</span>
       </li>
       <li class="infor_right" v-if="userLogin==false">
-        <h3>未登录</h3>
+        <h3 class="unLogin">未登录</h3>
       </li>
     </ol>
   </div>
@@ -22,9 +22,11 @@ export default {
     return {
       fmiUsername: "", //名字
       sex: "", //性别
-      fciAddress: "", //地址
+      province: "", //省
+      city: "", //市
+      area: "", //区
       fmiDatetimes: "", //时间
-      fciPath: "", //头像
+      fmiPath: "", //头像
       userLogin: false //用户是否登录
     };
   },
@@ -34,16 +36,37 @@ export default {
   methods: {
     local() {
       var ownInfo1 = JSON.parse(localStorage.getItem("ownInfo1"));
-      console.log(ownInfo1);
       if (ownInfo1 != null) {
         this.userLogin = true;
         this.fmiUsername = ownInfo1.info.fmiUsername; //名字
         this.sex = ownInfo1.memmberDetail.sex; //性别
-        this.fciAddress = ownInfo1.memmberDetail.fciAddress; //地址
+        this.province = ownInfo1.memmberDetail.province; //省
+        this.city = ownInfo1.memmberDetail.city; //市
+        this.area = ownInfo1.memmberDetail.area; //区
         this.fmiDatetimes = ownInfo1.info.fmiDatetimes; //时间
-        this.fciPath = ownInfo1.memmberDetail.fciPath; //地址
+        this.fmiPath = ownInfo1.info.fmiPath; //头像
       } else {
         this.userLogin = false;
+      }
+    },
+    goLogin() {
+      //页面路由跳转方法
+      if (this.userLogin == false) {
+        this.$router.push({
+          path: "/login"
+        });
+      }
+    },
+    goPersonalSet() {
+      //点击头像和用户信息跳转到个人设置
+      if (this.userLogin == true) {
+        this.$router.push({
+          path: "/mine/personalSet"
+        });
+      }else{
+        this.$router.push({
+          path: "/login"
+        });
       }
     }
   },
@@ -121,6 +144,9 @@ export default {
           top: 6px;
           left: 8px;
         }
+      }
+      .unLogin {
+        padding: 30px 0;
       }
       span {
         letter-spacing: 2px;

@@ -1,8 +1,8 @@
 <template>
   <div>
     <!-- header部分 -->
-    <index-header text="活动" :hasSearch="false">
-      <span @click="activeScreen" class="acticity-screen">筛选</span>
+    <index-header text="活动" :hasSearch="false" >
+      <span  @click="activeScreen" class="acticity-screen">筛选</span>
     </index-header>
     <!-- tab部分 -->
     <acTab class="ac-tab" @selectTab="selectTab"></acTab>
