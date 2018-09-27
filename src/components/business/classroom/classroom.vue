@@ -6,7 +6,7 @@
             <!-- <i class="is-live">正在直播</i>
             <i class="play-butt"><img src="./video-play-big.png" /></i>
             <p class="state">马云电商云商互联网领导智慧沟通营销销售讲座</p> -->
-            <swiper></swiper>
+            <swiper :data="carouselData"></swiper>
         </div>
         <div class="class-list">
             <class-tab></class-tab>
@@ -22,6 +22,27 @@ import ClassTab from "business/classTab/classTab";
 import Swiper from "base/swiper/swiper";
 
 export default {
+  data() {
+    return {
+      carouselData: [] //轮播图数据保存
+    };
+  },
+  created() {
+    this._getCarouselData(); //获取轮播图数据
+  },
+  methods: {
+    //获取轮播图信息
+    _getCarouselData() {
+      this.axios({
+        url: "h5frontpageList-home",
+        method: "post"
+      }).then(res => {
+        if (res.status === 200) {
+          this.carouselData = res.data.atiList;
+        }
+      });
+    }
+  },
   components: {
     IndexHeader,
     MFooter,
@@ -33,7 +54,6 @@ export default {
 <style lang="less" scoped>
 .classroom {
   .video-box {
-    height: 370px;
     background: #cad3dc;
     position: relative;
     .is-live {

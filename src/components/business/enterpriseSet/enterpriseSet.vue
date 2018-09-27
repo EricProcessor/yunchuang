@@ -205,6 +205,7 @@ export default {
             this.axios.all([sendMsg(), sendPic()])
                 .then(this.axios.spread(function(acct, perms) {
                     //这个时候两个请求都完成了
+                    // var ownInfo1 = JSON.parse(localStorage.getItem("ownInfo1"));
                     // console.log(acct, perms)
                     MessageBox({
                         title: '提示',
