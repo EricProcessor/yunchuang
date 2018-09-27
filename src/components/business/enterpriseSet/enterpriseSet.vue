@@ -133,10 +133,10 @@ export default {
       this.telephone = data.fciTel;
       this.email = data.fciMile;
       this.website = data.fciUrl;
-      this.picList = [{ src: data.member.fmiPath }];
-      // this.picList2 = [{src: data.fmiPath}]
-      this.headPicUrl = data.member.fmiPath;
-      // this.picture = data.fmiPath
+      this.picList = [{ src: data.member.fmiPath }];    //头像显示
+      this.picList2 = [{src: data.fciPath}]         //照片显示
+      this.headPicUrl = data.member.fmiPath;        //头像保存地址用
+      this.picture = data.fciPath               //照片保存地址用
       this.complexAddress = data.fciAddress;
       this.provinceId = data.provinceid ? data.provinceid : 2;
       this.cityId = data.cityid ? data.cityid : 52;
