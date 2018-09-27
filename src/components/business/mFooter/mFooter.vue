@@ -2,7 +2,7 @@
     <div class="public-footer">
         <div class="sitg"><!--占位用，撑起公共底部的高度--></div>
         <div ref="mFooter" class="m-footer">
-            <mt-tabbar fixed v-model="isSelected">
+            <mt-tabbar v-model="isSelected">
                 <mt-tab-item id="index">
                     <i></i>
                     <br>
@@ -74,13 +74,20 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+.public-footer {
+    position: relative;
+}
 .sitg {
     height: 100px;
 }
 .m-footer {
-    .is-fixed {
-        transform: translateZ(0)    
-    }
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 200;
+    width: 100%;
+    background: red;
+    -webkit-overflow-scrolling: touch;
     .mint-tabbar {
         .mint-tab-item {
             height: 100px;
