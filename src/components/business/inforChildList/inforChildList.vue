@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ul class="listBox">
+    <ul class="listBox" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
       <li class="list_li clearfix" v-if="title!='创业政策'" @click="linkInforDetail(val.fciId)" v-for="(val,index) in list" :key="index">
         <div class="fl left_div">
           <p class="text">{{val.fciTitle}}</p>
@@ -43,15 +43,27 @@
 </template>
 <script>
 export default {
-  props: ["list", "title"],
+  props: ["list", "title", "pageAll"],
   data() {
-    return {};
+    return {
+      pageCur: 1
+    };
+  },
+  updated() {
+    console.log(this.title, this.pageAll);
   },
   methods: {
     linkInforDetail(id) {
       this.$router.push({
-        path: `/information/${id}/${this.title}` 
+        path: `/information/${id}/${this.title}`
       });
+    },
+  
+    loadMore() {
+      if (this.pageCur < this.pageAll) {
+        this.pageCur++;
+        this.$emit("getloadMore",this.pageCur , this.pageAll);
+      }
     }
   }
 };
