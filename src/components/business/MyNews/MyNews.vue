@@ -161,6 +161,9 @@ export default {
   font-size: 30px;
   letter-spacing: 3px;
 }
+.mint-msgbox-title {
+  font-size: 30px;
+}
 .mint-msgbox-message {
   color: #333333;
 }
