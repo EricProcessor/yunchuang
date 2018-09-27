@@ -273,7 +273,9 @@ export default {
           return item.ca_name;
         })
         .join("-");
-
+      this.province = val[0].ca_name; //省
+      this.city = val[1].ca_name; //市
+      this.area = val[2].ca_name; //区
       this.provinceId = val[0].ca_id;
       this.cityId = val[0].ca_id;
       this.areaId = val[0].ca_id;
