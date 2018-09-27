@@ -133,7 +133,7 @@ export default {
             height: 70px;
             line-height: 70px;
             text-align: center;
-            font-size: 20px;
+            font-size: 28px;
             color: #666666;
             background: #F5F5F5;
         }

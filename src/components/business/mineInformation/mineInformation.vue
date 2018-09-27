@@ -63,6 +63,10 @@ export default {
         this.$router.push({
           path: "/mine/personalSet"
         });
+      } else {
+        this.$router.push({
+          path: "/login"
+        });
       }
     }
   },
@@ -126,6 +130,7 @@ export default {
     .infor_right {
       float: left;
       margin: 50px 30px 50px 0px;
+      width: 444px;
       h3 {
         color: #000;
         font-size: 30px;
@@ -151,6 +156,9 @@ export default {
         display: block;
         height: 36px;
         line-height: 36px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
     }
   }

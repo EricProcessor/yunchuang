@@ -76,8 +76,7 @@ export default {
     }
     .mint-tab-item.is-selected {
       color: #6ea1ff;
-      border-color: #6ea1ff;
-      border-width: 4px;
+      border-bottom: 4px solid #6ea1ff;
       .mint-tab-item-label {
         color: #6ea1ff;
       }
