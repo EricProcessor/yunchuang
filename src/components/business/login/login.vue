@@ -55,7 +55,7 @@ export default {
     forgotPwdBtn() {
       //忘记密码
       if (this.userInfo.userName == "") {
-        alert("请输入用户名！");
+        alert("请先输入用户名！");
       } else {
         let _this_url = "/frontcompanyinompanyCheckAcc-checkAcc";
         this.axios

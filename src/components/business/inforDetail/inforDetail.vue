@@ -1,40 +1,43 @@
 <template>
-  <div class="detailView">
-    <index-header :text="headerText"></index-header>
-    <!-- 资讯信息 -->
-    <div class="detailBox" v-if="title!='创业政策'" v-for="(v,i) in detail" :key="i">
-      <div class="titleInfoBox">
-        <div class="detailTile">{{v.fciTitle}}</div>
-        <p class="detailFrom">{{v.fciSource}}</p>
-        <div class="clearfix">
-          <div class="fl detailTime">{{v.fciDatetime}}</div>
-          <div class="fr">
-            <p class="clearfix readCount">
-              <span class="fl icon_num"></span>
-              <span class="fl count">{{v.fciExamine}}</span>
-            </p>
+  <!-- <div class="detailContent"> -->
+    <div class="detailView" @touchstart.stop="" @touchend.stop="" @touchmove.stop="">
+      <index-header :text="headerText"></index-header>
+      <!-- 资讯信息 -->
+      <div class="detailBox" v-if="title!='创业政策'" v-for="(v,i) in detail" :key="i">
+        <div class="titleInfoBox">
+          <div class="detailTile">{{v.fciTitle}}</div>
+          <p class="detailFrom">{{v.fciSource}}</p>
+          <div class="clearfix">
+            <div class="fl detailTime">{{v.fciDatetime}}</div>
+            <div class="fr">
+              <p class="clearfix readCount">
+                <span class="fl icon_num"></span>
+                <span class="fl count">{{v.fciExamine}}</span>
+              </p>
+            </div>
           </div>
         </div>
+        <div class="textInfoBox" v-html="v.fciContent"></div>
       </div>
-      <div class="textInfoBox" v-html="v.fciContent"></div>
-    </div>
-    <div class="detailBox" v-if="title=='创业政策'" v-for="(v,i) in detail" :key="i">
-      <div class="titleInfoBox">
-        <div class="detailTile">{{v.fpiName}}</div>
-        <p class="detailFrom">{{v.fpiSource}}</p>
-        <div class="clearfix">
-          <div class="fl detailTime">{{v.fpiDatetime}}</div>
-          <div class="fr">
-            <p class="clearfix readCount">
-              <span class="fl icon_num"></span>
-              <span class="fl count">{{v.fpiExamine}}</span>
-            </p>
+      <div class="detailBox" v-if="title=='创业政策'" v-for="(v,i) in detail" :key="i">
+        <div class="titleInfoBox">
+          <div class="detailTile">{{v.fpiName}}</div>
+          <p class="detailFrom">{{v.fpiSource}}</p>
+          <div class="clearfix">
+            <div class="fl detailTime">{{v.fpiDatetime}}</div>
+            <div class="fr">
+              <p class="clearfix readCount">
+                <span class="fl icon_num"></span>
+                <span class="fl count">{{v.fpiExamine}}</span>
+              </p>
+            </div>
           </div>
         </div>
+        <div class="textInfoBox" v-html="v.fpiContent"></div>
       </div>
-      <div class="textInfoBox" v-html="v.fpiContent"></div>
     </div>
-  </div>
+  <!-- </div> -->
+
 </template>
 <script>
 import IndexHeader from "business/indexHeader/indexHeader";
@@ -65,7 +68,7 @@ export default {
   },
   methods: {
     backBtnPre() {
-      this.$router.go(-1);
+      this.$router.history(-1);
     },
     loadHeadInfo() {
       //创业头条
@@ -143,11 +146,14 @@ export default {
   left: 0;
   background: #fff;
   z-index: 105;
-  overflow-y: auto;
+  overflow-y: scroll;
 }
 .detailBox {
   margin: 0 auto;
   width: 94%;
+  position: absolute;
+  top: 88px;
+  left: 3%;
   .titleInfoBox {
     .detailTile {
       width: 100%;

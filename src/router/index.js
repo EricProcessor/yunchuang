@@ -38,11 +38,13 @@ import FindPwdChange from 'business/findPwdChange/findPwdChange';
 Vue.use(Router)
 
 export default new Router({
-  routes: [{
+  routes: [
+    {
       path: '/', //首页
       name: 'index',
       component: Index,
-    }, {
+    }, 
+    {
       path: '/information', //资讯页面
       name: 'Information',
       component: Information,
@@ -51,7 +53,9 @@ export default new Router({
         name: 'inforDetail',
         component: InforDetail
       },]
-    }, {
+    }, 
+    
+     {
       path: '/activity', //活动页面
       name: 'activity',
       component: Activity

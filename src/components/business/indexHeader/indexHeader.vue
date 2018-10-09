@@ -1,13 +1,15 @@
 <template>
   <div class="public-header">
-    <div class="sitg"><!--占位用，撑起公共头部的高度--></div>
+    <div class="sitg">
+      <!--占位用，撑起公共头部的高度-->
+    </div>
     <div class="index-header">
-        <!-- <router-link  to="/"> -->
-          <i class="mintui mintui-back" v-if="hasBack" @click.stop="linkBack"></i>
-        <!-- </router-link> -->
-        {{text}}
-        <i v-if="hasSearch" data-v-5eeac47d="" class="mintui mintui-search" @click.stop="linkSearch" ></i>
-        <slot></slot>
+      <!-- <router-link  to="/"> -->
+      <i class="mintui mintui-back" v-if="hasBack" @click.stop="linkBack"></i>
+      <!-- </router-link> -->
+      {{text}}
+      <i v-if="hasSearch" data-v-5eeac47d="" class="mintui mintui-search" @click.stop="linkSearch"></i>
+      <slot></slot>
     </div>
 
   </div>

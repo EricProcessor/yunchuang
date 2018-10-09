@@ -53,7 +53,7 @@ export default {
   methods: {
     linkInforDetail(id) {
       this.$router.push({
-        path: `/information/${id}/${this.title}`
+        path: `/information/${id}/${this.title}`  
       });
     },
   
