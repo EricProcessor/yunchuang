@@ -184,6 +184,9 @@ export default {
 .mint-searchbar-core {
   background: #253350;
   color: #fff;
+  height: 48px;
+  position: relative;
+  top: -2px;
 }
 .mint-searchbar-inner .mintui-search {
   padding-right: 16px;

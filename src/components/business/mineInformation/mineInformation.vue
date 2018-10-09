@@ -27,7 +27,8 @@ export default {
       area: "", //区
       fmiDatetimes: "", //时间
       fmiPath: "", //头像
-      userLogin: false //用户是否登录
+      userLogin: false, //用户是否登录
+      isOwn: "" // 个人还是企业
     };
   },
   mounted() {
@@ -60,9 +61,21 @@ export default {
     goPersonalSet() {
       //点击头像和用户信息跳转到个人设置
       if (this.userLogin == true) {
-        this.$router.push({
-          path: "/mine/personalSet"
-        });
+        // this.$router.push({
+        //   path: "/mine/personalSet"
+        // });
+        this.isOwn = localStorage.getItem("isOwn");
+        if (this.isOwn == "Q") {
+          // 跳转到企业设置
+          this.$router.push({
+            path: "/mine/enterpriseSet"
+          });
+        } else {
+          // 跳转到个人设置
+          this.$router.push({
+            path: "/mine/personalSet"
+          });
+        }
       } else {
         this.$router.push({
           path: "/login"
