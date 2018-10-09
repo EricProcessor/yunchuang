@@ -115,7 +115,7 @@ export default {
         color: #333;
     }
     .actice-input{
-        position: relative;
+        width: 100%;
         display: flex;
     }   
 }   

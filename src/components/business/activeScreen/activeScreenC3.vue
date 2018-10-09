@@ -1,9 +1,8 @@
 <template>
     <!--日期选择器-->
-<div>  
+<div class="date-con">  
     <div class="time-right">
-        <p @click="openPicker"><input type="text"  v-model="birthdays" disabled placeholder="结束时间"/></p>
-        <i></i>
+        <p @click="openPicker"><input type="text"  v-model="birthdays" disabled placeholder="结束时间"/><i></i></p>       
     </div>
    <mt-datetime-picker
       type="date"
@@ -46,29 +45,43 @@ export default {
   
 }
 </script>
-<style lang="less" scoped>
-.time-right{
-  width: 70%;
-  position: relative;
-    input{
-      width: 95%;
-      height:58px;
-      background: #e9e7e7;
-      border:1px solid #f2f2f2;
-      padding-left:10px;
-      border-radius: 4px;
-      color: #666;
-    }
-    i{
-      display: block;
-      height:50px;
-      width: 50px;
-      position: absolute;
-      right:10px;
-      top:8px;
-      font-size: 34px;
-      background: url("./datePic.png") no-repeat ;
-      transform: scale(.7,.7)
-    }
+<style lang="less">
+.picker-slot{
+  font-size: 27px;
 }
+.date-con{
+  width: 49%;
+  .time-right{
+    width: 80%;
+    position: relative;
+    p{
+      width: 100%;
+      height:62px;
+      position: relative;
+      background: #e9e7e7;
+      input{
+        width: 100%;
+        height:62px;
+        background: #e9e7e7;
+        border:1px solid #f2f2f2;
+        padding-left:10px;
+        box-sizing: border-box;
+        border-radius: 4px;
+        color: #666;
+      }
+      i{  
+        display: block;
+        height:56px;
+        width: 56px;
+        position: absolute;
+        right:3px;
+        top:7px;
+        font-size: 34px;
+        background: url("./datePic.png") no-repeat ;
+        transform: scale(.7,.7)
+      }
+    }
+  }
+}
+
 </style>

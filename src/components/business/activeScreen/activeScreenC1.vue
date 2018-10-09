@@ -6,24 +6,7 @@
               <i>▼</i>
           </div>
           <mt-popup v-model="addressShow" position="bottom" class="region-popup">
-            <!-- <div class="address">
-              <p class="address-p">热门城市</p><p @click="closeAddressComponent">✖</p>
-            </div>
-            <ul>
-              <li>北京</li>
-              <li>上海</li>
-              <li>广州</li>
-              <li>深圳</li>
-              <li>杭州</li>
-              <li>武汉</li>
-              <li>南京</li>
-              <li>成都</li>
-              <li>苏州</li>
-              <li>东莞</li>
-              <li>宁波</li>
-              <li>郑州</li>
-            </ul> -->
-            <mt-picker :slots="slots" valueKey="name"  @change="_changeAddress"></mt-picker>
+            <mt-picker :slots="slots" valueKey="name" class="region-picker"  @change="_changeAddress"></mt-picker>
           </mt-popup>
           
       </div>   
@@ -34,11 +17,10 @@
   Vue.component(Popup.name, Popup);
   import { Picker } from 'mint-ui';
   Vue.component(Picker.name, Picker);
-import address from '@/config/address.json'  
+  import address from '@/config/address.json'  
  
 export default {
-    props: {
-        
+    props: {       
         position: {             //弹出方向设置，默认下方弹出
             type: String,
             default: 'bottom'
@@ -205,8 +187,14 @@ export default {
 }  
 .region-popup{
   width: 100%;
-  height:400px;
+  height:410px;
   margin-bottom: 85px;
+  .region-picker{
+    width: 100%;
+    height:400px;
+    margin-bottom: 45px;
+    font-size: 45px;
+  }
     .address{
     //   padding-top: 20px;
       width: 96%;
