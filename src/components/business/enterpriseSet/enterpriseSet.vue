@@ -3,67 +3,69 @@
         <index-header text="企业设置" :hasSearch="false"></index-header>
         <div class="setBox">
             <p class="remind" v-show="remind">带*号为必填项，请务必如实填写  <i class="close" @click="_closeRemind">&times;</i></p>
-            <div class="head-box">
+            <scroll class="listview">
+              <div class="head-box">
                 <div class="head-pic">
                     <img v-if="picList[0]" :src="picList[0].src" alt="">
                     <upload-img @getImg="getHeadUploadImg"></upload-img>
                 </div>
                 <span>更换头像</span>
-            </div>
-            <div class="form-list">
-                <div class="column">
-                    <ul>
-                        <li class="column-left"><i>*</i>联系人</li>
-                        <li class="column-right"><input type="text" v-model="name" /></li>
-                    </ul>
-                </div>
-                <div class="column">
-                    <ul>
-                        <li class="column-left">联系电话</li>
-                        <li class="column-right"><input type="text" v-model="telephone" /></li>
-                    </ul>
-                </div>
-                <div class="column">
-                    <ul>
-                        <li class="column-left">邮箱</li>
-                        <li class="column-right"><input type="text" v-model="email" /></li>
-                    </ul>
-                </div>
-                <div class="column">
-                    <ul>
-                        <li class="column-left">网址</li>
-                        <li class="column-right"><input type="text" v-model="website" /></li>
-                    </ul>
-                </div>
-                <div class="column">
-                    <ul>
-                        <li class="column-left">地址</li>
-                        <li class="column-right" @click="_showAddressPopup"><input type="text" placeholder="点击选择" disabled v-model="simpAddress" /></li>
-                    </ul>
-                </div>
-                <div class="column">
-                    <ul>
-                        <li class="column-left"></li>
-                        <li class="column-right">
-                            <textarea name="" placeholder="请输入详细地址" v-model="complexAddress" id="" cols="30" rows="10"></textarea>
-                        </li>
-                    </ul>
-                </div>
-                <div class="column">
-                    <ul>
-                        <li class="column-left">照片</li>
-                        <div class="column-right align-left">
-                            <div class="img-box">
-                                <img v-if="picList2[0]" :src="picList2[0].src" />
-                                <upload-img @getImg="getUploadImg"></upload-img>
-                            </div>
-                            <div class="upload-state">
-                               
-                            </div>
-                        </div>
-                    </ul>
-                </div>
-            </div>
+              </div>
+              <div class="form-list">
+                  <div class="column">
+                      <ul>
+                          <li class="column-left"><i>*</i>联系人</li>
+                          <li class="column-right"><input type="text" v-model="name" /></li>
+                      </ul>
+                  </div>
+                  <div class="column">
+                      <ul>
+                          <li class="column-left">联系电话</li>
+                          <li class="column-right"><input type="text" v-model="telephone" /></li>
+                      </ul>
+                  </div>
+                  <div class="column">
+                      <ul>
+                          <li class="column-left">邮箱</li>
+                          <li class="column-right"><input type="text" v-model="email" /></li>
+                      </ul>
+                  </div>
+                  <div class="column">
+                      <ul>
+                          <li class="column-left">网址</li>
+                          <li class="column-right"><input type="text" v-model="website" /></li>
+                      </ul>
+                  </div>
+                  <div class="column">
+                      <ul>
+                          <li class="column-left">地址</li>
+                          <li class="column-right" @click="_showAddressPopup"><input type="text" placeholder="点击选择" disabled v-model="simpAddress" /></li>
+                      </ul>
+                  </div>
+                  <div class="column">
+                      <ul>
+                          <li class="column-left"></li>
+                          <li class="column-right">
+                              <textarea name="" placeholder="请输入详细地址" v-model="complexAddress" id="" cols="30" rows="10"></textarea>
+                          </li>
+                      </ul>
+                  </div>
+                  <div class="column">
+                      <ul>
+                          <li class="column-left">照片</li>
+                          <div class="column-right align-left">
+                              <div class="img-box">
+                                  <img v-if="picList2[0]" :src="picList2[0].src" />
+                                  <upload-img @getImg="getUploadImg"></upload-img>
+                              </div>
+                              <div class="upload-state">
+                                
+                              </div>
+                          </div>
+                      </ul>
+                  </div>
+              </div>
+            </scroll>
             <!--地址选择组件-->
                 <address-pick v-if="isEchoAjaxOver" ref="addressPopup" :defaultProvinceId="provinceId" :defaultCityId="cityId" :defaultAreaId="areaId"  @selectAddress="_getAddress"></address-pick>
             <!--地址选择组件-->
@@ -79,6 +81,7 @@ import IndexHeader from "business/indexHeader/indexHeader";
 import { MessageBox } from "mint-ui";
 import UploadImg from "base/uploadImg/uploadImg";
 import AddressPick from "base/addressPick/addressPick";
+import Scroll from 'base/scroll/scroll'
 export default {
   data() {
     return {
@@ -130,10 +133,10 @@ export default {
       this.telephone = data.fciTel;
       this.email = data.fciMile;
       this.website = data.fciUrl;
-      this.picList = [{ src: data.member.fmiPath }];    //头像显示
-      this.picList2 = [{src: data.fciPath}]         //照片显示
-      this.headPicUrl = data.member.fmiPath;        //头像保存地址用
-      this.picture = data.fciPath               //照片保存地址用
+      this.picList = [{ src: data.member.fmiPath ? data.member.fmiPath : "" }];    //头像显示
+      this.picList2 = [{src: data.fciPath ? data.fciPath : ""}]         //照片显示
+      this.headPicUrl = data.member.fmiPath ? data.member.fmiPath : "";        //头像保存地址用
+      this.picture = data.fciPath ? data.fciPath : ""               //照片保存地址用
       this.complexAddress = data.fciAddress;
       this.provinceId = data.provinceid ? data.provinceid : 2;
       this.cityId = data.cityid ? data.cityid : 52;
@@ -286,7 +289,8 @@ export default {
   components: {
     IndexHeader,
     UploadImg,
-    AddressPick
+    AddressPick,
+    Scroll
   }
 };
 </script>
@@ -301,6 +305,11 @@ export default {
   min-height: 100%;
   .setBox {
     position: relative;
+    .listview {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
     .remind {
       height: 60px;
       font-size: 20px;
@@ -491,6 +500,7 @@ export default {
       justify-content: space-between;
       color: #fff;
       font-size: 30px;
+      z-index: 300;
       .reset {
         width: 36%;
         line-height: 88px;
