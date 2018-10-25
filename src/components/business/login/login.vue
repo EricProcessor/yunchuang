@@ -1,5 +1,6 @@
 <template>
   <div class="loginBox">
+    <p class="backPre" @click="back_from"><img src="./backBtn.png" alt=""/></p>
     <div class="logo">
       <p>
         <img src="./logo.png" alt="">
@@ -98,6 +99,9 @@ export default {
     },
     goToRegister() {
       this.$router.push("/register");
+    },
+    back_from(){
+      history.back(-1);
     }
   }
 };
@@ -107,6 +111,22 @@ export default {
   width: 100%;
   height: 1334px;
   background: #253350;
+  .backPre{
+    width: 60px;
+    height: 60px;
+    text-align: center;
+    border-radius: 50%;
+    background: rgb(22,31,48);
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    img{
+      width: 48px;
+      height: 48px;
+      padding: 8px 5px 0 0;
+      border-radius: 50%;
+    }
+  }
   .logo {
     width: 100%;
     height: 600px;
